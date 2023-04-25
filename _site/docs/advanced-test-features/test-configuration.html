@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+ <link href="assets/prism.css" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/assets/common.css">
+
+  <title>Inferno Framework</title>
+<body  data-spy="scroll" data-target="#toc">
+  <nav class="header-nav navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/assets/icon_logo.png" alt="Logo" height="50px">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="search-container">
+          <div class="input-group">
+            <span class="input-group-text" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="search" class="form-control" placeholder="Search Inferno Framework" aria-label="Search" aria-describedby="search-addon">
+          </div>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/docs">Documentation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Community</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">News</a>
+          </li>
+        </ul>
+        <a href="https://github.com/inferno-framework" target="_blank" rel="noopener noreferrer" class="ms-2 d-flex align-items-center" style="text-decoration:none">
+          <i class="fab fa-github fa-lg"></i>
+      </a>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+  <symbol id="svg-link" viewBox="0 0 24 24">
+  <title>Link</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link">
+    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+  </svg>
+</symbol>
+
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+  <title>Menu</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
+    <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</symbol>
+
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+  <title>Expand</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+    <polyline points="9 18 15 12 9 6"></polyline>
+  </svg>
+</symbol>
+
+  <!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE -->
+<symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
+  <title id="svg-external-link-title">(external link)</title>
+  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line>
+</symbol>
+
+  
+    <symbol id="svg-doc" viewBox="0 0 24 24">
+  <title>Document</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline>
+  </svg>
+</symbol>
+
+    <symbol id="svg-search" viewBox="0 0 24 24">
+  <title>Search</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+    <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</symbol>
+
+  
+  
+    <!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md -->
+<symbol id="svg-copy" viewBox="0 0 16 16">
+  <title>Copy</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+  </svg>
+</symbol>
+<symbol id="svg-copied" viewBox="0 0 16 16">
+  <title>Copied</title>
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16">
+    <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/>
+    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/>
+  </svg>
+</symbol>
+
+  
+</svg>
+
+<div class="container-fluid docs-content">
+  <div class="row">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-9">
+      
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="/"><span>Home</span></a></li>
+        
+        
+        
+          <li class="breadcrumb-item"><a href="">Advanced Features</a></li>
+        
+        <li class="breadcrumb-item active">Suite/Group/Test Configuration</li>
+      </ol>
+    </nav>
+
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <nav id="sidebar">
+    <ul class="navbar-nav list-unstyled components"></ul></nav>
+    </div>
+    <div class="col-sm-7">
+      <h1 id="test-configuration">Test Configuration</h1>
+
+<p>Inferno provides two mechanisms for altering test behavior.</p>
+
+<h3 id="configuration">Configuration</h3>
+
+<ul>
+  <li>Defined at the test, group, or suite level.</li>
+  <li>Evaluated at boot time.</li>
+  <li>Values chosen by test authors.</li>
+  <li>Can be used within a test’s <code class="language-plaintext highlighter-rouge">run</code> block to modify test behavior.</li>
+  <li>Can modify inputs/outputs/requests to avoid naming collisions.</li>
+  <li>Can modify input properties such as whether an input is required or locked.</li>
+  <li>Can define custom boot-time options which are used within a test’s <code class="language-plaintext highlighter-rouge">run</code> block
+to modify test behavior.</li>
+</ul>
+
+<h3 id="suite-options">Suite Options</h3>
+
+<ul>
+  <li>Only defined at the suite level.</li>
+  <li>Evaluated at test session creation time.</li>
+  <li>Values chosen by test users.</li>
+  <li>Can modify which tests/groups appear in the UI and are executed.</li>
+  <li>Can be used within a test’s <code class="language-plaintext highlighter-rouge">run</code> block to modify test behavior.</li>
+</ul>
+
+<h2 id="configuration-1">Configuration</h2>
+
+<p><a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html">Configuration</a>
+provides a way for test authors to avoid naming conflicts when reusing tests and
+set boot-time options. For example, a suite may want to run a particular group
+twice with distinct inputs and outputs. Those groups can be configured so that
+their inputs and outputs are distinct from each other without having to alter
+the group itself. Additionally, configuration can change input properties such
+as whether a particular input is locked or required.</p>
+
+<p>When a runnable defines some configuration, that configuration also applies to
+all of that runnable’s children. Configuration defined by a parent runnable
+overrides any child runnable’s configuration.</p>
+
+<p><a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html"><code class="language-plaintext highlighter-rouge">Configurable</code> in the API
+docs</a></p>
+
+<h3 id="renaming-inputsoutputsrequests">Renaming Inputs/Outputs/Requests</h3>
+
+<p>Renaming inputs and outputs allows test authors to handle potential naming
+conflicts when using the same tests multiple times, or using tests from multiple
+sources with differently named inputs.</p>
+
+<p>Consider a test group which needs to check which versions of TLS are
+supported by two different servers. This group can use <a href="https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb">this test which checks
+which TLS versions a server
+supports</a>
+based on a <code class="language-plaintext highlighter-rouge">url</code> input. In order to check the TLS versions supported by two
+different servers, <code class="language-plaintext highlighter-rouge">config</code> can be used to make each instance of this test use a
+different input.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestGroup</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestGroup</span>
+  <span class="n">input</span> <span class="ss">:source_server_url</span>
+  <span class="n">input</span> <span class="ss">:destination_server_url</span>
+  
+  <span class="c1"># Inline config</span>
+  <span class="nb">test</span> <span class="ss">from: :tls_version_test</span><span class="p">,</span>
+       <span class="ss">id: :source_server_tls_test</span><span class="p">,</span>
+       <span class="ss">config: </span><span class="p">{</span>
+         <span class="ss">inputs: </span><span class="p">{</span>
+           <span class="ss">url: </span><span class="p">{</span> <span class="ss">name: :source_server_url</span> <span class="p">}</span>
+         <span class="p">}</span>
+       <span class="p">}</span>
+       
+  <span class="c1"># Config within test block</span>
+  <span class="nb">test</span> <span class="ss">from: :tls_version_test</span> <span class="k">do</span>
+    <span class="nb">id</span> <span class="ss">:destination_server_tls_test</span>
+    <span class="n">config</span><span class="p">(</span>
+      <span class="ss">inputs: </span><span class="p">{</span>
+        <span class="ss">url: </span><span class="p">{</span> <span class="ss">name: :destination_server_url</span> <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Outputs and requests can be renamed in the same fashion, using <code class="language-plaintext highlighter-rouge">outputs</code> or
+<code class="language-plaintext highlighter-rouge">requests</code> as the key in <code class="language-plaintext highlighter-rouge">config</code>.</p>
+
+<h3 id="altering-input-properties">Altering Input Properties</h3>
+
+<p>In addition to renaming an input, other input properties can be altered as well.
+Any of the <a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/InputOutputHandling.html#input-instance_method">input
+options</a>
+used to define an input can be changed.</p>
+
+<p>For example, for SMART App Launch STU 1, PKCE support is optional. The following
+inputs are defined to let users choose whether to use PKCE during testing:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">StandaloneLaunchGroup</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestGroup</span>
+  <span class="c1"># ...</span>
+  <span class="n">input</span> <span class="ss">:use_pkce</span><span class="p">,</span>
+        <span class="ss">title: </span><span class="s1">'Proof Key for Code Exchange (PKCE)'</span><span class="p">,</span>
+        <span class="ss">type: </span><span class="s1">'radio'</span><span class="p">,</span>
+        <span class="ss">default: </span><span class="s1">'false'</span><span class="p">,</span>
+        <span class="ss">options: </span><span class="p">{</span>
+          <span class="ss">list_options: </span><span class="p">[</span>
+            <span class="p">{</span>
+              <span class="ss">label: </span><span class="s1">'Enabled'</span><span class="p">,</span>
+              <span class="ss">value: </span><span class="s1">'true'</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="ss">label: </span><span class="s1">'Disabled'</span><span class="p">,</span>
+              <span class="ss">value: </span><span class="s1">'false'</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+  <span class="n">input</span> <span class="ss">:pkce_code_challenge_method</span><span class="p">,</span>
+        <span class="ss">optional: </span><span class="kp">true</span><span class="p">,</span>
+        <span class="ss">title: </span><span class="s1">'PKCE Code Challenge Method'</span><span class="p">,</span>
+        <span class="ss">type: </span><span class="s1">'radio'</span><span class="p">,</span>
+        <span class="ss">default: </span><span class="s1">'S256'</span><span class="p">,</span>
+        <span class="ss">options: </span><span class="p">{</span>
+          <span class="ss">list_options: </span><span class="p">[</span>
+            <span class="p">{</span>
+              <span class="ss">label: </span><span class="s1">'S256'</span><span class="p">,</span>
+              <span class="ss">value: </span><span class="s1">'S256'</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+              <span class="ss">label: </span><span class="s1">'plain'</span><span class="p">,</span>
+              <span class="ss">value: </span><span class="s1">'plain'</span>
+            <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>For SMART App Launch STU 2, PKCE support is required, and it is required that
+PKCE use the S256 code challenge method. The same launch tests are reused for
+STU 2, but the inputs are configured to require PKCE with the S256 code
+challenge method. The defaults are set to the required value, and the inputs are
+locked to prevent users from changing them.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">StandaloneLaunchGroupSTU2</span> <span class="o">&lt;</span> <span class="no">StandaloneLaunchGroup</span>
+  <span class="c1"># ...</span>
+  <span class="n">config</span><span class="p">(</span>
+    <span class="ss">inputs: </span><span class="p">{</span>
+      <span class="ss">use_pkce: </span><span class="p">{</span>
+        <span class="ss">default: </span><span class="s1">'true'</span><span class="p">,</span>
+        <span class="ss">locked: </span><span class="kp">true</span>
+      <span class="p">},</span>
+      <span class="ss">pkce_code_challenge_method: </span><span class="p">{</span>
+        <span class="ss">default: </span><span class="s1">'S256'</span><span class="p">,</span>
+        <span class="ss">locked: </span><span class="kp">true</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+  <span class="c1"># ...</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="custom-configuration-options">Custom Configuration Options</h3>
+
+<p>Custom configuration options allow information to be loaded at boot time and
+made available to tests. For example, a test could have optional functionality
+which is enabled by setting a specific configuration option value.</p>
+
+<p><a href="https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb">This test which checks which TLS versions a server
+supports</a>
+allows test authors to set the minimum and maximum allowed TLS versions. This
+gives the test the flexibility to be used in a variety of different testing
+scenarios with different TLS requirements. The test’s configuration options are
+<a href="https://github.com/inferno-framework/tls-test-kit/#using-the-tls-test-in-other-test-suites">described in its
+README</a>
+For example, the Bulk Data Implementation Guide requires that TLS 1.2 or later
+be used, so Inferno bulk data tests can configure the TLS test as follows:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="ss">from: :tls_version_test</span><span class="p">,</span>
+     <span class="ss">config: </span><span class="p">{</span>
+       <span class="ss">options: </span><span class="p">{</span>  <span class="ss">minimum_allowed_version: </span><span class="no">OpenSSL</span><span class="o">::</span><span class="no">SSL</span><span class="o">::</span><span class="no">TLS1_2_VERSION</span> <span class="p">}</span>
+     <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="suite-options-1">Suite Options</h2>
+
+<p><a href="ttps://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method">Suite
+options</a>
+provide a way for users to select high level options that alter which
+tests/groups are executed during a session. For example, a test suite may
+support testing against different versions of an implementation guide, and based
+on which version the user selects when starting their session, the tests for the
+other versions can be hidden.</p>
+
+<p><a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method"><code class="language-plaintext highlighter-rouge">suite_option</code> in the API
+docs</a></p>
+
+<h3 id="defining-suite-options">Defining Suite Options</h3>
+<p><a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method">Suite
+options</a>
+must be defined within a test suite and have the following properties:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">identifier</code> - a Symbol which is used to identify this option</li>
+  <li><code class="language-plaintext highlighter-rouge">title</code> - the title which is displayed to users</li>
+  <li><code class="language-plaintext highlighter-rouge">list_options</code> - the possible values for this option. Each list option
+contains a <code class="language-plaintext highlighter-rouge">label</code> which is displayed to users, and a <code class="language-plaintext highlighter-rouge">value</code> which is the
+actual value stored when the user selects this option.</li>
+</ul>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
+  <span class="n">suite_option</span> <span class="ss">:smart_app_launch_version</span><span class="p">,</span>
+               <span class="ss">title: </span><span class="s1">'SMART App Launch Version'</span><span class="p">,</span>
+               <span class="ss">list_options: </span><span class="p">[</span>
+                 <span class="p">{</span>
+                   <span class="ss">label: </span><span class="s1">'SMART App Launch 1.0.0'</span><span class="p">,</span>
+                   <span class="ss">value: </span><span class="s1">'smart_app_launch_1'</span>
+                 <span class="p">},</span>
+                 <span class="p">{</span>
+                   <span class="ss">label: </span><span class="s1">'SMART App Launch 2.0.0'</span><span class="p">,</span>
+                   <span class="ss">value: </span><span class="s1">'smart_app_launch_2'</span>
+                 <span class="p">}</span>
+               <span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="hiding-tests-based-on-suite-options">Hiding Tests Based on Suite Options</h3>
+
+<p>Tests/groups can be hidden from the user and prevented from executing based on
+the selected suite options by defining
+<a href="https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Runnable.html#required_suite_options-instance_method"><code class="language-plaintext highlighter-rouge">required_suite_options</code></a>.
+In the following example (using the suite option definition from above), the
+user will only see the SMART App Launch group for the version which they
+selected when starting their session.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
+  <span class="c1"># suite_option :smart_app_launch_version,</span>
+  <span class="c1"># ...</span>
+  
+  <span class="c1"># Suite option requirements can be defined inline</span>
+  <span class="n">group</span> <span class="ss">from: :smart_app_launch_v1</span><span class="p">,</span>
+        <span class="ss">required_suite_options: </span><span class="p">{</span>
+          <span class="ss">smart_app_launch_version: </span><span class="s1">'smart_app_launch_1'</span>
+        <span class="p">}</span>
+        
+  <span class="c1"># Suite option requirements can be defined within a test/group definition</span>
+  <span class="n">group</span> <span class="ss">from: :smart_app_launch_v2</span> <span class="k">do</span>
+    <span class="n">required_suite_options</span> <span class="ss">smart_app_launch_version: </span><span class="s1">'smart_app_launch_2'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="altering-test-behavior-based-on-suite-options">Altering Test Behavior Based on Suite Options</h3>
+
+<p>Test behavior can be modified by inspecting the value of an option inside of the
+<code class="language-plaintext highlighter-rouge">run</code> block.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTest</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">Test</span>
+  <span class="n">run</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="n">suite_options</span><span class="p">[</span><span class="ss">:smart_app_launch_version</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'smart_app_launch_1'</span>
+      <span class="c1"># Perform SMART App Launch v1 behavior</span>
+    <span class="k">elsif</span> <span class="n">suite_options</span><span class="p">[</span><span class="ss">:smart_app_launch_version</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'smart_app_launch_2'</span>
+      <span class="c1"># Perform SMART App Launch v2 behavior</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+    </div>
+    <div class="col-sm-2">
+      <h4>On this page</h4>
+      <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    </div>
+  </div>
+</div>
+
+
+    <footer class="footer py-4 mt-4">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <p></p>
+      </div>
+      <div class="col-md-6">
+        <ul class="list-inline text-md-right">
+          <li class="list-inline-item"><a href="#">aaa</a></li>
+          <li class="list-inline-item"><a href="#">aaa</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script>
+    <script src="/assets/common.js"></script>
+    <script src="/assets/prism.js"></script>
+
+  </body>
+</html>

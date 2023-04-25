@@ -1,13 +1,22 @@
 # Inferno Framework Site
 
-This repository currently exists to redirect users from https://inferno-framework.github.io
-to https://inferno-framework.github.io/inferno-core.
 
-Eventually, it will contain general Inferno Framework information, with the `/inferno-core`
-path dedicated to those developing Inferno Test Kits using the inferno-core gem.
+
+```
+gem install jekyll bundler
+bundle exec jekyll serve
+```
+
+Navigate to http://localhost:4000/index_new.html
+
 
 ## License
-Copyright 2022 The MITRE Corporation
+
+Portions of this site are based on the [just-the-docs](just-the-docs-license.txt)
+Jekyll theme.
+
+
+Copyright 2023 The MITRE Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
