@@ -1,0 +1,20 @@
+{% unless page.url == "/" %}
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{{ site.base_url }}/"><span>Home</span></a></li>
+        {% if page.section == 'docs' %}
+        <li class="breadcrumb-item"><a href="{{ site.base_url }}/docs/"><span>Documentation</span></a></li>
+        {% endif %}
+        {% if page.section == 'about' %}
+        <li class="breadcrumb-item"><a href="{{ site.base_url }}/about/"><span>About</span></a></li>
+        {% endif %}
+        {% if page.grand_parent %}
+          <li class="breadcrumb-item"><a href="{{ first_level_url }}">{{ page.grand_parent }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ second_level_url }}">{{ page.parent }}</a></li>
+        {% elsif page.parent %}
+          <li class="breadcrumb-item"><a href="{{ first_level_url }}">{{ page.parent }}</a></li>
+        {% endif %}
+        <li class="breadcrumb-item active">{{ page.title }}</li>
+      </ol>
+    </nav>
+{% endunless %}
