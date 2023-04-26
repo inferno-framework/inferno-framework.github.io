@@ -3,6 +3,7 @@ title: Serving HTTP Requests
 nav_order: 2
 parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Serving HTTP Requests
 Some testing scenarios require that Inferno respond to incoming HTTP requests.

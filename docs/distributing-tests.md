@@ -5,6 +5,8 @@ section: docs
 layout: docs
 
 ---
+# Distributing Tests
+
 Inferno allows test kits to be distributed like regular ruby gems. In order to
 make your test suite available to others, first it needs to be organized as
 described in [Test

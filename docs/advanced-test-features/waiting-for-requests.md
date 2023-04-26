@@ -3,6 +3,7 @@ title: Waiting for an Incoming Request
 nav_order: 3
 parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Waiting for an Incoming Request
 Some testing workflows required testing to pause until an incoming request is

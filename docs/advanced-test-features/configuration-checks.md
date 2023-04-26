@@ -3,6 +3,7 @@ title: Configuration Checks
 nav_order: 5
 parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Configuration Checks
 Test Suites can have a set of checks they perform on startup to ensure that

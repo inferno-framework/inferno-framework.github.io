@@ -3,23 +3,34 @@ layout: base
 ---
 {% include icons/icons.html %}
 <div class="container-fluid docs-content">
-  <div class="row">
-    <div class="col-sm-3">
+  <div class="row breadcrumbs-row d-none d-lg-flex">
+    <div class="col-lg-3 left-nav-column">
     </div>
-    <div class="col-sm-9">
+    <div class="col-lg-7">
+      <div class="docs-body mx-auto">
       {% include breadcrumbs.html pages=site.html_pages key=nil %}
+      </div>
+     
     </div>
+    <div class="col-lg-2"></div>
+    
   </div>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-lg-3 left-nav-column">
+      <div class="d-none d-lg-block">
       {% include nav.html pages=site.html_pages key=nil %}
+      </div>
     </div>
-    <div class="col-sm-7">
+    <div class="col-lg-7">
+      <div class="docs-body mx-auto">
       {{ content }}
+      </div>
     </div>
-    <div class="col-sm-2">
-      <h4>On this page</h4>
-      <nav id="toc" data-toggle="toc" class="sticky-top"></nav>
+    <div class="col-lg-2">
+      <div class="right-toc sticky-top">
+        <h5><a href="#">On this page</a></h5>
+        <nav id="toc" data-toggle="toc"></nav>
+      </div>
     </div>
   </div>
 </div>
