@@ -3,6 +3,7 @@ title: Scratch
 nav_order: 4
 parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Scratch
 Scratch provides an alternative to inputs and outputs for passing information

@@ -3,6 +3,7 @@ title: Suite/Group/Test Configuration
 nav_order: 1
 parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Test Configuration
 
