@@ -1,3 +1,8 @@
+html {
+  font-size: 17px;
+  line-height: 1.2;
+
+}
 .navbar-custom {
   background-color: white;
 }
@@ -139,9 +144,13 @@ body::before {
 
   text-transform: uppercase;
   font-weight: bold;
-
-
 }
+
+.nav-item:first-child .nav-group{
+  padding-top: 0;
+}
+
+
 
 .docs-content h1 {
   padding-bottom: 20px;
@@ -152,6 +161,10 @@ body::before {
 .right-toc {
   border-left: 1px solid #ced0d9;
   padding-left: 1rem;
+}
+
+.right-toc h5 {
+  padding-top: 10px;
 }
 
 .right-toc a,

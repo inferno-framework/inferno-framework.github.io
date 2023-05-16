@@ -1,95 +1,32 @@
 ---
-title: Overview
+title: Welcome
 nav_order: 1
 layout: docs
-section: about
+section: community
 ---
-# Overview
+# Welcome
 
-Welcome to Inferno, an open source software testing framework for the Fast
-Healthcare Interoperability Resources health API and data exchange standard.
-Inferno's goal is to accelerate the availability of interoperable Health IT
-systems connected using the FHIR standard by providing easy to use, portable,
-and comprehensive test tools that can be used to support implementation of
-FHIR-based APIs.
+## Overview
+Inferno is an application framework for creating, executing, and sharing
+conformance test for FHIR APIs. Inferno tests are packaged within portable test
+applications called <a href="concepts.html#inferno-test-kit">Inferno Test Kits</a>.
+Test Kits are tailored to test specific FHIR-enabled data exchange use cases,
+typically described within one or more [FHIR Implementation
+Guides](http://fhir.org/guides/registry/).
 
-## The Inferno Approach
-
-FHIR is a 'Framework Standard' that has great flexibility in how it might used to
-facilitate .
-
-For more information about how Inferno is constructed, visit the ... or get started
-...
-
-## How do you use Inferno
-
-
-## Features and Functionality
-
-The Inferno Framework 
-
-## Using Inferno
-
-
-
-
-
-Inferno was initially developed to provide certification tests  tool for the Office
-of the National Coordinator for Ho
-
-Development of Inferno is principally sponsored by the Office of the National
-Coordinator for Health IT in support of the ONC Certified Health IT Program.
-Development is currently led by the MITRE Corporation, a non profit working in the
-public interest.
-
-API for Patient and Population certification criterion. 
-
-Inferno is used 
-
-Recognizing the challenges in evaluating conformance of the Standardized API for
-Patient and Population Services, and recognizing the value in providing open
-source tools that can be used freely by implementers, test labs, test tool vendors, or other certificaiton programs, the lessons learned 
-
-Inferno can be used in one of three 
-
-
-
-Inferno is an testing application framework that is aimed at 
-Inferno is sponsored by the Office of the National Coordinator for Health IT (ONC)
-and principally developed by the MITRE Corporation with the goal of fostering
-comprehensive testing solutions.
-
-Inferno was initially designed to provide a testing solution for ONC's 
-Standardized API Certification Criterion.
-
-In recognition of effort involved in producing a comprehensive testing suite
-for this use case.
-
-
-What is Inferno?
-Why Inferno?
-
-
-Inferno is framework for creating, executing, and sharing tests for health IT
-systems providing standardized FHIR APIs.
-
-
-
-You use Inferno to create
-**Inferno Test Kits** which are standalone, portable test applications that
-are tailored to test specific FHIR-enabled data exchange use cases as described
-in [FHIR Implementation Guides](http://fhir.org/guides/registry/).
-
-Examples of test applications (Test Kits) built using Inferno include:
+Examples of Inferno Test Kits include:
+* The [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit)
+  provides tests for systems that seek conformance to
+  [ONC's Standardized API certification criterion](https://www.healthit.gov/test-method/standardized-api-patient-and-population-services).
 * The [US Core Test Kit](https://github.com/inferno-framework/us-core-test-kit)
   provides tests for servers implementing [US Core Implementation
   Guide](http://hl7.org/fhir/us/core/).
 * The [SMART App Launch Test Kit](https://github.com/inferno-framework/smart-app-launch-test-kit)
   provides tests for systems that support the
   [SMART App Launch Framework](http://hl7.org/fhir/smart-app-launch/index.html).
-* The [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit)
-  provides tests for systems that seek conformance to
-  [ONC's Standardized API certification criterion](https://www.healthit.gov/test-method/standardized-api-patient-and-population-services).
+
+If you would like to learn how to run or deploy an existing Inferno Test Kit, please visit
+the <a href="getting-started-users.html">Using Test Kits</a> documentation.
 
 Each of these Test Kits is a standalone application that can be run on an end
 user's machine, on a shared private host behind a firewall, or on a shared

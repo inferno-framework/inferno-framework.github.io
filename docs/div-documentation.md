@@ -1,5 +1,5 @@
 ---
-title: Get Started
+title: Documentation
 nav_order: 0
 layout: docs
 section: docs
