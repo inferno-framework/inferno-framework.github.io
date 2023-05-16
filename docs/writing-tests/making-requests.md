@@ -99,7 +99,7 @@ group do
   fhir_client do
     url 'https://example.com/fhir'   # required
     bearer_token 'abc'               # optional
-    headers 'X-Custom-Header': 'def' # optional
+    headers 'X-Custom-Header' => 'def' # optional
   end
   
   test do
@@ -274,7 +274,7 @@ group do
   http_client do
     url 'https://example.com'
     bearer_token 'abc'
-    headers 'X-Custom-Header': 'def'
+    headers 'X-Custom-Header' => 'def'
   end
   
   test do

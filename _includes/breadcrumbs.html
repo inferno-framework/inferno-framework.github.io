@@ -3,18 +3,37 @@
       <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{{ site.base_url }}/index_new.html"><span>Home</span></a></li>
         {% if page.section == 'docs' %}
-        <li class="breadcrumb-item"><a href="{{ site.base_url }}/docs/"><span>Documentation</span></a></li>
+          {% if page.url == '/docs/' %}
+            <li class="breadcrumb-item"><span>Documentation</span></li>
+          {% else %}
+            <li class="breadcrumb-item"><a href="{{ site.base_url }}/docs/"><span>Documentation</span></a></li>
+            <li class="breadcrumb-item active">{{ page.title }}</li>
+          {% endif %}
         {% endif %}
         {% if page.section == 'about' %}
-        <li class="breadcrumb-item"><a href="{{ site.base_url }}/about/"><span>About</span></a></li>
+          {% if page.url == '/about/' %}
+            <li class="breadcrumb-item"><span>About</span></li>
+          {% else %}
+            <li class="breadcrumb-item"><a href="{{ site.base_url }}/about/"><span>About</span></a></li>
+            <li class="breadcrumb-item active">{{ page.title }}</li>
+          {% endif %}
         {% endif %}
-        {% if page.grand_parent %}
-          <li class="breadcrumb-item"><a href="{{ first_level_url }}">{{ page.grand_parent }}</a></li>
-          <li class="breadcrumb-item"><a href="{{ second_level_url }}">{{ page.parent }}</a></li>
-        {% elsif page.parent %}
-          <li class="breadcrumb-item"><a href="{{ first_level_url }}">{{ page.parent }}</a></li>
+        {% if page.section == 'community' %}
+          {% if page.url == '/community/' %}
+            <li class="breadcrumb-item"><span>Community</span></li>
+          {% else %}
+            <li class="breadcrumb-item"><a href="{{ site.base_url }}/community/"><span>Community</span></a></li>
+            <li class="breadcrumb-item active">{{ page.title }}</li>
+          {% endif %}
         {% endif %}
-        <li class="breadcrumb-item active">{{ page.title }}</li>
+        {% if page.section == 'news' %}
+          {% if page.url == '/news/' %}
+            <li class="breadcrumb-item"><span>News</span></li>
+          {% else %}
+            <li class="breadcrumb-item"><a href="{{ site.base_url }}/news/"><span>News</span></a></li>
+            <li class="breadcrumb-item active">{{ page.title }}</li>
+          {% endif %}
+        {% endif %}
       </ol>
     </nav>
 {% endunless %}
