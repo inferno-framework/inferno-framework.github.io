@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="/assets/common.css">
 
-  <title>Inferno Framework - Key Concepts</title>
+  <title>Inferno Framework - Frequently Asked Questions</title>
 <body  data-spy="scroll" data-target="#toc">
   <nav class="header-nav navbar navbar-expand-lg navbar-light navbar-custom">
     <div class="container-fluid">
@@ -37,10 +37,10 @@
         </div>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link align-middle" style="display: inline" href="/about/">About</a>
+            <a class="nav-link active align-middle" style="display: inline" href="/about/">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/docs">Documentation</a>
+            <a class="nav-link" href="/docs">Documentation</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/community">Community</a>
@@ -134,11 +134,11 @@
       <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="/index_new.html"><span>Home</span></a></li>
         
-          
-            <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
-            <li class="breadcrumb-item active">Key Concepts</li>
-          
         
+          
+            <li class="breadcrumb-item"><a href="/about/"><span>About</span></a></li>
+            <li class="breadcrumb-item active">Frequently Asked Questions</li>
+          
         
         
         
@@ -156,77 +156,51 @@
     <div class="col-lg-3 left-nav-column">
       <div class="d-none d-lg-block">
       <nav id="sidebar">
-    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item active"><a href="/docs/concepts.html" class="nav-link-top nav-link active">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-writers.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><a href="/docs/repo-layout-and-organization.html" class="nav-link-top nav-link">Test Kit Layout</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
-                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/defining-tests.html" class="nav-link">Defining Groups and Tests</a></li><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs/Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
-                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Suite/Group/Test Configuration</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for an Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Ruby Reference</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
-                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/deployment/" class="nav-link-top nav-link">Deploying to Shared Hosts</a><ul class="collapse list-unstyled"></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">About</div></li><li class="nav-item"><a href="/about/" class="nav-link-top nav-link">Overview</a></li><li class="nav-item"><a href="/about/goals.html" class="nav-link-top nav-link">The Inferno Framework</a></li><li class="nav-item"><a href="/about/alternatives.html" class="nav-link-top nav-link">Alternatives to Inferno</a></li><li class="nav-item active"><a href="/about/faq.html" class="nav-link-top nav-link active">Frequently Asked Questions</a></li><li class="nav-item"><a href="/about/who.html" class="nav-link-top nav-link">Inferno Team</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 id="key-concepts">Key Concepts</h1>
+      <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
 
-<h2 id="inferno-test-kit">Inferno Test Kit</h2>
+<h4 id="who-maintains-inferno">Who maintains Inferno?</h4>
 
-<p>A distributable set of tests and tools built and packaged
-using Inferno to help testers evaluate the conformance of a system to
-requirements of the FHIR base specification, relevant FHIR Implementation
-Guides, and any additional requirements.  Example: the ONC g10 certification
-test kit. Test kits primarily are composed of a Test Suite, which represents
-executable tests, but may include other tools such as FHIR resource validators
-or reference implementations.</p>
+<p>Development of Inferno is led by the Office of the National Coordinator for
+Health IT and core components are implemented by the MITRE Corporation.
+External participation and contributions are encouraged and welcome.  To learn
+how to participate, visit the <a href="/community">Community</a> page of this
+site.</p>
 
-<h2 id="inferno-deployment">Inferno Deployment</h2>
-<p>A web host that is running one or more Inferno Test Kits.  Inferno Test Kits can
-be run as an Inferno Deployment on users local machines without any additional
-configuration. Alternately, an Inferno Deployment can host multiple Inferno Test
-Kits and run on a shared service, such as is the case for
-https://inferno.healthit.gov.  A deployment provides a web interface as well as
-a RESTful API to enable third party integration.</p>
+<h4 id="does-inferno-use-the-fhir-testscript-resource">Does Inferno use the FHIR TestScript Resource?</h4>
 
-<h2 id="inferno-test-suite">Inferno Test Suite</h2>
+<p>Inferno does not currently use the standard <a href="https://hl7.org/fhir/tesetscript.html">FHIR Testscript Resource</a> for
+describing tests, and instead uses the Inferno Test DSL (Domain Specific
+Language).</p>
 
-<p>An executable set of tests provided within an Inferno Test Kit that allows
-testers to evaluate the conformance of a system.  The tests are organized
-hierarchically.  They may import tests from other Test Kits.  It may be the
-expectation of a Test Suite that a conformant system will pass all provided
-tests, or that the system may fail some tests.  An individual test suite defines
-how to interpret failures at the test level and in aggregate.</p>
+<p>You can read more information on the FHIR TestScript Resource and why Inferno does not currently use it on our <a href="/about/alternatives.html">Alternatives to Inferno Page</a>.</p>
 
-<h2 id="inferno-core">Inferno Core</h2>
+<h4 id="does-inferno-test-beyond-us-core">Does Inferno test beyond US Core?</h4>
 
-<p>The primary library of inferno, which testers can use to build Inferno Test
-Kits.  It provides the main logic of Inferno.  It provides a CLI, a web
-interface for executing tests, integration with data persistence layers and 3rd
-party validators.  Conceptually, Inferno core is similar to Ruby on Rails or
-React + create-react-app.</p>
+<p>Yes, Inferno is able to test other Implementation Guides (IGs), though tests must
+be written specific to these IGs.</p>
 
-<h2 id="inferno-template">Inferno Template</h2>
+<p>Inferno was initially created to provide conformance testing for ONC’s
+Standardized API certification criterion. This included requiring conformance
+to several FHIR IGs, include US Core. Since US Core was the
+first IG, Inferno is best known for testing this IG, and Inferno is particularly well suited to support IGs
+that also require conformance to US Core, but the goal of Inferno is to enable the creation of conformance tests
+for a wide variety of FHIR IGs.</p>
 
-<p>A starting point for writing new Inferno Test Suites.</p>
+<h4 id="how-can-i-find-test-kits-built-with-inferno">How can I find Test Kits built with Inferno?</h4>
 
-<h2 id="inferno-test-dsl">Inferno Test DSL</h2>
-<p>A Domain Specific Language (DSL) that test writers use to define the tests
-provided in the Inferno Test Suite. The DSL provides built-in functionality
-useful in testing FHIR APIs, such as FHIR client and built-in assertion
-libraries.  See documentation.</p>
+<p>Visit our <a href="/community">Community</a> page to find Test Kits built with Inferno.</p>
 
-<h2 id="inferno-validators">Inferno Validators</h2>
+<h4 id="can-i-host-my-own-inferno-server">Can I host my own Inferno server?</h4>
 
-<p>Tools that validate the correctness of a piece of data against a set of rules
- defined within a context.  Inferno Tests typically fetch data and validate the
- response using a validator.  Examples: FHIR Profile Validator, FHIR Terminology
- Validator.  Inferno typically performs these functions by providing common
- third party validators (e.g. HL7 FHIR Validator).</p>
-
-<h2 id="inferno-reference-implementations">Inferno Reference Implementations</h2>
-
-<p>An Inferno Test Kit may provide one or more Reference Implementations, which can
-be useful to develop tests against or to help interact with third party
-solutions.  Example: G10 Reference API.</p>
+<p>Inferno is specifically designed such that Inferno Test Kits can be run in any
+environment that supports Docker, including on a desktop machine or
+shared server.  For instructions on how to run a test kit locally or host them on a 
+shared server, visit the <a href="/Docs">Documentation</a>.</p>
 
       </div>
     </div>
