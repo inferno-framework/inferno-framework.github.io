@@ -4,31 +4,47 @@ nav_order: 11
 section: docs
 layout: docs
 ---
-# Getting Started for Inferno Test Writers
-Tests can be developed with or without a local ruby installation using docker.
-However, it is highly recommended that you install ruby locally for development.
-The advantages of using a local ruby installation are
-* It is much faster to restart native ruby processes than to stop/rebuild/start
-  docker images. This must be done every time tests change.
-* It is possible to set breakpoints and access an interactive debugger inside of
-  running tests, which makes test development much easier.
-* The Inferno Command Line Interface can be used. Run `inferno help` for
-  information.
+# Installation
+
+Inferno allows you to create and run executable tests for FHIR APIs. 
+It leverages the power of Ruby, a full featured programming language focused on
+elegance and simplicity.  But before you can start writing tests, you need to set up
+your local environment to support running Inferno.  You then create a Test Kit
+which provides a home for your tests.
+{: .lead}
+
+
+**Windows Users:** We strongly recommend using
+[WSL2](https://learn.microsoft.com/en-us/windows/wsl/install) for writing and
+executing tests in Windows.  While Ruby is available for installation in Windows, our
+experience is that native libraries used by Inferno are not well supported on
+Windows.
+{: .callout }
+
   
-### FHIR Validation Setup
-Put the `package.tgz` for the IG you're writing tests for in
-`lib/your_test_kit_name/igs` and update this path in
-`docker-compose.background.yml`. This will ensure that the validator has access
-to the resources needed to validate resources against your IG.
+## Set up your Environment
 
-### Development with Ruby
+Tests can either be developed in an environment with Ruby installed locally,
+or an environment with only Docker Desktop installed.  We recommend that
+tests are developed in an environment with Ruby installed, as it provides
+a substantially faster development experience and enables advanced features like
+the Command Line interface and breakpoints.
 
-#### Installation
-1. Install [Docker](https://www.docker.com/get-started).
+If you would like to try creating tests in Inferno without Ruby installed locally,
+you can skip to the [Test Development with Docker only](http://localhost:4000/docs/getting-started-writers.html#development-with-docker-only).
+
+
+1. Install [Docker Desktop](https://www.docker.com/get-started).
 1. Install Ruby. It is highly recommended that you install ruby via a [ruby
    version
    manager](https://www.ruby-lang.org/en/documentation/installation/#managers).
-1. Install [Docker](https://www.docker.com/get-started).
+
+## Create a new Test Kit
+
+Inferno Test Kits provide the project environment for developing your tests.
+You can think of an Inferno Test Kit like a project folder, which
+provides tools for you to developing and running your tests.
+
 1. Clone the [Inferno Template
    repository](https://github.com/inferno-framework/inferno-template). You can
    either clone this repository directly, or click the green "Use this template"
@@ -41,7 +57,14 @@ to the resources needed to validate resources against your IG.
    `watch` functionality to reload Inferno when a test has been updated.
 1. Run `bundle exec inferno migrate` to set up the database.
 
-#### Running Inferno
+Your new Test Kit it is now ready to run.  Inferno by default provides several
+example tests to help you get started.
+
+## Launch the Inferno Testing Interface
+
+Inferno Test Kits provide a default user interface that users can use to run
+your tests and inspect the results.
+
 1. Run `bundle exec inferno services start` to start the background services. By
    default, these include nginx, redis, the FHIR validator service, and the FHIR
    validator UI. Background services can be added/removed/edited in
@@ -55,7 +78,14 @@ to the resources needed to validate resources against your IG.
 1. When you are done, run `bundle exec inferno services stop` to stop the
    background services.
 
-#### Interactive consoles
+## Install an Implementation Guide Package in your Test Kit
+Put the `package.tgz` for the IG you're writing tests for in
+`lib/your_test_kit_name/igs` and update this path in
+`docker-compose.background.yml`. This will ensure that the validator has access
+to the resources needed to validate resources against your IG.
+
+
+## Interactive consoles
 A local ruby installation also allows you to use [pry](https://pry.github.io/),
 a powerful interactive console, to explore and experiment with your tests with
 `inferno console`:
@@ -145,9 +175,8 @@ instance variables: @created_at  @direction  @headers  @id  @index  @name  @requ
 ...
 ```
 
-### Development with Docker Only
+## Development with Docker Only
 
-#### Installation
 1. Install [Docker](https://www.docker.com/get-started).
 1. Clone the [Inferno Template
    repository](https://github.com/inferno-framework/inferno-template). You can
@@ -156,7 +185,6 @@ instance variables: @created_at  @direction  @headers  @id  @index  @name  @requ
 1. Run `./setup.sh` in the template repository to retrieve the necessary docker
    images and create a database.
 
-#### Running Inferno
 After installation, run the `./run.sh` script to start Inferno.
 - Navigate to [localhost](http://localhost) to access Inferno and run test
   suites.

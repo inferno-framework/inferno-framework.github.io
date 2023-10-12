@@ -6,6 +6,10 @@ section: docs
 ---
 # Key Concepts
 
+This page provides an overview of the major concepts within Inferno that
+will help you understand how and when to use Inferno.
+{: .lead }
+
 
 ## Inferno Test Kit
 
