@@ -155,90 +155,35 @@
     <div class="col-lg-3 left-nav-column">
       <div class="d-none d-lg-block">
       <nav id="sidebar">
-    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">About</div></li><li class="nav-item active"><a href="/about/" class="nav-link-top nav-link active">Overview</a></li><li class="nav-item"><a href="/about/goals.html" class="nav-link-top nav-link">The Inferno Framework</a></li><li class="nav-item"><a href="/about/alternatives.html" class="nav-link-top nav-link">Alternatives to Inferno</a></li><li class="nav-item"><a href="/about/faq.html" class="nav-link-top nav-link">Frequently Asked Questions</a></li><li class="nav-item"><a href="/about/who.html" class="nav-link-top nav-link">Inferno Team</a></li></ul></nav>
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">About</div></li><li class="nav-item active"><a href="/about/" class="nav-link-top nav-link active">Overview</a></li><li class="nav-item"><a href="/about/faq.html" class="nav-link-top nav-link">FAQ</a></li><li class="nav-item"><a href="/about/who.html" class="nav-link-top nav-link">Contact Us</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 id="overview">Overview</h1>
+      <h1 id="about-inferno">About Inferno</h1>
 
-<p>Welcome to Inferno, an open-source software testing framework for the Health Level 7 (HL7®) Fast
-Healthcare Interoperability Resources (FHIR®) health API and data exchange standard.
-The goal of Inferno is to accelerate the availability of interoperable Health IT
-systems by providing easy to use, portable,
-and comprehensive testing tools that can support implementation of
-FHIR-based APIs.</p>
-
-<p>Development of Inferno is principally sponsored by the Office of the National
-Coordinator for Health IT (ONC) in support of the ONC Certified Health IT Program.
-Development is currently led by the MITRE Corporation, a not-for-profit organization working in the
-public interest.</p>
-
-<h2 id="background">Background</h2>
-
-<p>Since 2018, MITRE has designed and developed a set of open-source testing tools, broadly named the Inferno Framework. Initially, this was 
-in support of the ONC Health IT Certification Program, which was established to assess health IT capabilities for quality and consistency across certified products. This led to the development of the ONC Certification (g)(10) Standardized API Test Kit, an integrated set of tests that evaluates a system’s level of conformance to the §170.315(g)(10) criterion. This open-source Test Kit is freely available for download and is being used today by health IT developers who are preparing for certification to this criterion, as well as Accredited Test Labs (ATLs) that evaluate conformance for purposes of certification.</p>
-
-<p>While supporting the ONC Certification (g)(10) Standardized API Test Kit is an important part of Inferno, the Inferno Framework itself is a set of building blocks for testing FHIR-endabled data exchanges that can be used for a wide variety of use cases outside of this one Test Kit. Anyone can use Inferno to create Inferno Test Kits, which are standalone, portable test applications that are tailored to test specific FHIR-enabled data exchange use cases as described by FHIR Implementation Guides (IGs). The MITRE team developing Inferno not only supports current Test Kits and develops new Test Kits, but also works to develop common utilities that can be used across Test Kits.</p>
+<p class="lead">Welcome to Inferno, an open-source software testing framework for the Health Level 7 (HL7®) <a href="https://www.hl7.org/fhir/">Fast
+Healthcare Interoperability Resources (FHIR®)</a> standard for health care data exchange.</p>
+<p class="lead">The goal of Inferno is to accelerate the availability of interoperable Health IT
+systems by providing <strong>easy to use</strong>, <strong>portable</strong>,
+and <strong>comprehensive testing tools</strong> that support interoperable implementations of FHIR-based systems.</p>
 
 <h2 id="what-is-inferno">What is Inferno?</h2>
 
-<p>Inferno is framework for creating, executing, and sharing tests for health IT
-systems providing standardized FHIR APIs. You use Inferno to create
-<strong>Inferno Test Kits</strong> which are standalone, portable test applications that
-are tailored to test specific FHIR-enabled data exchange use cases as described
-in <a href="http://fhir.org/guides/registry/">FHIR Implementation Guides</a>.</p>
+<p>Inferno is a <a href="https://www.ruby-lang.org">Ruby</a> application framework that test
+authors can use to create fully automated tests for FHIR-based APIs. Inferno tests are packaged within portable test applications called <a href="/docs/concepts.html">Inferno Test Kits</a>. Test Kits are tailored to test specific FHIR-enabled data exchange use cases, typically described within one or more <a href="https://fhir.org/guides/registry/">FHIR Implementation Guides</a>.</p>
 
-<p>Examples of test applications (Test Kits) built using Inferno include:</p>
-<ul>
-  <li>The <a href="https://github.com/inferno-framework/us-core-test-kit">US Core Test Kit</a>
-provides tests for servers implementing <a href="http://hl7.org/fhir/us/core/">US Core Implementation
-Guide</a>.</li>
-  <li>The <a href="https://github.com/inferno-framework/smart-app-launch-test-kit">SMART App Launch Test Kit</a>
-provides tests for systems that support the
-<a href="http://hl7.org/fhir/smart-app-launch/index.html">SMART App Launch Framework</a>.</li>
-  <li>The <a href="https://github.com/onc-healthit/onc-certification-g10-test-kit">ONC Certification (g)(10) Standardized API Test Kit</a>
-provides tests for systems that seek conformance to
-<a href="https://www.healthit.gov/test-method/standardized-api-patient-and-population-services">ONC’s Standardized API certification criterion</a>.</li>
-</ul>
+<p>For more information on how to use Inferno to test your FHIR-enabled use case, head over to the
+<a href="/docs">Documentation</a> section.</p>
 
-<p>This design enables users to build upon and extend Inferno Framework’s general-purpose FHIR testing functionality, allowing them to create and conduct tests within their use-case specific health data exchanges more effectively. Once an Inferno Test Kit has been created, it can be downloaded and used by implementers or test labs to easily evaluate conformance of FHIR APIs to the relevant IG.</p>
+<p>For the list of all available Test Kits that
+have been created using Inferno, check out the
+<a href="/community/">Community</a> section.</p>
 
-<p>This project also includes Inferno Core, which provides common utilities for FHIR-based testing. Tests are not
-limited to what is provided by Inferno Core, but rather it is a starting set of utilities provided for the benefit of the community.</p>
+<h2 id="background">Background</h2>
 
-<p>Test Kits are Ruby applications built with the Inferno Core gem. While Ruby is sufficient for most testing needs,
-Inferno Test Kits can include
-other non-Ruby services as needed, and by default provides a Docker Compose
-configuration to run and integrate with these services from within Inferno’s
-testing Domain Specific Language (DSL).</p>
-
-<p>You can find more information about how Inferno works on <a href="/about/goals.html">The Inferno Framework</a>, and how to use Inferno in the <a href="/docs">Documentation Section</a>.</p>
-
-<h2 id="inferno-test-kits">Inferno Test Kits</h2>
-<p>All available Test Kits can be found on the <a href="/community/">Community Page</a>.</p>
-
-<h2 id="main-inferno-repositories">Main Inferno Repositories</h2>
-<ul>
-  <li><a href="https://github.com/inferno-framework/inferno-core">Inferno Core</a> - The
-Inferno ruby library itself. This repository contains the code for defining
-and running tests, the command line and web interfaces, and this
-documentation. This is the repository to use if you want to investigate or
-make changes to the internals of Inferno.</li>
-  <li><a href="https://github.com/inferno-framework/inferno-template">Inferno Template</a> - A
-template for test writers. This is the repository to use if you want to write
-your own set of tests with Inferno.</li>
-  <li><a href="https://github.com/inferno-framework/fhir-validator-wrapper">FHIR Validator
-Wrapper</a> - A
-simple web wrapper around the <a href="https://github.com/hapifhir/org.hl7.fhir.core/tree/master/org.hl7.fhir.validation">official HL7 FHIR validation
-library</a>.
-Inferno relies on this service to validate FHIR resources.</li>
-</ul>
-
-<h2 id="contact-the-inferno-team">Contact the Inferno Team</h2>
-<p>The fastest way to reach the Inferno team is via the <a href="https://chat.fhir.org/#narrow/stream/179308-inferno">Inferno Zulip
-stream</a>. You can also
-<a href="mailto:inferno@groups.mitre.org">e-mail the team</a>.</p>
+<p>Since 2018, MITRE has designed and developed a set of open-source testing tools, broadly named Inferno. Initially, this was 
+in support of the ONC Health IT Certification Program, which was established to assess health IT capabilities for quality and consistency across certified products. This led to the development of the ONC Certification (g)(10) Standardized API Test Kit, an integrated set of tests that evaluates a system’s level of conformance to the §170.315(g)(10) criterion. This open-source Test Kit is freely available for download and is being used today by health IT developers who are preparing for certification to this criterion, as well as Accredited Test Labs (ATLs) that evaluate conformance for purposes of certification.</p>
 
       </div>
     </div>
