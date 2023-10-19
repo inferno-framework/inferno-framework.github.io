@@ -15,15 +15,15 @@ The advantages of using a local ruby installation are
 * The Inferno Command Line Interface can be used. Run `inferno help` for
   information.
   
-### FHIR Validation Setup
+## FHIR Validation Setup
 Put the `package.tgz` for the IG you're writing tests for in
 `lib/your_test_kit_name/igs` and update this path in
 `docker-compose.background.yml`. This will ensure that the validator has access
 to the resources needed to validate resources against your IG.
 
-### Development with Ruby
+## Development with Ruby
 
-#### Installation
+### Installation
 1. Install [Docker](https://www.docker.com/get-started).
 1. Install Ruby. It is highly recommended that you install ruby via a [ruby
    version
@@ -41,7 +41,7 @@ to the resources needed to validate resources against your IG.
    `watch` functionality to reload Inferno when a test has been updated.
 1. Run `bundle exec inferno migrate` to set up the database.
 
-#### Running Inferno
+### Running Inferno
 1. Run `bundle exec inferno services start` to start the background services. By
    default, these include nginx, redis, the FHIR validator service, and the FHIR
    validator UI. Background services can be added/removed/edited in
@@ -55,7 +55,7 @@ to the resources needed to validate resources against your IG.
 1. When you are done, run `bundle exec inferno services stop` to stop the
    background services.
 
-#### Interactive consoles
+### Interactive consoles
 A local ruby installation also allows you to use [pry](https://pry.github.io/),
 a powerful interactive console, to explore and experiment with your tests with
 `inferno console`:
@@ -145,9 +145,9 @@ instance variables: @created_at  @direction  @headers  @id  @index  @name  @requ
 ...
 ```
 
-### Development with Docker Only
+## Development with Docker Only
 
-#### Installation
+### Installation
 1. Install [Docker](https://www.docker.com/get-started).
 1. Clone the [Inferno Template
    repository](https://github.com/inferno-framework/inferno-template). You can
@@ -156,7 +156,7 @@ instance variables: @created_at  @direction  @headers  @id  @index  @name  @requ
 1. Run `./setup.sh` in the template repository to retrieve the necessary docker
    images and create a database.
 
-#### Running Inferno
+### Running Inferno
 After installation, run the `./run.sh` script to start Inferno.
 - Navigate to [localhost](http://localhost) to access Inferno and run test
   suites.
@@ -164,7 +164,7 @@ After installation, run the `./run.sh` script to start Inferno.
   standalone validator that can be used to validate individual FHIR resources.
    
 
-### Next Steps
+## Next Steps
 Now that Inferno is running, you could learn about [the file/directory
 organization](/inferno-core/repo-layout-and-organization.html) or just start
 [writing tests](/inferno-core/writing-tests).

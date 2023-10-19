@@ -1,10 +1,40 @@
+:root {
+  --link-color: #c93905;
+  --active-nav-bkg: #c93905;
+  --nav-hover-bkg: #ffe6cd;
+}
+
 html {
   font-size: 17px;
   line-height: 1.2;
-
 }
+
+body {
+  color: #010326;
+}
+
+.hero {
+  padding: 3rem;
+  margin: 3rem 0;
+  text-align: center;
+}
+
+code {
+  font-size:0.8rem;
+}
+
 .navbar-custom {
   background-color: white;
+}
+.navbar a.github-menu {
+  margin-top:20px;
+  margin-bottom:20px;
+}
+.navbar-collapse>ul {
+  padding-left:1rem;
+}
+.navbar-collapse>a.github-menu{
+  padding-left:1rem;
 }
 
 .search-container {
@@ -26,17 +56,15 @@ html {
 
 }
 
-body {
-  color: #010326;
-}
+
 
 .docs-content a {
-  color: #F25C05;
+  color: var(--link-color);
 }
 
 .docs-content a:hover,
 .docs-content a:visited {
-  color: #F25C05;
+    color: var(--link-color);
 }
 
 
@@ -120,7 +148,8 @@ body::before {
 }
 
 #sidebar .nav-link:hover {
-  background-color: #f2e7dc;
+/*  background-color: #f2e7dc; */
+  background-color: var(--nav-hover-bkg);
 }
 
 #sidebar .nav-link-top {
@@ -128,7 +157,8 @@ body::before {
 }
 
 #sidebar .nav-link.active {
-  background-color: #f2913d;
+/*  background-color: #f2913d; */
+  background-color: var(--active-nav-bkg);
   color: white;
 }
 
@@ -136,6 +166,11 @@ body::before {
   color: white;
 }
 
+
+footer {
+  font-size:0.8rem;
+  letterspacing:0.5px;
+}
 .breadcrumb-item {
   text-transform: uppercase;
   font-size: 14px;

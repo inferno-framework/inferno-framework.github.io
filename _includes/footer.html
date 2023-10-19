@@ -1,17 +1,7 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-
-  <div class="wrapper">
-
-    <div class="footer-col-wrapper">
-      <div class="footer-col">
-        <p class="feed-subscribe">
-          <a href="{{ site.feed.path | default: 'feed.xml' | absolute_url }}">
-            <svg class="svg-icon orange">
-              <use xlink:href="{{ 'assets/minima-social-icons.svg#rss' | relative_url }}"></use>
-            </svg><span>Subscribe</span>
-          </a>
-        </p>
+<footer class="footer mt-auto py-3 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col">
       {%- if site.author %}
         <ul class="contact-list">
           {% if site.author.name -%}
@@ -22,15 +12,9 @@
           {%- endif %}
         </ul>
       {%- endif %}
-      </div>
-      <div class="footer-col">
-        <p>{{ site.description | escape }}</p>
+      <p>{{ site.description | escape }}</p>
+      <p>HL7&reg;, FHIR&reg; and the FHIR [FLAME DESIGN] are the registered trademarks of Health Level Seven International and their use does not constitute endorsement by HL7.</p>
       </div>
     </div>
-
-    <div class="social-links">
-    </div>
-
   </div>
-
 </footer>

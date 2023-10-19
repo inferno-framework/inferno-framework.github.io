@@ -30,10 +30,6 @@ The Inferno Framework
 
 ## Using Inferno
 
-
-
-
-
 Inferno was initially developed to provide certification tests  tool for the Office
 of the National Coordinator for Ho
 

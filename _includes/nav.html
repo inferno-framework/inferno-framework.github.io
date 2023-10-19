@@ -158,7 +158,7 @@
   generating the nav links for a collection that includes `page`, AND `...` holds.
 {%- endcomment -%}
 
-<nav id="sidebar">
+<nav id="sidebar" class="collapse collapsed d-lg-block">
     <ul class="navbar-nav list-unstyled components">
     {%- for node in first_level_pages -%}
         {%- unless node.nav_exclude or node.section != page.section-%}

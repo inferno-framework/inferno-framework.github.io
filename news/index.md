@@ -4,7 +4,7 @@ nav_order: 1
 layout: docs
 section: news
 ---
-# Introduction
+# News Introduction
 
 ## Overview
 Inferno is an application framework for creating, executing, and sharing
@@ -75,7 +75,7 @@ include components that are not defined in Ruby.  Inferno Test Kits can include
 other non-Ruby services as needed, and by default provides a Docker Compose
 configuration to run and integrate with these services from within Inferno's
 testing DSL.
-
+        
 ## Documentation Resources
 - View the [JSON API Documentation](/inferno-core/api-docs) for information on
   interacting with Inferno via a JSON API.
