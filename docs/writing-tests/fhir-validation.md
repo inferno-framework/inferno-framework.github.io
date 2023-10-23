@@ -6,19 +6,20 @@ layout: docs
 section: docs
 ---
 # FHIR Resource Validation
-[FHIR resource validation](https://www.hl7.org/fhir/validation.html) is
+[FHIR Resource validation](https://www.hl7.org/fhir/validation.html) is
 performed by the [FHIR Validator Wrapper
 service](https://github.com/inferno-framework/fhir-validator-wrapper). When
-creating a test kit based on the template:
+creating a Test Kit based on the [Inferno Template](https://github.com/inferno-framework/inferno-template):
 
 * Place the `.tgz` IG packages for any profiles you need to validate against in
   `lib/YOUR_TEST_KIT_NAME/igs`.
 * Make sure that the volume path in `docker-compose.background.yml` points to
   the above directory.
-* Restart the validator service after adding/changing any IGs.
+
+Every time an IG is added or changed, restart the validator service.
 
 ### Defining Validators
-The test kit template defines a validator in the suite, and it is not necessary
+The Inferno Template defines a validator in the suite, and it is not necessary
 to alter it unless you need multiple validators or want to add extra validator
 behaviors. Validators are defined with `validator`:
 
@@ -102,10 +103,10 @@ end
 ```
 
 ### Performing Additional Validation
-Additional resource validation can be done using the
-`perform_additional_validation` method in the validator definition. This method
-can be used multiple times in a single validator definition to add multiple
-additional validation steps. To add additional validation messages, the block in
+If you want to perform validation steps in addition to the FHIR validation,
+you can use the `perform_additional_validation` method in the validator definition. The method
+can also be used multiple times in a single validator definition to add multiple
+validation steps. To add additional validation messages, the block in
 this method must return a single Hash with a `type` and `message`, or an Array
 of Hashes with those keys. If the block returns `nil`, no new messages are
 added. The resource is considered invalid if any messages with a `type` of
