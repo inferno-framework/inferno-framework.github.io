@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="/assets/common.css">
 
-  <title>Inferno Framework - Deploying to Shared Hosts</title>
+  <title>Inferno Framework - Getting Started</title>
 <body  data-spy="scroll" data-target="#toc">
   <nav class="header-nav navbar navbar-expand-lg navbar-light navbar-custom">
     <div class="container-fluid">
@@ -136,7 +136,7 @@
         
           
             <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
-            <li class="breadcrumb-item active">Deploying to Shared Hosts</li>
+            <li class="breadcrumb-item active">Getting Started</li>
           
         
         
@@ -156,53 +156,109 @@
     <div class="col-lg-3 left-nav-column">
       <div class="d-none d-lg-block">
       <nav id="sidebar">
-    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item"><a href="/docs/concepts.html" class="nav-link-top nav-link">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Getting Started category">
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item"><a href="/docs/concepts.html" class="nav-link-top nav-link">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item active"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Getting Started category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
+            </button><a href="/docs/getting-started/" class="nav-link-top nav-link active">Getting Started</a><ul class="list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/defining-tests.html" class="nav-link">Defining Groups and Tests</a></li><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Suite/Group/Test Configuration</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for an Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Ruby Reference</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item active"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
+            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Suite/Group/Test Configuration</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for an Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Ruby Reference</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/deployment/" class="nav-link-top nav-link active">Deploying to Shared Hosts</a><ul class="list-unstyled"></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
+            </button><a href="/docs/deployment/" class="nav-link-top nav-link">Deploying to Shared Hosts</a><ul class="collapse list-unstyled"></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 id="deploying-inferno">Deploying Inferno</h1>
-<p>Deployments of Inferno are based on the <a href="https://github.com/inferno-framework/inferno-template">test kit
-template</a>. This template
-contains a <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> file that can run all of the services inferno
-needs.</p>
-
-<p>At a minimum, deploying inferno involves the following:</p>
+      <h1 id="getting-started-for-inferno-test-writers">Getting Started for Inferno Test Writers</h1>
+<p>Tests can be developed either with a local Ruby installation or by using Docker.
+We recommended installing Ruby locally for development because:</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">git clone</code> the repository you want to deploy (or get it onto your server in
-some other way)</li>
-  <li>run <code class="language-plaintext highlighter-rouge">setup.sh</code> to pull &amp; build the needed docker images and run database
-migrations</li>
-  <li>run <code class="language-plaintext highlighter-rouge">docker-compose up -d</code> to start all of the services in the background</li>
+  <li>When the tests change, it is much faster to restart native Ruby processes than to stop/rebuild/start
+Docker images.</li>
+  <li>Ruby lets you set breakpoints and access an interactive debugger inside of
+running tests, which makes test development easier.</li>
+  <li>The Inferno Command Line Interface can be used, which includes additional useful
+functionality for developers, such as an interactive console. See 
+<a href="http://localhost:4000/docs/inferno-cli.html">Inferno CLI</a> for more information.</li>
 </ul>
 
-<h2 id="services">Services</h2>
-<p>By default, a deployment of Inferno includes the following services:</p>
+<h3 id="development-with-ruby">Development with Ruby</h3>
 
+<h4 id="installation">Installation</h4>
+<ol>
+  <li>Install <a href="https://www.docker.com/get-started">Docker</a>.</li>
+  <li>Install Ruby. It is highly recommended that you install Ruby via a <a href="https://www.ruby-lang.org/en/documentation/installation/#managers">Ruby
+version
+manager</a>.</li>
+  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template
+repository</a>. You can
+either clone this repository directly, or click the green “Use this template”
+button to create your own repository based on this one.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle install</code> to install dependencies.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">gem install inferno_core</code> to install inferno.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">gem install foreman</code> to install foreman, which will be used to run the
+Inferno web and worker processes.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">gem install rerun</code> to install rerun, which will be used to enable
+<code class="language-plaintext highlighter-rouge">watch</code> functionality to reload Inferno when a test has been updated.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec inferno migrate</code> to set up the database.</li>
+  <li>Put the <code class="language-plaintext highlighter-rouge">package.tgz</code> for the IG you’re writing tests for in
+<code class="language-plaintext highlighter-rouge">lib/your_test_kit_name/igs</code> and update this path in
+<code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>. This will ensure that the validator has access
+to the resources needed to validate resources against your IG.</li>
+</ol>
+
+<h4 id="running-inferno">Running Inferno</h4>
+<ol>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec inferno services start</code> to start the background services. By
+default, these include nginx, redis, the FHIR validator service, and the FHIR
+validator UI. Background services can be added, removed, and edited in
+<code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">inferno start --watch</code> to start Inferno and have it reload any time a file
+changes. Remove the <code class="language-plaintext highlighter-rouge">watch</code> flag if you would prefer to manually restart
+Inferno.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost:4567</code> to access Inferno. 
+To access the FHIR resource validator, navigate to
+<code class="language-plaintext highlighter-rouge">http://localhost/validator</code>.</li>
+  <li>When you are done, run <code class="language-plaintext highlighter-rouge">bundle exec inferno services stop</code> to stop the
+background services.</li>
+</ol>
+
+<h3 id="development-with-docker-only">Development with Docker Only</h3>
+
+<h4 id="installation-1">Installation</h4>
+<ol>
+  <li>Install <a href="https://www.docker.com/get-started">Docker</a>.</li>
+  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template
+repository</a>. You can
+either clone this repository directly, or click the green “Use this template”
+button to create your own repository based on this one.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">./setup.sh</code> in the template repository to retrieve the necessary Docker
+images and create a database.</li>
+  <li>Put the <code class="language-plaintext highlighter-rouge">package.tgz</code> for the IG you’re writing tests for in
+  <code class="language-plaintext highlighter-rouge">lib/your_test_kit_name/igs</code> and update this path in
+  <code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>. This will ensure that the validator has access
+  to the resources needed to validate resources against your IG.</li>
+</ol>
+
+<h4 id="running-inferno-1">Running Inferno</h4>
+<p>After installation, run the <code class="language-plaintext highlighter-rouge">./run.sh</code> script to start Inferno.</p>
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">nginx</code> - A reverse proxy which handles sending requests to the correct
-services</li>
-  <li><code class="language-plaintext highlighter-rouge">inferno</code> - The inferno web process which serves Inferno’s static assets and
-the JSON API</li>
-  <li><code class="language-plaintext highlighter-rouge">worker</code> - The inferno web process which actually executes tests</li>
-  <li><code class="language-plaintext highlighter-rouge">redis</code> - Redis handles communication between the inferno web and worker
-processes</li>
-  <li><code class="language-plaintext highlighter-rouge">validator_service</code> - <a href="https://github.com/inferno-framework/fhir-validator-wrapper">A JSON API wrapper around the HL7 FHIR
-validator</a> which
-Inferno uses to validate FHIR resources</li>
-  <li><code class="language-plaintext highlighter-rouge">fhir_validator_app</code> - (Optional) <a href="https://github.com/inferno-framework/fhir-validator-app">A web front end for the validator
-service</a> which allows
-users to easily perform standalone FHIR resource validation. Nothing depends
-on this service, so it can be safely removed from <code class="language-plaintext highlighter-rouge">docker-compose.yml</code> if you
-don’t need to provide standalone FHIR resource validation.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost</code> to access Inferno and run test
+suites.</li>
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost/validator</code> to access a
+standalone validator that can be used to validate individual FHIR resources.</li>
+</ul>
+
+<h3 id="next-steps">Next Steps</h3>
+<p>Now that Inferno is running, you can either:</p>
+<ul>
+  <li>Go to <a href="/docs/getting-started/repo-layout-and-organization.html">Template Layout</a> for
+more information on the files included in the Inferno Template directory,</li>
+  <li>Go to <a href="/docs/getting-started/inferno-cli.html">Inferno CLI</a> for
+more information about the <code class="language-plaintext highlighter-rouge">inferno</code> commands available,</li>
+  <li>Go to <a href="/docs/getting-started/debugging.html">Debugging</a> for
+more information about debugging in Inferno,</li>
+  <li>Or just jump to <a href="/docs/writing-tests">Writing Tests</a>.</li>
 </ul>
 
       </div>
