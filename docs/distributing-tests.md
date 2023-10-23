@@ -7,22 +7,19 @@ layout: docs
 ---
 # Distributing Tests
 
-Inferno allows test kits to be distributed like regular ruby gems. In order to
-make your test suite available to others, first it needs to be organized as
-described in [Test
-Organization](/inferno-core/repo-layout-and-organization.html#test-organization).
-
-Then, you must fill in the information in the `gemspec` file in the root of the
+Inferno allows Test Kits to be distributed like regular Ruby gems. In order to
+make your Test Kit available to others:
+1. Make sure your repository is organized as
+described in [Template Layout](/docs/getting-started/repo-layout-and-organization.html).
+2. Fill out the information in the `gemspec` file at the root of the
 repository. The name of the file should match `spec.name` within the file and
-the name of the main file in `lib`. Using the US Core example from above, this
+the name of the main file in `lib`. For example, for the US Core Test Kit, this
 file would be named `us_core_test_kit.gempsec` and `spec.name` would be
-`'us_core_test_kit'`. There are [recommended naming conventions for
-gems](https://guides.rubygems.org/name-your-gem/).
-
-**Optional:** Once your gemspec file has been updated, you can publish your gem
-on [rubygems, the official ruby gem repository](https://rubygems.org/). If you
-don't publish your gem on rubygems, users will still be able to install it if it
-is located in a public git repository. To publish your gem on rubygems, you will
-first need to [make an account on
-rubygems](https://guides.rubygems.org/publishing/#publishing-to-rubygemsorg) and
-then run `gem build *.gemspec` and `gem push *.gem`.
+`'us_core_test_kit'`. This page has [recommended naming conventions](https://guides.rubygems.org/name-your-gem/)
+for gems.
+3. **Optional:** Once your `gemspec` file has been updated, you can publish your gem
+on [rubygems](https://rubygems.org/), the official ruby gem repository. To publish your
+gem on rubygems, you will first need to [make an account](https://guides.rubygems.org/publishing/#publishing-to-rubygemsorg) and
+then run `gem build *.gemspec` and `gem push *.gem`. If you
+don't publish your gem on rubygems, however, users will still be able to install your Test Kit if it
+is located in a public Git repository. 
