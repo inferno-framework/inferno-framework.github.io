@@ -40,7 +40,7 @@
             <a class="nav-link align-middle" style="display: inline" href="/about/">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/docs">Documentation</a>
+            <a class="nav-link active" href="/docs">Documentation</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/community">Community</a>
@@ -134,6 +134,11 @@
       <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="/index_new.html"><span>Home</span></a></li>
         
+          
+            <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
+            <li class="breadcrumb-item active">Database Configuration</li>
+          
+        
         
         
         
@@ -151,37 +156,33 @@
     <div class="col-lg-3 left-nav-column">
       <div class="d-none d-lg-block">
       <nav id="sidebar">
-    <ul class="navbar-nav list-unstyled components"></ul></nav>
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item"><a href="/docs/concepts.html" class="nav-link-top nav-link">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Getting Started category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item active"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/deployment/" class="nav-link-top nav-link">Deploying to Shared Hosts</a><ul class="list-unstyled"><li class=""><a href="/docs/deployment/security.html" class="nav-link">Security Considerations</a></li><li class=" active"><a href="/docs/deployment/database.html" class="nav-link active">Database Configuration</a></li><li class=""><a href="/docs/deployment/ssl.html" class="nav-link">SSL Configuration</a></li><li class=""><a href="/docs/deployment/host.html" class="nav-link">Hostname and Path Configuration</a></li><li class=""><a href="/docs/deployment/input-presets.html" class="nav-link">Input Presets</a></li></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 class="no_toc" id="database-configuration">Database Configuration</h1>
+      <h1 id="database-configuration">Database Configuration</h1>
 
-<h2 class="no_toc text-delta" id="table-of-contents">Table of Contents</h2>
-
-<ol id="markdown-toc">
-  <li><a href="#database-configuration-1" id="markdown-toc-database-configuration-1">Database Configuration</a></li>
-  <li><a href="#postgresql" id="markdown-toc-postgresql">PostgreSQL</a>    <ol>
-      <li><a href="#postgresql-with-docker" id="markdown-toc-postgresql-with-docker">PostgreSQL with Docker</a></li>
-      <li><a href="#postgresql-with-a-separate-service" id="markdown-toc-postgresql-with-a-separate-service">PostgreSQL with a Separate Service</a></li>
-    </ol>
-  </li>
-</ol>
-<hr />
-<h2 id="database-configuration-1">Database Configuration</h2>
-<p>The database configuration lives in <code class="language-plaintext highlighter-rouge">config/database.yml</code>. Inferno uses the
+<p>The database configuration file is <code class="language-plaintext highlighter-rouge">config/database.yml</code>. Inferno uses the
 <a href="http://sequel.jeremyevans.net/">Sequel gem</a> to communicate with the database,
-which offers <a href="http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options">the following configuration
-options</a>.</p>
+which offers a wide range of configuration options, 
+<a href="http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options">found here</a>.</p>
 
-<h2 id="postgresql">PostgreSQL</h2>
-<p>Inferno defaults to using SQLite, which is not suitable for use in a multi-user
-deployment. Multi-user deployments should use PostgreSQL instead.</p>
+<p>By default, Inferno uses SQLite. Unfortunately, SQLite is not suitable for use in a multi-user
+deployment. Multi-user deployments should use PostgreSQL instead. The following sections
+walk through setting up Inferno with PostgreSQL.</p>
 
 <h3 id="postgresql-with-docker">PostgreSQL with Docker</h3>
-<p>Rather than setting up a separate PostgreSQL service, you can run it via
-<code class="language-plaintext highlighter-rouge">docker-compose</code> along with the rest of Inferno’s services. To do so:</p>
+<p>The easiest way to run a PostgreSQL service is by adding it to the
+<code class="language-plaintext highlighter-rouge">docker-compose</code> with the rest of Inferno’s services. To do so:</p>
 <ul>
   <li>Add <code class="language-plaintext highlighter-rouge">gem 'pg'</code> to <code class="language-plaintext highlighter-rouge">Gemfile</code></li>
   <li>Add the following entry to <code class="language-plaintext highlighter-rouge">docker-compose.yml</code>:
@@ -221,7 +222,7 @@ deployment. Multi-user deployments should use PostgreSQL instead.</p>
   </li>
 </ul>
 
-<h3 id="postgresql-with-a-separate-service">PostgreSQL with a Separate Service</h3>
+<h3 id="postgresql-as-a-separate-service">PostgreSQL as a Separate Service</h3>
 <p>If you have an existing PostgreSQL service that you would like to use, you can
 use it with the following steps:</p>
 

@@ -97,586 +97,592 @@
   },"16": {
     "doc": "Configuration Checks",
     "title": "Configuration Checks",
-    "content": "Test Suites can have a set of checks they perform on startup to ensure that their environment is correctly configured. These checks are performed the first time a session is created for the suite. The checks can be refreshed using the JSON API. Defining Configuration Checks . The check_configuration method defines a check to be performed. It takes a block which returns an Array of message hashes. class MySuite &lt; Inferno::TestSuite check_configuration do messages = [] if validator_is_correct_version? messages &lt;&lt; { type: 'info', message: 'Correct validator version' } else messages &lt;&lt; { type: 'error', message: 'Incorrect validator version' } end if service_xyz_is_available? messages &lt;&lt; { type: 'info', message: 'Service XYZ is available' } else messages &lt;&lt; { type: 'error', message: 'Service XYZ is unavailable' } end messages end end . ",
+    "content": "Test Suites can have a set of checks they perform on startup to ensure that their environment is correctly configured. These checks are performed the first time a session is created for the suite. The checks can be refreshed using the JSON API. ",
     "url": "/docs/advanced-test-features/configuration-checks.html",
     "relUrl": "/docs/advanced-test-features/configuration-checks.html"
   },"17": {
-    "doc": "Database Configuration",
-    "title": "Database Configuration",
-    "content": " ",
-    "url": "/docs/deployment/database.html",
-    "relUrl": "/docs/deployment/database.html"
+    "doc": "Configuration Checks",
+    "title": "Defining Configuration Checks",
+    "content": "The check_configuration method defines a check to be performed. It takes a block that returns an Array of message hashes. class MySuite &lt; Inferno::TestSuite check_configuration do messages = [] if validator_is_correct_version? messages &lt;&lt; { type: 'info', message: 'Correct validator version' } else messages &lt;&lt; { type: 'error', message: 'Incorrect validator version' } end if service_xyz_is_available? messages &lt;&lt; { type: 'info', message: 'Service XYZ is available' } else messages &lt;&lt; { type: 'error', message: 'Service XYZ is unavailable' } end messages end end . ",
+    "url": "/docs/advanced-test-features/configuration-checks.html#defining-configuration-checks",
+    "relUrl": "/docs/advanced-test-features/configuration-checks.html#defining-configuration-checks"
   },"18": {
     "doc": "Database Configuration",
-    "title": "Table of Contents",
-    "content": ". | Database Configuration | PostgreSQL . | PostgreSQL with Docker | PostgreSQL with a Separate Service | . | . ",
-    "url": "/docs/deployment/database.html#table-of-contents",
-    "relUrl": "/docs/deployment/database.html#table-of-contents"
-  },"19": {
-    "doc": "Database Configuration",
     "title": "Database Configuration",
-    "content": "The database configuration lives in config/database.yml. Inferno uses the Sequel gem to communicate with the database, which offers the following configuration options. ",
+    "content": "The database configuration file is config/database.yml. Inferno uses the Sequel gem to communicate with the database, which offers a wide range of configuration options, found here. By default, Inferno uses SQLite. Unfortunately, SQLite is not suitable for use in a multi-user deployment. Multi-user deployments should use PostgreSQL instead. The following sections walk through setting up Inferno with PostgreSQL. PostgreSQL with Docker . The easiest way to run a PostgreSQL service is by adding it to the docker-compose with the rest of Inferno’s services. To do so: . | Add gem 'pg' to Gemfile | Add the following entry to docker-compose.yml: inferno_db: image: postgres:14.1-alpine mem_limit: 600m restart: unless-stopped volumes: - ./data/pg:/var/lib/postgresql/data environment: POSTGRES_HOST_AUTH_METHOD: trust POSTGRES_DB: inferno_production . | Add inferno_db to the depends_on for inferno and worker services in docker-compose.yml. For example: inferno: # ... depends_on: - validator_service - inferno_db worker: # ... depends_on: - redis - inferno_db . | Use the following for the production configuration in config/database.yml: production: adapter: postgres database: inferno_production max_connections: 10 user: postgres host: inferno_db . | . PostgreSQL as a Separate Service . If you have an existing PostgreSQL service that you would like to use, you can use it with the following steps: . | Add gem 'pg' to Gemfile | In config/database.yml, change the adapter in the production entry to postgres, and supply the database, user, password, host, and port for the PostgreSQL database | . ",
     "url": "/docs/deployment/database.html",
     "relUrl": "/docs/deployment/database.html"
-  },"20": {
-    "doc": "Database Configuration",
-    "title": "PostgreSQL",
-    "content": "Inferno defaults to using SQLite, which is not suitable for use in a multi-user deployment. Multi-user deployments should use PostgreSQL instead. PostgreSQL with Docker . Rather than setting up a separate PostgreSQL service, you can run it via docker-compose along with the rest of Inferno’s services. To do so: . | Add gem 'pg' to Gemfile | Add the following entry to docker-compose.yml: inferno_db: image: postgres:14.1-alpine mem_limit: 600m restart: unless-stopped volumes: - ./data/pg:/var/lib/postgresql/data environment: POSTGRES_HOST_AUTH_METHOD: trust POSTGRES_DB: inferno_production . | Add inferno_db to the depends_on for inferno and worker services in docker-compose.yml. For example: inferno: # ... depends_on: - validator_service - inferno_db worker: # ... depends_on: - redis - inferno_db . | Use the following for the production configuration in config/database.yml: production: adapter: postgres database: inferno_production max_connections: 10 user: postgres host: inferno_db . | . PostgreSQL with a Separate Service . If you have an existing PostgreSQL service that you would like to use, you can use it with the following steps: . | Add gem 'pg' to Gemfile | In config/database.yml, change the adapter in the production entry to postgres, and supply the database, user, password, host, and port for the PostgreSQL database | . ",
-    "url": "/docs/deployment/database.html#postgresql",
-    "relUrl": "/docs/deployment/database.html#postgresql"
-  },"21": {
+  },"19": {
     "doc": "Debugging",
     "title": "Debugging in Inferno",
     "content": "Debugging using the debug gem is available if running Inferno using a local Ruby installation. The debug gem allows users to set a breakpoint within a test’s run block to debug test behavior. To use the debug gem: . | Add require 'debug/open_nonstop' and debugger to set a breakpoint. | Run your tests until the breakpoint is reached. | In a separate terminal window, run bundle exec rdbg -A to access the debugger console. | Use debug commands, which can be found here. | . Example . We first add the require 'debug/open_nonstop' and debugger to set a breakpoint. We’ve added these to lines 9 &amp; 10 in the example test below. 1 module InfernoTemplate 2 class PatientGroup &lt; Inferno::TestGroup 3 ... 4 test do 5 ... 6 run do 7 fhir_read(:patient, patient_id, name: :patient) 8 9 require 'debug/open_nonstop' 10 debugger 11 12 assert_response_status(200) 13 assert_resource_type(:patient) 14 assert resource.id == patient_id, 15 \"Requested resource with id #{patient_id}, received resource with id #{resource.id}\" 16 end 17 end 18 end 19 end . We then run the tests until the breakpoint is reached. Then we connect to the debugger console. ᐅ bundle exec rdbg -A DEBUGGER (client): Connected. PID:22112, $0:sidekiq 6.5.7 [0 of 10 busy] [18, 27] in ~/code/inferno-template/lib/inferno_template/patient_group.rb 18| 19| run do 20| fhir_read(:patient, patient_id, name: :patient) 21| 22| require 'debug/open_nonstop' =&gt; 23| debugger 24| 25| assert_response_status(200) 26| assert_resource_type(:patient) 27| assert resource.id == patient_id, . Now you can get information about the current object . (ruby:remote) self.id \"test_suite_template-patient_group-Test01\" (ruby:remote) self.title \"Server returns requested Patient resource from the Patient read interaction\" . As well as the values of currently defined variables. (rdbg:remote) inputs [:patient_id, :url, :credentials] (ruby:remote) patient_id \"85\" (rdbg:remote) url \"https://inferno.healthit.gov/reference-server/r4\" . You can also look at available methods and instance variables of a given object, like request . (rdbg:remote) ls request Inferno::Entities::Request created_at created_at= direction direction= headers headers= id id= index index= name name= query_parameters request request_body request_body= request_header request_headers resource response response_body response_body= response_header response_headers result_id result_id= status status= test_session_id test_session_id= to_hash updated_at updated_at= url url= verb verb= instance variables: @created_at @direction @headers @id @index @name @request_body @response_body @result_id @status @test_session_id @updated_at @url @verb . And then use that as a reference to get additional information: . (ruby:remote) request.status 200 (ruby:remote) request.response_body \"{\\n \\\"resourceType\\\": \\\"Patient\\\" ... }\" . There are a lot more commands available than just the ones stated above. You can always type help for the list of all commands, or help [COMMAND] for information about a specific command. ",
     "url": "/docs/getting-started/debugging.html#debugging-in-inferno",
     "relUrl": "/docs/getting-started/debugging.html#debugging-in-inferno"
-  },"22": {
+  },"20": {
     "doc": "Debugging",
     "title": "Debugging",
     "content": " ",
     "url": "/docs/getting-started/debugging.html",
     "relUrl": "/docs/getting-started/debugging.html"
-  },"23": {
-    "doc": "Defining Groups and Tests",
-    "title": "Defining Groups and Tests",
-    "content": "Test Suite Structure . There are three classes used to organize tests in Inferno: . | TestSuite - An entire suite of tests. A TestSuite can contain one or more TestGroup classes. | TestGroup - A TestGroup can contain one or more TestGroup or Test classes. | Test - An individual test. A Test contains a run block which defines what happens when the test is run. | . For example, a simple US Core test suite might look like this: . | US Core (TestSuite) . | US Core Patient Group (TestGroup) . | Server supports Patient Read Interaction (Test) | Server supports Patient Search by id (Test) | . | US Core Condition Group (TestGroup) . | Server supports Condition Read Interaction (Test) | Server supports Condition Search by Patient (Test) | . | . | . Inline Group and Test Definitions . Let’s show how to add groups and tests to a TestSuite using the above US Core example. To start, we define the groups in the TestSuite using the group method. # lib/us_core_test_kit.rb module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group do title 'US Core Patient Group' end group do title 'US Core Condition Group' end end end . We can then add the tests to each group using the test method: . # lib/us_core_test_kit.rb module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group do title 'US Core Patient Group' test do title 'Server supports Patient Read Interaction' input :patient_id run do # test code goes here end end test do title 'Server supports Patient Search by id' input :patient_id run do # test code goes here end end end group do title 'US Core Condition Group' test do title 'Server supports Condition Read Interaction' input :condition_id run do # test code goes here end end test do title 'Server supports Condition Search by Patient' input :patient_id run do # test code goes here end end end end end . This test suite is already getting pretty long. We can improve the organization using externally defined groups and tests. External Group and Test Definitions . Let’s move the Patient and Condition groups into their own files, and assign them ids. # File: lib/us_core_test_kit/us_core_patient_group.rb module USCoreTestKit class USCorePatientGroup &lt; Inferno::TestGroup title 'US Core Patient Group' id :us_core_patient test do title 'Server supports Patient Read Interaction' input :patient_id run do # test code goes here end end test do title 'Server supports Patient Search by id' input :patient_id run do # test code goes here end end end end # File: lib/us_core_test_kit/us_core_condition_group.rb module USCoreTestKit class USCoreConditionGroup &lt; Inferno::TestGroup title 'US Core Condition Group' id :us_core_condition test do title 'Server supports Condition Read Interaction' input :condition_id run do # test code goes here end end test do title 'Server supports Condition Search by Patient' input :patient_id run do # test code goes here end end end end . Now the suite can include these groups without having to contain their entire definitions. # File: lib/us_core_test_kit.rb require_relative 'us_core_test_kit/us_core_patient_group' require_relative 'us_core_test_kit/us_core_condition_group' module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group from: :us_core_patient group from: :us_core_condition end end . We can take it a step further and move the tests into their own files . # File: lib/us_core_test_kit/us_core_patient_read_test.rb module USCoreTestKit class USCorePatientReadTest &lt; Inferno::Test title 'Server supports Patient Read Interaction' id :us_core_patient_read input :patient_id run do # test code goes here end end end # File: lib/us_core_test_kit/us_core_patient_search_by_id_test.rb module USCoreTestKit class USCorePatientSearchByIdTest &lt; Inferno::TestGroup title 'Server supports Patient Search by id' id :us_core_patient_search_by_id input :patient_id run do # test code goes here end end end . And then add each Test to their respective TestGroup. # lib/us_core_test_kit/us_core_patient_group.rb require_relative 'us_core_patient_read_test' require_relative 'us_core_patient_search_by_id_test' module USCoreTestKit class USCorePatientGroup &lt; Inferno::TestGroup title 'US Core Patient Group' id :us_core_patient test from: :us_core_patient_read test from :us_core_patient_search_by_id end end . Note: When importing a group, its optional children can be omitted: . group from: :us_core_patient, exclude_optional: true . ",
-    "url": "/docs/writing-tests/defining-tests.html",
-    "relUrl": "/docs/writing-tests/defining-tests.html"
-  },"24": {
+  },"21": {
     "doc": "Distributing Tests",
     "title": "Distributing Tests",
     "content": "Inferno allows Test Kits to be distributed like regular Ruby gems. In order to make your Test Kit available to others: . | Make sure your repository is organized as described in Template Layout. | Fill out the information in the gemspec file at the root of the repository. The name of the file should match spec.name within the file and the name of the main file in lib. For example, for the US Core Test Kit, this file would be named us_core_test_kit.gempsec and spec.name would be 'us_core_test_kit'. This page has recommended naming conventions for gems. | Optional: Once your gemspec file has been updated, you can publish your gem on rubygems, the official ruby gem repository. To publish your gem on rubygems, you will first need to make an account and then run gem build *.gemspec and gem push *.gem. If you don’t publish your gem on rubygems, however, users will still be able to install your Test Kit if it is located in a public Git repository. | . ",
     "url": "/docs/distributing-tests.html",
     "relUrl": "/docs/distributing-tests.html"
-  },"25": {
+  },"22": {
     "doc": "Community",
     "title": "Community",
     "content": " ",
     "url": "/community/div-community.html",
     "relUrl": "/community/div-community.html"
-  },"26": {
+  },"23": {
     "doc": "Creating Test Kits",
     "title": "Creating Test Kits",
     "content": " ",
     "url": "/docs/div-creating.html",
     "relUrl": "/docs/div-creating.html"
-  },"27": {
+  },"24": {
     "doc": "Documentation",
     "title": "Documentation",
     "content": " ",
     "url": "/docs/div-documentation.html",
     "relUrl": "/docs/div-documentation.html"
-  },"28": {
+  },"25": {
     "doc": "Using Test Kits",
     "title": "Using Test Kits",
     "content": " ",
     "url": "/docs/div-using.html",
     "relUrl": "/docs/div-using.html"
-  },"29": {
+  },"26": {
     "doc": "About",
     "title": "About",
     "content": " ",
     "url": "/about/div_about.html",
     "relUrl": "/about/div_about.html"
-  },"30": {
+  },"27": {
     "doc": "Frequently Asked Questions",
     "title": "Frequently Asked Questions",
     "content": "Who maintains Inferno? . Development of Inferno is led by the Office of the National Coordinator for Health IT and core components are implemented by the MITRE Corporation. External participation and contributions are encouraged and welcome. To learn how to participate, visit the Community page of this site. Does Inferno use the FHIR TestScript Resource? . Inferno does not currently use the standard FHIR Testscript Resource for describing tests, and instead uses the Inferno Test DSL (Domain Specific Language). The Inferno Test DSL is designed to enable test writers to create high fidelity simulated test clients that can serve as realistic data exchange partners for FHIR APIs being tested. This allows for comprehensive conformance tests that that have the flexibility to stay within any domain-specific constraints imposed on clients by Implementation Guides. It also enables a higher level of testing automation, as test writers can leverage a full-featured programming language within the tests themselves. TestScript expresses tests as a linear set of HTTP requests with expectations attached to the request and response. Conformance to an Implementation Guide requires the definition of many separate TestScripts to test various data exchanges defined within the FHIR Implementation Guide. TestScripts can either be used to drive a simulated client to evaluate the conformance of a FHIR API, or to evaluate the conformance of data exchanges created by other clients and servers. In the base TestScript definition provided by the FHIR specification, only simple client simulators can be implemented using TestScript, as there is no support for conditional requests or looping constructs. TestScripts can be extended using platform-specific extensions to enable higher-fidelity simulated clients, if that is needed to accomplish the test writer’s testing goals. However, using non-standard extensions within TestScripts negates some of the value of TestScript, as scripts are no longer portable between testing systems that have not implemented all of the same extensions. Additionally, extensive use of extensions to recreate features of a fully featured programming language would result in a programming language that is expressed within the FHIR data model, which would be counter-productive. The Inferno approach is to describe tests within a full-featured programming environment such that test developers can create low or high fidelity simulated clients using the Ruby programming language. The testing DSL provided attempts to make simple tests written in Inferno to be approximately as easy to understand as tests written in TestScript, but is designed to make it much easier to add more complex logic as needed depending on testing goals. Because all test logic is incorporated into distributable test kits, anyone can download and run Inferno tests regardless of the inclusion of custom logic or behavior. No extensions need to be implemented on any platform that would like to run Inferno tests. Whether TestScript or Inferno’s DSL is best in a given case largely depends on the Implementation Guide, the goals of testing, and the preference of the test writers. The Inferno DSL currently does not provide broad support for client testing, so those tests are best represented in TestScript or some other approach. For API testing, Inferno is optimized for testers that would like to create realistic test clients with a high level of automation and that are capable of performing complex behavior as defined in an Implementation Guide, and who have some level of comfort or interest in writing simple programs. TestScript is more optimized for situations where complex client behavior does not need to be described in order to accomplish testing goals, but does provide the opportunity to be extended as needed, understanding that using extensions may negatively impact the value of using TestScript. Does Inferno test beyond US Core? . Yes, Inferno is able to test other Implementation Guides, though tests must be written specific to these implementation guides. Inferno was initially created to provide conformance testing for ONC’s Standardized API certification criterion. This includes requiring conformance to several FHIR implementation guides, include US Core. Since US Core was the first Implementation Guide, Inferno is best known for testing this implementation guide, and is particularly well suited to support Implementation Guides that also require conformance to US Core. However, the goal of Inferno is to enable the creation of conformance tests for a wide variety of FHIR Implementation Guides. How can I find Test Kits built with Inferno? . Visit our Community page to find Test Kits built with Inferno. Can I host my own Inferno server? . Inferno is specifically designed such that Inferno Test Kits can be run in any environment that supports Docker, including on a desktop machine or shared server. For instructions on how to run a test kit locally or host them on a shared server, visit the Documentation. ",
     "url": "/about/faq.html",
     "relUrl": "/about/faq.html"
-  },"31": {
+  },"28": {
     "doc": "FHIR Validation",
     "title": "FHIR Resource Validation",
     "content": "FHIR Resource validation is performed by the FHIR Validator Wrapper service. When creating a Test Kit based on the Inferno Template: . | Place the .tgz IG packages for any profiles you need to validate against in lib/YOUR_TEST_KIT_NAME/igs. | Make sure that the volume path in docker-compose.background.yml points to the above directory. | . Every time an IG is added or changed, restart the validator service. Defining Validators . The Inferno Template defines a validator in the suite, and it is not necessary to alter it unless you need multiple validators or want to add extra validator behaviors. Validators are defined with validator: . validator :optional_validator_name do # Read the validator URL from an environment variable url ENV.fetch('VALIDATOR_URL') end . validator in the API docs . Validating FHIR Resources . The resource_is_valid? method will validate a FHIR resource and add any validation messages to the runnable. test do fhir_read :patient, '123' # Validate the resource from the last request if resource_is_valid? end # Validate some other resource if resource_is_valid?(resource: some_other_resource) end # Validate against a particular profile if resource_is_valid?(profile_url: 'http://example.com/fhir_profile_url') end # Validate using a particular named validator if resource_is_valid?(validator: :my_customized_validator) end end . resource_is_valid? in the API docs . assert_valid_resource will validate the resource, add any validation messages to the runnable, and fail the test if the resource is invalid. test do fhir_read :patient, '123' # Use the resource from the last request assert_valid_resource # Validate some other resource assert_valid_resource(resource: some_other_resource) # Validate against a particular profile assert_valid_resource(profile_url: 'http://example.com/fhir_profile_url') # Validate using a particular named validator assert_valid_resource(validator: :my_customized_validator) end . assert_valid_resource in the API docs . Filtering Validation Messages . If you need to ignore certain validation messages in your test kit, this can be done using the exclude_message method in the validator definition. validator do url ENV.fetch('VALIDATOR_URL') # Messages will be excluded if the block evaluates to a truthy value exclude_message do |message| message.type == 'info' || message.message.include?('message to ignore') || message.message.match?(/regex_filter/) end end . Performing Additional Validation . If you want to perform validation steps in addition to the FHIR validation, you can use the perform_additional_validation method in the validator definition. The method can also be used multiple times in a single validator definition to add multiple validation steps. To add additional validation messages, the block in this method must return a single Hash with a type and message, or an Array of Hashes with those keys. If the block returns nil, no new messages are added. The resource is considered invalid if any messages with a type of error are present. validator do url ENV.fetch('VALIDATOR_URL') perform_additional_validation do |resource, profile_url| if something_is_wrong { type: 'error', message: 'something is wrong'} end end end . ",
     "url": "/docs/writing-tests/fhir-validation.html#fhir-resource-validation",
     "relUrl": "/docs/writing-tests/fhir-validation.html#fhir-resource-validation"
-  },"32": {
+  },"29": {
     "doc": "FHIR Validation",
     "title": "FHIR Validation",
     "content": " ",
     "url": "/docs/writing-tests/fhir-validation.html",
     "relUrl": "/docs/writing-tests/fhir-validation.html"
-  },"33": {
+  },"30": {
     "doc": "FHIR and Testing",
     "title": "FHIR Testing",
     "content": " ",
     "url": "/about/fhir.html#fhir-testing",
     "relUrl": "/about/fhir.html#fhir-testing"
-  },"34": {
+  },"31": {
     "doc": "FHIR and Testing",
     "title": "FHIR and Testing",
     "content": " ",
     "url": "/about/fhir.html",
     "relUrl": "/about/fhir.html"
-  },"35": {
+  },"32": {
     "doc": "Getting Started",
     "title": "Getting Started for Inferno Users",
-    "content": "Start here if you’re interested in testing a FHIR server against one or more existing Test Kits. Running an Existing Test Kit . Most Test Kits are developed using the Inferno Template repository which provides scripts for standing up an instance of Inferno to run a selected Test Kit. | Install Docker. | Clone the repository for the Test Kit you want to run. | Run ./setup.sh in the Test Kit repository directory to retrieve the necessary docker images and create a database. | Run ./run.sh to start Inferno. | Navigate to http://localhost to access Inferno. | . e.g., to run the US Core Test Kit: . git clone https://github.com/inferno-framework/us-core-test-kit.git cd us-core-test-kit ./setup.sh ./run.sh . Always check the documentation for an individual Test Kit since there may be additional installation steps. Multiple Test Kits . There may be times when you wish to offer multiple test kits in a single Inferno instance. You can load and run two or more separate Test Kits by using Inferno Template. To create and deploy a custom combination of Test Kits with the Inferno Template first create a new repository based off the template or clone the template: . git clone https://github.com/inferno-framework/inferno-template.git . Add Test Kits you want to include to the Gemfile: . # Gem published on rubygems gem 'smart_app_launch_test_kit' # Gem available via git gem 'us_core_test_kit', git: 'https://github.com/inferno-framework/us-core-test-kit.git', branch: 'main' . To enable the Test Kits, require them in in lib/inferno_template.rb: . require 'smart_app_launch_test_kit' require 'us_core_test_kit' . Inferno relies on external validation services for profile validation; by default, Inferno uses the FHIR Validator Wrapper. For Test Kits that require profile validation, such as the US Core Test Kit, the corresponding Implementation Guide will need to be placed in the lib/inferno_deployment/igs/ directory as a .tgz file (i.e., package.tgz). The Implementation Guide files for a Test Kit can be located in that kit’s git repository and just copied over directly: . e.g., for the US Core Test Kit: . git clone https://github.com/inferno-framework/us-core-test-kit.git cp -a us-core-test-kit/lib/us_core_test_kit/igs/. inferno-template/lib/inferno_template/igs/ . Once this is done you can build and run the instance: . cd inferno_template ./setup.sh ./run.sh . Note: Example Test Suites, Groups, Tests and IGs in the template can be removed. ",
+    "content": "Start here if you’re interested in testing a FHIR server against one or more existing Test Kits. ",
     "url": "/docs/getting-started-users.html#getting-started-for-inferno-users",
     "relUrl": "/docs/getting-started-users.html#getting-started-for-inferno-users"
-  },"36": {
+  },"33": {
+    "doc": "Getting Started",
+    "title": "Running an Existing Test Kit",
+    "content": "Most Test Kits are developed using the Inferno Template repository, which provides scripts for standing up an instance of Inferno to run a selected Test Kit. Running a Test Kit usually follows the below steps: . | Install Docker. | Clone the repository for the Test Kit you want to run. | Run ./setup.sh in the Test Kit repository directory to retrieve the necessary docker images and create a database. | Run ./run.sh to start Inferno. | Navigate to http://localhost to access Inferno. | . For example, to run the US Core Test Kit: . git clone https://github.com/inferno-framework/us-core-test-kit.git cd us-core-test-kit ./setup.sh ./run.sh . Always check the documentation for an individual Test Kit, however, since there may be additional installation steps. ",
+    "url": "/docs/getting-started-users.html#running-an-existing-test-kit",
+    "relUrl": "/docs/getting-started-users.html#running-an-existing-test-kit"
+  },"34": {
+    "doc": "Getting Started",
+    "title": "Running Multiple Test Kits",
+    "content": "There may be times when you wish to run multiple Test Kits in a single Inferno instance. You can load and run two or more separate Test Kits by using Inferno Template. To create and deploy a custom combination of Test Kits with the Inferno Template first create a new repository based off the template or clone the template: . git clone https://github.com/inferno-framework/inferno-template.git . Add Test Kits you want to include to the Gemfile: . # Gem published on rubygems gem 'smart_app_launch_test_kit' # Gem available via git gem 'us_core_test_kit', git: 'https://github.com/inferno-framework/us-core-test-kit.git', branch: 'main' . To enable the Test Kits, require them in in lib/inferno_template.rb: . require 'smart_app_launch_test_kit' require 'us_core_test_kit' . Inferno relies on external validation services for profile validation; by default, Inferno uses the FHIR Validator Wrapper. For Test Kits that require profile validation, such as the US Core Test Kit, the corresponding Implementation Guide needs to be placed in the lib/inferno_deployment/igs/ directory as a .tgz file (i.e., package.tgz). Inferno Test Kits already have the IGs in their repository, so you can easily just copy it over from that Test Kit into your template directory. For example, if you want to include the US Core IG in your template directory: . git clone https://github.com/inferno-framework/us-core-test-kit.git cp -a us-core-test-kit/lib/us_core_test_kit/igs/. inferno-template/lib/inferno_template/igs/ . Once this is done you can build and run the instance: . cd inferno_template ./setup.sh ./run.sh . Note: Example Test Suites, Groups, Tests and IGs in the template can be removed. ",
+    "url": "/docs/getting-started-users.html#running-multiple-test-kits",
+    "relUrl": "/docs/getting-started-users.html#running-multiple-test-kits"
+  },"35": {
     "doc": "Getting Started",
     "title": "Getting Started",
     "content": " ",
     "url": "/docs/getting-started-users.html",
     "relUrl": "/docs/getting-started-users.html"
-  },"37": {
+  },"36": {
     "doc": "Goals",
     "title": "Project Goals",
     "content": "Describe project goals? . ",
     "url": "/about/goals.html#project-goals",
     "relUrl": "/about/goals.html#project-goals"
-  },"38": {
+  },"37": {
     "doc": "Goals",
     "title": "Goals",
     "content": " ",
     "url": "/about/goals.html",
     "relUrl": "/about/goals.html"
-  },"39": {
+  },"38": {
     "doc": "Hostname and Path Configuration",
     "title": "Hostname and Path Configuration",
-    "content": "Inferno needs to know the URL where it is being hosted, and it determines this based on environment variables. These environment variables need to be set in both the web and worker processes. Some tests need to generate links to Inferno, so the worker process needs to know where Inferno is hosted even though it isn’t serving those urls itself. ",
+    "content": "Inferno needs to know the URL of where it is hosted, and it determines this based on environment variables. These environment variables need to be set in both the web and worker processes. The web process needs to know the URL because it is serving the URL. The worker process needs to know where Inferno is hosted even though it isn’t serving those URLs itself because some tests generate links to Inferno. ",
     "url": "/docs/deployment/host.html",
     "relUrl": "/docs/deployment/host.html"
-  },"40": {
+  },"39": {
     "doc": "Hostname and Path Configuration",
     "title": "Hostname Configuration",
-    "content": "Set the INFERNO_HOST environment variable in .env to tell Inferno what its host and scheme are. This allows Inferno to correctly construct things like absolute redirect and launch urls for the SMART App Launch workflow. ",
+    "content": "In .env, set the INFERNO_HOST environment variable to the hostname. This allows Inferno to correctly construct things like absolute redirect and launch urls for the SMART App Launch workflow. ",
     "url": "/docs/deployment/host.html#hostname-configuration",
     "relUrl": "/docs/deployment/host.html#hostname-configuration"
-  },"41": {
+  },"40": {
     "doc": "Hostname and Path Configuration",
     "title": "Base Path Configuration",
     "content": "If Inferno won’t be hosted at the root of its host (e.g., you want to host Inferno at http://example.com/inferno rather than at http://example.com): . | Set the BASE_PATH environment variable in .env | In nginx.conf, change location / to location /your_base_path | . ",
     "url": "/docs/deployment/host.html#base-path-configuration",
     "relUrl": "/docs/deployment/host.html#base-path-configuration"
-  },"42": {
-    "doc": "Introduction",
-    "title": "Introduction",
-    "content": " ",
-    "url": "/news/",
-    "relUrl": "/news/"
-  },"43": {
-    "doc": "Introduction",
-    "title": "Overview",
-    "content": "Inferno is an application framework for creating, executing, and sharing conformance test for FHIR APIs. Inferno tests are packaged within portable test applications called Inferno Test Kits. Test Kits are tailored to test specific FHIR-enabled data exchange use cases, typically described within one or more FHIR Implementation Guides. Examples of Inferno Test Kits include: . | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | . If you would like to learn how to run or deploy an existing Inferno Test Kit, please visit the Using Test Kits documentation. Each of these Test Kits is a standalone application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. They are Ruby applications built with the Inferno Core gem which provides several features useful for a FHIR testing application: . | Inferno DSL: A domain specific language for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces: Multiple interfaces for executing tests and retrieving results | Test Reuse: Methods for reusing tests within a project or from other projects | . Inferno’s design reflects the flexibility provided by the base FHIR specification. As a platform specification that is intended to provide support across the whole healthcare process, FHIR relies on Implementation Guides to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR Implementation Guides typically will describe how to use relevant portions of the FHIR specification for its use case, while also providing additional rules that are not described within FHIR itself. There are no limits to what these rules may include, and may even require the use of other standards, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in Implementation Guides is challenging. Inferno accomplishes this by providing test authors with a full featured Ruby programming environment to define and run their tests, and doesn’t restrict usage of the rich ecosystem of open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing Implementation Guides that: . | include the use of additional standards beyond FHIR, | have large specifications that could benefit from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno Core’s goal is to expand on the set of common utilities it provides for the benefit of the community. While Ruby is sufficient for most testing needs, Inferno Test Kits may also include components that are not defined in Ruby. Inferno Test Kits can include other non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
-    "url": "/news/#overview",
-    "relUrl": "/news/#overview"
-  },"44": {
-    "doc": "Introduction",
-    "title": "Documentation Resources",
-    "content": ". | View the JSON API Documentation for information on interacting with Inferno via a JSON API. | View the Inferno Ruby Documentation for detailed information on Inferno’s ruby api. | . ",
-    "url": "/news/#documentation-resources",
-    "relUrl": "/news/#documentation-resources"
-  },"45": {
-    "doc": "Introduction",
-    "title": "Main Inferno Repositories",
-    "content": ". | Inferno Core - The Inferno ruby library itself. This repository contains the code for defining and running tests, the command line and web interfaces, and this documentation. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
-    "url": "/news/#main-inferno-repositories",
-    "relUrl": "/news/#main-inferno-repositories"
-  },"46": {
-    "doc": "Introduction",
-    "title": "Inferno Test Kits",
-    "content": "See available Test Kits . ",
-    "url": "/news/#inferno-test-kits",
-    "relUrl": "/news/#inferno-test-kits"
-  },"47": {
-    "doc": "Introduction",
-    "title": "Contact the Inferno Team",
-    "content": "The fastest way to reach the Inferno team is via the Inferno Zulip stream. You can also e-mail the team. ",
-    "url": "/news/#contact-the-inferno-team",
-    "relUrl": "/news/#contact-the-inferno-team"
-  },"48": {
-    "doc": "Overview",
-    "title": "Overview",
-    "content": "Welcome to Inferno, an open source software testing framework for the Fast Healthcare Interoperability Resources health API and data exchange standard. Inferno’s goal is to accelerate the availability of interoperable Health IT systems connected using the FHIR standard by providing easy to use, portable, and comprehensive test tools that can be used to support implementation of FHIR-based APIs. ",
-    "url": "/about/",
-    "relUrl": "/about/"
-  },"49": {
-    "doc": "Overview",
-    "title": "The Inferno Approach",
-    "content": "FHIR is a ‘Framework Standard’ that has great flexibility in how it might used to facilitate . For more information about how Inferno is constructed, visit the … or get started … . ",
-    "url": "/about/#the-inferno-approach",
-    "relUrl": "/about/#the-inferno-approach"
-  },"50": {
-    "doc": "Overview",
-    "title": "How do you use Inferno",
-    "content": " ",
-    "url": "/about/#how-do-you-use-inferno",
-    "relUrl": "/about/#how-do-you-use-inferno"
-  },"51": {
-    "doc": "Overview",
-    "title": "Features and Functionality",
-    "content": "The Inferno Framework . ",
-    "url": "/about/#features-and-functionality",
-    "relUrl": "/about/#features-and-functionality"
-  },"52": {
-    "doc": "Overview",
-    "title": "Using Inferno",
-    "content": "Inferno was initially developed to provide certification tests tool for the Office of the National Coordinator for Ho . Development of Inferno is principally sponsored by the Office of the National Coordinator for Health IT in support of the ONC Certified Health IT Program. Development is currently led by the MITRE Corporation, a non profit working in the public interest. API for Patient and Population certification criterion. Inferno is used . Recognizing the challenges in evaluating conformance of the Standardized API for Patient and Population Services, and recognizing the value in providing open source tools that can be used freely by implementers, test labs, test tool vendors, or other certificaiton programs, the lessons learned . Inferno can be used in one of three . Inferno is an testing application framework that is aimed at Inferno is sponsored by the Office of the National Coordinator for Health IT (ONC) and principally developed by the MITRE Corporation with the goal of fostering comprehensive testing solutions. Inferno was initially designed to provide a testing solution for ONC’s Standardized API Certification Criterion. In recognition of effort involved in producing a comprehensive testing suite for this use case. What is Inferno? Why Inferno? . Inferno is framework for creating, executing, and sharing tests for health IT systems providing standardized FHIR APIs. You use Inferno to create Inferno Test Kits which are standalone, portable test applications that are tailored to test specific FHIR-enabled data exchange use cases as described in FHIR Implementation Guides. Examples of test applications (Test Kits) built using Inferno include: . | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | . Each of these Test Kits is a standalone application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. They are Ruby applications built with the Inferno Core gem which provides several features useful for a FHIR testing application: . | Inferno DSL: A domain specific language for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces: Multiple interfaces for executing tests and retrieving results | Test Reuse: Methods for reusing tests within a project or from other projects | . Inferno’s design reflects the flexibility provided by the base FHIR specification. As a platform specification that is intended to provide support across the whole healthcare process, FHIR relies on Implementation Guides to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR Implementation Guides typically will describe how to use relevant portions of the FHIR specification for its use case, while also providing additional rules that are not described within FHIR itself. There are no limits to what these rules may include, and may even require the use of other standards, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in Implementation Guides is challenging. Inferno accomplishes this by providing test authors with a full featured Ruby programming environment to define and run their tests, and doesn’t restrict usage of the rich ecosystem of open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing Implementation Guides that: . | include the use of additional standards beyond FHIR, | have large specifications that could benefit from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno Core’s goal is to expand on the set of common utilities it provides for the benefit of the community. While Ruby is sufficient for most testing needs, Inferno Test Kits may also include components that are not defined in Ruby. Inferno Test Kits can include other non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
-    "url": "/about/#using-inferno",
-    "relUrl": "/about/#using-inferno"
-  },"53": {
-    "doc": "Overview",
-    "title": "Documentation Resources",
-    "content": ". | View the JSON API Documentation for information on interacting with Inferno via a JSON API. | View the Inferno Ruby Documentation for detailed information on Inferno’s ruby api. | . ",
-    "url": "/about/#documentation-resources",
-    "relUrl": "/about/#documentation-resources"
-  },"54": {
-    "doc": "Overview",
-    "title": "Main Inferno Repositories",
-    "content": ". | Inferno Core - The Inferno ruby library itself. This repository contains the code for defining and running tests, the command line and web interfaces, and this documentation. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
-    "url": "/about/#main-inferno-repositories",
-    "relUrl": "/about/#main-inferno-repositories"
-  },"55": {
-    "doc": "Overview",
-    "title": "Inferno Test Kits",
-    "content": "See available Test Kits . ",
-    "url": "/about/#inferno-test-kits",
-    "relUrl": "/about/#inferno-test-kits"
-  },"56": {
-    "doc": "Overview",
-    "title": "Contact the Inferno Team",
-    "content": "The fastest way to reach the Inferno team is via the Inferno Zulip stream. You can also e-mail the team. ",
-    "url": "/about/#contact-the-inferno-team",
-    "relUrl": "/about/#contact-the-inferno-team"
-  },"57": {
-    "doc": "JSON API",
-    "title": "JSON API",
-    "content": " ",
-    "url": "/docs/json-api/",
-    "relUrl": "/docs/json-api/"
-  },"58": {
-    "doc": "Advanced Features",
-    "title": "Advanced Features",
-    "content": " ",
-    "url": "/docs/advanced-test-features/",
-    "relUrl": "/docs/advanced-test-features/"
-  },"59": {
+  },"41": {
     "doc": "Getting Started",
     "title": "Getting Started for Inferno Test Writers",
     "content": "Tests can be developed either with a local Ruby installation or by using Docker. We recommended installing Ruby locally for development because: . | When the tests change, it is much faster to restart native Ruby processes than to stop/rebuild/start Docker images. | Ruby lets you set breakpoints and access an interactive debugger inside of running tests, which makes test development easier. | The Inferno Command Line Interface can be used, which includes additional useful functionality for developers, such as an interactive console. See Inferno CLI for more information. | . Development with Ruby . Installation . | Install Docker. | Install Ruby. It is highly recommended that you install Ruby via a Ruby version manager. | Clone the Inferno Template repository. You can either clone this repository directly, or click the green “Use this template” button to create your own repository based on this one. | Run bundle install to install dependencies. | Run gem install inferno_core to install inferno. | Run gem install foreman to install foreman, which will be used to run the Inferno web and worker processes. | Run gem install rerun to install rerun, which will be used to enable watch functionality to reload Inferno when a test has been updated. | Run bundle exec inferno migrate to set up the database. | Put the package.tgz for the IG you’re writing tests for in lib/your_test_kit_name/igs and update this path in docker-compose.background.yml. This will ensure that the validator has access to the resources needed to validate resources against your IG. | . Running Inferno . | Run bundle exec inferno services start to start the background services. By default, these include nginx, redis, the FHIR validator service, and the FHIR validator UI. Background services can be added, removed, and edited in docker-compose.background.yml. | Run inferno start --watch to start Inferno and have it reload any time a file changes. Remove the watch flag if you would prefer to manually restart Inferno. | Navigate to http://localhost:4567 to access Inferno. To access the FHIR resource validator, navigate to http://localhost/validator. | When you are done, run bundle exec inferno services stop to stop the background services. | . Development with Docker Only . Installation . | Install Docker. | Clone the Inferno Template repository. You can either clone this repository directly, or click the green “Use this template” button to create your own repository based on this one. | Run ./setup.sh in the template repository to retrieve the necessary Docker images and create a database. | Put the package.tgz for the IG you’re writing tests for in lib/your_test_kit_name/igs and update this path in docker-compose.background.yml. This will ensure that the validator has access to the resources needed to validate resources against your IG. | . Running Inferno . After installation, run the ./run.sh script to start Inferno. | Navigate to http://localhost to access Inferno and run test suites. | Navigate to http://localhost/validator to access a standalone validator that can be used to validate individual FHIR resources. | . Next Steps . Now that Inferno is running, you can either: . | Go to Template Layout for more information on the files included in the Inferno Template directory, | Go to Inferno CLI for more information about the inferno commands available, | Go to Debugging for more information about debugging in Inferno, | Or just jump to Writing Tests. | . ",
     "url": "/docs/getting-started/#getting-started-for-inferno-test-writers",
     "relUrl": "/docs/getting-started/#getting-started-for-inferno-test-writers"
-  },"60": {
+  },"42": {
     "doc": "Getting Started",
     "title": "Getting Started",
     "content": " ",
     "url": "/docs/getting-started/",
     "relUrl": "/docs/getting-started/"
-  },"61": {
+  },"43": {
+    "doc": "Overview",
+    "title": "Overview",
+    "content": "Welcome to Inferno, an open source software testing framework for the Fast Healthcare Interoperability Resources health API and data exchange standard. Inferno’s goal is to accelerate the availability of interoperable Health IT systems connected using the FHIR standard by providing easy to use, portable, and comprehensive test tools that can be used to support implementation of FHIR-based APIs. ",
+    "url": "/about/",
+    "relUrl": "/about/"
+  },"44": {
+    "doc": "Overview",
+    "title": "The Inferno Approach",
+    "content": "FHIR is a ‘Framework Standard’ that has great flexibility in how it might used to facilitate . For more information about how Inferno is constructed, visit the … or get started … . ",
+    "url": "/about/#the-inferno-approach",
+    "relUrl": "/about/#the-inferno-approach"
+  },"45": {
+    "doc": "Overview",
+    "title": "How do you use Inferno",
+    "content": " ",
+    "url": "/about/#how-do-you-use-inferno",
+    "relUrl": "/about/#how-do-you-use-inferno"
+  },"46": {
+    "doc": "Overview",
+    "title": "Features and Functionality",
+    "content": "The Inferno Framework . ",
+    "url": "/about/#features-and-functionality",
+    "relUrl": "/about/#features-and-functionality"
+  },"47": {
+    "doc": "Overview",
+    "title": "Using Inferno",
+    "content": "Inferno was initially developed to provide certification tests tool for the Office of the National Coordinator for Ho . Development of Inferno is principally sponsored by the Office of the National Coordinator for Health IT in support of the ONC Certified Health IT Program. Development is currently led by the MITRE Corporation, a non profit working in the public interest. API for Patient and Population certification criterion. Inferno is used . Recognizing the challenges in evaluating conformance of the Standardized API for Patient and Population Services, and recognizing the value in providing open source tools that can be used freely by implementers, test labs, test tool vendors, or other certificaiton programs, the lessons learned . Inferno can be used in one of three . Inferno is an testing application framework that is aimed at Inferno is sponsored by the Office of the National Coordinator for Health IT (ONC) and principally developed by the MITRE Corporation with the goal of fostering comprehensive testing solutions. Inferno was initially designed to provide a testing solution for ONC’s Standardized API Certification Criterion. In recognition of effort involved in producing a comprehensive testing suite for this use case. What is Inferno? Why Inferno? . Inferno is framework for creating, executing, and sharing tests for health IT systems providing standardized FHIR APIs. You use Inferno to create Inferno Test Kits which are standalone, portable test applications that are tailored to test specific FHIR-enabled data exchange use cases as described in FHIR Implementation Guides. Examples of test applications (Test Kits) built using Inferno include: . | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | . Each of these Test Kits is a standalone application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. They are Ruby applications built with the Inferno Core gem which provides several features useful for a FHIR testing application: . | Inferno DSL: A domain specific language for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces: Multiple interfaces for executing tests and retrieving results | Test Reuse: Methods for reusing tests within a project or from other projects | . Inferno’s design reflects the flexibility provided by the base FHIR specification. As a platform specification that is intended to provide support across the whole healthcare process, FHIR relies on Implementation Guides to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR Implementation Guides typically will describe how to use relevant portions of the FHIR specification for its use case, while also providing additional rules that are not described within FHIR itself. There are no limits to what these rules may include, and may even require the use of other standards, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in Implementation Guides is challenging. Inferno accomplishes this by providing test authors with a full featured Ruby programming environment to define and run their tests, and doesn’t restrict usage of the rich ecosystem of open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing Implementation Guides that: . | include the use of additional standards beyond FHIR, | have large specifications that could benefit from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno Core’s goal is to expand on the set of common utilities it provides for the benefit of the community. While Ruby is sufficient for most testing needs, Inferno Test Kits may also include components that are not defined in Ruby. Inferno Test Kits can include other non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
+    "url": "/about/#using-inferno",
+    "relUrl": "/about/#using-inferno"
+  },"48": {
+    "doc": "Overview",
+    "title": "Documentation Resources",
+    "content": ". | View the JSON API Documentation for information on interacting with Inferno via a JSON API. | View the Inferno Ruby Documentation for detailed information on Inferno’s ruby api. | . ",
+    "url": "/about/#documentation-resources",
+    "relUrl": "/about/#documentation-resources"
+  },"49": {
+    "doc": "Overview",
+    "title": "Main Inferno Repositories",
+    "content": ". | Inferno Core - The Inferno ruby library itself. This repository contains the code for defining and running tests, the command line and web interfaces, and this documentation. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
+    "url": "/about/#main-inferno-repositories",
+    "relUrl": "/about/#main-inferno-repositories"
+  },"50": {
+    "doc": "Overview",
+    "title": "Inferno Test Kits",
+    "content": "See available Test Kits . ",
+    "url": "/about/#inferno-test-kits",
+    "relUrl": "/about/#inferno-test-kits"
+  },"51": {
+    "doc": "Overview",
+    "title": "Contact the Inferno Team",
+    "content": "The fastest way to reach the Inferno team is via the Inferno Zulip stream. You can also e-mail the team. ",
+    "url": "/about/#contact-the-inferno-team",
+    "relUrl": "/about/#contact-the-inferno-team"
+  },"52": {
+    "doc": "JSON API",
+    "title": "JSON API",
+    "content": " ",
+    "url": "/docs/json-api/",
+    "relUrl": "/docs/json-api/"
+  },"53": {
+    "doc": "Advanced Features",
+    "title": "Advanced Features",
+    "content": "Now that you’ve gone through the basics of how to write tests, we can move on to the more advanced features of Inferno. These pages do not have to be read in order. Feel free to jump around to whatever pages are useful for your specific use case: . Altering Test Behavior . This page walks through two options of how to alter test behavior at either boot time or at session creation time, to address use cases including test reuse, supporting different IG versions, etc. Serving HTTP Requests . Some testing scenarios require that Inferno responds to incoming HTTP requests. For example, authorization workflows based on asymmetric client credentials require that public keys are served at an accessible location, so Inferno needs to be able to serve these keys in order to support these workflows. For these cases, a suite can define custom routes to be served by Inferno, and this page walks through how to do this. Waiting for Incoming Requests . Some testing workflows required testing to pause until an incoming request is received. For example, the OAuth2 workflow used by the SMART App Launch IG involves redirecting the user to an authorization server, which then redirects the user back to the application that requested authorization. In order to handle a workflow like this, Inferno must be able to handle the incoming request and associate it with a particular testing session, and this page walks through how to do this. Scratch . Scratch provides an alternative to inputs and outputs for passing information between tests. The benefits of using scratch, and how to use it, can be found on this page. Configuration Checks . This page shows how to write a set of checks for Test Suites on startup, to ensure that their environment is correctly configured. ",
+    "url": "/docs/advanced-test-features/",
+    "relUrl": "/docs/advanced-test-features/"
+  },"54": {
     "doc": "Deploying to Shared Hosts",
     "title": "Deploying Inferno",
-    "content": "Deployments of Inferno are based on the test kit template. This template contains a docker-compose.yml file that can run all of the services inferno needs. At a minimum, deploying inferno involves the following: . | git clone the repository you want to deploy (or get it onto your server in some other way) | run setup.sh to pull &amp; build the needed docker images and run database migrations | run docker-compose up -d to start all of the services in the background | . ",
+    "content": "Deployments of Inferno are based on the Inferno Template. This template contains a docker-compose.yml file that can run all of the services inferno needs. At a minimum, deploying inferno involves the following: . | git clone the repository you want to deploy (or get it onto your server in some other way) | run setup.sh to pull &amp; build the needed docker images and run database migrations | run docker-compose up -d to start all of the services in the background | . By default, a deployment of Inferno includes the following services: . | nginx - A reverse proxy which handles sending requests to the correct services | inferno - The inferno web process which serves Inferno’s static assets and the JSON API | worker - The inferno web process which executes the tests | redis - Message broker that handles communication between the inferno web and worker processes | validator_service - A JSON API wrapper around the HL7 FHIR validator which Inferno uses to validate FHIR resources | fhir_validator_app - (Optional) A web front end for the validator service which allows users to easily perform standalone FHIR resource validation. Nothing depends on this service, so it can be safely removed from docker-compose.yml if you don’t need to provide standalone FHIR resource validation. | . ",
     "url": "/docs/deployment/#deploying-inferno",
     "relUrl": "/docs/deployment/#deploying-inferno"
-  },"62": {
-    "doc": "Deploying to Shared Hosts",
-    "title": "Services",
-    "content": "By default, a deployment of Inferno includes the following services: . | nginx - A reverse proxy which handles sending requests to the correct services | inferno - The inferno web process which serves Inferno’s static assets and the JSON API | worker - The inferno web process which actually executes tests | redis - Redis handles communication between the inferno web and worker processes | validator_service - A JSON API wrapper around the HL7 FHIR validator which Inferno uses to validate FHIR resources | fhir_validator_app - (Optional) A web front end for the validator service which allows users to easily perform standalone FHIR resource validation. Nothing depends on this service, so it can be safely removed from docker-compose.yml if you don’t need to provide standalone FHIR resource validation. | . ",
-    "url": "/docs/deployment/#services",
-    "relUrl": "/docs/deployment/#services"
-  },"63": {
+  },"55": {
     "doc": "Deploying to Shared Hosts",
     "title": "Deploying to Shared Hosts",
     "content": " ",
     "url": "/docs/deployment/",
     "relUrl": "/docs/deployment/"
-  },"64": {
+  },"56": {
     "doc": "Writing Tests",
     "title": "Writing Tests in Inferno",
-    "content": " ",
+    "content": "Test Suite Structure . There are three classes used to organize tests in Inferno: . | TestSuite - An entire suite of tests. A TestSuite can contain one or more TestGroup classes. | TestGroup - A TestGroup can contain one or more TestGroup or Test classes. | Test - An individual test. A Test contains a run block which defines what happens when the test is run. | . For example, a simple US Core test suite might look like this: . | US Core (TestSuite) . | US Core Patient Group (TestGroup) . | Server supports Patient Read Interaction (Test) | Server supports Patient Search by id (Test) | . | US Core Condition Group (TestGroup) . | Server supports Condition Read Interaction (Test) | Server supports Condition Search by Patient (Test) | . | . | . Defining Groups and Tests . Let’s show how to add groups and tests to a TestSuite using the above US Core example. To start, we define the groups in the TestSuite using the group method. # lib/us_core_test_kit.rb module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group do title 'US Core Patient Group' end group do title 'US Core Condition Group' end end end . We can then add the tests to each group using the test method: . # lib/us_core_test_kit.rb module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group do title 'US Core Patient Group' test do title 'Server supports Patient Read Interaction' input :patient_id run do # test code goes here end end test do title 'Server supports Patient Search by id' input :patient_id run do # test code goes here end end end group do title 'US Core Condition Group' test do title 'Server supports Condition Read Interaction' input :condition_id run do # test code goes here end end test do title 'Server supports Condition Search by Patient' input :patient_id run do # test code goes here end end end end end . This test suite is already getting pretty long. We can improve the organization using externally defined groups and tests. Externally Defined Groups and Tests . Let’s move the Patient and Condition groups into their own files, and assign them ids. # File: lib/us_core_test_kit/us_core_patient_group.rb module USCoreTestKit class USCorePatientGroup &lt; Inferno::TestGroup title 'US Core Patient Group' id :us_core_patient test do title 'Server supports Patient Read Interaction' input :patient_id run do # test code goes here end end test do title 'Server supports Patient Search by id' input :patient_id run do # test code goes here end end end end # File: lib/us_core_test_kit/us_core_condition_group.rb module USCoreTestKit class USCoreConditionGroup &lt; Inferno::TestGroup title 'US Core Condition Group' id :us_core_condition test do title 'Server supports Condition Read Interaction' input :condition_id run do # test code goes here end end test do title 'Server supports Condition Search by Patient' input :patient_id run do # test code goes here end end end end . Now the suite can include these groups without having to contain their entire definitions. # File: lib/us_core_test_kit.rb require_relative 'us_core_test_kit/us_core_patient_group' require_relative 'us_core_test_kit/us_core_condition_group' module USCoreTestKit class USCoreTestSuite &lt; Inferno::TestSuite group from: :us_core_patient group from: :us_core_condition end end . We can take it a step further and move the tests into their own files . # File: lib/us_core_test_kit/us_core_patient_read_test.rb module USCoreTestKit class USCorePatientReadTest &lt; Inferno::Test title 'Server supports Patient Read Interaction' id :us_core_patient_read input :patient_id run do # test code goes here end end end # File: lib/us_core_test_kit/us_core_patient_search_by_id_test.rb module USCoreTestKit class USCorePatientSearchByIdTest &lt; Inferno::TestGroup title 'Server supports Patient Search by id' id :us_core_patient_search_by_id input :patient_id run do # test code goes here end end end . And then add each Test to their respective TestGroup. # lib/us_core_test_kit/us_core_patient_group.rb require_relative 'us_core_patient_read_test' require_relative 'us_core_patient_search_by_id_test' module USCoreTestKit class USCorePatientGroup &lt; Inferno::TestGroup title 'US Core Patient Group' id :us_core_patient test from: :us_core_patient_read test from :us_core_patient_search_by_id end end . Note: When importing a group, its optional children can be omitted: . group from: :us_core_patient, exclude_optional: true . ",
     "url": "/docs/writing-tests/#writing-tests-in-inferno",
     "relUrl": "/docs/writing-tests/#writing-tests-in-inferno"
-  },"65": {
+  },"57": {
     "doc": "Writing Tests",
     "title": "Writing Tests",
     "content": " ",
     "url": "/docs/writing-tests/",
     "relUrl": "/docs/writing-tests/"
-  },"66": {
+  },"58": {
     "doc": "Introduction",
     "title": "Introduction",
     "content": " ",
     "url": "/docs/",
     "relUrl": "/docs/"
-  },"67": {
+  },"59": {
     "doc": "Introduction",
     "title": "Overview",
     "content": "Inferno is an application framework for creating, executing, and sharing conformance test for FHIR APIs. Inferno tests are packaged within portable test applications called Inferno Test Kits. Test Kits are tailored to test specific FHIR-enabled data exchange use cases, typically described within one or more FHIR Implementation Guides (IGs). For example: . | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | . If you would like to learn how to run or deploy an existing Inferno Test Kit, please visit the Using Test Kits documentation. A Test Kit is a standalone Ruby application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. It is built with the Inferno Core gem, which provides several useful features for a FHIR testing application, including: . | The Inferno DSL - A domain specific language (DSL) for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces - Multiple interface options for executing tests and retrieving results | Test Reuse - Methods for reusing tests within a project or from other projects | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno’s design reflects the flexibility provided by the base FHIR specification. FHIR is a platform specification that is intended to provide support across the whole healthcare process, so it relies on IGs to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR IGs will typically describe how to use relevant portions of the FHIR specification for its use case while also providing additional rules not described in FHIR. There are no limits to what these additional rules may include; for example, other standards can be required, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in an IG is challenging. Inferno accomplishes this by providing test authors with a full-featured Ruby programming environment to define and run tests. It also allows the use of the open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing IGs that: . | include additional standards beyond FHIR, | have large specifications that could use from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . While Ruby is sufficient for most testing needs, test developers may want to include components that are not defined in Ruby. Inferno Test Kits can include these non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
     "url": "/docs/#overview",
     "relUrl": "/docs/#overview"
-  },"68": {
+  },"60": {
     "doc": "Introduction",
     "title": "Main Inferno Repositories",
     "content": ". | Inferno Core - The Inferno Ruby library. This repository that contains the code for defining and running tests and the command line and web interfaces. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
     "url": "/docs/#main-inferno-repositories",
     "relUrl": "/docs/#main-inferno-repositories"
-  },"69": {
+  },"61": {
     "doc": "Introduction",
     "title": "Documentation Resources",
     "content": ". | JSON API Documentation - The documentation for interacting with Inferno via a JSON API. | Inferno Ruby Documentation - The documentation for Inferno’s Ruby API. | . ",
     "url": "/docs/#documentation-resources",
     "relUrl": "/docs/#documentation-resources"
-  },"70": {
+  },"62": {
     "doc": "Introduction",
     "title": "Inferno Test Kits",
     "content": "Visit the Community Page to view all available Test Kits. ",
     "url": "/docs/#inferno-test-kits",
     "relUrl": "/docs/#inferno-test-kits"
-  },"71": {
+  },"63": {
+    "doc": "Introduction",
+    "title": "Introduction",
+    "content": " ",
+    "url": "/news/",
+    "relUrl": "/news/"
+  },"64": {
+    "doc": "Introduction",
+    "title": "Overview",
+    "content": "Inferno is an application framework for creating, executing, and sharing conformance test for FHIR APIs. Inferno tests are packaged within portable test applications called Inferno Test Kits. Test Kits are tailored to test specific FHIR-enabled data exchange use cases, typically described within one or more FHIR Implementation Guides. Examples of Inferno Test Kits include: . | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | . If you would like to learn how to run or deploy an existing Inferno Test Kit, please visit the Using Test Kits documentation. Each of these Test Kits is a standalone application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. They are Ruby applications built with the Inferno Core gem which provides several features useful for a FHIR testing application: . | Inferno DSL: A domain specific language for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces: Multiple interfaces for executing tests and retrieving results | Test Reuse: Methods for reusing tests within a project or from other projects | . Inferno’s design reflects the flexibility provided by the base FHIR specification. As a platform specification that is intended to provide support across the whole healthcare process, FHIR relies on Implementation Guides to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR Implementation Guides typically will describe how to use relevant portions of the FHIR specification for its use case, while also providing additional rules that are not described within FHIR itself. There are no limits to what these rules may include, and may even require the use of other standards, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in Implementation Guides is challenging. Inferno accomplishes this by providing test authors with a full featured Ruby programming environment to define and run their tests, and doesn’t restrict usage of the rich ecosystem of open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing Implementation Guides that: . | include the use of additional standards beyond FHIR, | have large specifications that could benefit from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno Core’s goal is to expand on the set of common utilities it provides for the benefit of the community. While Ruby is sufficient for most testing needs, Inferno Test Kits may also include components that are not defined in Ruby. Inferno Test Kits can include other non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
+    "url": "/news/#overview",
+    "relUrl": "/news/#overview"
+  },"65": {
+    "doc": "Introduction",
+    "title": "Documentation Resources",
+    "content": ". | View the JSON API Documentation for information on interacting with Inferno via a JSON API. | View the Inferno Ruby Documentation for detailed information on Inferno’s ruby api. | . ",
+    "url": "/news/#documentation-resources",
+    "relUrl": "/news/#documentation-resources"
+  },"66": {
+    "doc": "Introduction",
+    "title": "Main Inferno Repositories",
+    "content": ". | Inferno Core - The Inferno ruby library itself. This repository contains the code for defining and running tests, the command line and web interfaces, and this documentation. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
+    "url": "/news/#main-inferno-repositories",
+    "relUrl": "/news/#main-inferno-repositories"
+  },"67": {
+    "doc": "Introduction",
+    "title": "Inferno Test Kits",
+    "content": "See available Test Kits . ",
+    "url": "/news/#inferno-test-kits",
+    "relUrl": "/news/#inferno-test-kits"
+  },"68": {
+    "doc": "Introduction",
+    "title": "Contact the Inferno Team",
+    "content": "The fastest way to reach the Inferno team is via the Inferno Zulip stream. You can also e-mail the team. ",
+    "url": "/news/#contact-the-inferno-team",
+    "relUrl": "/news/#contact-the-inferno-team"
+  },"69": {
     "doc": "Welcome",
     "title": "Welcome",
     "content": " ",
     "url": "/community/",
     "relUrl": "/community/"
-  },"72": {
+  },"70": {
     "doc": "Welcome",
     "title": "Overview",
     "content": "Inferno is an application framework for creating, executing, and sharing conformance test for FHIR APIs. Inferno tests are packaged within portable test applications called Inferno Test Kits. Test Kits are tailored to test specific FHIR-enabled data exchange use cases, typically described within one or more FHIR Implementation Guides. Examples of Inferno Test Kits include: . | The ONC Certification (g)(10) Standardized API Test Kit provides tests for systems that seek conformance to ONC’s Standardized API certification criterion. | The US Core Test Kit provides tests for servers implementing US Core Implementation Guide. | The SMART App Launch Test Kit provides tests for systems that support the SMART App Launch Framework. | . If you would like to learn how to run or deploy an existing Inferno Test Kit, please visit the Using Test Kits documentation. Each of these Test Kits is a standalone application that can be run on an end user’s machine, on a shared private host behind a firewall, or on a shared public host such as inferno.healthit.gov. They are Ruby applications built with the Inferno Core gem which provides several features useful for a FHIR testing application: . | Inferno DSL: A domain specific language for authoring FHIR API tests that includes a FHIR client, native Ruby classes for FHIR, and FHIR instance validators | API, Web and CLI Interfaces: Multiple interfaces for executing tests and retrieving results | Test Reuse: Methods for reusing tests within a project or from other projects | . Inferno’s design reflects the flexibility provided by the base FHIR specification. As a platform specification that is intended to provide support across the whole healthcare process, FHIR relies on Implementation Guides to provide enough specificity to enable meaningful interoperability between actors for a given data exchange use case. FHIR Implementation Guides typically will describe how to use relevant portions of the FHIR specification for its use case, while also providing additional rules that are not described within FHIR itself. There are no limits to what these rules may include, and may even require the use of other standards, such as OAuth or QR Codes for Vaccination Credentials, as part of their conformance criteria. Creating a test system that is flexible enough to test any arbitrary conformance criteria introduced in Implementation Guides is challenging. Inferno accomplishes this by providing test authors with a full featured Ruby programming environment to define and run their tests, and doesn’t restrict usage of the rich ecosystem of open source third-party libraries provided by Ruby. This makes Inferno well-suited for testing Implementation Guides that: . | include the use of additional standards beyond FHIR, | have large specifications that could benefit from Ruby’s meta-programming capabilities to ease maintenance burden, | or require complex logic to thoroughly validate API responses. | . Inferno Core provides common utilities for FHIR-based testing, but tests are not limited to what is provided by Inferno Core. Inferno Core’s goal is to expand on the set of common utilities it provides for the benefit of the community. While Ruby is sufficient for most testing needs, Inferno Test Kits may also include components that are not defined in Ruby. Inferno Test Kits can include other non-Ruby services as needed, and by default provides a Docker Compose configuration to run and integrate with these services from within Inferno’s testing DSL. ",
     "url": "/community/#overview",
     "relUrl": "/community/#overview"
-  },"73": {
+  },"71": {
     "doc": "Welcome",
     "title": "Documentation Resources",
     "content": ". | View the JSON API Documentation for information on interacting with Inferno via a JSON API. | View the Inferno Ruby Documentation for detailed information on Inferno’s ruby api. | . ",
     "url": "/community/#documentation-resources",
     "relUrl": "/community/#documentation-resources"
-  },"74": {
+  },"72": {
     "doc": "Welcome",
     "title": "Main Inferno Repositories",
     "content": ". | Inferno Core - The Inferno ruby library itself. This repository contains the code for defining and running tests, the command line and web interfaces, and this documentation. This is the repository to use if you want to investigate or make changes to the internals of Inferno. | Inferno Template - A template for test writers. This is the repository to use if you want to write your own set of tests with Inferno. | FHIR Validator Wrapper - A simple web wrapper around the official HL7 FHIR validation library. Inferno relies on this service to validate FHIR resources. | . ",
     "url": "/community/#main-inferno-repositories",
     "relUrl": "/community/#main-inferno-repositories"
-  },"75": {
+  },"73": {
     "doc": "Welcome",
     "title": "Inferno Test Kits",
     "content": "See available Test Kits . ",
     "url": "/community/#inferno-test-kits",
     "relUrl": "/community/#inferno-test-kits"
-  },"76": {
+  },"74": {
     "doc": "Welcome",
     "title": "Contact the Inferno Team",
     "content": "The fastest way to reach the Inferno team is via the Inferno Zulip stream. You can also e-mail the team. ",
     "url": "/community/#contact-the-inferno-team",
     "relUrl": "/community/#contact-the-inferno-team"
-  },"77": {
+  },"75": {
     "doc": "Inferno CLI",
     "title": "Inferno Command Line Inferface",
     "content": "Inferno Commands . The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation. The commands available include: . | Command | Description | . | inferno console | Starts an interactive console session with Inferno. More information can be found in the next section. | . | inferno help [COMMAND] | Describes the available commands, or one specific command if specified | . | inferno migrate | Runs database migrations | . | inferno services start/stop | Starts or stops the background services (nginx, Redis, etc.) for Inferno | . | inferno start | Starts Inferno | . | inferno suite SUBCOMMAND ...ARGS | Performs suite-based operations | . | inferno suites | Lists available test suites | .     . Interactive Console . A local Ruby installation allows you to use pry, a powerful interactive console, to explore and experiment with your tests using the inferno console command: . ᐅ bundle exec inferno console [1] pry(main)&gt; suite = InfernoTemplate::Suite =&gt; InfernoTemplate::Suite [2] pry(main)&gt; suite.groups =&gt; [#&lt;Inferno::Entities::TestGroup @id=\"test_suite_template-capability_statement\", @short_id=\"1\", @title=\"Capability Statement\"&gt;, #&lt;InfernoTemplate::PatientGroup @id=\"test_suite_template-patient_group\", @short_id=\"2\", @title=\"Patient Tests\"&gt;] [3] pry(main)&gt; suite.groups.first.tests =&gt; [#&lt;Inferno::Entities::Test @id=\"test_suite_template-capability_statement-capability_statement_read\", @short_id=\"1.01\", @title=\"Read CapabilityStatement\"&gt;] . ",
     "url": "/docs/getting-started/inferno-cli.html#inferno-command-line-inferface",
     "relUrl": "/docs/getting-started/inferno-cli.html#inferno-command-line-inferface"
-  },"78": {
+  },"76": {
     "doc": "Inferno CLI",
     "title": "Inferno CLI",
     "content": " ",
     "url": "/docs/getting-started/inferno-cli.html",
     "relUrl": "/docs/getting-started/inferno-cli.html"
-  },"79": {
+  },"77": {
     "doc": "Input Presets",
     "title": "Input Presets",
-    "content": "Input presets are sets of predefined input values for a suite. Users can select a preset to use those predefined values without having to manually enter them. Presets must be placed in config/presets. Generating a Preset Template . The Inferno CLI can generate a preset template. ᐅ inferno suite help input_template Usage: inferno suite input_template SUITE_ID Options: f, [--filename=&lt;filename&gt;] Description: Generates a template for creating an input preset for a Test Suite. With -f option, the preset template is written to the specified filename. Without the -f option, the preset template will just be displayed in the console. With the -f option, the preset template will be written to config/presets with the given filename. If you need to find out a test suite’s id, the inferno suites command will display the ids for all of the available test suites. The preset template will contain some metadata for the preset: . | title - This is what is displayed to users when selecting presets | id - A unique id string for this preset. If null, a random id is generated for the preset when Inferno starts. | test_suite_id - The id for the test suite this preset is for | . The preset then contains a list of inputs. Set the value for each input, and those values will be used when a user selects the preset. The input keys beginning with underscores are ignored, and are included to assist in the creation of a preset. { \"title\": \"Preset for Demonstration Suite\", \"id\": null, \"test_suite_id\": \"demo\", \"inputs\": [ { \"name\": \"url\", \"value\": \"https://inferno.healthit.gov/reference-server/r4\", \"_title\": \"URL\", \"_description\": \"Insert url of FHIR server\", \"_type\": \"text\" }, { \"name\": \"patient_id\", \"value\": \"85\", \"_title\": \"Patient ID\", \"_type\": \"text\" } ] } . Presets with Dynamic Values . It is possible for values in templates to be dynamically generated when Inferno starts by using embedded ruby (ERB). For example, this could be used to have a preset with a host which is read from an environment variable. In order to use ERB in a preset: . | Give the filename the .erb extension. For a JSON file with ERB, the extension .json.erb would be typical. | Use the &lt;%= %&gt; ERB tag to insert ruby code which will be evaluated when Inferno starts. The tag will be replaced by the result of executing the ruby code within the tag. | . { \"name\": \"url\", \"value\": \"&lt;%= ENV['REFERENCE_SERVER_HOST'] %&gt;/reference-server/r4\", \"_title\": \"URL\", \"_description\": \"Insert url of FHIR server\", \"_type\": \"text\" } . In the example above, if the REFERENCE_SERVER_HOST environment variable were set to http://example.com, then that input would have a value of \"http://example.com/reference-server/r4\". Presets with Suite Options . It is possible to specify different values for a preset input depending on what suite options have been selected. To do this, add a value_for_options key to the preset input. Within value_for_options, add a list of options with name and value, as well as the value to be used when those options are used. When using the preset, if value_for_options is present, its entries are evaluated in order. The value in the first entry whose options match the options selected by the user will be used. The plain value (outside of value_for_options) will be used if the selected options do not match any of the value_for_options entries. { \"name\": \"all_versions_input\", \"_type\": \"text\", \"value\": \"ig version 1 not selected\", \"value_for_options\": [ { \"options\": [ { \"name\": \"ig_version\", \"value\": \"1\" }, { \"name\": \"other_option\", \"value\": \"1\" } ], \"value\": \"ig version 1 &amp; other option 1 selected\" }, { \"options\": [ { \"name\": \"ig_version\", \"value\": \"1\" }, { \"name\": \"other_option\", \"value\": \"2\" } ], \"value\": \"ig version 1 &amp; other option 2 selected\" } ] } . ",
+    "content": "Input presets are sets of predefined input values for a suite. Users can select a preset to use predefined values without having to manually enter them. Presets must be placed in config/presets. Generating a Preset Template . The Inferno CLI can generate a preset template. ᐅ inferno suite help input_template Usage: inferno suite input_template SUITE_ID Options: f, [--filename=&lt;filename&gt;] Description: Generates a template for creating an input preset for a Test Suite. With -f option, the preset template is written to the specified filename. Without the -f option, the preset template will just be displayed in the console. With the -f option, the preset template will be written to config/presets with the given filename. If you need to find out a test suite’s id, the inferno suites command will display the ids for all of the available test suites. The preset template will contain some metadata for the preset: . | title - This is what is displayed to users when selecting presets | id - A unique id string for this preset. If null, a random id is generated for the preset when Inferno starts. | test_suite_id - The id for the test suite this preset is for | . The preset then contains a list of inputs. Set the value for each input, and those values will be used when a user selects the preset. The input keys beginning with underscores are ignored, and are included to assist in the creation of a preset. { \"title\": \"Preset for Demonstration Suite\", \"id\": null, \"test_suite_id\": \"demo\", \"inputs\": [ { \"name\": \"url\", \"value\": \"https://inferno.healthit.gov/reference-server/r4\", \"_title\": \"URL\", \"_description\": \"Insert url of FHIR server\", \"_type\": \"text\" }, { \"name\": \"patient_id\", \"value\": \"85\", \"_title\": \"Patient ID\", \"_type\": \"text\" } ] } . Presets with Dynamic Values . It is possible for values in templates to be dynamically generated when Inferno starts by using ERB. For example, this could be used to create a preset with a host that is read from an environment variable. In order to use ERB in a preset: . | Give the filename the .erb extension. For a JSON file with ERB, the extension .json.erb would be typical. | Use the &lt;%= %&gt; ERB tag to insert Ruby code, which will be evaluated when Inferno starts. The tag will be replaced by the result of executing the Ruby code within the tag. | . { \"name\": \"url\", \"value\": \"&lt;%= ENV['REFERENCE_SERVER_HOST'] %&gt;/reference-server/r4\", \"_title\": \"URL\", \"_description\": \"Insert URL of FHIR server\", \"_type\": \"text\" } . In the example above, if the REFERENCE_SERVER_HOST environment variable were set to http://example.com, then that input would have a value of \"http://example.com/reference-server/r4\". Presets with Suite Options . It is possible to specify different values for a preset input depending on what suite options have been selected. To do this: . | Add a value_for_options key to the preset input | Within value_for_options, add a list of options with name and value, as well as the value to be used when those options are used. | . When using the preset, if value_for_options is present, its entries are evaluated in order. The value of the first entry whose options match the options selected by the user will be used. The plain value (outside of value_for_options) will be used if the selected options do not match any of the value_for_options entries. { \"name\": \"all_versions_input\", \"_type\": \"text\", \"value\": \"ig version 1 not selected\", \"value_for_options\": [ { \"options\": [ { \"name\": \"ig_version\", \"value\": \"1\" }, { \"name\": \"other_option\", \"value\": \"1\" } ], \"value\": \"ig version 1 &amp; other option 1 selected\" }, { \"options\": [ { \"name\": \"ig_version\", \"value\": \"1\" }, { \"name\": \"other_option\", \"value\": \"2\" } ], \"value\": \"ig version 1 &amp; other option 2 selected\" } ] } . ",
     "url": "/docs/deployment/input-presets.html",
     "relUrl": "/docs/deployment/input-presets.html"
-  },"80": {
+  },"78": {
     "doc": "Making Requests",
     "title": "Making Requests",
     "content": "Inferno provides support for making FHIR requests as well as generic HTTP requests. Accessing Requests and Responses . After making a FHIR or HTTP request, information about it is made available via several methods: . | request - returns a Request object which contains all of the information about the request and the response. | response - returns a Hash containing the status, headers, and body of the response. | resource - returns the response body as a FHIR model. | . test do run do fhir_read(:patient, '123') request # A `Request` object containing the request and response response # A `Hash` containing the response information resource # A FHIR model built from the response body end end . When making assertions against a response or resource, the assertions that are designed to be used with responses and resources will automatically use the response/resource from the last request. It is therefore unnecessary to pass the response/resource in to the assertion unless you want to make assertions against a different response/resource. test do run do fhir_read(:patient, '123') # Using the values from the fhir_read request automatically assert_response_status(200) assert_resource_type(:patient) assert_valid_resource ... # Specifying the request &amp; resource explicitly assert_response_status(200, request: some_other_request) assert_resource_type(:patient, resource: some_other_resource) assert_valid_resource(resource: some_other_resource) end end . Reusing Requests . If you want to reuse a request from an earlier test instead of reissuing it, you can give the initial request a name, and then have your other tests use that named request. group do test do # Declare that this test makes a particular request makes_request :patient_read run do fhir_read(:patient, '123', name: :patient_read) # include the name end end test do # Declare that this test uses the named request \":patient_read\". The test runner # will automatically load this request and make it available within the test. uses_request :patient_read run do # These will all be populated with the request from the first test request response resource end end end . ",
     "url": "/docs/writing-tests/making-requests.html",
     "relUrl": "/docs/writing-tests/making-requests.html"
-  },"81": {
+  },"79": {
     "doc": "Making Requests",
     "title": "FHIR Requests",
     "content": "FHIR Clients . Before making a FHIR request, a client needs to be created. Clients are passed down from a TestSuite or TestGroup to all of their descendants, so it isn’t necessary for each Test to define its own client. When defining a client, you MUST set the base server url, and you MAY set a bearer token and additional custom headers. group do fhir_client do url 'https://example.com/fhir' # required bearer_token 'abc' # optional headers 'X-Custom-Header' =&gt; 'def' # optional end test do run do # FHIR requests will automatically use the client declared above end end end . It is unlikely you will want to hard code the server url or bearer token, so a Ruby symbol can be used to read these values from an input. group do input :server_url, :access_token fhir_client do url :server_url bearer_token :access_token end end . If you need direct access to the FHIR client in a test, it is available via fhir_client. The client is reinstantiated in each test, so changes made to a client within a test do not carry over into other tests. test do run do fhir_client # this returns the FHIR client end end . methods for defining FHIR clients in the API docs . Available FHIR Request Methods . The following methods are currently available for making FHIR requests: . | fhir_create | fhir_delete | fhir_get_capability_statement | fhir_operation | fhir_read | fhir_search | fhir_transaction | . For more details on these methods, see the FHIR Client API documentation. If you need to make other types of FHIR requests, contact the Inferno team so we can prioritize adding them. Here are some examples of how to use the above methods: . test do # Create a resource on a server new_patient = FHIR::Patient.new(name: [{ given: ['Jane'], family: 'Doe'}]) fhir_create(new_patient) # Delete a resource on a server fhir_delete(:patient, 'resource_to_delete_id_1') fhir_delete('Patient', 'resource_to_delete_id_2') # Fetch a server's CapabilityStatement fhir_get_capability_statement # Perform a FHIR Operation parameters = FHIR::Parameters.new( parameter: [ { name: 'code', valueCode: '85354-9' }, { name: 'system' valueUri: 'http://loinc.org' } ] ) fhir_operation(\"/CodeSystem/$lookup\", body: parameters) # Read a FHIR resource fhir_read(:patient, 'resource_to_read_id') fhir_read('Patient', 'resource_to_read_id') # Perform a FHIR search w/GET fhir_search(:patient, params: { family: 'Smith' }) fhir_search('Patient', params: { family: 'Smith' }) # Perform a FHIR search w/POST fhir_search(:patient, params: { family: 'Smith' }, search_method: :post) fhir_search('Patient', params: { family: 'Smith' }, search_method: :post) # Perform a FHIR transaction transaction_bundle = FHIR::Bundle.new( type: 'transaction', entry: [ # a list of transaction entries ] ) fhir_transaction(transaction_bundle) end . Making Requests to Multiple Servers . If you need to make requests to multiple FHIR servers, this can be accomplished by naming each fhir_client. group do fhir_client :client_a do url :url_a end fhir_client :client_b do url :url_b end test do run do fhir_read(:patient, '123', client: :client_a) fhir_read(:patient, '456', client: :client_b) end end end . OAuth Credentials . When making requests to FHIR servers using OAuth2-based authorization (such as the SMART App Launch workflow), OAuth credentials support an access token and, optionally, a refresh token and the information needed to perform a token refresh (refresh token, token endpoint, client ID, client secret). If all of this information is available, the FHIR client will automatically refresh the access token if it will expire in under a minute. If no information on the access token duration is available, the token will be refreshed prior to each FHIR request. group do input :credentials, type: :oauth_credentials fhir_client do url 'https://example.com/fhir' oauth_credentials :credentials end test do run do sleep 3600 # The access token will automatically refresh if it has expired fhir_read(:patient, '123') end end end . ",
     "url": "/docs/writing-tests/making-requests.html#fhir-requests",
     "relUrl": "/docs/writing-tests/making-requests.html#fhir-requests"
-  },"82": {
+  },"80": {
     "doc": "Making Requests",
     "title": "HTTP Requests",
     "content": "HTTP Clients . It is not necessary to create a HTTP client in order to make HTTP requests, but it may be helpful if you need to make multiple requests to the same server. If an HTTP client is available, then the HTTP request methods only need the relative path from the client’s url rather than an absolute url. The syntax for doing so is the same as that for FHIR clients, except the method is called http_client rather than fhir_client. group do http_client do url 'https://example.com' bearer_token 'abc' headers 'X-Custom-Header' =&gt; 'def' end test do run do get '/path' # Makes a request to `https://example.com/path` end end end . Available HTTP Request Methods . The following methods are currently available for making HTTP requests: . | get | post | delete | stream - used to stream the response from a GET request | . For more details on these methods, see the HTTP Client API documentation. If you need to make other types of HTTP requests, contact the Inferno team so we can prioritize adding them. ",
     "url": "/docs/writing-tests/making-requests.html#http-requests",
     "relUrl": "/docs/writing-tests/making-requests.html#http-requests"
-  },"83": {
+  },"81": {
     "doc": "Test Properties",
     "title": "Test, Suite, and Group Properties",
     "content": " ",
     "url": "/docs/writing-tests/properties.html#test-suite-and-group-properties",
     "relUrl": "/docs/writing-tests/properties.html#test-suite-and-group-properties"
-  },"84": {
+  },"82": {
     "doc": "Test Properties",
     "title": "General Properties",
     "content": "Config . Configure a runnable and its descendants. For more information, see Configuration. config in the API docs . Description . A detailed description displayed in the UI. Markdown is supported. There are several ways to define long strings in ruby: . test do description 'This is a brief description' description 'This is a longer description. There are several ways to split ' \\ 'it up over multiple lines, and this is one of the worst ways.' description &lt;&lt;~DESCRIPTION This is another long description. This is an ok way to represent a long string in ruby. DESCRIPTION description %( This is another long description. This is a pretty good way to represent a long string in ruby. ) end . description in the API docs . Id . A unique identifier for a test, group, or suite. Inferno will automatically create ids if they are not specified. It is important to create ids yourself if you need to refer to a test or group elsewhere. TestSuite ids appear in Inferno’s urls, so consideration should be given to choosing a suite id that will make sense to users as a url path. Links to a test suite take the form of INFERNO_BASE_PATH/TEST_SUITE_ID, and individual test session urls look like INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID. test do id :us_core_patient_read end group do test from: :us_core_patient_read end . id in the API docs . Input Instructions . Define additional instructions which will be displayed above a runnable’s inputs. These instructions only appear when running this particular runnable. They will not appear if you run a parent or child of this runnable. Markdown is supported. group do input_instructions %( Register Inferno as a standalone application using the following information: * Redirect URI: `#{SMARTAppLaunch::AppRedirectTest.config.options[:redirect_uri]}` Enter in the appropriate scope to enable patient-level access to all relevant resources. If using SMART v2, v2-style scopes must be used. In addition, support for the OpenID Connect (openid fhirUser), refresh tokens (offline_access), and patient context (launch/patient) are required. ) end . input_instructions in the API docs . Optional/Required . [Test &amp; Group only] Mark a test or group as optional/required. Tests and Groups are required by default. The results of optional tests do not affect the test result of their parent. group do optional # Makes this group optional test do optional # Makes this test optional end test from: :some_optional_test do required # Make an optional test required end end . optional in the API docs . required in the API docs . Required Suite Options . [Test &amp; Group only] Define the suite options that must be selected in order for a runnable to be included in the current session. See Hiding Tests Based on Suite Options. class MyTestSuite &lt; Inferno::TestSuite # suite_option :smart_app_launch_version, # ... # Suite option requirements can be defined inline group from: :smart_app_launch_v1, required_suite_options: { smart_app_launch_version: 'smart_app_launch_1' } # Suite option requirements can be defined within a test/group definition group from: :smart_app_launch_v2 do required_suite_options smart_app_launch_version: 'smart_app_launch_2' end end . required_suite_options in the API docs . Short Title . A short title which is displayed in the left side of the UI: . group do short_title 'Patient Tests' end . short_title in the API docs . Title . The title which is displayed in the UI: . test do title 'US Core Patient Read Interaction' end . title in the API docs . ",
     "url": "/docs/writing-tests/properties.html#general-properties",
     "relUrl": "/docs/writing-tests/properties.html#general-properties"
-  },"85": {
+  },"83": {
     "doc": "Test Properties",
     "title": "Test Specific Properties",
     "content": "Run . run defines a block of code to execute when the test is run. A test will typically make one or more assertions. If no assertions fail, then the test passes. test do run do assert 1 == 0, 'One is not equal to zero' end end . run in the API docs . ",
     "url": "/docs/writing-tests/properties.html#test-specific-properties",
     "relUrl": "/docs/writing-tests/properties.html#test-specific-properties"
-  },"86": {
+  },"84": {
     "doc": "Test Properties",
     "title": "TestGroup Specific Properties",
     "content": "Run as Group . run_as_group makes a group run as a single unit. When true, users will not be able to run any of the group’s children individually. They will only be able to run the whole group at once. group do run_as_group # These tests can not be run individually test do # ... end test do # ... end end . run_as_group in the API docs . ",
     "url": "/docs/writing-tests/properties.html#testgroup-specific-properties",
     "relUrl": "/docs/writing-tests/properties.html#testgroup-specific-properties"
-  },"87": {
+  },"85": {
     "doc": "Test Properties",
     "title": "TestSuite Specific Properties",
     "content": "Links . Define a list of links which are displayed in the footer of the UI. class MyTestSuite &lt; Inferno::TestSuite links [ { label: 'Report Issue', url: 'https://github.com/onc-healthit/onc-certification-g10-test-kit/issues/' }, { label: 'Open Source', url: 'https://github.com/onc-healthit/onc-certification-g10-test-kit/' } ] end . links in the API docs . Suite Option . Define a user-selectable option for a suite. See Suite Options documentation. class MyTestSuite &lt; Inferno::TestSuite suite_option :smart_app_launch_version, title: 'SMART App Launch Version', list_options: [ { label: 'SMART App Launch 1.0.0', value: 'smart_app_launch_1' }, { label: 'SMART App Launch 2.0.0', value: 'smart_app_launch_2' } ] end . suite_option in the API docs . Version . Define the suite’s version, which is displayed in the UI. class MySuite &lt; Inferno::TestSuite version '1.2.3' end . version in the API docs . Suite Summary . Define a summary to display on the suite options selection page. If the suite has no options, the summary is not used. If no suite summary is defined, the description will be displayed on the options selection page. class MyTestSuite &lt; Inferno::TestSuite suite_summary %( This is a brief description of the suite which will be displayed on the suite options selection page. ) end . suite_summary in the API docs . ",
     "url": "/docs/writing-tests/properties.html#testsuite-specific-properties",
     "relUrl": "/docs/writing-tests/properties.html#testsuite-specific-properties"
-  },"88": {
+  },"86": {
     "doc": "Test Properties",
     "title": "Test Properties",
     "content": " ",
     "url": "/docs/writing-tests/properties.html",
     "relUrl": "/docs/writing-tests/properties.html"
-  },"89": {
+  },"87": {
     "doc": "Template Layout",
     "title": "Template Layout",
     "content": "After cloning the template repository, you will have a directory structure that looks something like this: . ├── Dockerfile ├── Gemfile ├── config │   └── ... ├── config.ru ├── data │   └── redis │   └── ... ├── docker-compose.yml ├── docker-compose.background.yml ├── inferno_template.gemspec ├── lib │   ├── inferno_template │   │   └── igs │   │      └── ... │   └── inferno_template.rb ├── spec │   ├── ... └── worker.rb . | Dockerfile - This file controls how the Docker image for your tests is built. | Gemfile - This file is where you add extra Ruby dependencies. | config - This folder contains configuration for the database and web servers. | config.ru - This is the main file for Inferno’s web server process. | data - This folder includes the database and Redis snapshots. | docker-compose.yml - This file coordinates and runs all of the services Inferno needs. | docker-compose.background.yml - This file coordinates and runs the background services needed for running Inferno. | inferno_template.gemspec - This file controls how your tests are packaged up as a distributable Ruby gem. This is also where you can add additional Ruby gems if you need them. | lib - This folder is where the code for your tests goes. | lib/{YOUR_TEST_KIT_NAME}/igs - This is where IG packages go so that they can be used by the validator. See /lib/inferno_template/igs for reference. | spec - This folder is for unit tests. | worker.rb - This is the main file for Inferno’s test runner process. | . ",
     "url": "/docs/getting-started/repo-layout-and-organization.html",
     "relUrl": "/docs/getting-started/repo-layout-and-organization.html"
-  },"90": {
+  },"88": {
     "doc": "Template Layout",
     "title": "Test Organization",
     "content": "Inferno Test Kits are organized like ruby gems to enable them to be easily distributed. | Tests must live in the lib folder. | The lib folder should contain only one file, which is the main entrypoint for your Test Suite. The name of this file should be your_test_kit_name.rb, and this is what other Test Kits will require in order to load your tests. | All other test files should live in a subdirectory in lib, and the convention is to have this subdirectory have the same name as the single file in lib, minus the extension. | The package.tgz file for the IG you’re testing against should be placed in lib/your_test_kit_name/igs. This will allow you to validate against the profiles in that IG. | . For example, if I were creating a Test Kit for the US Core Implementation Guide, my lib folder would look like this: . lib ├── us_core_test_kit.rb └── us_core_test_kit ├── patient_tests.rb ├── condition_tests.rb ├── ... └── igs └── package.tgz . And anyone wanting to use this test kit, would load it with require 'us_core_test_kit'. If you want more examples, check out the Community Page to view all available Test Kits. ",
     "url": "/docs/getting-started/repo-layout-and-organization.html#test-organization",
     "relUrl": "/docs/getting-started/repo-layout-and-organization.html#test-organization"
-  },"91": {
+  },"89": {
     "doc": "Roadmap",
     "title": "The Inferno Architecture",
     "content": "Design of inferno; inferno principals; etc . ",
     "url": "/about/roadmap.html#the-inferno-architecture",
     "relUrl": "/about/roadmap.html#the-inferno-architecture"
-  },"92": {
+  },"90": {
     "doc": "Roadmap",
     "title": "Roadmap",
     "content": " ",
     "url": "/about/roadmap.html",
     "relUrl": "/about/roadmap.html"
-  },"93": {
-    "doc": "Ruby Reference",
-    "title": "Ruby Reference",
-    "content": "Put here . ",
+  },"91": {
+    "doc": "Inferno Ruby API",
+    "title": "Inferno Ruby API",
+    "content": "The documentation for Inferno’s Ruby API can be found here. ",
     "url": "/docs/ruby.html",
     "relUrl": "/docs/ruby.html"
-  },"94": {
+  },"92": {
     "doc": "Scratch",
     "title": "Scratch",
-    "content": "Scratch provides an alternative to inputs and outputs for passing information between tests. Inputs and outputs should be preferred over scratch when possible. | Inputs/Outputs | Scratch | . | Stored in the database | Stored in memory | . | Strings | Any data type | . | Persist through an entire test session | Lifetime limited to a single test run | . | Input values only change if they are a test output | Any test can change scratch | . The major advantage of scratch is that its contents are stored in memory. Inputs are loaded from the database at the start of each test. If tests require a large number of complex objects, scratch provides a way to avoid repeatedly loading, deserializing, and instantiating them. The major limitation of scratch is that it only persists through a single test run (i.e., a single click of the Run Tests button). ",
+    "content": "Scratch provides an alternative to inputs and outputs for passing information between tests. The table below shows the main differences between the two options: . | Inputs/Outputs | Scratch | . | Stored in the database | Stored in memory | . | Strings | Any data type | . | Persist through an entire test session | Lifetime limited to a single test run | . | Input values only change if they are a test output   | Any test can change scratch | .   . Inputs are loaded from the database at the start of each test, so the major advantage of scratch is that its contents are stored in memory. Also, if tests require a large number of complex objects, scratch provides a way to avoid repeatedly loading, deserializing, and instantiating them. The major limitation of scratch, however, is that it only persists through a single test run (i.e., a single click of the Run Tests button). Inputs and outputs are therefore recommended over scratch when possible. ",
     "url": "/docs/advanced-test-features/scratch.html",
     "relUrl": "/docs/advanced-test-features/scratch.html"
-  },"95": {
+  },"93": {
     "doc": "Scratch",
     "title": "Example",
-    "content": "scratch is just a plain Hash which is passed to each test. It persists throughout a single test run, and changes made it in one test will be visible to any subsequent tests in that run. class MyGroup &lt; Inferno::TestGroup # Since scratch is lost at the end of a test run, by making this group run # together, that ensures that the tests run together and the scratch will # remain present. run_as_group test do run do # retrieve a large number of FHIR resources # ... # store resources in scratch scratch[:observations] = a_large_number_of_fhir_observations scratch[:conditions] = a_large_number_of_fhir_conditions end end test do run do # read resources from scratch perform_some_operation_on(scratch[:observations]) end end test do run do # read resources from scratch perform_some_operation_on(scratch[:conditions]) end end end . ",
+    "content": "scratch is a plain Hash that is passed to each test. It persists throughout a single test run, and changes made to it in one test will be visible to any subsequent tests in that run. class MyGroup &lt; Inferno::TestGroup # Since scratch is lost at the end of a test run, by making this group run # together, that ensures that the tests run together and the scratch will # remain present. run_as_group test do run do # retrieve a large number of FHIR resources # ... # store resources in scratch scratch[:observations] = a_large_number_of_fhir_observations scratch[:conditions] = a_large_number_of_fhir_conditions end end test do run do # read resources from scratch perform_some_operation_on(scratch[:observations]) end end test do run do # read resources from scratch perform_some_operation_on(scratch[:conditions]) end end end . ",
     "url": "/docs/advanced-test-features/scratch.html#example",
     "relUrl": "/docs/advanced-test-features/scratch.html#example"
-  },"96": {
+  },"94": {
     "doc": "Security Considerations",
     "title": "Security Considerations",
     "content": " ",
     "url": "/docs/deployment/security.html",
     "relUrl": "/docs/deployment/security.html"
-  },"97": {
+  },"95": {
     "doc": "Security Considerations",
     "title": "Server-Side Request Forgery (SSRF)",
-    "content": "Inferno is designed to make requests against user-submitted urls, which makes it important to mitigate against SSRF. It is not practical to implement SSRF protection within Inferno itself because which urls are valid and invalid vary based on the particular deployment. Because of this, it is recommended that deployments use network-layer SSRF mitigations. For example, the Inferno team protects against SSRF in public deployments by implementing firewall rules in the host operating system which deny Inferno access to the internal network. ",
+    "content": "Inferno is designed to make requests against user-submitted URLs, which makes it important to mitigate against SSRF. It is not practical to implement SSRF protection within Inferno itself because which URLs are valid versus which ones are invalid varies based on the particular deployment. Because of this, it is recommended that deployments use network-layer SSRF mitigations. For example, the Inferno team protects against SSRF in public deployments by implementing firewall rules in the host operating system, which denies Inferno access to the internal network. ",
     "url": "/docs/deployment/security.html#server-side-request-forgery-ssrf",
     "relUrl": "/docs/deployment/security.html#server-side-request-forgery-ssrf"
-  },"98": {
+  },"96": {
     "doc": "Serving HTTP Requests",
     "title": "Serving HTTP Requests",
-    "content": "Some testing scenarios require that Inferno respond to incoming HTTP requests. For these cases, it is possible for a suite to define custom routes which will be served by Inferno. For example, authorization workflows based on asymmetric client credentials require that public keys are served at an accessible location, so Inferno needs to be able to serve these keys in order to support these workflows. To prevent conflicts between routes defined by different test suites, suite-defined routes are served at INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH. ",
+    "content": "Some testing scenarios require that Inferno responds to incoming HTTP requests. For these cases, a suite can define custom routes to be served by Inferno. For example, authorization workflows based on asymmetric client credentials require that public keys are served at an accessible location, so Inferno needs to be able to serve these keys in order to support these workflows. To prevent conflicts between routes defined by different test suites, suite-defined routes are served at INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH. ",
     "url": "/docs/advanced-test-features/serving-http-requests.html",
     "relUrl": "/docs/advanced-test-features/serving-http-requests.html"
-  },"99": {
+  },"97": {
     "doc": "Serving HTTP Requests",
     "title": "Defining Custom Routes",
-    "content": "Custom routes are defined using the route method. class MyTestSuite &lt; Inferno::TestSuite route(:get, 'my_custom_route', my_route_handler) end . route takes three arguments, a symbol for the HTTP verb served by the route (:get, :post, etc., or :all), a String for the route path, and a route handler. The route handler is any Rack-compatible object. route in the API docs . Route Handlers . Rack is a standard interface for handling HTTP requests in ruby. Route handlers must be a Rack-compatible object, which could be something as simple as a Proc/Lambda, or an entire web application built in something like Sinatra. The requirements for a Rack-compatible route handler are as follows: . | It must respond to the call method which takes one argument (the Rack environment). | It must return a three element array consisting of: . | The HTTP status code (integer) | The response headers (Hash) | The response body (Array of Strings) | . | . Some simple route handlers could look like this: . class MyTestSuite &lt; Inferno::TestSuite id :my_test_suite my_html = File.read(File.join(__dir__, 'my_html.html')) my_html_route_handler = proc { [200, { 'Content-Type' =&gt; 'text/html' }, [html]] } # Serve an html page at INFERNO_PATH/my_test_suite/custom/my_html_page route :get, '/my_html_page', my_html_route_handler my_jwks = File.read(File.join(__dir__, 'my_jwks.json')) my_jwks_route_handler = proc { [200, { 'Content-Type' =&gt; 'application/json' }, [my_jwks]] } # Serve a JSON file at INFERNO_PATH/my_test_suite/custom/.well-known/jwks.json route :get, '/.well-known/jwks.json', my_jwks_route_handler end . ",
+    "content": "Custom routes are defined using the route method. class MyTestSuite &lt; Inferno::TestSuite route(:get, 'my_custom_route', my_route_handler) end . route takes three arguments, a symbol for the HTTP verb served by the route (:get, :post, etc., or :all), a String for the route path, and a route handler. The following section has more information about route handlers. route in the API docs . ",
     "url": "/docs/advanced-test-features/serving-http-requests.html#defining-custom-routes",
     "relUrl": "/docs/advanced-test-features/serving-http-requests.html#defining-custom-routes"
-  },"100": {
+  },"98": {
+    "doc": "Serving HTTP Requests",
+    "title": "Route Handlers",
+    "content": "Rack is a standard interface for handling HTTP requests in Ruby. Route handlers must be a Rack-compatible object, which could be something as simple as a Lambda, or an entire web application built in something like Sinatra. The requirements for a Rack-compatible route handler are as follows: . | It must respond to the call method which takes one argument, the environment. | It must return a three element array consisting of: . | The HTTP status code (integer) | The response headers (Hash) | The response body (Array of Strings) | . | . Here are a few examples: . class MyTestSuite &lt; Inferno::TestSuite id :my_test_suite my_html = File.read(File.join(__dir__, 'my_html.html')) my_html_route_handler = proc { [200, { 'Content-Type' =&gt; 'text/html' }, [html]] } # Serve an html page at INFERNO_PATH/my_test_suite/custom/my_html_page route :get, '/my_html_page', my_html_route_handler my_jwks = File.read(File.join(__dir__, 'my_jwks.json')) my_jwks_route_handler = proc { [200, { 'Content-Type' =&gt; 'application/json' }, [my_jwks]] } # Serve a JSON file at INFERNO_PATH/my_test_suite/custom/.well-known/jwks.json route :get, '/.well-known/jwks.json', my_jwks_route_handler end . ",
+    "url": "/docs/advanced-test-features/serving-http-requests.html#route-handlers",
+    "relUrl": "/docs/advanced-test-features/serving-http-requests.html#route-handlers"
+  },"99": {
     "doc": "SSL Configuration",
     "title": "SSL Configuration",
     "content": "Inferno uses nginx as a reverse proxy, and it can be configured to serve Inferno with SSL. Configuring nginx for HTTPS . In config/nginx.conf, there is a server block which starts like this: . server { # ... listen 80; . Right below listen 80;, add the following to serve Inferno with SSL: . listen 443 default_server ssl; ssl_certificate /etc/ssl/certs/inferno/inferno.crt; ssl_certificate_key /etc/ssl/certs/inferno/inferno.key; ssl_protocols TLSv1.2 TLSv1.3; . Adding Certificate to nginx . Once the nginx configuration has been updated, a certificate needs to be mounted into its docker image. In docker-compose.yml, update the volumes list to include the certificates: . nginx: image: nginx volumes: - ./config/nginx.conf:/etc/nginx/nginx.conf # Replace LOCAL_CERT_PATH with the path to a folder containing inferno.crt # and inferno.key - LOCAL_CERT_PATH:/etc/ssl/certs/inferno:ro # ... ",
     "url": "/docs/deployment/ssl.html",
     "relUrl": "/docs/deployment/ssl.html"
-  },"101": {
-    "doc": "Suite/Group/Test Configuration",
-    "title": "Test Configuration",
-    "content": "Inferno provides two mechanisms for altering test behavior. Configuration . | Defined at the test, group, or suite level. | Evaluated at boot time. | Values chosen by test authors. | Can be used within a test’s run block to modify test behavior. | Can modify inputs/outputs/requests to avoid naming collisions. | Can modify input properties such as whether an input is required or locked. | Can define custom boot-time options which are used within a test’s run block to modify test behavior. | . Suite Options . | Only defined at the suite level. | Evaluated at test session creation time. | Values chosen by test users. | Can modify which tests/groups appear in the UI and are executed. | Can be used within a test’s run block to modify test behavior. | . ",
-    "url": "/docs/advanced-test-features/test-configuration.html#test-configuration",
-    "relUrl": "/docs/advanced-test-features/test-configuration.html#test-configuration"
-  },"102": {
-    "doc": "Suite/Group/Test Configuration",
-    "title": "Configuration",
-    "content": "Configuration provides a way for test authors to avoid naming conflicts when reusing tests and set boot-time options. For example, a suite may want to run a particular group twice with distinct inputs and outputs. Those groups can be configured so that their inputs and outputs are distinct from each other without having to alter the group itself. Additionally, configuration can change input properties such as whether a particular input is locked or required. When a runnable defines some configuration, that configuration also applies to all of that runnable’s children. Configuration defined by a parent runnable overrides any child runnable’s configuration. Configurable in the API docs . Renaming Inputs/Outputs/Requests . Renaming inputs and outputs allows test authors to handle potential naming conflicts when using the same tests multiple times, or using tests from multiple sources with differently named inputs. Consider a test group which needs to check which versions of TLS are supported by two different servers. This group can use this test which checks which TLS versions a server supports based on a url input. In order to check the TLS versions supported by two different servers, config can be used to make each instance of this test use a different input. class MyTestGroup &lt; Inferno::TestGroup input :source_server_url input :destination_server_url # Inline config test from: :tls_version_test, id: :source_server_tls_test, config: { inputs: { url: { name: :source_server_url } } } # Config within test block test from: :tls_version_test do id :destination_server_tls_test config( inputs: { url: { name: :destination_server_url } } ) end end . Outputs and requests can be renamed in the same fashion, using outputs or requests as the key in config. Altering Input Properties . In addition to renaming an input, other input properties can be altered as well. Any of the input options used to define an input can be changed. For example, for SMART App Launch STU 1, PKCE support is optional. The following inputs are defined to let users choose whether to use PKCE during testing: . class StandaloneLaunchGroup &lt; Inferno::TestGroup # ... input :use_pkce, title: 'Proof Key for Code Exchange (PKCE)', type: 'radio', default: 'false', options: { list_options: [ { label: 'Enabled', value: 'true' }, { label: 'Disabled', value: 'false' } ] } input :pkce_code_challenge_method, optional: true, title: 'PKCE Code Challenge Method', type: 'radio', default: 'S256', options: { list_options: [ { label: 'S256', value: 'S256' }, { label: 'plain', value: 'plain' } ] } # ... end . For SMART App Launch STU 2, PKCE support is required, and it is required that PKCE use the S256 code challenge method. The same launch tests are reused for STU 2, but the inputs are configured to require PKCE with the S256 code challenge method. The defaults are set to the required value, and the inputs are locked to prevent users from changing them. class StandaloneLaunchGroupSTU2 &lt; StandaloneLaunchGroup # ... config( inputs: { use_pkce: { default: 'true', locked: true }, pkce_code_challenge_method: { default: 'S256', locked: true } } ) # ... end . Custom Configuration Options . Custom configuration options allow information to be loaded at boot time and made available to tests. For example, a test could have optional functionality which is enabled by setting a specific configuration option value. This test which checks which TLS versions a server supports allows test authors to set the minimum and maximum allowed TLS versions. This gives the test the flexibility to be used in a variety of different testing scenarios with different TLS requirements. The test’s configuration options are described in its README For example, the Bulk Data Implementation Guide requires that TLS 1.2 or later be used, so Inferno bulk data tests can configure the TLS test as follows: . test from: :tls_version_test, config: { options: { minimum_allowed_version: OpenSSL::SSL::TLS1_2_VERSION } } . ",
-    "url": "/docs/advanced-test-features/test-configuration.html#configuration-1",
-    "relUrl": "/docs/advanced-test-features/test-configuration.html#configuration-1"
-  },"103": {
-    "doc": "Suite/Group/Test Configuration",
-    "title": "Suite Options",
-    "content": "Suite options provide a way for users to select high level options that alter which tests/groups are executed during a session. For example, a test suite may support testing against different versions of an implementation guide, and based on which version the user selects when starting their session, the tests for the other versions can be hidden. suite_option in the API docs . Defining Suite Options . Suite options must be defined within a test suite and have the following properties: . | identifier - a Symbol which is used to identify this option | title - the title which is displayed to users | list_options - the possible values for this option. Each list option contains a label which is displayed to users, and a value which is the actual value stored when the user selects this option. | . class MyTestSuite &lt; Inferno::TestSuite suite_option :smart_app_launch_version, title: 'SMART App Launch Version', list_options: [ { label: 'SMART App Launch 1.0.0', value: 'smart_app_launch_1' }, { label: 'SMART App Launch 2.0.0', value: 'smart_app_launch_2' } ] end . Hiding Tests Based on Suite Options . Tests/groups can be hidden from the user and prevented from executing based on the selected suite options by defining required_suite_options. In the following example (using the suite option definition from above), the user will only see the SMART App Launch group for the version which they selected when starting their session. class MyTestSuite &lt; Inferno::TestSuite # suite_option :smart_app_launch_version, # ... # Suite option requirements can be defined inline group from: :smart_app_launch_v1, required_suite_options: { smart_app_launch_version: 'smart_app_launch_1' } # Suite option requirements can be defined within a test/group definition group from: :smart_app_launch_v2 do required_suite_options smart_app_launch_version: 'smart_app_launch_2' end end . Altering Test Behavior Based on Suite Options . Test behavior can be modified by inspecting the value of an option inside of the run block. class MyTest &lt; Inferno::Test run do if suite_options[:smart_app_launch_version] == 'smart_app_launch_1' # Perform SMART App Launch v1 behavior elsif suite_options[:smart_app_launch_version] == 'smart_app_launch_2' # Perform SMART App Launch v2 behavior end end end . ",
-    "url": "/docs/advanced-test-features/test-configuration.html#suite-options-1",
-    "relUrl": "/docs/advanced-test-features/test-configuration.html#suite-options-1"
-  },"104": {
-    "doc": "Suite/Group/Test Configuration",
-    "title": "Suite/Group/Test Configuration",
-    "content": " ",
+  },"100": {
+    "doc": "Altering Test Behavior",
+    "title": "Altering Test Behavior",
+    "content": "Inferno provides two mechanisms for altering test behavior: Configuration and Suite Options. ",
     "url": "/docs/advanced-test-features/test-configuration.html",
     "relUrl": "/docs/advanced-test-features/test-configuration.html"
-  },"105": {
+  },"101": {
+    "doc": "Altering Test Behavior",
+    "title": "Configuration",
+    "content": "Configuration provides a way for test authors to set boot time options. Some additional information about Confguration: . | Defined at the test, group, or suite level. | Evaluated at boot time. | Values chosen by test authors. | Can be used within a test’s run block to modify test behavior. | Can modify inputs/outputs/requests to avoid naming collisions. | Can modify input properties such as whether an input is required or locked. | Can define custom boot-time options which are used within a test’s run block to modify test behavior. | . For example, a suite may want to run a particular group twice with different sets of inputs and outputs. These groups can be configured so that their inputs and outputs are distinct from each other, without having to alter the group itself. When a runnable defines some configuration, that configuration also applies to all of that runnable’s children. Configuration defined by a parent runnable overrides any child runnable’s configuration. Configurable in the API docs . Renaming Inputs, Outputs, and Requests . Renaming inputs and outputs allows test authors to handle potential naming conflicts when using the same tests multiple times, or using tests from multiple sources with differently named inputs. Consider a test group which needs to check which versions of TLS are supported by two different servers. This group can use this test which checks the TLS versions a server supports based on a url input. In order to check the TLS versions supported by two different servers, config can be used to make each instance of this test use a different input. class MyTestGroup &lt; Inferno::TestGroup input :source_server_url input :destination_server_url # Inline config test from: :tls_version_test, id: :source_server_tls_test, config: { inputs: { url: { name: :source_server_url } } } # Config within test block test from: :tls_version_test do id :destination_server_tls_test config( inputs: { url: { name: :destination_server_url } } ) end end . Outputs and requests can be renamed in the same fashion, using outputs or requests as the key in config. Altering Input Properties . In addition to renaming an input, other input properties can be altered as well. Any of the input options used to define an input can be changed. For example, for SMART App Launch STU 1, PKCE support is optional. The following inputs are defined to let users choose whether to use PKCE during testing: . class StandaloneLaunchGroup &lt; Inferno::TestGroup # ... input :use_pkce, title: 'Proof Key for Code Exchange (PKCE)', type: 'radio', default: 'false', options: { list_options: [ { label: 'Enabled', value: 'true' }, { label: 'Disabled', value: 'false' } ] } input :pkce_code_challenge_method, optional: true, title: 'PKCE Code Challenge Method', type: 'radio', default: 'S256', options: { list_options: [ { label: 'S256', value: 'S256' }, { label: 'plain', value: 'plain' } ] } # ... end . For SMART App Launch STU 2, PKCE support is required, and it is required that PKCE use the S256 code challenge method. The same launch tests are reused for STU 2, but the inputs are configured to require PKCE with the S256 code challenge method. The defaults are set to the required value, and the inputs are locked to prevent users from changing them. class StandaloneLaunchGroupSTU2 &lt; StandaloneLaunchGroup # ... config( inputs: { use_pkce: { default: 'true', locked: true }, pkce_code_challenge_method: { default: 'S256', locked: true } } ) # ... end . Custom Configuration Options . Custom configuration options allow information to be loaded at boot time and made available to tests. For example, a test could have optional functionality which is enabled by setting a specific configuration option value. This test, which checks the TLS versions a server supports, allows test authors to set minimum and maximum allowed TLS versions. This gives the test flexibility to be used in a variety of different testing scenarios with different TLS requirements. The test’s configuration options are described in its README For example, the Bulk Data IG requires that TLS 1.2 or later be used, so Inferno bulk data tests can configure the TLS test as follows: . test from: :tls_version_test, config: { options: { minimum_allowed_version: OpenSSL::SSL::TLS1_2_VERSION } } . ",
+    "url": "/docs/advanced-test-features/test-configuration.html#configuration",
+    "relUrl": "/docs/advanced-test-features/test-configuration.html#configuration"
+  },"102": {
+    "doc": "Altering Test Behavior",
+    "title": "Suite Options",
+    "content": "Suite options provide a way for users to select high level options that alter which tests and/or groups are executed during a session. For example, a test suite may support testing against different versions of an IG, and based on which version the user selects when starting their session, the tests for the other versions are hidden. Some additional information about Suite Options: . | Only defined at the suite level. | Evaluated at test session creation time. | Values chosen by test users. | Can modify which tests and/or groups appear in the UI and are executed. | Can be used within a test’s run block to modify test behavior. | . suite_option in the API docs . Defining Suite Options . Suite options must be defined within a test suite and have the following properties: . | A Symbol which is used to identify this option (e.g. :smart_app_launch_version in the below example) | title - the title which is displayed to users | list_options - the possible values for this option. Each list option contains a label which is displayed to users, and a value which is the actual value stored when the user selects this option. | . class MyTestSuite &lt; Inferno::TestSuite suite_option :smart_app_launch_version, title: 'SMART App Launch Version', list_options: [ { label: 'SMART App Launch 1.0.0', value: 'smart_app_launch_1' }, { label: 'SMART App Launch 2.0.0', value: 'smart_app_launch_2' } ] end . Hiding Tests Based on Suite Options . Tests and groups can be hidden from the user and prevented from executing based on the selected suite options by defining required_suite_options. In the following example (using the suite option definition from above), the user will only see the SMART App Launch group for the version which they selected when starting their session. class MyTestSuite &lt; Inferno::TestSuite # suite_option :smart_app_launch_version, # ... # Suite option requirements can be defined inline group from: :smart_app_launch_v1, required_suite_options: { smart_app_launch_version: 'smart_app_launch_1' } # Suite option requirements can also be defined within a test/group definition group from: :smart_app_launch_v2 do required_suite_options smart_app_launch_version: 'smart_app_launch_2' end end . Altering Test Behavior Based on Suite Options . Test behavior can be modified by inspecting the value of an option inside of the run block. class MyTest &lt; Inferno::Test run do if suite_options[:smart_app_launch_version] == 'smart_app_launch_1' # Perform SMART App Launch v1 behavior elsif suite_options[:smart_app_launch_version] == 'smart_app_launch_2' # Perform SMART App Launch v2 behavior end end end . ",
+    "url": "/docs/advanced-test-features/test-configuration.html#suite-options",
+    "relUrl": "/docs/advanced-test-features/test-configuration.html#suite-options"
+  },"103": {
     "doc": "Test Inputs and Outputs",
     "title": "Test Inputs and Outputs",
     "content": "Inputs and outputs provide a structured way to pass information into and out of tests. When a user initiates a test run, a modal is displayed for providing input values. When multiple tests are run together, the user will not be prompted for inputs that are populated by the output of a previous test in the run. Currently, all inputs and outputs are stored as strings. ",
     "url": "/docs/writing-tests/test-inputs-outputs.html",
     "relUrl": "/docs/writing-tests/test-inputs-outputs.html"
-  },"106": {
+  },"104": {
     "doc": "Test Inputs and Outputs",
     "title": "Inputs",
     "content": "Defining Inputs . The input method defines an input. input can take several arguments, but only the identifier is required: . | identifier - (required) a name for this input. The input value is available in the run block using this name. | title: - a title which is displayed in the UI. | description: - a description which is displayed in the UI. | type: - controls the type of HTML input element used in the UI. Currently there are 5 possible values: . | 'text' - (default) a regular input field. | 'textarea' - for a text area input field. | 'radio' - for a radio button singular selection field. | 'checkbox - for a checkbox field. In tests, a checkbox input is represented as an array of the selected values. | 'oauth_credentials' - a complex type for storing OAuth2 credentials. When used by a FHIR client, the access token will automatically refresh if possible. | . | default: - default value for the input. | optional: - (default: false) whether the input is optional. | options: - possible input option formats based on input type. | list_options: - options for input formats that require a list of possible values (radio and checkbox). An array of hashes with label and value keys. | . | locked: - (default: false) whether the user can alter the input’s value. Locking an input can force it to use a value from a previous test’s output, or the default value. | . Here is a simple example: . test do input :url, title: 'FHIR Server Url', description: 'The base url for the FHIR server' run do # The input's identifier is :url, so its value is available via `url` assert url.start_with?('https'), 'The server must support https' end end . input in the API docs . Defining Multiple Inputs . It is possible to define multiple inputs in a single input call, though this prevents the use of the additional properties listed above. This can be useful when a test uses inputs that have been defined in a parent or sibling. test do input :input1, :input2, :input3, :input4 ... end . Inputs with List Options . For the radio or checkbox input types, a list of options must be provided. The label is displayed to the user, and the value is the actual value that is stored when the user selects that option. test do input :radio_input_example, title: 'Example Radio Input', options: { list_options: [ { label: 'Radio Option 1' value: 'option_1' }, { label: 'Radio Option 2' value: 'option_2' } ] } input :checkbox_input_example, title: 'Example Checkbox Input', options: { list_options: [ { label: 'Checkbox Option 1' value: 'option_1' }, { label: 'Checkbox Option 2' value: 'option_2' } ] } run do if radio_input_example == 'option_1' # ... end if radio_input_example == 'option_2' # ... end if checkbox_input_example.include? 'option_1' # ... end if checkbox_input_example.include? 'option_2' # ... end end end . Ordering Inputs . When a group or suite displays all of its descendants’ inputs, they may be in an unintuitive order. They can be reordered using input_order. group do input_order :input_2, :input_1 test do input :input_1 end test do input :input_2 end end . Additional Input Instructions . If a developer wants to include additional input instructions, they can define input_instructions which will be displayed above the inputs. group do input_instructions %( Register Inferno as a standalone application using the following information: * Redirect URI: `#{SMARTAppLaunch::AppRedirectTest.config.options[:redirect_uri]}` Enter in the appropriate scope to enable patient-level access to all relevant resources. If using SMART v2, v2-style scopes must be used. In addition, support for the OpenID Connect (openid fhirUser), refresh tokens (offline_access), and patient context (launch/patient) are required. ) end . ",
     "url": "/docs/writing-tests/test-inputs-outputs.html#inputs",
     "relUrl": "/docs/writing-tests/test-inputs-outputs.html#inputs"
-  },"107": {
+  },"105": {
     "doc": "Test Inputs and Outputs",
     "title": "Outputs",
     "content": "Defining Outputs . The output method defines an output. It is used in a test’s definition block to define which outputs a test provides, and within a test’s run block to assign a value to an output. Multiple outputs can be defined and assigned at once. test do output :value1 output :value2, :value3 run do output value1: 'ABC' output value2: 'DEF', value3: 'GHI' end end test do # These inputs will automatically get their values from the previous test's # outputs. input :value1, :value2, :value3 ... end . output for defining outputs in the API docs . output for assigning values to outputs in the API docs . ",
     "url": "/docs/writing-tests/test-inputs-outputs.html#outputs",
     "relUrl": "/docs/writing-tests/test-inputs-outputs.html#outputs"
-  },"108": {
+  },"106": {
     "doc": "Test Inputs and Outputs",
     "title": "Handling Complex Objects",
     "content": "Since inputs and outputs are all stored as strings, special handling is needed if passing complex objects between tests. This can generally be handled using JSON serialization. Ruby hashes and arrays, as well as FHIR model classes, support the to_json method, which turns an object into a JSON string. test do output :complex_object_json run do ... output complex_object_json: hash_or_array_or_fhir_resource.to_json end end test do input :complex_object_json run do assert_valid_json(complex_object_json) # For safety complex_object = JSON.parse(complex_object_json) ... end end . ",
     "url": "/docs/writing-tests/test-inputs-outputs.html#handling-complex-objects",
     "relUrl": "/docs/writing-tests/test-inputs-outputs.html#handling-complex-objects"
-  },"109": {
+  },"107": {
     "doc": "Test Inputs and Outputs",
     "title": "Behind the Scenes",
     "content": "Inputs and outputs work as a single key-value store scoped to a test session. The main differences between them are: . | An input’s value can not be changed during a test | Inputs support additional metadata for display in the UI (title, description, etc.) | . Since inputs and outputs form a single key-value store, a value will be overwritten if multiple tests write to the same output. However, each test result stores the input and output values that were present for that particular test. ",
     "url": "/docs/writing-tests/test-inputs-outputs.html#behind-the-scenes",
     "relUrl": "/docs/writing-tests/test-inputs-outputs.html#behind-the-scenes"
+  },"108": {
+    "doc": "Waiting for Incoming Request",
+    "title": "Waiting for Incoming Requests",
+    "content": "Some testing workflows required testing to pause until an incoming request is received. For example, the OAuth2 workflow used by the SMART App Launch IG involves redirecting the user to an authorization server, which then redirects the user back to the application that requested authorization. In order to handle a workflow like this, Inferno must be able to handle the incoming request and associate it with a particular testing session. Inferno accomplishes this with the wait status and special routes for resuming tests. ",
+    "url": "/docs/advanced-test-features/waiting-for-requests.html#waiting-for-incoming-requests",
+    "relUrl": "/docs/advanced-test-features/waiting-for-requests.html#waiting-for-incoming-requests"
+  },"109": {
+    "doc": "Waiting for Incoming Request",
+    "title": "Wait Method",
+    "content": "A test is instructed to wait for an incoming request using the wait method. wait takes three arguments: . | identifier - An identifier which can uniquely identify the current test session. It must be possible for this identifier to be reconstructed based on the incoming request. | message - A markdown string displayed to the user while the test is waiting. | timeout - The number of seconds the test will wait. | . wait in the API docs . ",
+    "url": "/docs/advanced-test-features/waiting-for-requests.html#wait-method",
+    "relUrl": "/docs/advanced-test-features/waiting-for-requests.html#wait-method"
   },"110": {
-    "doc": "Waiting for an Incoming Request",
-    "title": "Waiting for an Incoming Request",
-    "content": "Some testing workflows required testing to pause until an incoming request is received. For example, the OAuth2 workflow used by the SMART App Launch IG involves redirecting the user to an authorization server, which then redirects the user back to the application which requested authorization (Inferno). In order to handle a workflow like this, Inferno must be able to handle the incoming request and associate it with a particular testing session. Inferno accomplishes this with the wait status and special routes for resuming tests. Making a Test Wait . A test is instructed to wait for an incoming request using the wait method. wait takes three arguments: . | identifier - An identifier which can uniquely identify the current test session. It must be possible for this identifier to be reconstructed based on the incoming request. | message - A markdown string which will be displayed to the user while the test is waiting. | timeout - The number of seconds the test will wait. | . wait in the API docs . Handling the Incoming Request . The route to make a test resume execution is created with resume_test_route, which takes three arguments: . | method - A symbol for the HTTP verb for the incoming request (:get, :post, etc.) | path - A string for the route path. The route will be served at INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH. | A block which extracts identifier from the incoming request and returns it. In this block, request can be used to access a Request object which contains the details of the incoming request. | . If it is necessary to inspect the incoming request in a test, the incoming request can be assigned a name using receives_request :my_request_name (see Reusing Requests). resume_test_route in the API docs . receives_request in the API docs . ",
-    "url": "/docs/advanced-test-features/waiting-for-requests.html",
-    "relUrl": "/docs/advanced-test-features/waiting-for-requests.html"
+    "doc": "Waiting for Incoming Request",
+    "title": "Handling the Incoming Request",
+    "content": "The route for making a test resume execution is created with resume_test_route, which takes three arguments: . | method - A symbol for the HTTP verb for the incoming request (:get, :post, etc.) | path - A string for the route path. The route will be served at INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH. | A block that extracts the identifier from the incoming request and returns it. In this block, request can be used to access a Request object which contains the details of the incoming request. | . If it is necessary to inspect the incoming request in a test, the incoming request can be assigned a name using receives_request :my_request_name (see Reusing Requests). resume_test_route in the API docs . receives_request in the API docs . ",
+    "url": "/docs/advanced-test-features/waiting-for-requests.html#handling-the-incoming-request",
+    "relUrl": "/docs/advanced-test-features/waiting-for-requests.html#handling-the-incoming-request"
   },"111": {
-    "doc": "Waiting for an Incoming Request",
+    "doc": "Waiting for Incoming Request",
     "title": "Example",
-    "content": "This example will show how to implement the redirect flow in the SMART App Launch Standalone Launch Sequence. It will be necessary to: . | Redirect the user to the system under test’s authorize endpoint. | The client (Inferno) generates a random state value which the authorization server sends back, so state can be used as the identifier. | . | Wait for the user to be redirected back to Inferno. | Extract state from the incoming request to match the current test session. | . | Check that the incoming request contained a code parameter. | . class SMARTAppLaunchSuite &lt; Inferno::TestSuite id :smart_app_launch # This route will be served at INFERNO_BASE/custom/smart_app_launch/redirect # Since the `state` query parameter is what uniquely links the incoming request # to the current test session, return that from the block. resume_test_route :get, '/redirect' do |request| request.query_parameters['state'] end group do id :standalone_launch test do id :smart_redirect # Assign a name to the incoming request so that it can be inspected by # other tests. receives_request :redirect run do # Generate a random unique state value which uniquely identifies this # authorization request. state = SecureRandom.uuid # Build authorization url based on information from discovery, app # registration, and state. authorization_url = ... # Make this test wait. wait( identifier: state, message: %( [Follow this link to authorize with the SMART server](#{authorization_url}). Tests will resume once Inferno receives a request at `#{Inferno::Application['base_url']}/custom/smart_app_launch/redirect` with a state of `#{state}`. ) ) end end # Execution will resume with this test once the incoming request is # received. test do id :redirect_contains_code # Make the incoming request from the previous test available here. uses_request :redirect run do code = request.query_parameters['code'] assert code.present?, 'No `code` parameter received' end end end end . ",
+    "content": "This example will show how to implement the redirect flow in the SMART App Launch Standalone Launch Sequence. The steps are as follows: . | Redirect the user to the system under test’s authorize endpoint. | The client (Inferno) generates a random state value which the authorization server sends back, so state can be used as the identifier. | . | Wait for the user to be redirected back to Inferno. | Extract state from the incoming request to match the current test session. | . | Check that the incoming request contained a code parameter. | . class SMARTAppLaunchSuite &lt; Inferno::TestSuite id :smart_app_launch # This route will be served at INFERNO_BASE/custom/smart_app_launch/redirect # Since the `state` query parameter is what uniquely links the incoming request # to the current test session, return that from the block. resume_test_route :get, '/redirect' do |request| request.query_parameters['state'] end group do id :standalone_launch test do id :smart_redirect # Assign a name to the incoming request so that it can be inspected by # other tests. receives_request :redirect run do # Generate a random unique state value which uniquely identifies this # authorization request. state = SecureRandom.uuid # Build authorization url based on information from discovery, app # registration, and state. authorization_url = ... # Make this test wait. wait( identifier: state, message: %( [Follow this link to authorize with the SMART server](#{authorization_url}). Tests will resume once Inferno receives a request at `#{Inferno::Application['base_url']}/custom/smart_app_launch/redirect` with a state of `#{state}`. ) ) end end # Execution will resume with this test once the incoming request is # received. test do id :redirect_contains_code # Make the incoming request from the previous test available here. uses_request :redirect run do code = request.query_parameters['code'] assert code.present?, 'No `code` parameter received' end end end end . ",
     "url": "/docs/advanced-test-features/waiting-for-requests.html#example",
     "relUrl": "/docs/advanced-test-features/waiting-for-requests.html#example"
   },"112": {
+    "doc": "Waiting for Incoming Request",
+    "title": "Waiting for Incoming Request",
+    "content": " ",
+    "url": "/docs/advanced-test-features/waiting-for-requests.html",
+    "relUrl": "/docs/advanced-test-features/waiting-for-requests.html"
+  },"113": {
     "doc": "Inferno Team",
     "title": "The Inferno Team",
     "content": " ",
     "url": "/about/who.html#the-inferno-team",
     "relUrl": "/about/who.html#the-inferno-team"
-  },"113": {
+  },"114": {
     "doc": "Inferno Team",
     "title": "Inferno Team",
     "content": " ",

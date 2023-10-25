@@ -40,7 +40,7 @@
             <a class="nav-link align-middle" style="display: inline" href="/about/">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/docs">Documentation</a>
+            <a class="nav-link active" href="/docs">Documentation</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/community">Community</a>
@@ -134,6 +134,11 @@
       <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="/index_new.html"><span>Home</span></a></li>
         
+          
+            <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
+            <li class="breadcrumb-item active">Input Presets</li>
+          
+        
         
         
         
@@ -151,14 +156,22 @@
     <div class="col-lg-3 left-nav-column">
       <div class="d-none d-lg-block">
       <nav id="sidebar">
-    <ul class="navbar-nav list-unstyled components"></ul></nav>
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item"><a href="/docs/concepts.html" class="nav-link-top nav-link">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Getting Started category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item active"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/deployment/" class="nav-link-top nav-link">Deploying to Shared Hosts</a><ul class="list-unstyled"><li class=""><a href="/docs/deployment/security.html" class="nav-link">Security Considerations</a></li><li class=""><a href="/docs/deployment/database.html" class="nav-link">Database Configuration</a></li><li class=""><a href="/docs/deployment/ssl.html" class="nav-link">SSL Configuration</a></li><li class=""><a href="/docs/deployment/host.html" class="nav-link">Hostname and Path Configuration</a></li><li class=" active"><a href="/docs/deployment/input-presets.html" class="nav-link active">Input Presets</a></li></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
       <h1 id="input-presets">Input Presets</h1>
 <p>Input presets are sets of predefined input values for a suite. Users can select
-a preset to use those predefined values without having to manually enter them.
+a preset to use predefined values without having to manually enter them.
 Presets must be placed in <code class="language-plaintext highlighter-rouge">config/presets</code>.</p>
 
 <h3 id="generating-a-preset-template">Generating a Preset Template</h3>
@@ -221,15 +234,15 @@ creation of a preset.</p>
 <h3 id="presets-with-dynamic-values">Presets with Dynamic Values</h3>
 
 <p>It is possible for values in templates to be dynamically generated when Inferno
-starts by using <a href="https://github.com/ruby/erb">embedded ruby (ERB)</a>. For example,
-this could be used to have a preset with a host which is read from an
+starts by using <a href="https://github.com/ruby/erb">ERB</a>. For example,
+this could be used to create a preset with a host that is read from an
 environment variable. In order to use ERB in a preset:</p>
 
 <ul>
   <li>Give the filename the <code class="language-plaintext highlighter-rouge">.erb</code> extension. For a JSON file with ERB, the
 extension <code class="language-plaintext highlighter-rouge">.json.erb</code> would be typical.</li>
-  <li>Use the <code class="language-plaintext highlighter-rouge">&lt;%= %&gt;</code> ERB tag to insert ruby code which will be evaluated when
-Inferno starts. The tag will be replaced by the result of executing the ruby
+  <li>Use the <code class="language-plaintext highlighter-rouge">&lt;%= %&gt;</code> ERB tag to insert Ruby code, which will be evaluated when
+Inferno starts. The tag will be replaced by the result of executing the Ruby
 code within the tag.</li>
 </ul>
 
@@ -237,7 +250,7 @@ code within the tag.</li>
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"url"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;%= ENV['REFERENCE_SERVER_HOST'] %&gt;/reference-server/r4"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"URL"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insert url of FHIR server"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"_description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Insert URL of FHIR server"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
@@ -251,11 +264,15 @@ set to <code class="language-plaintext highlighter-rouge">http://example.com</co
 <p>It is possible to specify different values for a preset input depending on what
 <a href="/inferno-core/writing-tests/test-configuration.html#suite-options-1">suite
 options</a>
-have been selected. To do this, add a <code class="language-plaintext highlighter-rouge">value_for_options</code> key to the preset
-input. Within <code class="language-plaintext highlighter-rouge">value_for_options</code>, add a list of <code class="language-plaintext highlighter-rouge">options</code> with <code class="language-plaintext highlighter-rouge">name</code> and
-<code class="language-plaintext highlighter-rouge">value</code>, as well as the <code class="language-plaintext highlighter-rouge">value</code> to be used when those options are used. When
-using the preset, if <code class="language-plaintext highlighter-rouge">value_for_options</code> is present, its entries are evaluated
-in order. The value in the first entry whose options match the options selected
+have been selected. To do this:</p>
+<ul>
+  <li>Add a <code class="language-plaintext highlighter-rouge">value_for_options</code> key to the preset input</li>
+  <li>Within <code class="language-plaintext highlighter-rouge">value_for_options</code>, add a list of <code class="language-plaintext highlighter-rouge">options</code> with <code class="language-plaintext highlighter-rouge">name</code> and
+<code class="language-plaintext highlighter-rouge">value</code>, as well as the <code class="language-plaintext highlighter-rouge">value</code> to be used when those options are used.</li>
+</ul>
+
+<p>When using the preset, if <code class="language-plaintext highlighter-rouge">value_for_options</code> is present, its entries are evaluated
+in order. The <code class="language-plaintext highlighter-rouge">value</code> of the first entry whose options match the options selected
 by the user will be used. The plain <code class="language-plaintext highlighter-rouge">value</code> (outside of <code class="language-plaintext highlighter-rouge">value_for_options</code>)
 will be used if the selected options do not match any of the <code class="language-plaintext highlighter-rouge">value_for_options</code>
 entries.</p>
