@@ -1,9 +1,9 @@
 ---
-title: Ruby Reference
+title: Inferno Ruby API
 nav_order: 18
-layout: docs
 section: docs
+layout: docs
 ---
-# Ruby Reference
+# Inferno Ruby API
 
-Put here
+The documentation for Inferno's Ruby API can be [found here](/inferno-core/docs/).

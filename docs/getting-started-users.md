@@ -4,15 +4,15 @@ nav_order: 21
 section: docs
 layout: docs
 ---
-## Getting Started for Inferno Users
+# Getting Started for Inferno Users
 Start here if you're interested in testing a FHIR server against one or more
 existing Test Kits.
 
-### Running an Existing Test Kit
+## Running an Existing Test Kit
 Most Test Kits are developed using the [Inferno Template
-repository](https://github.com/inferno-framework/inferno-template) which
+repository](https://github.com/inferno-framework/inferno-template), which
 provides scripts for standing up an instance of Inferno to run a selected Test
-Kit.
+Kit. Running a Test Kit usually follows the below steps:
 
 1. Install [Docker](https://www.docker.com/get-started).
 1. Clone the repository for  the Test Kit you want to run.
@@ -21,7 +21,7 @@ Kit.
 1. Run `./run.sh` to start Inferno.
 1. Navigate to `http://localhost` to access Inferno.
 
-e.g., to run the [US Core Test
+For example, to run the [US Core Test
 Kit](https://github.com/inferno-framework/us-core-test-kit):
 ```sh
 git clone https://github.com/inferno-framework/us-core-test-kit.git
@@ -30,11 +30,11 @@ cd us-core-test-kit
 ./run.sh
 ```
 
-Always check the documentation for an individual Test Kit since there may be
+Always check the documentation for an individual Test Kit, however, since there may be
 additional installation steps.
 
-### Multiple Test Kits
-There may be times when you wish to offer multiple test kits in a single Inferno
+## Running Multiple Test Kits
+There may be times when you wish to run multiple Test Kits in a single Inferno
 instance. You can load and run two or more separate Test Kits by using [Inferno
 Template](https://github.com/inferno-framework/inferno-template).
 
@@ -67,12 +67,12 @@ Inferno relies on external validation services for profile validation; by
 default, Inferno uses the [FHIR Validator
 Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper). For Test
 Kits that require profile validation, such as the US Core Test Kit, the
-corresponding Implementation Guide will need to be placed in the
+corresponding Implementation Guide needs to be placed in the
 `lib/inferno_deployment/igs/` directory as a _.tgz_ file (i.e., _package.tgz_).
-The Implementation Guide files for a Test Kit can be located in that kit's git
-repository and just copied over directly:
+Inferno Test Kits already have the IGs in their repository,
+so you can easily just copy it over from that Test Kit into your template directory.
 
-e.g., for the US Core Test Kit:
+For example, if you want to include the US Core IG in your template directory:
 ```sh
 git clone https://github.com/inferno-framework/us-core-test-kit.git
 cp -a us-core-test-kit/lib/us_core_test_kit/igs/. inferno-template/lib/inferno_template/igs/
