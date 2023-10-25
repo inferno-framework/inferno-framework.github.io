@@ -1,7 +1,8 @@
 ---
 title: SSL Configuration
 nav_order: 3
-parent: Deployment
+parent: Deploying to Shared Hosts
+section: docs
 layout: docs
 ---
 # SSL Configuration
