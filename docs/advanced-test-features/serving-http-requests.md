@@ -6,9 +6,9 @@ layout: docs
 section: docs
 ---
 # Serving HTTP Requests
-Some testing scenarios require that Inferno respond to incoming HTTP requests.
-For these cases, it is possible for a suite to define custom routes which will
-be served by Inferno. For example, authorization workflows based on asymmetric
+Some testing scenarios require that Inferno responds to incoming HTTP requests.
+For these cases, a suite can define custom routes to be served by Inferno.
+For example, authorization workflows based on asymmetric
 client credentials require that public keys are served at an accessible
 location, so Inferno needs to be able to serve these keys in order to support
 these workflows.
@@ -30,27 +30,27 @@ end
 
 `route` takes three arguments, a symbol for the HTTP verb served by the route
 (`:get`, `:post`, etc., or `:all`), a String for the route path, and a route
-handler. The route handler is any Rack-compatible object.
+handler. The following section has more information about route handlers.
 
 [`route` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#route-instance_method)
 
-### Route Handlers
+## Route Handlers
 [Rack](https://github.com/rack/rack) is a standard interface for handling HTTP
-requests in ruby. Route handlers must be a Rack-compatible object, which could
-be something as simple as a Proc/Lambda, or an entire web application built in
+requests in Ruby. Route handlers must be a Rack-compatible object, which could
+be something as simple as a Lambda, or an entire web application built in
 something like [Sinatra](https://sinatrarb.com/).
 
 The requirements for a Rack-compatible route handler are as follows:
 
-* It must respond to the `call` method which takes one argument ([the Rack
-  environment](https://github.com/rack/rack/blob/main/SPEC.rdoc#the-environment-)).
+* It must respond to the `call` method which takes one argument, [the
+  environment](https://github.com/rack/rack/blob/main/SPEC.rdoc#the-environment-).
 * It must return a three element array consisting of:
   * The HTTP status code (integer)
   * The response headers (Hash)
   * The response body (Array of Strings)
 
-Some simple route handlers could look like this:
+Here are a few examples:
 ```ruby
 class MyTestSuite < Inferno::TestSuite
   id :my_test_suite

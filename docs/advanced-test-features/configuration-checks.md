@@ -8,13 +8,13 @@ section: docs
 # Configuration Checks
 Test Suites can have a set of checks they perform on startup to ensure that
 their environment is correctly configured. These checks are performed the first
-time a session is created for the suite. The checks can be refreshed [using the
-JSON API](/inferno-core/api-docs/#/Test
+time a session is created for the suite. The checks can be refreshed using the
+[JSON API](/inferno-core/api-docs/#/Test
 Suite/put_test_suites__test_suite_id__check_configuration).
 
-### Defining Configuration Checks
+## Defining Configuration Checks
 The `check_configuration` method defines a check to be performed. It takes a
-block which returns an Array of message hashes.
+block that returns an Array of message hashes.
 
 ```ruby
 class MySuite < Inferno::TestSuite

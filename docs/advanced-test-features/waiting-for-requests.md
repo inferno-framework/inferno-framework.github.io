@@ -1,44 +1,44 @@
 ---
-title: Waiting for an Incoming Request
+title: Waiting for Incoming Request
 nav_order: 3
 parent: Advanced Features
 layout: docs
 section: docs
 ---
-# Waiting for an Incoming Request
+# Waiting for Incoming Requests
 Some testing workflows required testing to pause until an incoming request is
 received. For example, the OAuth2 workflow used by the SMART App Launch IG
 involves redirecting the user to an authorization server, which then redirects
-the user back to the application which requested authorization (Inferno). In
+the user back to the application that requested authorization. In
 order to handle a workflow like this, Inferno must be able to handle the
 incoming request and associate it with a particular testing session. Inferno
 accomplishes this with the `wait` status and special routes for resuming tests.
 
-### Making a Test Wait
+## Wait Method
 A test is instructed to wait for an incoming request using the
 [`wait`](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
 method. `wait` takes three arguments:
 * `identifier` - An identifier which can uniquely identify the current test
   session. It must be possible for this identifier to be reconstructed based on
   the incoming request.
-* `message` - A markdown string which will be displayed to the user while the
+* `message` - A markdown string displayed to the user while the
   test is waiting.
 * `timeout` - The number of seconds the test will wait.
 
 [`wait` in the API
 docs](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
 
-### Handling the Incoming Request
-The route to make a test resume execution is created with
+## Handling the Incoming Request
+The route for making a test resume execution is created with
 [`resume_test_route`](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_method),
 which takes three arguments:
 * `method` - A symbol for the HTTP verb for the incoming request (`:get`,
   `:post`, etc.)
 * `path` - A string for the route path. The route will be served at
   `INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH`.
-* A block which extracts `identifier` from the incoming request and returns it.
+* A block that extracts the `identifier` from the incoming request and returns it.
   In this block, `request` can be used to access a [`Request`
-  object](/inferno-core/docs/Inferno/Entities/Request.html) which contains the
+  ](/inferno-core/docs/Inferno/Entities/Request.html) object which contains the
   details of the incoming request.
   
 If it is necessary to inspect the incoming request in a test, the incoming
@@ -56,7 +56,7 @@ docs](/inferno-core/docs/Inferno/DSL/RequestStorage/ClassMethods.html#receives_r
 This example will show how to implement the redirect flow in the [SMART App
 Launch Standalone Launch
 Sequence](http://hl7.org/fhir/smart-app-launch/1.0.0/#standalone-launch-sequence).
-It will be necessary to:
+The steps are as follows:
 * Redirect the user to the system under test's authorize endpoint.
   * The client (Inferno) generates a random `state` value which the
     authorization server sends back, so `state` can be used as the `identifier`.
