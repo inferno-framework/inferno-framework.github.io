@@ -160,7 +160,7 @@
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
@@ -179,20 +179,8 @@ interface for executing tests, and integration with data persistence layers and 
 party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
 React + create-react-app.</p>
 
-<h2 id="inferno-deployment">Inferno Deployment</h2>
-
-<p>A web host running one or more Inferno Test Kits. An example is the 
-<a href="https://inferno.healthit.gov">https://inferno.healthit.gov</a> website.
-An individual Test Kit can also be run as an Inferno Deployment on 
-users’ local machines without any additional
-configuration. An Inferno Deployment includes a web interface as well as
-a RESTful API to enable third party integration.</p>
-
-<h2 id="inferno-template">Inferno Template</h2>
-
-<p>A template for writing Inferno Test Kits.</p>
-
 <h2 id="inferno-dsl">Inferno DSL</h2>
+
 <p>A Domain Specific Language (DSL) that test writers use to define the tests
 in an Inferno Test Kit. The DSL provides built-in functionality that is
 useful in testing FHIR APIs, such as a FHIR client and built-in assertion
@@ -207,6 +195,10 @@ Guides, and any additional requirements. Test Kits are primarily composed of one
 or more Test Suites, but may include other tools such as FHIR resource validators
 or reference implementations.</p>
 
+<h2 id="inferno-template">Inferno Template</h2>
+
+<p>A template for writing Inferno Test Kits.</p>
+
 <h2 id="inferno-test-suite">Inferno Test Suite</h2>
 
 <p>An executable set of tests provided within an Inferno Test Kit that allows
@@ -215,7 +207,7 @@ Each Test Suite also defines how to interpret failures at the test level and in 
 For example, Test Suite may define that a conformant system will pass all provided
 tests, or that the system may fail some tests.</p>
 
-<h2 id="inferno-validators">Inferno Validators</h2>
+<h2 id="validators">Validators</h2>
 
 <p>Validators are tools that validate the correctness of a piece of data against a set of rules
 defined within a context. Inferno tests typically fetch data and validate the
@@ -231,6 +223,15 @@ and demonstrates “corect” behavior. They can
 be useful to develop tests against or to help interact with third party
 solutions. For example, Inferno has a <a href="https://github.com/inferno-framework/inferno-reference-server">Reference Server</a>
 for US Core and the Inferno ONC (g)(10) certification tests.</p>
+
+<h2 id="inferno-deployment">Inferno Deployment</h2>
+
+<p>A web host running one or more Inferno Test Kits. An example is the 
+<a href="https://inferno.healthit.gov">https://inferno.healthit.gov</a> website.
+An individual Test Kit can also be run as an Inferno Deployment on 
+users’ local machines without any additional
+configuration. An Inferno Deployment includes a web interface as well as
+a RESTful API to enable third party integration.</p>
 
       </div>
     </div>

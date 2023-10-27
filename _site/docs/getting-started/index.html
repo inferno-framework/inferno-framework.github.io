@@ -160,7 +160,7 @@
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/getting-started/" class="nav-link-top nav-link active">Getting Started</a><ul class="list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
@@ -169,7 +169,14 @@
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 id="getting-started-for-inferno-test-writers">Getting Started for Inferno Test Writers</h1>
+      <h1 id="getting-started-for-creating-a-test-kit">Getting Started for Creating a Test Kit</h1>
+<p>This page shows you how to create a Test Kit from scratch. We recommend using the 
+<a href="https://github.com/inferno-framework/inferno-template">Inferno Template</a> repository
+as a starting point, since it includes everything you’ll need to get started.</p>
+
+<p>We also have a tutorial designed to walk a user through writing a basic set of tests for servers of the US Core Implementation Guide v3.1.1.
+<a href="https://github.com/inferno-training/inferno-tutorial/wiki">Click here for the US Core Test Kit tutorial</a>.</p>
+
 <p>Tests can be developed either with a local Ruby installation or by using Docker.
 We recommended installing Ruby locally for development because:</p>
 <ul>
@@ -182,78 +189,109 @@ functionality for developers, such as an interactive console. See
 <a href="http://localhost:4000/docs/inferno-cli.html">Inferno CLI</a> for more information.</li>
 </ul>
 
-<h3 id="development-with-ruby">Development with Ruby</h3>
+<h2 id="development-with-ruby">Development with Ruby</h2>
 
-<h4 id="installation">Installation</h4>
+<h4 id="windows-instructions">Windows Instructions</h4>
+<p>Windows developers will need to use <a href="https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-wsl-2">WSL</a> in order to interact with 
+Inferno.  It is recommended that you also follow <a href="https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-nvm-nodejs-and-npm">the steps for installing node.js</a>. 
+Once you have WSL (and node.js) set up:</p>
+
+<ol class="lh-default">
+  <li>Install VS Code and the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">WSL Extension</a>.</li>
+  <li>Install <a href="https://www.microsoft.com/store/productId/9PDXGNCFSCZV">Ubuntu from the Windows Store</a>.</li>
+  <li>Open Command Prompt and run <code class="language-plaintext highlighter-rouge">ubuntu</code>.
+    <ol>
+      <li>You will have to setup a user and password for this linux subsytem.</li>
+      <li>The password will be used for <code class="language-plaintext highlighter-rouge">sudo</code> commands later, so remember these credentials!</li>
+    </ol>
+  </li>
+  <li>Install Docker Desktop for Windows.
+    <ol>
+      <li>Follow the steps from Docker to ensure it plays nicely with WSL, see <a href="https://docs.docker.com/desktop/wsl/#turn-on-docker-desktop-wsl-2">here</a>.</li>
+      <li>From the Docker settings, Open Resources &gt; WSL Integration, and make sure Ubuntu is selected.  Then, hit “Apply and Restart”.</li>
+    </ol>
+  </li>
+  <li>From VS Code, press <code class="language-plaintext highlighter-rouge">Ctrl</code> + <code class="language-plaintext highlighter-rouge">Shift</code> + <code class="language-plaintext highlighter-rouge">P</code> to open the command palette, and type “WSL”.  Select “Connect to WSL in new Window using distro…” and select Ubuntu.</li>
+  <li>Open a terminal in the new WSL window and try to <code class="language-plaintext highlighter-rouge">ping google.com</code>.</li>
+  <li>If you cannot ping google.com, you may not be able to connect to the internet from within the WSL instance.  The steps at <a href="https://stackoverflow.com/questions/55649015/could-not-resolve-host-github-com-only-in-windows-bash#:~:text=It%20could%20be%20that%20your%20/etc/resolv.conf%20file%20is%20corrupt%20%2D%20it%20happened%20to%20me!">this stack overflow article</a> should resolve the issue. If it does not, open cmd and run <code class="language-plaintext highlighter-rouge">nslookup</code>.  Copy the Default Address, then in your wsl instance type <code class="language-plaintext highlighter-rouge">sudo nano /etc/resolv.conf</code>.  Add the default address as another nameserver.</li>
+  <li>Continue from step 2 in <a href="#set-up-environment">Set Up Environment</a>.</li>
+</ol>
+
+<p><strong>NOTE:</strong> If, when running Inferno within WSL, the tests begin to stall and the console repeatedly prints <code class="language-plaintext highlighter-rouge">WARN: Your Redis network connection is performing extremely poorly.</code>,
+WSL may be having networking issues.  To resolve this, you can follow the steps in this <a href="https://github.com/microsoft/WSL/issues/4901#issuecomment-1724482084">WSL Slow Network Issue thread</a>.  You can make a <code class="language-plaintext highlighter-rouge">.wslconfig</code> file from your <code class="language-plaintext highlighter-rouge">%USERDATA%</code> directory if it does not already exist, and you will need to restart WSL (usually through <code class="language-plaintext highlighter-rouge">wsl --shutdown</code> in Windows Powershell) before the changes take effect.</p>
+
+<h4 id="set-up-environment">Set Up Environment</h4>
 <ol>
   <li>Install <a href="https://www.docker.com/get-started">Docker</a>.</li>
   <li>Install Ruby. It is highly recommended that you install Ruby via a <a href="https://www.ruby-lang.org/en/documentation/installation/#managers">Ruby
 version
 manager</a>.</li>
-  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template
-repository</a>. You can
-either clone this repository directly, or click the green “Use this template”
-button to create your own repository based on this one.</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">bundle install</code> to install dependencies.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">gem install inferno_core</code> to install inferno.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">gem install foreman</code> to install foreman, which will be used to run the
 Inferno web and worker processes.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">gem install rerun</code> to install rerun, which will be used to enable
 <code class="language-plaintext highlighter-rouge">watch</code> functionality to reload Inferno when a test has been updated.</li>
-  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec inferno migrate</code> to set up the database.</li>
-  <li>Put the <code class="language-plaintext highlighter-rouge">package.tgz</code> for the IG you’re writing tests for in
-<code class="language-plaintext highlighter-rouge">lib/your_test_kit_name/igs</code> and update this path in
-<code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>. This will ensure that the validator has access
-to the resources needed to validate resources against your IG.</li>
 </ol>
 
-<h4 id="running-inferno">Running Inferno</h4>
+<h4 id="set-up-a-new-test-kit">Set Up a New Test Kit</h4>
+<ol>
+  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template</a> repository. You can
+either clone this repository directly, or click the green “Use this template”
+button to create your own repository based on this one.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle install</code> to install dependencies.</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec inferno migrate</code> to set up the database.</li>
+</ol>
+
+<h4 id="run-your-test-kit">Run Your Test Kit</h4>
 <ol>
   <li>Run <code class="language-plaintext highlighter-rouge">bundle exec inferno services start</code> to start the background services. By
-default, these include nginx, redis, the FHIR validator service, and the FHIR
-validator UI. Background services can be added, removed, and edited in
-<code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>.</li>
+default, these include nginx, Redis, the FHIR validator service, and the FHIR
+validator UI. You can check to make sure they’re running by running <code class="language-plaintext highlighter-rouge">docker container ls</code> in the
+command line, or checking the “Container” tab in Docker Desktop.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">inferno start --watch</code> to start Inferno and have it reload any time a file
 changes. Remove the <code class="language-plaintext highlighter-rouge">watch</code> flag if you would prefer to manually restart
 Inferno.</li>
-  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost:4567</code> to access Inferno. 
+  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost:4567</code> to access Inferno. You should see two test groups on the side
+of the page: “Capability Statement” and “Patient Tests”.
 To access the FHIR resource validator, navigate to
 <code class="language-plaintext highlighter-rouge">http://localhost/validator</code>.</li>
   <li>When you are done, run <code class="language-plaintext highlighter-rouge">bundle exec inferno services stop</code> to stop the
 background services.</li>
 </ol>
 
-<h3 id="development-with-docker-only">Development with Docker Only</h3>
+<h2 id="development-with-docker-only">Development with Docker Only</h2>
 
-<h4 id="installation-1">Installation</h4>
+<h4 id="set-up-environment-1">Set Up Environment</h4>
 <ol>
   <li>Install <a href="https://www.docker.com/get-started">Docker</a>.</li>
-  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template
-repository</a>. You can
+</ol>
+
+<h4 id="set-up-a-new-test-kit-1">Set Up a New Test Kit</h4>
+<ol>
+  <li>Clone the <a href="https://github.com/inferno-framework/inferno-template">Inferno Template</a> repository. You can
 either clone this repository directly, or click the green “Use this template”
 button to create your own repository based on this one.</li>
   <li>Run <code class="language-plaintext highlighter-rouge">./setup.sh</code> in the template repository to retrieve the necessary Docker
 images and create a database.</li>
-  <li>Put the <code class="language-plaintext highlighter-rouge">package.tgz</code> for the IG you’re writing tests for in
-  <code class="language-plaintext highlighter-rouge">lib/your_test_kit_name/igs</code> and update this path in
-  <code class="language-plaintext highlighter-rouge">docker-compose.background.yml</code>. This will ensure that the validator has access
-  to the resources needed to validate resources against your IG.</li>
 </ol>
 
-<h4 id="running-inferno-1">Running Inferno</h4>
-<p>After installation, run the <code class="language-plaintext highlighter-rouge">./run.sh</code> script to start Inferno.</p>
-<ul>
-  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost</code> to access Inferno and run test
+<h4 id="run-your-test-kit-1">Run Your Test Kit</h4>
+<ol>
+  <li>Run the <code class="language-plaintext highlighter-rouge">./run.sh</code> script to start Inferno.
+    <ul>
+      <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost</code> to access Inferno and run test
 suites.</li>
-  <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost/validator</code> to access a
+      <li>Navigate to <code class="language-plaintext highlighter-rouge">http://localhost/validator</code> to access a
 standalone validator that can be used to validate individual FHIR resources.</li>
-</ul>
+    </ul>
+  </li>
+</ol>
 
 <h3 id="next-steps">Next Steps</h3>
-<p>Now that Inferno is running, you can either:</p>
+<p>Now that Inferno is running, you can:</p>
 <ul>
   <li>Go to <a href="/docs/getting-started/repo-layout-and-organization.html">Template Layout</a> for
-more information on the files included in the Inferno Template directory,</li>
+how to update the template for your use case</li>
   <li>Go to <a href="/docs/getting-started/inferno-cli.html">Inferno CLI</a> for
 more information about the <code class="language-plaintext highlighter-rouge">inferno</code> commands available,</li>
   <li>Go to <a href="/docs/getting-started/debugging.html">Debugging</a> for

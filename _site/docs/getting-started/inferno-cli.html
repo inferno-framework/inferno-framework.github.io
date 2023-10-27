@@ -160,7 +160,7 @@
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=" active"><a href="/docs/getting-started/inferno-cli.html" class="nav-link active">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item active"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
@@ -172,8 +172,13 @@
       <h1 id="inferno-command-line-inferface">Inferno Command Line Inferface</h1>
 
 <h3 id="inferno-commands">Inferno Commands</h3>
-<p>The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation.
-The commands available include:</p>
+<p>The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation.</p>
+
+<p>We recommend running all commands starting with <code class="language-plaintext highlighter-rouge">bundle exec</code> (e.g. <code class="language-plaintext highlighter-rouge">bundle exec inferno migrate</code>) because
+it guarantees that only the specific gems and versions listed in <code class="language-plaintext highlighter-rouge">Gemfile.lock</code> are available to be used.
+<strong>Exception:</strong> The <code class="language-plaintext highlighter-rouge">inferno start</code> command cannot be run with <code class="language-plaintext highlighter-rouge">bundle exec</code>.</p>
+
+<p>The commands available include:</p>
 
 <table>
   <thead>
@@ -185,7 +190,7 @@ The commands available include:</p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">inferno console</code></td>
-      <td>Starts an interactive console session with Inferno. More information can be found in the next section.</td>
+      <td>Starts an interactive console session with Inferno. More information can be found on the <a href="debugging.html#interactive-console">Debugging Page</a>.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">inferno help [COMMAND]</code></td>
@@ -196,16 +201,20 @@ The commands available include:</p>
       <td>Runs database migrations</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">inferno services start/stop</code></td>
-      <td>Starts or stops the background services (nginx, Redis, etc.) for Inferno</td>
+      <td><code class="language-plaintext highlighter-rouge">inferno services start</code></td>
+      <td>Starts the background services (nginx, Redis, etc.) for Inferno</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">inferno services stop</code></td>
+      <td>Stops the background services for Inferno</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">inferno start</code></td>
       <td>Starts Inferno</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">inferno suite SUBCOMMAND ...ARGS</code></td>
-      <td>Performs suite-based operations</td>
+      <td><code class="language-plaintext highlighter-rouge">inferno suite SUBCOMMAND ...ARGS</code>    </td>
+      <td>Performs suite-based operations. The available subcommands are <code class="language-plaintext highlighter-rouge">describe</code>, <code class="language-plaintext highlighter-rouge">help</code>, and <code class="language-plaintext highlighter-rouge">input_template</code></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">inferno suites</code></td>
@@ -213,23 +222,6 @@ The commands available include:</p>
     </tr>
   </tbody>
 </table>
-
-<p> 
- </p>
-
-<h3 id="interactive-console">Interactive Console</h3>
-<p>A local Ruby installation allows you to use <a href="https://pry.github.io/">pry</a>,
-a powerful interactive console, to explore and experiment with your tests using the
-<code class="language-plaintext highlighter-rouge">inferno console</code> command:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">ᐅ</span> <span class="n">bundle</span> <span class="nb">exec</span> <span class="n">inferno</span> <span class="n">console</span>
-<span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">pry</span><span class="p">(</span><span class="n">main</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">suite</span> <span class="o">=</span> <span class="no">InfernoTemplate</span><span class="o">::</span><span class="no">Suite</span>
-<span class="o">=&gt;</span> <span class="no">InfernoTemplate</span><span class="o">::</span><span class="no">Suite</span>
-<span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">pry</span><span class="p">(</span><span class="n">main</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">suite</span><span class="p">.</span><span class="nf">groups</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="c1">#&lt;Inferno::Entities::TestGroup @id="test_suite_template-capability_statement", @short_id="1", @title="Capability Statement"&gt;,</span>
- <span class="c1">#&lt;InfernoTemplate::PatientGroup @id="test_suite_template-patient_group", @short_id="2", @title="Patient  Tests"&gt;]</span>
-<span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">pry</span><span class="p">(</span><span class="n">main</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">suite</span><span class="p">.</span><span class="nf">groups</span><span class="p">.</span><span class="nf">first</span><span class="p">.</span><span class="nf">tests</span>
-<span class="o">=&gt;</span> <span class="p">[</span><span class="c1">#&lt;Inferno::Entities::Test @id="test_suite_template-capability_statement-capability_statement_read", @short_id="1.01", @title="Read CapabilityStatement"&gt;]</span>
-</code></pre></div></div>
 
       </div>
     </div>

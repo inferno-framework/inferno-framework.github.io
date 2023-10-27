@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="/assets/common.css">
 
-  <title>Inferno Framework - Test Properties</title>
+  <title>Inferno Framework - Properties</title>
 <body  data-spy="scroll" data-target="#toc">
   <nav class="header-nav navbar navbar-expand-lg navbar-light navbar-custom">
     <div class="container-fluid">
@@ -136,7 +136,7 @@
         
           
             <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
-            <li class="breadcrumb-item active">Test Properties</li>
+            <li class="breadcrumb-item active">Properties</li>
           
         
         
@@ -160,7 +160,7 @@
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/getting-started/" class="nav-link-top nav-link">Getting Started</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/getting-started/repo-layout-and-organization.html" class="nav-link">Template Layout</a></li><li class=""><a href="/docs/getting-started/inferno-cli.html" class="nav-link">Inferno CLI</a></li><li class=""><a href="/docs/getting-started/debugging.html" class="nav-link">Debugging</a></li></ul></li><li class="nav-item active"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="list-unstyled"><li class=" active"><a href="/docs/writing-tests/properties.html" class="nav-link active">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="list-unstyled"><li class=" active"><a href="/docs/writing-tests/properties.html" class="nav-link active">Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Inputs and Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Test Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Altering Test Behavior</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Inferno Ruby API</a></li><li class="nav-item"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
@@ -169,22 +169,71 @@
     </div>
     <div class="col-lg-7">
       <div class="docs-body mx-auto">
-      <h1 id="test-suite-and-group-properties">Test, Suite, and Group Properties</h1>
+      <h1 id="test-group--suite-properties">Test, Group &amp; Suite Properties</h1>
 
-<h2 id="general-properties">General Properties</h2>
+<h2 id="title">Title</h2>
+<p><strong>Description</strong>: The title which is displayed in the UI.</p>
 
-<h4 id="config">Config</h4>
-<p>Configure a runnable and its descendants. For more information, see
-<a href="/inferno-core/writing-tests/test-configuration.html#configuration-1">Configuration</a>.</p>
+<p><strong>Can be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code>, <code class="language-plaintext highlighter-rouge">Suite</code></p>
 
-<p><a href="/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method"><code class="language-plaintext highlighter-rouge">config</code> in the API
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
+  <span class="n">title</span> <span class="s1">'US Core Patient Read Interaction'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#title-instance_method"><code class="language-plaintext highlighter-rouge">title</code> in the API
 docs</a></p>
 
-<h4 id="description">Description</h4>
-<p>A detailed description displayed in the UI.
-<a href="https://commonmark.org/help/">Markdown</a> is supported. There are several ways to
-define long strings in ruby:</p>
+<hr />
+<h2 id="short-title">Short Title</h2>
+<p><strong>Description</strong>: A short title which is displayed in the left side of the UI.</p>
 
+<p><strong>Can be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code>, <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
+  <span class="n">short_title</span> <span class="s1">'Patient Tests'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#short_title-instance_method"><code class="language-plaintext highlighter-rouge">short_title</code> in the API
+docs</a></p>
+
+<hr />
+<h2 id="id">Id</h2>
+<p><strong>Description</strong>: A unique identifier. Inferno will automatically create
+ids if they are not specified. It is important to create ids yourself if you
+need to refer to a test or group elsewhere.</p>
+
+<p><strong>Can be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code>, <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
+  <span class="nb">id</span> <span class="ss">:us_core_patient_read</span>
+<span class="k">end</span>
+
+<span class="n">group</span> <span class="k">do</span>
+  <span class="nb">test</span> <span class="ss">from: :us_core_patient_read</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p><strong>Additional Notes</strong>: TestSuite ids appear in Inferno’s urls, so consideration should be given to
+choosing a suite id that will make sense to users as a url path. Links to a test
+suite take the form of <code class="language-plaintext highlighter-rouge">INFERNO_BASE_PATH/TEST_SUITE_ID</code>, and individual test
+session urls look like <code class="language-plaintext highlighter-rouge">INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID</code>.</p>
+
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#id-instance_method"><code class="language-plaintext highlighter-rouge">id</code> in the API
+docs</a></p>
+
+<hr />
+<h2 id="description">Description</h2>
+<p><strong>Description</strong>: A detailed description displayed in the UI.
+<a href="https://commonmark.org/help/">Markdown</a> is supported. The description usually
+requires multiple lines, and the example below shows different ways to
+define long strings in Ruby.</p>
+
+<p><strong>Can be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code>, <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
   <span class="n">description</span> <span class="s1">'This is a brief description'</span>
   
@@ -202,34 +251,78 @@ define long strings in ruby:</p>
   )</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#description-instance_method"><code class="language-plaintext highlighter-rouge">description</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#description-instance_method"><code class="language-plaintext highlighter-rouge">description</code> in the API
 docs</a></p>
 
-<h4 id="id">Id</h4>
-<p>A unique identifier for a test, group, or suite. Inferno will automatically create
-ids if they are not specified. It is important to create ids yourself if you
-need to refer to a test or group elsewhere.</p>
+<hr />
+<h2 id="optionalrequired">Optional/Required</h2>
+<p><strong>Description</strong>: Mark a test or group as optional/required. Tests and Groups are required by default.
+The results of optional tests do not affect the test result of their parent.</p>
 
-<p>TestSuite ids appear in Inferno’s urls, so consideration should be given to
-choosing a suite id that will make sense to users as a url path. Links to a test
-suite take the form of <code class="language-plaintext highlighter-rouge">INFERNO_BASE_PATH/TEST_SUITE_ID</code>, and individual test
-session urls look like <code class="language-plaintext highlighter-rouge">INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID</code>.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
-  <span class="nb">id</span> <span class="ss">:us_core_patient_read</span>
-<span class="k">end</span>
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code></p>
 
-<span class="n">group</span> <span class="k">do</span>
-  <span class="nb">test</span> <span class="ss">from: :us_core_patient_read</span>
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
+  <span class="n">optional</span> <span class="c1"># Makes this group optional</span>
+
+  <span class="nb">test</span> <span class="k">do</span>
+    <span class="n">optional</span> <span class="c1"># Makes this test optional</span>
+  <span class="k">end</span>
+  
+  <span class="nb">test</span> <span class="ss">from: :some_optional_test</span> <span class="k">do</span>
+    <span class="n">required</span> <span class="c1"># Make an optional test required</span>
+  <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#id-instance_method"><code class="language-plaintext highlighter-rouge">id</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method"><code class="language-plaintext highlighter-rouge">optional</code> in the API
+docs</a>, 
+<a href="/inferno-core/docs/Inferno/DSL/Runnable.html#required-instance_method"><code class="language-plaintext highlighter-rouge">required</code> in the API
 docs</a></p>
 
-<h4 id="input-instructions">Input Instructions</h4>
-<p>Define additional instructions which will be displayed above a runnable’s
+<hr />
+<h2 id="run">Run</h2>
+<p><strong>Description</strong>: <code class="language-plaintext highlighter-rouge">run</code> defines a block of code to execute when the test is
+run. A test will typically make one or more
+<a href="/inferno-core/docs/Inferno/DSL/Assertions.html">assertions</a>. If no assertions fail, then the
+test passes.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code></p>
+
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
+  <span class="n">run</span> <span class="k">do</span>
+    <span class="n">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'One is not equal to zero'</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/Test.html#block-class_method"><code class="language-plaintext highlighter-rouge">run</code> in the API
+docs</a></p>
+
+<hr />
+<h2 id="version">Version</h2>
+<p><strong>Description</strong>: Define the suite’s version, which is displayed in the UI.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MySuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
+  <span class="n">version</span> <span class="s1">'1.2.3'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#version-class_method"><code class="language-plaintext highlighter-rouge">version</code> in the API
+docs</a></p>
+
+<hr />
+<h2 id="input-instructions">Input Instructions</h2>
+<p><strong>Description</strong>: 
+Define additional instructions which will be displayed above a runnable’s
 inputs. These instructions only appear when running this particular runnable.
 They will not appear if you run a parent or child of this runnable.
 <a href="https://commonmark.org/help/">Markdown</a> is supported.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code>, <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
   <span class="n">input_instructions</span> <span class="sx">%(
     Register Inferno as a standalone application using the following information:
@@ -243,36 +336,71 @@ They will not appear if you run a parent or child of this runnable.
   )</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#input_instructions-instance_method"><code class="language-plaintext highlighter-rouge">input_instructions</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#input_instructions-instance_method"><code class="language-plaintext highlighter-rouge">input_instructions</code> in the API
 docs</a></p>
 
-<h4 id="optionalrequired">Optional/Required</h4>
-<p>[<code class="language-plaintext highlighter-rouge">Test</code> &amp; <code class="language-plaintext highlighter-rouge">Group</code> only] Mark a test or group as optional/required. Tests and Groups are required by default.
-The results of optional tests do not affect the test result of their parent.</p>
+<hr />
+<h2 id="run-as-group">Run as Group</h2>
+<p><strong>Description</strong> <code class="language-plaintext highlighter-rouge">run_as_group</code> makes a group run as a single unit. When true,
+users will not be able to run any of the group’s children individually. They
+will only be able to run the whole group at once.</p>
 
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Group</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
-  <span class="n">optional</span> <span class="c1"># Makes this group optional</span>
+  <span class="n">run_as_group</span>
+
+  <span class="c1"># These tests can not be run individually</span>
+  <span class="nb">test</span> <span class="k">do</span>
+    <span class="c1"># ...</span>
+  <span class="k">end</span>
 
   <span class="nb">test</span> <span class="k">do</span>
-    <span class="n">optional</span> <span class="c1"># Makes this test optional</span>
-  <span class="k">end</span>
-  
-  <span class="nb">test</span> <span class="ss">from: :some_optional_test</span> <span class="k">do</span>
-    <span class="n">required</span> <span class="c1"># Make an optional test required</span>
+    <span class="c1"># ...</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method"><code class="language-plaintext highlighter-rouge">optional</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/TestGroup.html#run_as_group-class_method"><code class="language-plaintext highlighter-rouge">run_as_group</code> in the API
 docs</a></p>
 
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#required-instance_method"><code class="language-plaintext highlighter-rouge">required</code> in the API
+<hr />
+<h2 id="suite-option">Suite Option</h2>
+<p><strong>Description</strong> Define a user-selectable option for a suite. See <a href="/inferno-core/writing-tests/test-configuration.html#suite-options-1">Suite
+Options
+documentation</a>.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
+  <span class="n">suite_option</span> <span class="ss">:smart_app_launch_version</span><span class="p">,</span>
+               <span class="ss">title: </span><span class="s1">'SMART App Launch Version'</span><span class="p">,</span>
+               <span class="ss">list_options: </span><span class="p">[</span>
+                 <span class="p">{</span>
+                   <span class="ss">label: </span><span class="s1">'SMART App Launch 1.0.0'</span><span class="p">,</span>
+                   <span class="ss">value: </span><span class="s1">'smart_app_launch_1'</span>
+                 <span class="p">},</span>
+                 <span class="p">{</span>
+                   <span class="ss">label: </span><span class="s1">'SMART App Launch 2.0.0'</span><span class="p">,</span>
+                   <span class="ss">value: </span><span class="s1">'smart_app_launch_2'</span>
+                 <span class="p">}</span>
+               <span class="p">]</span>
+<span class="k">end</span>
+</code></pre></div></div>
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method"><code class="language-plaintext highlighter-rouge">suite_option</code> in the API
 docs</a></p>
 
-<h4 id="required-suite-options">Required Suite Options</h4>
-<p>[<code class="language-plaintext highlighter-rouge">Test</code> &amp; <code class="language-plaintext highlighter-rouge">Group</code> only] Define the suite options that must be selected
+<hr />
+<h2 id="required-suite-options">Required Suite Options</h2>
+<p><strong>Description</strong>: Define the suite options that must be selected
 in order for a runnable to be included in the current session. See <a href="/inferno-core/writing-tests/test-configuration.html#hiding-tests-based-on-suite-options">Hiding Tests
 Based on Suite
 Options</a>.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Test</code>, <code class="language-plaintext highlighter-rouge">Group</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
   <span class="c1"># suite_option :smart_app_launch_version,</span>
   <span class="c1"># ...</span>
@@ -289,70 +417,17 @@ Options</a>.</p>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#required_suite_options-instance_method"><code class="language-plaintext highlighter-rouge">required_suite_options</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Runnable.html#required_suite_options-instance_method"><code class="language-plaintext highlighter-rouge">required_suite_options</code> in the API
 docs</a></p>
 
-<h4 id="short-title">Short Title</h4>
-<p>A short title which is displayed in the left side of the UI:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
-  <span class="n">short_title</span> <span class="s1">'Patient Tests'</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#short_title-instance_method"><code class="language-plaintext highlighter-rouge">short_title</code> in the API
-docs</a></p>
-
-<h4 id="title">Title</h4>
-<p>The title which is displayed in the UI:</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
-  <span class="n">title</span> <span class="s1">'US Core Patient Read Interaction'</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/DSL/Runnable.html#title-instance_method"><code class="language-plaintext highlighter-rouge">title</code> in the API
-docs</a></p>
-
-<h2 id="test-specific-properties">Test Specific Properties</h2>
-
-<h4 id="run">Run</h4>
-<p><code class="language-plaintext highlighter-rouge">run</code> defines a block of code to execute when the test is
-run. A test will typically make one or more
-<a href="/inferno-core/docs/Inferno/DSL/Assertions.html">assertions</a>. If no assertions fail, then the
-test passes.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">test</span> <span class="k">do</span>
-  <span class="n">run</span> <span class="k">do</span>
-    <span class="n">assert</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'One is not equal to zero'</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/Test.html#block-class_method"><code class="language-plaintext highlighter-rouge">run</code> in the API
-docs</a></p>
-
-<h2 id="testgroup-specific-properties">TestGroup Specific Properties</h2>
-
-<h4 id="run-as-group">Run as Group</h4>
-<p><code class="language-plaintext highlighter-rouge">run_as_group</code> makes a group run as a single unit. When true,
-users will not be able to run any of the group’s children individually. They
-will only be able to run the whole group at once.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="k">do</span>
-  <span class="n">run_as_group</span>
-
-  <span class="c1"># These tests can not be run individually</span>
-  <span class="nb">test</span> <span class="k">do</span>
-    <span class="c1"># ...</span>
-  <span class="k">end</span>
-
-  <span class="nb">test</span> <span class="k">do</span>
-    <span class="c1"># ...</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/TestGroup.html#run_as_group-class_method"><code class="language-plaintext highlighter-rouge">run_as_group</code> in the API
-docs</a></p>
-
-<h2 id="testsuite-specific-properties">TestSuite Specific Properties</h2>
-
-<h4 id="links">Links</h4>
-<p>Define a list of links which are displayed in the footer of
+<hr />
+<h2 id="links">Links</h2>
+<p><strong>Description</strong>: Define a list of links which are displayed in the footer of
 the UI.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
   <span class="n">links</span> <span class="p">[</span>
     <span class="p">{</span>
@@ -366,45 +441,19 @@ the UI.</p>
   <span class="p">]</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method"><code class="language-plaintext highlighter-rouge">links</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method"><code class="language-plaintext highlighter-rouge">links</code> in the API
 docs</a></p>
 
-<h4 id="suite-option">Suite Option</h4>
-<p>Define a user-selectable option for a suite. See <a href="/inferno-core/writing-tests/test-configuration.html#suite-options-1">Suite
-Options
-documentation</a>.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
-  <span class="n">suite_option</span> <span class="ss">:smart_app_launch_version</span><span class="p">,</span>
-               <span class="ss">title: </span><span class="s1">'SMART App Launch Version'</span><span class="p">,</span>
-               <span class="ss">list_options: </span><span class="p">[</span>
-                 <span class="p">{</span>
-                   <span class="ss">label: </span><span class="s1">'SMART App Launch 1.0.0'</span><span class="p">,</span>
-                   <span class="ss">value: </span><span class="s1">'smart_app_launch_1'</span>
-                 <span class="p">},</span>
-                 <span class="p">{</span>
-                   <span class="ss">label: </span><span class="s1">'SMART App Launch 2.0.0'</span><span class="p">,</span>
-                   <span class="ss">value: </span><span class="s1">'smart_app_launch_2'</span>
-                 <span class="p">}</span>
-               <span class="p">]</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method"><code class="language-plaintext highlighter-rouge">suite_option</code> in the API
-docs</a></p>
-
-<h4 id="version">Version</h4>
-<p>Define the suite’s version, which is displayed in the UI.</p>
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MySuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
-  <span class="n">version</span> <span class="s1">'1.2.3'</span>
-<span class="k">end</span>
-</code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#version-class_method"><code class="language-plaintext highlighter-rouge">version</code> in the API
-docs</a></p>
-
-<h4 id="suite-summary">Suite Summary</h4>
-<p>Define a summary to display on the suite options
+<hr />
+<h2 id="suite-summary">Suite Summary</h2>
+<p><strong>Description</strong>: Define a summary to display on the suite options
 selection page. If the suite has no options, the summary is not used. If no
 suite summary is defined, the description will be displayed on the options
 selection page.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Example</strong>:</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyTestSuite</span> <span class="o">&lt;</span> <span class="no">Inferno</span><span class="o">::</span><span class="no">TestSuite</span>
   <span class="n">suite_summary</span> <span class="sx">%(
     This is a brief description of the suite which will be displayed on the
@@ -412,7 +461,17 @@ selection page.</p>
   )</span>
 <span class="k">end</span>
 </code></pre></div></div>
-<p><a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_method"><code class="language-plaintext highlighter-rouge">suite_summary</code> in the API
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_method"><code class="language-plaintext highlighter-rouge">suite_summary</code> in the API
+docs</a></p>
+
+<hr />
+<h2 id="config">Config</h2>
+<p><strong>Description</strong>: Configure a runnable and its descendants. For more information, see
+<a href="/inferno-core/writing-tests/test-configuration.html#configuration-1">Configuration</a>.</p>
+
+<p><strong>Can Be Used In</strong>: <code class="language-plaintext highlighter-rouge">Suite</code></p>
+
+<p><strong>Reference</strong>: <a href="/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method"><code class="language-plaintext highlighter-rouge">config</code> in the API
 docs</a></p>
 
       </div>
