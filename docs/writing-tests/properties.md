@@ -1,26 +1,78 @@
 ---
-title: Test Properties
+title: Properties
 nav_order: 2
 parent: Writing Tests
 layout: docs
 section: docs
 ---
-# Test, Suite, and Group Properties
+# Test, Group & Suite Properties
 
-## General Properties
+## Title
+**Description**: The title which is displayed in the UI.
 
-#### Config
-Configure a runnable and its descendants. For more information, see
-[Configuration](/inferno-core/writing-tests/test-configuration.html#configuration-1).
+**Can be Used In**: `Test`, `Group`, `Suite` 
 
-[`config` in the API
-docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
+**Example**:
+```ruby
+test do
+  title 'US Core Patient Read Interaction'
+end
+```
+**Reference**: [`title` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#title-instance_method)
 
-#### Description
-A detailed description displayed in the UI.
-[Markdown](https://commonmark.org/help/) is supported. There are several ways to
-define long strings in ruby:
+----
+## Short Title
+**Description**: A short title which is displayed in the left side of the UI.
 
+**Can be Used In**: `Test`, `Group`, `Suite` 
+
+**Example**:
+```ruby
+group do
+  short_title 'Patient Tests'
+end
+```
+**Reference**: [`short_title` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#short_title-instance_method)
+
+----
+## Id
+**Description**: A unique identifier. Inferno will automatically create
+ids if they are not specified. It is important to create ids yourself if you
+need to refer to a test or group elsewhere.
+
+**Can be Used In**: `Test`, `Group`, `Suite`
+
+**Example**:
+```ruby
+test do
+  id :us_core_patient_read
+end
+
+group do
+  test from: :us_core_patient_read
+end
+```
+
+**Additional Notes**: TestSuite ids appear in Inferno's urls, so consideration should be given to
+choosing a suite id that will make sense to users as a url path. Links to a test
+suite take the form of `INFERNO_BASE_PATH/TEST_SUITE_ID`, and individual test
+session urls look like `INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID`.
+
+**Reference**: [`id` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#id-instance_method)
+
+----
+## Description
+**Description**: A detailed description displayed in the UI.
+[Markdown](https://commonmark.org/help/) is supported. The description usually
+requires multiple lines, and the example below shows different ways to
+define long strings in Ruby.
+
+**Can be Used In**: `Test`, `Group`, `Suite`
+
+**Example**:
 ```ruby
 test do
   description 'This is a brief description'
@@ -39,35 +91,81 @@ test do
   )
 end
 ```
-[`description` in the API
+**Reference**: [`description` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#description-instance_method)
 
-#### Id
-A unique identifier for a test, group, or suite. Inferno will automatically create
-ids if they are not specified. It is important to create ids yourself if you
-need to refer to a test or group elsewhere.
+----
+## Optional/Required
+**Description**: Mark a test or group as optional/required. Tests and Groups are required by default.
+The results of optional tests do not affect the test result of their parent.
 
-TestSuite ids appear in Inferno's urls, so consideration should be given to
-choosing a suite id that will make sense to users as a url path. Links to a test
-suite take the form of `INFERNO_BASE_PATH/TEST_SUITE_ID`, and individual test
-session urls look like `INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID`.
+**Can Be Used In**: `Test`, `Group`
+
+**Example**:
 ```ruby
-test do
-  id :us_core_patient_read
-end
-
 group do
-  test from: :us_core_patient_read
+  optional # Makes this group optional
+
+  test do
+    optional # Makes this test optional
+  end
+  
+  test from: :some_optional_test do
+    required # Make an optional test required
+  end
 end
 ```
-[`id` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#id-instance_method)
+**Reference**: [`optional` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method), 
+[`required` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#required-instance_method)
 
-#### Input Instructions
+----
+## Run
+**Description**: `run` defines a block of code to execute when the test is
+run. A test will typically make one or more
+[assertions](/inferno-core/docs/Inferno/DSL/Assertions.html). If no assertions fail, then the
+test passes.
+
+**Can Be Used In**: `Test`
+
+**Example**:
+```ruby
+test do
+  run do
+    assert 1 == 0, 'One is not equal to zero'
+  end
+end
+```
+**Reference**: [`run` in the API
+docs](/inferno-core/docs/Inferno/Entities/Test.html#block-class_method)
+
+----
+## Version
+**Description**: Define the suite's version, which is displayed in the UI.
+
+**Can Be Used In**: `Suite`
+
+**Example**:
+```ruby
+class MySuite < Inferno::TestSuite
+  version '1.2.3'
+end
+```
+**Reference**: [`version` in the API
+docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#version-class_method)
+
+----
+## Input Instructions
+**Description**: 
 Define additional instructions which will be displayed above a runnable's
 inputs. These instructions only appear when running this particular runnable.
 They will not appear if you run a parent or child of this runnable.
 [Markdown](https://commonmark.org/help/) is supported.
+
+**Can Be Used In**: `Test`, `Group`, `Suite`
+
+**Example**:
 ```ruby
 group do
   input_instructions %(
@@ -82,37 +180,73 @@ group do
   )
 end
 ```
-[`input_instructions` in the API
+**Reference**: [`input_instructions` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#input_instructions-instance_method)
 
-#### Optional/Required
-[`Test` & `Group` only] Mark a test or group as optional/required. Tests and Groups are required by default.
-The results of optional tests do not affect the test result of their parent.
+----
+## Run as Group
+**Description** `run_as_group` makes a group run as a single unit. When true,
+users will not be able to run any of the group's children individually. They
+will only be able to run the whole group at once.
 
+**Can Be Used In**: `Group`
+
+**Example**:
 ```ruby
 group do
-  optional # Makes this group optional
+  run_as_group
+
+  # These tests can not be run individually
+  test do
+    # ...
+  end
 
   test do
-    optional # Makes this test optional
-  end
-  
-  test from: :some_optional_test do
-    required # Make an optional test required
+    # ...
   end
 end
 ```
-[`optional` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method)
+**Reference**: [`run_as_group` in the API
+docs](/inferno-core/docs/Inferno/Entities/TestGroup.html#run_as_group-class_method)
 
-[`required` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#required-instance_method)
+----
+## Suite Option
+**Description** Define a user-selectable option for a suite. See [Suite
+Options
+documentation](/inferno-core/writing-tests/test-configuration.html#suite-options-1).
 
-#### Required Suite Options
-[`Test` & `Group` only] Define the suite options that must be selected
+**Can Be Used In**: `Suite`
+
+**Example**:
+```ruby
+class MyTestSuite < Inferno::TestSuite
+  suite_option :smart_app_launch_version,
+               title: 'SMART App Launch Version',
+               list_options: [
+                 {
+                   label: 'SMART App Launch 1.0.0',
+                   value: 'smart_app_launch_1'
+                 },
+                 {
+                   label: 'SMART App Launch 2.0.0',
+                   value: 'smart_app_launch_2'
+                 }
+               ]
+end
+```
+**Reference**: [`suite_option` in the API
+docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
+
+----
+## Required Suite Options
+**Description**: Define the suite options that must be selected
 in order for a runnable to be included in the current session. See [Hiding Tests
 Based on Suite
 Options](/inferno-core/writing-tests/test-configuration.html#hiding-tests-based-on-suite-options).
+
+**Can Be Used In**: `Test`, `Group`
+
+**Example**:
 ```ruby
 class MyTestSuite < Inferno::TestSuite
   # suite_option :smart_app_launch_version,
@@ -130,74 +264,17 @@ class MyTestSuite < Inferno::TestSuite
   end
 end
 ```
-[`required_suite_options` in the API
+**Reference**: [`required_suite_options` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#required_suite_options-instance_method)
 
-#### Short Title
-A short title which is displayed in the left side of the UI:
-```ruby
-group do
-  short_title 'Patient Tests'
-end
-```
-[`short_title` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#short_title-instance_method)
-
-#### Title
-The title which is displayed in the UI:
-```ruby
-test do
-  title 'US Core Patient Read Interaction'
-end
-```
-[`title` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#title-instance_method)
-
-## Test Specific Properties
-
-#### Run
-`run` defines a block of code to execute when the test is
-run. A test will typically make one or more
-[assertions](/inferno-core/docs/Inferno/DSL/Assertions.html). If no assertions fail, then the
-test passes.
-```ruby
-test do
-  run do
-    assert 1 == 0, 'One is not equal to zero'
-  end
-end
-```
-[`run` in the API
-docs](/inferno-core/docs/Inferno/Entities/Test.html#block-class_method)
-
-## TestGroup Specific Properties
-
-#### Run as Group
-`run_as_group` makes a group run as a single unit. When true,
-users will not be able to run any of the group's children individually. They
-will only be able to run the whole group at once.
-```ruby
-group do
-  run_as_group
-
-  # These tests can not be run individually
-  test do
-    # ...
-  end
-
-  test do
-    # ...
-  end
-end
-```
-[`run_as_group` in the API
-docs](/inferno-core/docs/Inferno/Entities/TestGroup.html#run_as_group-class_method)
-
-## TestSuite Specific Properties
-
-#### Links
-Define a list of links which are displayed in the footer of
+----
+## Links
+**Description**: Define a list of links which are displayed in the footer of
 the UI.
+
+**Can Be Used In**: `Suite`
+
+**Example**:
 ```ruby
 class MyTestSuite < Inferno::TestSuite
   links [
@@ -212,47 +289,19 @@ class MyTestSuite < Inferno::TestSuite
   ]
 end
 ```
-[`links` in the API
+**Reference**: [`links` in the API
 docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method)
 
-#### Suite Option
-Define a user-selectable option for a suite. See [Suite
-Options
-documentation](/inferno-core/writing-tests/test-configuration.html#suite-options-1).
-```ruby
-class MyTestSuite < Inferno::TestSuite
-  suite_option :smart_app_launch_version,
-               title: 'SMART App Launch Version',
-               list_options: [
-                 {
-                   label: 'SMART App Launch 1.0.0',
-                   value: 'smart_app_launch_1'
-                 },
-                 {
-                   label: 'SMART App Launch 2.0.0',
-                   value: 'smart_app_launch_2'
-                 }
-               ]
-end
-```
-[`suite_option` in the API
-docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
-
-#### Version
-Define the suite's version, which is displayed in the UI.
-```ruby
-class MySuite < Inferno::TestSuite
-  version '1.2.3'
-end
-```
-[`version` in the API
-docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#version-class_method)
-
-#### Suite Summary
-Define a summary to display on the suite options
+----
+## Suite Summary
+**Description**: Define a summary to display on the suite options
 selection page. If the suite has no options, the summary is not used. If no
 suite summary is defined, the description will be displayed on the options
 selection page.
+
+**Can Be Used In**: `Suite`
+
+**Example**:
 ```ruby
 class MyTestSuite < Inferno::TestSuite
   suite_summary %(
@@ -261,5 +310,15 @@ class MyTestSuite < Inferno::TestSuite
   )
 end
 ```
-[`suite_summary` in the API
+**Reference**: [`suite_summary` in the API
 docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_method)
+
+----
+## Config
+**Description**: Configure a runnable and its descendants. For more information, see
+[Configuration](/inferno-core/writing-tests/test-configuration.html#configuration-1).
+
+**Can Be Used In**: `Suite`
+
+**Reference**: [`config` in the API
+docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
