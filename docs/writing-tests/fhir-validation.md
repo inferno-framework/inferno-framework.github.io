@@ -39,7 +39,7 @@ validation messages to the runnable.
 
 ```ruby
 test do
-  fhir_read :patient, '123'
+  fhir_read(:patient, '123')
   
   # Validate the resource from the last request
   if resource_is_valid?
@@ -67,7 +67,7 @@ to the runnable, and fail the test if the resource is invalid.
 
 ```ruby
 test do
-  fhir_read :patient, '123'
+  fhir_read(:patient, '123')
   
   # Use the resource from the last request
   assert_valid_resource

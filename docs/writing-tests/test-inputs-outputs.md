@@ -1,11 +1,11 @@
 ---
-title: Test Inputs and Outputs
+title: Inputs and Outputs
 nav_order: 3
 parent: Writing Tests
 layout: docs
 section: docs
 ---
-# Test Inputs and Outputs
+# Inputs and Outputs
 Inputs and outputs provide a structured way to pass information into and out of
 tests. When a user initiates a test run, a modal is displayed for providing input values.
 When multiple tests are run together, the user will not be

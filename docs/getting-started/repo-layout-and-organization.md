@@ -50,7 +50,7 @@ looks something like this:
 - `worker.rb` - This is the main file for Inferno's test runner process.
 
 ## Test Organization
-Inferno Test Kits are organized like ruby gems to enable them to be easily
+Inferno Test Kits are organized like Ruby gems to enable them to be easily
 distributed.
 - Tests must live in the `lib` folder.
 - The `lib` folder should contain only one file, which is the main entrypoint

@@ -59,12 +59,12 @@ class MyTestSuite < Inferno::TestSuite
   my_html_route_handler = proc { [200, { 'Content-Type' => 'text/html' }, [html]] }
   
   # Serve an html page at INFERNO_PATH/my_test_suite/custom/my_html_page
-  route :get, '/my_html_page', my_html_route_handler
+  route(:get, '/my_html_page', my_html_route_handler)
   
   my_jwks = File.read(File.join(__dir__, 'my_jwks.json'))
   my_jwks_route_handler = proc { [200, { 'Content-Type' => 'application/json' }, [my_jwks]] }
   
   # Serve a JSON file at INFERNO_PATH/my_test_suite/custom/.well-known/jwks.json
-  route :get, '/.well-known/jwks.json', my_jwks_route_handler
+  route(:get, '/.well-known/jwks.json', my_jwks_route_handler)
 end
 ```

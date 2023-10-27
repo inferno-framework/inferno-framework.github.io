@@ -103,7 +103,7 @@ Tests can have the following results in Inferno:
 - `wait` - A test is waiting to receive an incoming request, and will resume
   once it is received (see [Waiting for an Incoming
   Request](/inferno-core/advanced-test-features/waiting-for-requests.html)).
-- `cancel` (not yet implemented)
+- `cancel` - Test cancelled by user.
 
 #### Assigning specific results
 Inferno provides methods to assign some specific results to a test:
