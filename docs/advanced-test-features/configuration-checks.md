@@ -12,7 +12,7 @@ time a session is created for the suite. The checks can be refreshed [using the
 JSON API](/inferno-core/api-docs/#/Test
 Suite/put_test_suites__test_suite_id__check_configuration).
 
-### Defining Configuration Checks
+## Defining Configuration Checks
 The `check_configuration` method defines a check to be performed. It takes a
 block which returns an Array of message hashes.
 

@@ -8,7 +8,7 @@ section: docs
 # Making Requests
 Inferno provides support for making FHIR and generic http requests.
 
-### Accessing Requests and Responses
+## Accessing Requests and Responses
 After making a FHIR/http request, information about it is made available via several
 methods:
 - `request` - returns a
@@ -54,7 +54,7 @@ test do
 end
 ```
 
-### Reusing Requests
+## Reusing Requests
 You may want to reuse a request from an earlier test rather than reissuing it.
 This can be done by giving a request a name, specifying that a test makes a
 named request, and then specifying that another test uses that named request.
@@ -85,9 +85,9 @@ group do
 end
 ```
 
-## FHIR Requests
+# FHIR Requests
 
-### FHIR Clients
+## FHIR Clients
 Before making a FHIR request, a client needs to be created. Clients are passed
 down from a `TestSuite` or `TestGroup` to all of their descendants, so it isn't
 necessary for each `Test` to define its own client. When defining a client, you
@@ -137,7 +137,7 @@ end
 ```
 [methods for defining FHIR clients in the API docs](/inferno-core/docs/Inferno/DSL/FHIRClientBuilder.html)
 
-### Available FHIR Request Methods
+## Available FHIR Request Methods
 The following methods are currently available for making FHIR requests:
 - `fhir_create`
 - `fhir_delete`
@@ -151,7 +151,7 @@ documentation](/inferno-core/docs/Inferno/DSL/FHIRClient.html). If you need to
 make other types of FHIR requests, [contact the Inferno
 team](/inferno-core/#contact-the-inferno-team) so we can prioritize adding them.
 
-#### FHIR Request Examples
+### FHIR Request Examples
 
 ```ruby
 test do
@@ -204,7 +204,7 @@ test do
 end
 ```
 
-### Making Requests to Multiple Servers
+## Making Requests to Multiple Servers
 If you need to make requests to multiple fhir servers, this can be accomplished
 by creating multiple named fhir clients.
 
@@ -228,7 +228,7 @@ group do
 end
 ```
 
-### OAuth Credentials
+## OAuth Credentials
 When making requests to FHIR servers using OAuth2-based (such as the SMART App
 Launch workflow) authorization, OAuth credentials support an access token and
 optionally a refresh token as well as all of the information needed to perform a
@@ -258,9 +258,9 @@ group do
 end
 ```
 
-## HTTP Requests
+# HTTP Requests
 
-### HTTP Clients
+## HTTP Clients
 It is not necessary to create an http client in order to make http requests, but
 it may be helpful if you need to make multiple requests to the same server. If
 an http client is available, then the http request methods only need to specify
@@ -286,7 +286,7 @@ end
 
 ```
 
-### Available HTTP Request Methods
+## Available HTTP Request Methods
 The following methods are currently available for making http requests:
 - `get`
 - `post`

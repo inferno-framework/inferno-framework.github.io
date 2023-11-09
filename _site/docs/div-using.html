@@ -15,7 +15,7 @@
 
   <link rel="stylesheet" href="/assets/common.css">
 
-  <title>Inferno Framework - Inferno Team</title>
+  <title>Inferno Framework - Using Test Kits</title>
 </head>
 <body  data-spy="scroll" data-target="#toc" class="d-flex flex-column  h-100">
   <a href="#content" class="visually-hidden-focusable">Skip to main content</a>
@@ -43,10 +43,10 @@
       </div>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active align-middle" style="display: inline" href="/about/">About</a>
+          <a class="nav-link align-middle" style="display: inline" href="/about/">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/docs">Documentation</a>
+          <a class="nav-link active" href="/docs">Documentation</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/community">Community</a>
@@ -138,11 +138,11 @@
       <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="/index_new.html"><span>Home</span></a></li>
         
+          
+            <li class="breadcrumb-item"><a href="/docs/"><span>Documentation</span></a></li>
+            <li class="breadcrumb-item active">Using Test Kits</li>
+          
         
-          
-            <li class="breadcrumb-item"><a href="/about/"><span>About</span></a></li>
-            <li class="breadcrumb-item active">Inferno Team</li>
-          
         
         
         
@@ -164,7 +164,13 @@
         Show Navigation
         </a>
         <nav id="sidebar" class="collapse collapsed d-lg-block">
-    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">About</div></li><li class="nav-item"><a href="/about/" class="nav-link-top nav-link">Overview</a></li><li class="nav-item"><a href="/about/goals.html" class="nav-link-top nav-link">Goals</a></li><li class="nav-item"><a href="/about/fhir.html" class="nav-link-top nav-link">FHIR and Testing</a></li><li class="nav-item active"><a href="/about/who.html" class="nav-link-top nav-link active">Inferno Team</a></li><li class="nav-item"><a href="/about/alternatives.html" class="nav-link-top nav-link">Alternatives</a></li><li class="nav-item"><a href="/about/architecture.html" class="nav-link-top nav-link">Architecture</a></li><li class="nav-item"><a href="/about/roadmap.html" class="nav-link-top nav-link">Roadmap</a></li><li class="nav-item"><a href="/about/faq.html" class="nav-link-top nav-link">Frequently Asked Questions</a></li></ul></nav>
+    <ul class="navbar-nav list-unstyled components"><li class="nav-item"><div class="nav-group">Documentation</div></li><li class="nav-item"><a href="/docs/" class="nav-link-top nav-link">Introduction</a></li><li class="nav-item"><a href="/docs/concepts.html" class="nav-link-top nav-link">Key Concepts</a></li><li class="nav-item"><div class="nav-group">Creating Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-writers.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Writing Tests category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/writing-tests/" class="nav-link-top nav-link">Writing Tests</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/writing-tests/defining-tests.html" class="nav-link">Defining Groups and Tests</a></li><li class=""><a href="/docs/writing-tests/properties.html" class="nav-link">Test Properties</a></li><li class=""><a href="/docs/writing-tests/test-inputs-outputs.html" class="nav-link">Test Inputs/Outputs</a></li><li class=""><a href="/docs/writing-tests/making-requests.html" class="nav-link">Making Requests</a></li><li class=""><a href="/docs/writing-tests/assertions-and-results.html" class="nav-link">Assertions and Results</a></li><li class=""><a href="/docs/writing-tests/fhir-validation.html" class="nav-link">FHIR Validation</a></li></ul></li><li class="nav-item"><a href="/docs/repo-layout-and-organization.html" class="nav-link-top nav-link">Test Kit Layout</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Advanced Features category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/advanced-test-features/" class="nav-link-top nav-link">Advanced Features</a><ul class="collapse list-unstyled"><li class=""><a href="/docs/advanced-test-features/test-configuration.html" class="nav-link">Suite/Group/Test Configuration</a></li><li class=""><a href="/docs/advanced-test-features/serving-http-requests.html" class="nav-link">Serving HTTP Requests</a></li><li class=""><a href="/docs/advanced-test-features/waiting-for-requests.html" class="nav-link">Waiting for an Incoming Request</a></li><li class=""><a href="/docs/advanced-test-features/scratch.html" class="nav-link">Scratch</a></li><li class=""><a href="/docs/advanced-test-features/configuration-checks.html" class="nav-link">Configuration Checks</a></li></ul></li><li class="nav-item"><a href="/docs/distributing-tests.html" class="nav-link-top nav-link">Distributing Tests</a></li><li class="nav-item"><a href="/docs/ruby.html" class="nav-link-top nav-link">Ruby Reference</a></li><li class="nav-item active"><div class="nav-group">Using Test Kits</div></li><li class="nav-item"><a href="/docs/getting-started-users.html" class="nav-link-top nav-link">Getting Started</a></li><li class="nav-item"><button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in Deploying to Shared Hosts category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+            </button><a href="/docs/deployment/" class="nav-link-top nav-link">Deploying to Shared Hosts</a><ul class="collapse list-unstyled"></ul></li><li class="nav-item"><a href="/docs/json-api/" class="nav-link-top nav-link">JSON API</a></li></ul></nav>
       </div>
     </div>
     <div class="col-lg-2 order-2">
@@ -176,7 +182,7 @@
     </div>
     <div class="col-lg-7 order-1">
       <div class="docs-body mx-auto" id="content">
-      <h1 id="the-inferno-team">The Inferno Team</h1>
+      
 
       </div>
     </div>
