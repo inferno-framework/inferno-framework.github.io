@@ -1,16 +1,18 @@
 ---
-title: Suite/Group/Test Configuration
+title: Altering Test Behavior
 nav_order: 1
 parent: Advanced Features
 layout: docs
 section: docs
 ---
-# Test Configuration
+# Altering Test Behavior
 
-Inferno provides two mechanisms for altering test behavior.
+Inferno provides two mechanisms for altering test behavior: Configuration and Suite Options.
 
-### Configuration
+## Configuration
 
+[Configuration](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html)
+provides a way for test authors to set boot time options. Some additional information about Confguration:
 * Defined at the test, group, or suite level.
 * Evaluated at boot time.
 * Values chosen by test authors.
@@ -20,23 +22,10 @@ Inferno provides two mechanisms for altering test behavior.
 * Can define custom boot-time options which are used within a test's `run` block
   to modify test behavior.
 
-### Suite Options
-
-* Only defined at the suite level.
-* Evaluated at test session creation time.
-* Values chosen by test users.
-* Can modify which tests/groups appear in the UI and are executed.
-* Can be used within a test's `run` block to modify test behavior.
-
-## Configuration
-
-[Configuration](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html)
-provides a way for test authors to avoid naming conflicts when reusing tests and
-set boot-time options. For example, a suite may want to run a particular group
-twice with distinct inputs and outputs. Those groups can be configured so that
-their inputs and outputs are distinct from each other without having to alter
-the group itself. Additionally, configuration can change input properties such
-as whether a particular input is locked or required.
+For example, a suite may want to run a particular group
+twice with different sets of inputs and outputs. These groups can be configured so that
+their inputs and outputs are distinct from each other, without having to alter
+the group itself.
 
 When a runnable defines some configuration, that configuration also applies to
 all of that runnable's children. Configuration defined by a parent runnable
@@ -45,17 +34,15 @@ overrides any child runnable's configuration.
 [`Configurable` in the API
 docs](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html)
 
-### Renaming Inputs/Outputs/Requests
+#### Renaming Inputs, Outputs, and Requests
 
 Renaming inputs and outputs allows test authors to handle potential naming
 conflicts when using the same tests multiple times, or using tests from multiple
 sources with differently named inputs.
 
-
 Consider a test group which needs to check which versions of TLS are
-supported by two different servers. This group can use [this test which checks
-which TLS versions a server
-supports](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb)
+supported by two different servers. This group can use [this test](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb)
+which checks the TLS versions a server supports
 based on a `url` input. In order to check the TLS versions supported by two
 different servers, `config` can be used to make each instance of this test use a
 different input.
@@ -89,7 +76,7 @@ end
 Outputs and requests can be renamed in the same fashion, using `outputs` or
 `requests` as the key in `config`.
 
-### Altering Input Properties
+#### Altering Input Properties
 
 In addition to renaming an input, other input properties can be altered as well.
 Any of the [input
@@ -164,20 +151,19 @@ class StandaloneLaunchGroupSTU2 < StandaloneLaunchGroup
 end
 ```
 
-### Custom Configuration Options
+#### Custom Configuration Options
 
 Custom configuration options allow information to be loaded at boot time and
 made available to tests. For example, a test could have optional functionality
 which is enabled by setting a specific configuration option value.
 
-[This test which checks which TLS versions a server
-supports](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb)
-allows test authors to set the minimum and maximum allowed TLS versions. This
-gives the test the flexibility to be used in a variety of different testing
-scenarios with different TLS requirements. The test's configuration options are
-[described in its
-README](https://github.com/inferno-framework/tls-test-kit/#using-the-tls-test-in-other-test-suites)
-For example, the Bulk Data Implementation Guide requires that TLS 1.2 or later
+[This test](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb), 
+which checks the TLS versions a server supports,
+allows test authors to set minimum and maximum allowed TLS versions. This
+gives the test flexibility to be used in a variety of different testing
+scenarios with different TLS requirements. The test's configuration options are described in its
+[README](https://github.com/inferno-framework/tls-test-kit/#using-the-tls-test-in-other-test-suites)
+For example, the Bulk Data IG requires that TLS 1.2 or later
 be used, so Inferno bulk data tests can configure the TLS test as follows:
 
 ```ruby
@@ -190,21 +176,27 @@ test from: :tls_version_test,
 ## Suite Options
 
 [Suite
-options](ttps://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
+options](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
 provide a way for users to select high level options that alter which
-tests/groups are executed during a session. For example, a test suite may
-support testing against different versions of an implementation guide, and based
+tests and/or groups are executed during a session. For example, a test suite may
+support testing against different versions of an IG, and based
 on which version the user selects when starting their session, the tests for the
-other versions can be hidden.
+other versions are hidden. Some additional information about Suite Options:
+
+* Only defined at the suite level.
+* Evaluated at test session creation time.
+* Values chosen by test users.
+* Can modify which tests and/or groups appear in the UI and are executed.
+* Can be used within a test's `run` block to modify test behavior.
 
 [`suite_option` in the API
 docs](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
 
-### Defining Suite Options
+#### Defining Suite Options
 [Suite
 options](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
 must be defined within a test suite and have the following properties:
-* `identifier` - a Symbol which is used to identify this option
+*  A Symbol which is used to identify this option (e.g. `:smart_app_launch_version` in the below example)
 * `title` - the title which is displayed to users
 * `list_options` - the possible values for this option. Each list option
   contains a `label` which is displayed to users, and a `value` which is the
@@ -227,9 +219,9 @@ class MyTestSuite < Inferno::TestSuite
 end
 ```
 
-### Hiding Tests Based on Suite Options
+#### Hiding Tests Based on Suite Options
 
-Tests/groups can be hidden from the user and prevented from executing based on
+Tests and groups can be hidden from the user and prevented from executing based on
 the selected suite options by defining
 [`required_suite_options`](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Runnable.html#required_suite_options-instance_method).
 In the following example (using the suite option definition from above), the
@@ -247,14 +239,14 @@ class MyTestSuite < Inferno::TestSuite
           smart_app_launch_version: 'smart_app_launch_1'
         }
         
-  # Suite option requirements can be defined within a test/group definition
+  # Suite option requirements can also be defined within a test/group definition
   group from: :smart_app_launch_v2 do
     required_suite_options smart_app_launch_version: 'smart_app_launch_2'
   end
 end
 ```
 
-### Altering Test Behavior Based on Suite Options
+#### Altering Test Behavior Based on Suite Options
 
 Test behavior can be modified by inspecting the value of an option inside of the
 `run` block.

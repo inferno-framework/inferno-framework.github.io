@@ -1,26 +1,28 @@
 ---
-title: Test Inputs/Outputs
+title: Inputs and Outputs
 nav_order: 3
 parent: Writing Tests
 layout: docs
 section: docs
 ---
-# Test Inputs/Outputs
+# Inputs and Outputs
 Inputs and outputs provide a structured way to pass information into and out of
-tests. When a user initiates a test run, a modal is displayed allowing them to
-provide input values. When multiple tests are being run together, the user is
-not prompted for inputs which can be populated by the output of a previous test
+tests. When a user initiates a test run, a modal is displayed for providing input values.
+When multiple tests are run together, the user will not be
+prompted for inputs that are populated by the output of a previous test
 in the run. Currently, all inputs and outputs are stored as strings.
 
-## Defining Inputs
+## Inputs
+
+#### Defining Inputs
 The `input` method defines an input. `input` can take several arguments, but
 only the identifier is required:
 - `identifier` - (**required**) a name for this input. The input value is
   available in the run block using this name.
 - `title:` -  a title which is displayed in the UI.
 - `description:` - a description which is displayed in the UI.
-- `type:` - controls the type of html input element used in the UI. Currently
-  three possible values:
+- `type:` - controls the type of HTML input element used in the UI. Currently
+  there are 5 possible values:
   - `'text'` - (**default**) a regular input field.
   - `'textarea'` - for a text area input field.
   - `'radio'` - for a radio button singular selection field.
@@ -39,6 +41,7 @@ only the identifier is required:
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
 
+Here is a simple example:
 ```ruby
 test do
   input :url,
@@ -54,10 +57,10 @@ end
 [`input` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#input-instance_method)
 
-### Defining Multiple Inputs
-It is possible to define multiple inputs in a single `input` call, but not with
-any of the additional properties listed above. This can be useful when a test
-uses inputs which have been more completely defined in a parent or sibling.
+#### Defining Multiple Inputs
+It is possible to define multiple inputs in a single `input` call, though this 
+prevents the use of the additional properties listed above. This can be useful when a test
+uses inputs that have been defined in a parent or sibling.
 
 ```ruby
 test do
@@ -66,7 +69,7 @@ test do
 end
 ```
 
-### Inputs with List Options
+#### Inputs with List Options
 For the `radio` or `checkbox` input types, a list of options must be provided.
 The `label` is displayed to the user, and the `value` is the actual value that
 is stored when the user selects that option.
@@ -108,8 +111,6 @@ test do
       # ...
     end
 
-    # ...
-
     if radio_input_example == 'option_2'
       # ...
     end
@@ -125,7 +126,7 @@ test do
 end
 ```
 
-### Ordering Inputs
+#### Ordering Inputs
 When a group or suite displays all of its descendants' inputs, they may be in an
 unintuitive order. They can be reordered using `input_order`.
 ```ruby
@@ -142,8 +143,8 @@ group do
 end
 ```
 
-### Additional Input Instructions
-If a runnable needs extra input instructions, it can define `input_instructions`
+#### Additional Input Instructions
+If a developer wants to include additional input instructions, they can define `input_instructions`
 which will be displayed above the inputs.
 
 ```ruby
@@ -161,10 +162,12 @@ group do
 end
 ```
 
-## Defining Outputs
+## Outputs
+
+#### Defining Outputs
 The `output` method defines an output. It is used in a test's definition block
 to define which outputs a test provides, and within a test's `run` block to
-assign a value to an output. Multiple outputs can be defined/assigned at once.
+assign a value to an output. Multiple outputs can be defined and assigned at once.
 
 ```ruby
 test do
@@ -192,9 +195,9 @@ docs](/inferno-core/docs/Inferno/Entities/Test.html#output-instance_method)
 
 ## Handling Complex Objects
 Since inputs and outputs are all stored as strings, special handling is needed
-if you want to use them to pass complex objects between tests. This can
+if passing complex objects between tests. This can
 generally be handled using JSON serialization. Ruby hashes and arrays, as well
-as FHIR model classes support the `to_json` method turn the object into a JSON
+as FHIR model classes, support the `to_json` method, which turns an object into a JSON
 string.
 
 ```ruby
@@ -221,9 +224,13 @@ end
 
 ## Behind the Scenes
 Inputs and outputs work as a single key-value store scoped to a test session.
-The main differences between them are that an input's value can not be changed
-during a test, and inputs support additional metadata for display in the UI
-(title, description, etc.). Since inputs and outputs form a single key-value
+The main differences between them are:
+- An input's value can not be changed
+during a test
+- Inputs support additional metadata for display in the UI
+(title, description, etc.)
+
+Since inputs and outputs form a single key-value
 store, a value will be overwritten if multiple tests write to the same output.
-However, each test result stores the input/output values that were present for
+However, each test result stores the input and output values that were present for
 that particular test.

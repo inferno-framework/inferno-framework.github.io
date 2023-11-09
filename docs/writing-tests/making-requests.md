@@ -6,10 +6,10 @@ layout: docs
 section: docs
 ---
 # Making Requests
-Inferno provides support for making FHIR and generic http requests.
+Inferno provides support for making FHIR requests as well as generic HTTP requests.
 
-## Accessing Requests and Responses
-After making a FHIR/http request, information about it is made available via several
+### Accessing Requests and Responses
+After making a FHIR or HTTP request, information about it is made available via several
 methods:
 - `request` - returns a
   [`Request`](/inferno-core/docs/Inferno/Entities/Request.html) object which
@@ -31,22 +31,24 @@ end
 ```
 
 When making [assertions](/inferno-core/docs/Inferno/DSL/Assertions.html) against
-a response or resource, the assertions which are designed to be used with
+a response or resource, the assertions that are designed to be used with
 responses and resources will automatically use the response/resource from the
-last request, so it isn't necessary to pass one in unless you want to make
-assertions against a different response/resource.
+last request. It is therefore unnecessary to pass the response/resource in to the assertion
+unless you want to make assertions against a different response/resource.
 
 ```ruby
 test do
   run do
     fhir_read(:patient, '123')
     
+    # Using the values from the fhir_read request automatically
     assert_response_status(200)
     assert_resource_type(:patient)
     assert_valid_resource
     
     ...
     
+    # Specifying the request & resource explicitly
     assert_response_status(200, request: some_other_request)
     assert_resource_type(:patient, resource: some_other_resource)
     assert_valid_resource(resource: some_other_resource)
@@ -54,10 +56,9 @@ test do
 end
 ```
 
-## Reusing Requests
-You may want to reuse a request from an earlier test rather than reissuing it.
-This can be done by giving a request a name, specifying that a test makes a
-named request, and then specifying that another test uses that named request.
+### Reusing Requests
+If you want to reuse a request from an earlier test instead of reissuing it,
+you can give the initial request a name, and then have your other tests use that named request.
 
 ```ruby
 group do
@@ -71,7 +72,7 @@ group do
   end
   
   test do
-    # Declare that this test uses a particular named request. The test runner
+    # Declare that this test uses the named request ":patient_read". The test runner
     # will automatically load this request and make it available within the test.
     uses_request :patient_read
     
@@ -85,9 +86,9 @@ group do
 end
 ```
 
-# FHIR Requests
+## FHIR Requests
 
-## FHIR Clients
+#### FHIR Clients
 Before making a FHIR request, a client needs to be created. Clients are passed
 down from a `TestSuite` or `TestGroup` to all of their descendants, so it isn't
 necessary for each `Test` to define its own client. When defining a client, you
@@ -110,7 +111,7 @@ group do
 end
 ```
 
-You probably don't want to hard code the server url or bearer token, so a ruby
+It is unlikely you will want to hard code the server url or bearer token, so a Ruby
 symbol can be used to read these values from an input.
 
 ```ruby
@@ -137,7 +138,7 @@ end
 ```
 [methods for defining FHIR clients in the API docs](/inferno-core/docs/Inferno/DSL/FHIRClientBuilder.html)
 
-## Available FHIR Request Methods
+#### Available FHIR Request Methods
 The following methods are currently available for making FHIR requests:
 - `fhir_create`
 - `fhir_delete`
@@ -146,12 +147,13 @@ The following methods are currently available for making FHIR requests:
 - `fhir_read`
 - `fhir_search`
 - `fhir_transaction`
+
 For more details on these methods, see the [FHIR Client API
 documentation](/inferno-core/docs/Inferno/DSL/FHIRClient.html). If you need to
 make other types of FHIR requests, [contact the Inferno
-team](/inferno-core/#contact-the-inferno-team) so we can prioritize adding them.
+team](/about/who.html) so we can prioritize adding them.
 
-### FHIR Request Examples
+Here are some examples of how to use the above methods:
 
 ```ruby
 test do
@@ -204,9 +206,9 @@ test do
 end
 ```
 
-## Making Requests to Multiple Servers
-If you need to make requests to multiple fhir servers, this can be accomplished
-by creating multiple named fhir clients.
+#### Making Requests to Multiple Servers
+If you need to make requests to multiple FHIR servers, this can be accomplished
+by naming each `fhir_client`.
 
 ```ruby
 group do
@@ -228,10 +230,10 @@ group do
 end
 ```
 
-## OAuth Credentials
-When making requests to FHIR servers using OAuth2-based (such as the SMART App
-Launch workflow) authorization, OAuth credentials support an access token and
-optionally a refresh token as well as all of the information needed to perform a
+#### OAuth Credentials
+When making requests to FHIR servers using OAuth2-based authorization (such as the SMART App
+Launch workflow), OAuth credentials support an access token and,
+optionally, a refresh token and the information needed to perform a
 token refresh (refresh token, token endpoint, client ID, client secret). If all
 of this information is available, the FHIR client will automatically refresh the
 access token if it will expire in under a minute. If no information on the
@@ -258,14 +260,14 @@ group do
 end
 ```
 
-# HTTP Requests
+## HTTP Requests
 
-## HTTP Clients
-It is not necessary to create an http client in order to make http requests, but
+#### HTTP Clients
+It is not necessary to create a HTTP client in order to make HTTP requests, but
 it may be helpful if you need to make multiple requests to the same server. If
-an http client is available, then the http request methods only need to specify
-the additional path which needs to be added to the client's url rather than an
-absolute url.The syntax for doing so is the same as that for [FHIR
+an HTTP client is available, then the HTTP request methods only need
+the relative path from the client's url rather than an
+absolute url. The syntax for doing so is the same as that for [FHIR
 clients](#fhir-clients), except the method is called `http_client` rather than
 `fhir_client`.
 
@@ -286,8 +288,8 @@ end
 
 ```
 
-## Available HTTP Request Methods
-The following methods are currently available for making http requests:
+#### Available HTTP Request Methods
+The following methods are currently available for making HTTP requests:
 - `get`
 - `post`
 - `delete`
@@ -295,5 +297,5 @@ The following methods are currently available for making http requests:
 
 For more details on these methods, see the [HTTP Client API
 documentation](/inferno-core/docs/Inferno/DSL/HTTPClient.html). If you need to
-make other types of http requests, [contact the Inferno
-team](/inferno-core/#contact-the-inferno-team) so we can prioritize adding them.
+make other types of HTTP requests, [contact the Inferno
+team](/about/who.html) so we can prioritize adding them.

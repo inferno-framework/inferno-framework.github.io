@@ -6,62 +6,64 @@ section: docs
 ---
 # Key Concepts
 
+## Inferno Core
+
+Inferno Core is the primary library of Inferno, which testers can use to build Inferno Test
+Kits. It provides the main logic of Inferno, as well as a CLI, a web
+interface for executing tests, and integration with data persistence layers and 3rd
+party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
+React + create-react-app.
+
+## Inferno DSL
+
+A Domain Specific Language (DSL) that test writers use to define the tests
+in an Inferno Test Kit. The DSL provides built-in functionality that is
+useful in testing FHIR APIs, such as a FHIR client and built-in assertion
+libraries. See [Writing Tests](http://localhost:4000/docs/writing-tests/) for more information.
 
 ## Inferno Test Kit
 
 A distributable set of tests and tools built and packaged
 using Inferno to help testers evaluate the conformance of a system to
-requirements of the FHIR base specification, relevant FHIR Implementation
-Guides, and any additional requirements.  Example: the ONC g10 certification
-test kit. Test kits primarily are composed of a Test Suite, which represents
-executable tests, but may include other tools such as FHIR resource validators
-or reference implementations.  
+FHIR base specification requirements, relevant FHIR Implementation
+Guides, and any additional requirements. Test Kits are primarily composed of one
+or more Test Suites, but may include other tools such as FHIR resource validators
+or reference implementations.
 
-## Inferno Deployment
-A web host that is running one or more Inferno Test Kits.  Inferno Test Kits can
-be run as an Inferno Deployment on users local machines without any additional
-configuration. Alternately, an Inferno Deployment can host multiple Inferno Test
-Kits and run on a shared service, such as is the case for
-https://inferno.healthit.gov.  A deployment provides a web interface as well as
-a RESTful API to enable third party integration.
+## Inferno Template
+
+A template for writing Inferno Test Kits.
 
 ## Inferno Test Suite
 
 An executable set of tests provided within an Inferno Test Kit that allows
-testers to evaluate the conformance of a system.  The tests are organized
-hierarchically.  They may import tests from other Test Kits.  It may be the
-expectation of a Test Suite that a conformant system will pass all provided
-tests, or that the system may fail some tests.  An individual test suite defines
-how to interpret failures at the test level and in aggregate.
+testers to evaluate the conformance of a system. They can import tests from other Test Kits. 
+Each Test Suite also defines how to interpret failures at the test level and in aggregate.
+For example, Test Suite may define that a conformant system will pass all provided
+tests, or that the system may fail some tests. 
 
-## Inferno Core
+## Validators
 
-The primary library of inferno, which testers can use to build Inferno Test
-Kits.  It provides the main logic of Inferno.  It provides a CLI, a web
-interface for executing tests, integration with data persistence layers and 3rd
-party validators.  Conceptually, Inferno core is similar to Ruby on Rails or
-React + create-react-app.
+Validators are tools that validate the correctness of a piece of data against a set of rules
+defined within a context. Inferno tests typically fetch data and validate the
+response using a validator, for example the FHIR Profile Validator or the FHIR Terminology
+Validator. Inferno typically performs these functions by providing common
+third party validators (e.g. HL7 FHIR Validator).
 
-## Inferno Template
+## Reference Implementations
 
-A starting point for writing new Inferno Test Suites.
-
-## Inferno Test DSL
-A Domain Specific Language (DSL) that test writers use to define the tests
-provided in the Inferno Test Suite. The DSL provides built-in functionality
-useful in testing FHIR APIs, such as FHIR client and built-in assertion
-libraries.  See documentation.
-
-## Inferno Validators
-
- Tools that validate the correctness of a piece of data against a set of rules
- defined within a context.  Inferno Tests typically fetch data and validate the
- response using a validator.  Examples: FHIR Profile Validator, FHIR Terminology
- Validator.  Inferno typically performs these functions by providing common
- third party validators (e.g. HL7 FHIR Validator).
-
-## Inferno Reference Implementations
-
-An Inferno Test Kit may provide one or more Reference Implementations, which can
+An Inferno Test Kit may provide one or more Reference Implementations, which
+is a program that implements all requirements from a specification (e.g. FHIR) 
+and demonstrates "corect" behavior. They can
 be useful to develop tests against or to help interact with third party
-solutions.  Example: G10 Reference API.
+solutions. For example, Inferno has a [Reference Server](https://github.com/inferno-framework/inferno-reference-server)
+for US Core and the Inferno ONC (g)(10) certification tests.
+
+## Inferno Deployment
+
+A web host running one or more Inferno Test Kits. An example is the 
+[https://inferno.healthit.gov](https://inferno.healthit.gov) website.
+An individual Test Kit can also be run as an Inferno Deployment on 
+users' local machines without any additional
+configuration. An Inferno Deployment includes a web interface as well as
+a RESTful API to enable third party integration.

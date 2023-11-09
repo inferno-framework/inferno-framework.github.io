@@ -1,31 +1,24 @@
 ---
 title: Database Configuration
 nav_order: 2
-parent: Deployment
+parent: Deploying to Shared Hosts
+section: docs
 layout: docs
 ---
 # Database Configuration
-{: .no_toc}
 
-## Table of Contents
-{: .no_toc .text-delta}
-
-1. TOC
-{:toc}
----
-## Database Configuration
-The database configuration lives in `config/database.yml`. Inferno uses the
+The database configuration file is `config/database.yml`. Inferno uses the
 [Sequel gem](http://sequel.jeremyevans.net/) to communicate with the database,
-which offers [the following configuration
-options](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options).
+which offers a wide range of configuration options, 
+[found here](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options).
 
-## PostgreSQL
-Inferno defaults to using SQLite, which is not suitable for use in a multi-user
-deployment. Multi-user deployments should use PostgreSQL instead.
+By default, Inferno uses SQLite. Unfortunately, SQLite is not suitable for use in a multi-user
+deployment. Multi-user deployments should use PostgreSQL instead. The following sections
+walk through setting up Inferno with PostgreSQL.
 
 ### PostgreSQL with Docker
-Rather than setting up a separate PostgreSQL service, you can run it via
-`docker-compose` along with the rest of Inferno's services. To do so:
+The easiest way to run a PostgreSQL service is by adding it to the
+`docker-compose` with the rest of Inferno's services. To do so:
 * Add `gem 'pg'` to `Gemfile`
 * Add the following entry to `docker-compose.yml`:
 ```yaml
@@ -63,7 +56,7 @@ production:
   host: inferno_db
 ```
 
-### PostgreSQL with a Separate Service
+### PostgreSQL as a Separate Service
 If you have an existing PostgreSQL service that you would like to use, you can
 use it with the following steps:
 
