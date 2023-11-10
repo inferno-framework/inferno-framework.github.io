@@ -7,7 +7,7 @@ section: docs
 ---
 # Writing Tests in Inferno
 
-### Test Suite Structure
+## Test Suite Structure
 There are three classes used to organize tests in Inferno:
 - `TestSuite` - An entire suite of tests. A `TestSuite` can contain one or more `TestGroup` classes.
 - `TestGroup` - A `TestGroup` can contain one or more `TestGroup` or `Test` classes.
@@ -23,7 +23,7 @@ For example, a simple US Core test suite might look like this:
     - Server supports Condition Read Interaction (`Test`)
     - Server supports Condition Search by Patient (`Test`)
 
-### Defining Groups and Tests
+## Defining Groups and Tests
 Let's show how to add groups and tests to a `TestSuite` using the above US Core example.
 To start, we define the groups in the `TestSuite` using the `group` method.
 
@@ -97,7 +97,7 @@ end
 This test suite is already getting pretty long. We can improve the organization
 using externally defined groups and tests.
 
-### Externally Defined Groups and Tests
+## Externally Defined Groups and Tests
 Let's move the Patient and Condition groups into their own files, and assign
 them ids.
 
