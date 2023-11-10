@@ -5,7 +5,7 @@ has_children: true
 section: docs
 layout: docs
 ---
-# Getting Started for Creating a Test Kit
+# Getting Started Creating a Test Kit
 This page shows you how to create a Test Kit from scratch. We recommend using the 
 [Inferno Template](https://github.com/inferno-framework/inferno-template) repository
 as a starting point, since it includes everything you'll need to get started.
