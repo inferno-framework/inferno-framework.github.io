@@ -168,8 +168,15 @@
                 <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
             </button>
             {%- endif -%}
-            {%- if node.is_divider == true -%}
+            {%- if node.is_divider == true and node.nav_order == 0 -%}
                 <div class="nav-group">{{node.title}}</div>
+            {%- elsif node.is_divider == true -%}
+                <div class="nav-group nav-subgroup">{{node.title}}</div>
+            {%- elsif node.external_url -%}
+                <a href="{{ node.external_url }}" class="nav-link-top nav-link">
+                  {{ node.title }}
+                  <i class="fa fa-external-link pl-1"></i>
+                </a>
             {%- else -%}
                 <a href="{{ node.url | relative_url }}" class="nav-link-top nav-link{% if page.url == node.url %} active{% endif %}">{{ node.title }}</a>
             {%- endif -%}

@@ -1,9 +1,10 @@
 ---
-title: Ruby Reference
-nav_order: 17
-layout: docs
+title: Inferno Core Docs
+nav_order: 18
 section: docs
+layout: docs
+external_url: https://inferno-framework.github.io/inferno-core/docs
 ---
-# Ruby Reference
+# Inferno Ruby API
 
-Put here
+The documentation for Inferno's Ruby API can be [found here](/inferno-core/docs/).

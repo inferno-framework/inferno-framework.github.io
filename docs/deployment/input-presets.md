@@ -1,12 +1,13 @@
 ---
 title: Input Presets
 nav_order: 5
-parent: Deployment
+parent: Deploying to Shared Hosts
+section: docs
 layout: docs
 ---
 # Input Presets
 Input presets are sets of predefined input values for a suite. Users can select
-a preset to use those predefined values without having to manually enter them.
+a preset to use predefined values without having to manually enter them.
 Presets must be placed in `config/presets`.
 
 ### Generating a Preset Template
@@ -69,14 +70,14 @@ creation of a preset.
 ### Presets with Dynamic Values
 
 It is possible for values in templates to be dynamically generated when Inferno
-starts by using [embedded ruby (ERB)](https://github.com/ruby/erb). For example,
-this could be used to have a preset with a host which is read from an
+starts by using [ERB](https://github.com/ruby/erb). For example,
+this could be used to create a preset with a host that is read from an
 environment variable. In order to use ERB in a preset:
 
 * Give the filename the `.erb` extension. For a JSON file with ERB, the
   extension `.json.erb` would be typical.
-* Use the `<%= %>` ERB tag to insert ruby code which will be evaluated when
-  Inferno starts. The tag will be replaced by the result of executing the ruby
+* Use the `<%= %>` ERB tag to insert Ruby code, which will be evaluated when
+  Inferno starts. The tag will be replaced by the result of executing the Ruby
   code within the tag.
 
 ```json
@@ -84,7 +85,7 @@ environment variable. In order to use ERB in a preset:
   "name": "url",
   "value": "<%= ENV['REFERENCE_SERVER_HOST'] %>/reference-server/r4",
   "_title": "URL",
-  "_description": "Insert url of FHIR server",
+  "_description": "Insert URL of FHIR server",
   "_type": "text"
 }
 ```
@@ -98,11 +99,13 @@ set to `http://example.com`, then that input would have a value of
 It is possible to specify different values for a preset input depending on what
 [suite
 options](/inferno-core/writing-tests/test-configuration.html#suite-options-1)
-have been selected. To do this, add a `value_for_options` key to the preset
-input. Within `value_for_options`, add a list of `options` with `name` and
-`value`, as well as the `value` to be used when those options are used. When
-using the preset, if `value_for_options` is present, its entries are evaluated
-in order. The value in the first entry whose options match the options selected
+have been selected. To do this: 
+* Add a `value_for_options` key to the preset input
+* Within `value_for_options`, add a list of `options` with `name` and
+`value`, as well as the `value` to be used when those options are used.
+
+When using the preset, if `value_for_options` is present, its entries are evaluated
+in order. The `value` of the first entry whose options match the options selected
 by the user will be used. The plain `value` (outside of `value_for_options`)
 will be used if the selected options do not match any of the `value_for_options`
 entries.

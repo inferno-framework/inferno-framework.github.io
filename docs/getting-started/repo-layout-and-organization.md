@@ -1,0 +1,81 @@
+---
+title: Template Layout
+layout: docs
+nav_order: 1
+parent: Getting Started
+section: docs
+layout: docs
+---
+## Template Layout
+After cloning the template repository, you will have a directory structure that
+looks something like this:
+```
+├── Dockerfile
+├── Gemfile
+├── config
+│   └── ...
+├── config.ru
+├── data
+│   └── redis
+│       └── ...
+├── docker-compose.yml
+├── docker-compose.background.yml
+├── inferno_template.gemspec
+├── lib
+│   ├── inferno_template
+│   │   └── igs
+│   │       └── ...
+│   └── inferno_template.rb
+├── spec
+│   ├── ...
+└── worker.rb
+```
+- `Dockerfile` - This file controls how the Docker image for your tests is built.
+- `Gemfile` - This file is where you add extra Ruby dependencies.
+- `config` - This folder contains configuration for the database and web
+  servers.
+- `config.ru` - This is the main file for Inferno's web server process.
+- `data` - This folder includes the database and Redis snapshots.
+- `docker-compose.yml` - This file coordinates and runs all of the services Inferno
+  needs.
+- `docker-compose.background.yml` - This file coordinates and runs the background
+  services needed for running Inferno.
+- `inferno_template.gemspec` - This file controls how your tests are packaged
+  up as a distributable Ruby gem. This is also where you can add additional Ruby
+  gems if you need them.
+- `lib` - This folder is where the code for your tests goes.
+- `lib/{YOUR_TEST_KIT_NAME}/igs` - This is where IG packages go so that they can
+  be used by the validator. See `/lib/inferno_template/igs` for reference.
+- `spec` - This folder is for unit tests.
+- `worker.rb` - This is the main file for Inferno's test runner process.
+
+## Test Organization
+Inferno Test Kits are organized like Ruby gems to enable them to be easily
+distributed.
+- Tests must live in the `lib` folder.
+- The `lib` folder should contain only one file, which is the main entrypoint
+  for your Test Suite. The name of this file should be `your_test_kit_name.rb`,
+  and this is what other Test Kits will `require` in order to load your tests.
+- All other test files should live in a subdirectory in `lib`, and
+  the convention is to have this subdirectory have the same name as the single file in `lib`,
+  minus the extension.
+- The `package.tgz` file for the IG you're testing against should be placed in
+  `lib/your_test_kit_name/igs`. This will allow you to validate against the
+  profiles in that IG.
+
+For example, if I were creating a Test Kit for the US Core Implementation Guide,
+my `lib` folder would look like this:
+```
+lib
+├── us_core_test_kit.rb
+└── us_core_test_kit
+    ├── patient_tests.rb
+    ├── condition_tests.rb
+    ├── ...
+    └── igs
+        └── package.tgz
+```
+And anyone wanting to use this test kit, would load it with `require
+'us_core_test_kit'`.
+
+If you want more examples, check out the [Community Page](/inferno-core/available-test-kits) to view all available Test Kits.
