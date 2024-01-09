@@ -1,12 +1,13 @@
 ---
-title: Get Involved
+title: Welcome
 nav_order: 1
 layout: docs
 section: community
 ---
-# Get Involved
+# Inferno Community
 
-External participation and contributions to Inferno are encouraged and welcome. See below for how to engage with the Inferno team!
+Welcome to the Inferno Community.  The Inferno Framework is being developed
+under the Apache 2.0 license and the source is available in the [Inferno Framework GitHub Organization](https://github.com/inferno-framework).  External participation and contributions to Inferno are encouraged and welcome. See below for how to engage with the Inferno team!
 
 ## Inferno Team
 
@@ -55,5 +56,3 @@ If you are interested in making a non-trivial change to one of our GitHub reposi
 When submitting a PR, please do the following:
 - Confirm that all linters and tests pass
 - Include any steps necessary to run and test the PR in the description
-
-------------
