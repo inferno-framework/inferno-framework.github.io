@@ -155,6 +155,15 @@ code {
   color: white;
 }
 
+footer a {
+  color: var(--link-color);
+}
+
+footer a:hover,
+footer a:visited {
+    color: var(--link-color);
+}
+
 footer {
   font-size:0.8rem;
   letterspacing:0.5px;
