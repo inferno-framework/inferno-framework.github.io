@@ -57,6 +57,9 @@ code {
 }
 
 
+.news-content {
+  margin-left: 1.5rem;
+}
 
 .docs-content a {
   color: var(--link-color);
@@ -190,7 +193,7 @@ footer {
   position:absolute;
   right:-1rem;
   width:1.5rem;
-  height:100%;
+  /* height:100%; */
   padding-right:.25rem;
   padding-left:.25rem;
   overflow:visible
@@ -450,3 +453,36 @@ footer {
   transition: opacity ease 400ms, width 0s, height 0s;
   z-index:1999;
 }
+
+.news-notice {
+  font-size: 20px;
+  margin-bottom: 2rem;
+}
+
+.news-item {
+  border: 1px solid #cacaca;
+  padding: 1rem;
+  border-radius: .5rem;
+  margin-top: 1rem;
+}
+
+.news-item h2 {
+  font-size: 1.5em;
+}
+
+.news-body {
+  max-width: 800px;
+}
+
+.news-body h1 {
+  margin-bottom: 0;
+  padding-bottom: .5rem;
+}
+
+.news-body time {
+  font-weight: bold;
+  padding-bottom: 1rem;
+  display: block
+}
+
+

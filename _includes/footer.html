@@ -1,19 +1,13 @@
-<footer class="footer mt-auto py-3 bg-light">
-  <div class="container">
+<footer class="py-4 mt-4 bg-light">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col">
-      {%- if site.author %}
-        <ul class="contact-list">
-          {% if site.author.name -%}
-            <li class="p-name">{{ site.author.name | escape }}</li>
-          {% endif -%}
-          {% if site.author.email -%}
-            <li><a class="u-email" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
-          {%- endif %}
-        </ul>
-      {%- endif %}
-      <p>{{ site.description | escape }}</p>
-      <p>HL7&reg;, FHIR&reg; and the FHIR [FLAME DESIGN] are the registered trademarks of Health Level Seven International and their use does not constitute endorsement by HL7.</p>
+      <div class="col-sm-6">
+        <h4 data-toc-skip>Contact Us</h4>
+        <p>The fastest way to reach the Inferno team is via the <a
+            href="https://chat.fhir.org/#narrow/stream/179308-inferno">Inferno Zulip stream</a>.</p>
+        <p>You can also e-mail the <a href="mailto:inferno@groups.mitre.org">Inferno Development Team</a>.</p>
+      </div>
+      <div class="col-sm-6">
       </div>
     </div>
   </div>

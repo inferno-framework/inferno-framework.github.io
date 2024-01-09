@@ -4,9 +4,9 @@ nav_order: 1
 layout: docs
 section: docs
 ---
-# Introduction
+# Inferno Documentation
 
-## Overview
+## Introduction to Inferno
 Inferno is an application framework for creating, executing, and sharing
 conformance test for FHIR APIs. Inferno tests are packaged within portable test
 applications called <a href="concepts.html#inferno-test-kit">Inferno Test Kits</a>.

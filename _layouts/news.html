@@ -1,0 +1,24 @@
+---
+layout: base
+---
+<div class="container-fluid docs-content">
+    <div class="row breadcrumbs-row d-none d-lg-flex">
+      <div class="col-lg-12">
+        <div class="news-body mx-auto">
+        {% include breadcrumbs.html pages=site.html_pages key=nil %}
+        </div>
+       
+      </div>
+      
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="news-body mx-auto" id="content">
+          <h1 data-toc-skip>{{ page.title }}</h1>
+          <time datetime="{{ page.date }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+          {% include anchor_headings.html html=content h_min=2 beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+        </div>
+      </div>
+    </div>
+  </div>
