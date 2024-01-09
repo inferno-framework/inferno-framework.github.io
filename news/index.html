@@ -1,0 +1,31 @@
+---
+title: Introduction
+nav_order: 1
+layout: news
+section: news
+title: Inferno News &amp; Updates
+---
+
+
+
+<div class="news-notice">
+    The Inferno Framework is under active development and is being improved to
+    make it easier to test a wider range of FHIR-enabled data exchange use
+    cases. The Inferno team will use this space to provide updates on major
+    improvements to the Inferno Framework, as well as notable updates to Test
+    Kits built with Inferno.  The team also provides announcements on the <a
+    href ="https://chat.fhir.org/#narrow/stream/179309-inferno">Inferno FHIR
+    Chat</a>.
+</div>
+
+
+{% for news_item in site.news reversed %}
+    <article class="news-item">
+        <h2>{{ news_item.title }}</h2>
+        <time datetime="{{ news_item.date }}">{{ news_item.date | date: "%B %-d, %Y" }}</time>
+        <p>
+            {{ news_item.content | split:'<!-- break -->' | first }}
+        </p>
+        <a href="{{ news_item.url }}">Read More</a>
+    </article>
+{% endfor %}

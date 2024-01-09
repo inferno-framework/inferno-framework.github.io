@@ -23,7 +23,7 @@ email: inferno@groups.mitre.org
 description: >- # this means to ignore newlines until "baseurl:"
   Inferno Framework is a rigorous and extensible testing development framework for HL7® FHIR® and beyond.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://inferno-framework.github.io" # the base hostname & protocol for your site, e.g. http://example.com
   
 # Build settings
 # theme: minima
@@ -49,3 +49,8 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+collections:
+  news:
+    output: true
+    permalink: /news/:path
