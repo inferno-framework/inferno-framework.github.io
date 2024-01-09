@@ -1,11 +1,11 @@
 ---
 title: Resources
-nav_order: 3
+nav_order: 2 
 layout: docs
 section: community
 ---
 
-# Resources
+# Additional Community Resources
 
 ## Online Resources
 

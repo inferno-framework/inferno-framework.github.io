@@ -1,6 +1,6 @@
 ---
-title: Test Kits
-nav_order: 2
+title: Inferno Test Kits
+nav_order: 11
 layout: docs
 section: community
 ---
@@ -9,7 +9,8 @@ section: community
 
 The Test Kit Registry includes all Test Kits currently registered with the Inferno Team, along with a link to the associated source code and publicly hosted server, if available. The list of all Inferno Test Kits that are publicly available on GitHub can be [found here](https://github.com/inferno-framework/inferno-core/network/dependents).
 
-If you are interested in adding your Test Kit to this table, [Contact Us](/about/who.html).
+If you are interested in adding your Test Kit to this table, [Contact Us](/about/who.html)
+or open a [Pull Request](https://github.com/inferno-framework/inferno-framework.github.io/blob/main/community/test-kits.md).
 
 | Test Kit      | Source Code | Public Host |
 |---------------|-------------|-------------|
@@ -25,14 +26,3 @@ If you are interested in adding your Test Kit to this table, [Contact Us](/about
 | TLS Test Kit | [GitHub Repository](https://github.com/inferno-framework/tls-test-kit) | N/A |
 | UDS+ Test Kit | [GitHub Repository](https://github.com/inferno-framework/uds-plus-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | US Core Test Kit | [GitHub Repository](https://github.com/inferno-framework/us-core-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
-
-&nbsp;
-
-## Availble Public Hosts
-
-All known Public Hosts of Inferno Test Kits are listed below. If you are interested in adding your Public Host to this table, [Contact Us](/about/who.html).
-
-| Name   | Link   | Host Organization |
-|--------|--------|-------------------|
-| Inferno Public Host &emsp; | [inferno.healthit.gov](https://inferno.healthit.gov) | ONC |
-| Inferno QA | [inferno-qa.healthit.gov](https://inferno-qa.healthit.gov) &emsp; | ONC |
