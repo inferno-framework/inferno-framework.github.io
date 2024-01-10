@@ -1,7 +1,5 @@
 # Inferno Framework Site
 
-
-
 ```
 gem install jekyll bundler
 bundle exec jekyll serve
@@ -14,9 +12,6 @@ Navigate to http://localhost:4000/index_new.html
 
 Portions of this site are based on the [just-the-docs](just-the-docs-license.txt)
 Jekyll theme.
-
-
-Copyright 2023 The MITRE Corporation
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License. You may obtain a copy of the
