@@ -18,7 +18,7 @@ walk through setting up Inferno with PostgreSQL.
 
 ### PostgreSQL with Docker
 The easiest way to run a PostgreSQL service is by adding it to the
-`docker-compose` with the rest of Inferno's services. To do so:
+`docker-compose.yml` file with the rest of Inferno's services. To do so:
 * Add `gem 'pg'` to `Gemfile`
 * Add the following entry to `docker-compose.yml`:
 ```yaml
