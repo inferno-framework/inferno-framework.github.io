@@ -45,7 +45,6 @@ code {
   z-index: 2000;
 }
 
-
 .fa-github {
   font-size: 2em;
   color: #333;
@@ -55,7 +54,6 @@ code {
   background-color: #F0F2F1;
 
 }
-
 
 .news-content {
   margin-left: 1.5rem;
@@ -94,13 +92,15 @@ code {
   width: 2rem;
   height: 2rem;
   position: absolute;
-  right: 10px;
+  right: -2px;
+  top: 6px;
   color: #010326;
 }
 
 .nav-list-expander svg {
   width: 1rem;
   height: 1rem;
+  color: #010326;
 }
 
 #sidebar {
@@ -117,8 +117,11 @@ code {
 }
 
 #sidebar .nav-item.active svg {
-  color: white;
   transform: rotate(90deg);
+}
+
+#sidebar .nav-link.active + a svg {
+  color: white;
 }
 
 #sidebar .nav-item {
@@ -494,4 +497,47 @@ footer {
   display: block
 }
 
+.active ul li a {
+  background-color: #f5f2f0;
+}
 
+.grid {
+  width: 100%;
+  thead {
+    border-bottom: 1px solid #C0C0C0;
+  }
+  td, th { 
+    padding-left: 7px;
+  }
+  td:last-child, th:last-child { 
+    border-left: 1px solid #C0C0C0;
+  }
+}
+
+/* for some reason other grid classes could not inherit from .grid */
+.scratch-grid {
+  width: 100%;
+  thead {
+    border-bottom: 1px solid #C0C0C0;
+  }
+  td, th { 
+    padding-left: 7px;
+    width: 51%; 
+  }
+  td:last-child, th:last-child { 
+    border-left: 1px solid #C0C0C0;
+  }
+}
+
+.multi-grid {
+  width: 100%;
+  thead {
+    border-bottom: 1px solid #C0C0C0;
+  }
+  td, th { 
+    padding-left: 7px;
+  }
+  td:last-child, th:last-child , td:nth-child(2), th:nth-child(2) { 
+    border-left: 1px solid #C0C0C0;
+  }
+}

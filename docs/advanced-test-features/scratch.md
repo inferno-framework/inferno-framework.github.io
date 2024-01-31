@@ -15,6 +15,7 @@ between tests. The table below shows the main differences between the two option
 | Strings | Any data type |
 | Persist through an entire test session | Lifetime limited to a single test run |
 | Input values only change if they are a test output &emsp; | Any test can change scratch |
+{: .scratch-grid }
 
 &nbsp;
 
