@@ -32,7 +32,7 @@ or reference implementations.
 
 ## Inferno Template
 
-A template for writing Inferno Test Kits.
+A template for writing Inferno Test Kits. See [Template Layout](http://localhost:4000/docs/getting-started/repo-layout-and-organization) for more information.
 
 ## Inferno Test Suite
 
