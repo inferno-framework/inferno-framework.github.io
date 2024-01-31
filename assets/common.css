@@ -497,10 +497,6 @@ footer {
   display: block
 }
 
-.active ul li a {
-  background-color: #f5f2f0;
-}
-
 .grid {
   width: 100%;
   thead {
