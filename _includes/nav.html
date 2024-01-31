@@ -163,11 +163,6 @@
     {%- for node in first_level_pages -%}
         {%- unless node.nav_exclude or node.section != page.section-%}
         <li class="nav-item{% if page.collection == include.key and page.url == node.url or page.grand_parent == node.title or page.parent == node.title and page.grand_parent == nil %} active{% endif %}">
-            {%- if node.has_children -%}
-            <button href="#" class="btn btn-link nav-list-expander" aria-label="toggle links in {{ node.title }} category">
-                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
-            </button>
-            {%- endif -%}
             {%- if node.is_divider == true and node.nav_order == 0 -%}
                 <div class="nav-group">{{node.title}}</div>
             {%- elsif node.is_divider == true -%}
@@ -181,6 +176,17 @@
                 <a href="{{ node.url | relative_url }}" class="nav-link-top nav-link{% if page.url == node.url %} active{% endif %}">{{ node.title }}</a>
             {%- endif -%}
             {%- if node.has_children -%}
+              {%- if node.external_url -%}
+                <a href="{{ node.external_url }}" class="nav-list-expander" aria-label="toggle links in {{ child.title }} category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+                </a>
+              {%- else -%}
+                <a href="{{ node.url | relative_url }}" class="nav-list-expander" aria-label="toggle links in {{ child.title }} category">
+                <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+                </a>
+              {%- endif -%}
+            {%- endif -%}
+            {%- if node.has_children -%}
             {%- assign children_list = second_level_pages
                     | where: "parent", node.title -%}
             {%- if node.child_nav_order == 'desc' or node.child_nav_order == 'reversed' -%}
@@ -191,9 +197,15 @@
                 {%- unless child.nav_exclude -%}
                 <li class="{% if page.url == child.url or page.parent == child.title %} active{% endif %}">
                 {%- if child.has_children -%}
-                    <a href="#" class="nav-list-expander" aria-label="toggle links in {{ child.title }} category">
+                  {%- if node.external_url -%}
+                    <a href="{{ node.external_url }}" class="nav-list-expander" aria-label="toggle links in {{ child.title }} category">
                     <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
                     </a>
+                  {%- else -%}
+                    <a href="{{ node.url | relative_url }}" class="nav-list-expander" aria-label="toggle links in {{ child.title }} category">
+                    <svg viewBox="0 0 24 24"><use xlink:href="#svg-arrow-right"></use></svg>
+                    </a>
+                  {%- endif -%}
                 {%- endif -%}
                 <a href="{{ child.url | relative_url }}" class="nav-link{% if page.url == child.url %} active{% endif %}">{{ child.title }}</a>
                 {%- if child.has_children -%}
