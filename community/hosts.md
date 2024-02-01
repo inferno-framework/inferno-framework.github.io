@@ -13,3 +13,4 @@ All known Public Hosts of Inferno Test Kits are listed below. If you are interes
 |--------|--------|-------------------|
 | Inferno on HealthIT.gov | [inferno.healthit.gov](https://inferno.healthit.gov) | ONC |
 | Inferno on HealthIT.gov QA | [inferno-qa.healthit.gov](https://inferno-qa.healthit.gov) &emsp; | ONC |
+{: .multi-grid}

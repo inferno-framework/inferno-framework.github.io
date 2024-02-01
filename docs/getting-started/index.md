@@ -21,7 +21,7 @@ We recommended installing Ruby locally for development because:
   running tests, which makes test development easier.
 * The Inferno Command Line Interface can be used, which includes additional useful
   functionality for developers, such as an interactive console. See 
-  [Inferno CLI](http://localhost:4000/docs/inferno-cli.html) for more information.
+  [Inferno CLI](/docs/getting-started/inferno-cli.html) for more information.
 
 ## Development with Ruby
 

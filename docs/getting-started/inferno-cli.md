@@ -26,3 +26,4 @@ The commands available include:
 | `inferno start` | Starts Inferno |
 | `inferno suite SUBCOMMAND ...ARGS` &emsp; &emsp; | Performs suite-based operations. The available subcommands are `describe`, `help`, and `input_template` |
 | `inferno suites` | Lists available test suites |
+{: .grid}

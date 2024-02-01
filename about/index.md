@@ -19,7 +19,7 @@ tools** that support interoperable implementations of FHIR-based systems.
 Inferno is a [Ruby](https://www.ruby-lang.org) application framework that test
 authors can use to create fully automated tests for FHIR-based APIs. Inferno
 tests are packaged within portable test applications called [Inferno Test
-Kits](/docs/concepts.html). Test Kits are tailored to test specific FHIR-enabled
+Kits](/docs/concepts.html#inferno-test-kit). Test Kits are tailored to test specific FHIR-enabled
 data exchange use cases, typically described within one or more [FHIR
 Implementation Guides](https://fhir.org/guides/registry/).
 

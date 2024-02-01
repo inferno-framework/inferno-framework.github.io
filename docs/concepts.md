@@ -19,7 +19,7 @@ React + create-react-app.
 A Domain Specific Language (DSL) that test writers use to define the tests
 in an Inferno Test Kit. The DSL provides built-in functionality that is
 useful in testing FHIR APIs, such as a FHIR client and built-in assertion
-libraries. See [Writing Tests](http://localhost:4000/docs/writing-tests/) for more information.
+libraries. See [Writing Tests](/docs/writing-tests/) for more information.
 
 ## Inferno Test Kit
 
@@ -32,7 +32,7 @@ or reference implementations.
 
 ## Inferno Template
 
-A template for writing Inferno Test Kits.
+A template for writing Inferno Test Kits. See [Template Layout](/docs/getting-started/repo-layout-and-organization) for more information.
 
 ## Inferno Test Suite
 
