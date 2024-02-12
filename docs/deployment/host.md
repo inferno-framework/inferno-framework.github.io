@@ -15,7 +15,7 @@ even though it isn't serving those URLs itself because some tests generate links
 ## Hostname Configuration
 In `.env`, set the `INFERNO_HOST` environment variable to the hostname. 
 This allows Inferno to correctly construct things like
-absolute redirect and launch urls for the SMART App Launch workflow.
+absolute redirect and launch URLs for the SMART App Launch workflow.
 
 ## Base Path Configuration
 If Inferno won't be hosted at the root of its host (e.g., you want to host

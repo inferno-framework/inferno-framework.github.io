@@ -11,7 +11,7 @@ Template](https://github.com/inferno-framework/inferno-template). This template
 contains a `docker-compose.yml` file that can run all of the services inferno
 needs.
 
-At a minimum, deploying inferno involves the following:
+At a minimum, deploying Inferno involves the following:
 - `git clone` the repository you want to deploy (or get it onto your server in
   some other way)
 - run `setup.sh` to pull & build the needed docker images and run database

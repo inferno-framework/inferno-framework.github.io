@@ -8,7 +8,7 @@ section: docs
 
 ## Introduction to Inferno
 Inferno is an application framework for creating, executing, and sharing
-conformance test for FHIR APIs. Inferno tests are packaged within portable test
+conformance tests for FHIR APIs. Inferno tests are packaged within portable test
 applications called <a href="concepts.html#inferno-test-kit">Inferno Test Kits</a>.
 Test Kits are tailored to test specific FHIR-enabled data exchange use cases,
 typically described within one or more [FHIR Implementation
@@ -59,12 +59,12 @@ Creating a test system that is flexible enough to test any arbitrary
 conformance criteria introduced in an IG is challenging.
 Inferno accomplishes this by providing test authors with a full-featured
 Ruby programming environment to define and run tests. It also allows the
-use of the open source third-party libraries provided by Ruby.
+use of the open-source third-party libraries provided by Ruby.
 This makes Inferno well-suited for testing IGs 
 that:
 
 * include additional standards beyond FHIR,
-* have large specifications that could use from Ruby's meta-programming
+* have large specifications that could benefit from Ruby's meta-programming
   capabilities to ease maintenance burden,
 * or require complex logic to thoroughly validate API responses.
 
