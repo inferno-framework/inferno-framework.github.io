@@ -52,7 +52,7 @@ third-party validators (e.g. HL7 FHIR Validator).
 
 ## Reference Implementations
 
-An Inferno Test Kit may provide one or more Reference Implementations, which
+An Inferno Test Kit may provide one or more reference implementations, which
 is a program that implements all requirements from a specification (e.g. FHIR) 
 and demonstrates "correct" behavior. They can
 be useful to develop tests against or to help interact with third-party
