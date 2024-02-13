@@ -2,7 +2,7 @@
 layout: news
 title: New Home of the Inferno Framework
 section: news
-date: 2024-01-8
+date: 2024-02-13
 ---
 
 Welcome to new home of the Inferno Framework!

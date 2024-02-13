@@ -5,7 +5,7 @@ gem install jekyll bundler
 bundle exec jekyll serve
 ```
 
-Navigate to http://localhost:4000/index_new.html
+Navigate to http://localhost:4000/
 
 
 ## License
