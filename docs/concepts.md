@@ -25,7 +25,7 @@ libraries. See [Writing Tests](/docs/writing-tests/) for more information.
 
 A distributable set of tests and tools built and packaged
 using Inferno to help testers evaluate the conformance of a system to
-FHIR-based specification requirements, relevant FHIR Implementation
+base FHIR specification requirements, relevant FHIR Implementation
 Guides, and any additional requirements. Test Kits are primarily composed of one
 or more Test Suites, but may include other tools such as FHIR resource validators
 or reference implementations.
