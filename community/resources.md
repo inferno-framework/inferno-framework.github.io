@@ -17,6 +17,7 @@ US Core Test Kit Tutorial: [https://github.com/inferno-training/inferno-tutorial
 
 The Inferno Team runs a monthly Tech Talk to discuss updates to the Inferno testing tool and to cover any special topics of interest to the community. This meeting happens the second Wednesday of every month at 1 PM ET. The link to the meeting can be [found here](https://global.gotomeeting.com/join/774619365).
 
+- February 2024 Tech Talk - [Presentation Slides](/download/Inferno_Tech_Talk_Feb_14_2024.pdf)
 - January 2024 Tech Talk - [Presentation Slides](/download/Inferno_Tech_Talk_Jan_10_2024.pdf)
 - December 2023 Tech Talk - [Presentation Slides](/download/Inferno_Tech_Talk_Dec_13_2023.pdf)
 - November 2023 Tech Talk - [Presentation Slides](/download/Inferno_Tech_Talk_Nov_8_2023.pdf)
