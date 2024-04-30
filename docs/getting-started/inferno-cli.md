@@ -5,7 +5,7 @@ parent: Getting Started
 section: docs
 layout: docs
 ---
-# Inferno Command Line Inferface
+# Inferno Command Line Interface
 
 ### Inferno Commands
 The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation.
