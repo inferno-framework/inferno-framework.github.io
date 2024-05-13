@@ -7,31 +7,44 @@ section: docs
 ---
 # FHIR Resource Validation
 [FHIR Resource validation](https://www.hl7.org/fhir/validation.html) is
-performed by the [FHIR Validator Wrapper
-service](https://github.com/inferno-framework/fhir-validator-wrapper). When
-creating a Test Kit based on the [Inferno Template](https://github.com/inferno-framework/inferno-template):
+performed by the [HL7® FHIR Java Validator](https://github.com/hapifhir/org.hl7.fhir.core). 
+Two validator "wrapper" services are currently included in the Inferno framework:
+ - [HL7 Validator Wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper)
+   - Used to validate resources as part of the test suite
+ - [Inferno Validator Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper) (deprecated)
+   - Used to support the Validator UI until the UI is transitioned to use the HL7 service
+
+When creating a Test Kit based on the 
+[Inferno Template](https://github.com/inferno-framework/inferno-template):
 
 * Place the `.tgz` IG packages for any profiles you need to validate against in
   `lib/YOUR_TEST_KIT_NAME/igs`.
-* Make sure that the volume path in `docker-compose.background.yml` points to
+* Make sure that the volume paths in `docker-compose.background.yml` point to
   the above directory.
 
-Every time an IG is added or changed, restart the validator service.
+Every time an IG is added or changed, restart the validator services.
 
 ### Defining Validators
-The Inferno Template defines a validator in the suite, and it is not necessary
-to alter it unless you need multiple validators or want to add extra validator
-behaviors. Validators are defined with `validator`:
+The Inferno Template defines one basic validator in the suite. The validator must be configured to
+reference the IG being tested against. IGs may be referenced by package identifier 
+(for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename. 
+It is not necessary to alter the template suite further unless you need multiple validators or want to add
+extra validator behaviors. Validators are defined with `fhir_resource_validator`:
 
 ```ruby
-validator :optional_validator_name do
-  # Read the validator URL from an environment variable
-  url ENV.fetch('VALIDATOR_URL')
+fhir_resource_validator :optional_validator_name do
+  # Read the validator URL from an environment variable (optional)
+  url ENV.fetch('FHIR_RESOURCE_VALIDATOR_URL')
+
+  # Specify the IG(s) to validate resources against
+ igs 'identifier#version' # Use this method for published IGs/versions
+ igs 'igs/filename.tgz'   # Use this otherwise
+ igs 'ig1#v', 'ig2#v'     # Specify all IGs in one line if multiple are needed
 end
 ```
 
-[`validator` in the API
-docs](/inferno-core/docs/Inferno/DSL/FHIRValidation/ClassMethods.html#validator-instance_method)
+[`fhir_resource_validator` in the API
+docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fhir_resource_validator-instance_method)
 
 ### Validating FHIR Resources
 The `resource_is_valid?` method will validate a FHIR resource and add any
@@ -91,8 +104,7 @@ If you need to ignore certain validation messages in your test kit, this can be
 done using the `exclude_message` method in the validator definition.
 
 ```ruby
-validator do
-  url ENV.fetch('VALIDATOR_URL')
+fhir_resource_validator do
   # Messages will be excluded if the block evaluates to a truthy value
   exclude_message do |message|
     message.type == 'info' ||
@@ -113,8 +125,7 @@ added. The resource is considered invalid if any messages with a `type` of
 `error` are present.
 
 ```ruby
-validator do
-  url ENV.fetch('VALIDATOR_URL')
+fhir_resource_validator do
   perform_additional_validation do |resource, profile_url|
     if something_is_wrong
       { type: 'error', message: 'something is wrong'}
