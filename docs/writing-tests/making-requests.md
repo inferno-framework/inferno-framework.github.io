@@ -143,10 +143,14 @@ The following methods are currently available for making FHIR requests:
 - `fhir_create`
 - `fhir_delete`
 - `fhir_get_capability_statement`
+- `fhir_history`
 - `fhir_operation`
+- `fhir_patch`
 - `fhir_read`
 - `fhir_search`
 - `fhir_transaction`
+- `fhir_update`
+- `fhir_vread`
 
 For more details on these methods, see the [FHIR Client API
 documentation](/inferno-core/docs/Inferno/DSL/FHIRClient.html). If you need to
