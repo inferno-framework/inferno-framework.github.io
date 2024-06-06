@@ -8,7 +8,7 @@ section: docs
 
 ## Inferno Core
 
-Inferno Core is the primary library of Inferno, which testers can use to build Inferno Test
+The primary library of Inferno, which testers can use to build Inferno Test
 Kits. It provides the main logic of Inferno, as well as a command line interface, a web
 interface for executing tests, and integration with data persistence layers and third-party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
 React + create-react-app.
@@ -43,7 +43,7 @@ tests, or that the system may fail some tests.
 
 ## Validators
 
-Validators are tools that validate the correctness of a piece of data against a set of rules
+Tools that validate the correctness of a piece of data against a set of rules
 defined within a context. Inferno tests typically fetch data and validate the
 response using a validator, for example the FHIR Profile Validator or the FHIR Terminology
 Validator. Inferno typically performs these functions by providing common
@@ -51,8 +51,7 @@ third-party validators (e.g. HL7 FHIR Validator).
 
 ## Reference Implementations
 
-An Inferno Test Kit may provide one or more reference implementations, which
-is a program that implements all requirements from a specification (e.g. FHIR) 
+Example servers that implement all requirements from a specification (e.g. FHIR) 
 and demonstrates "correct" behavior. They can
 be useful to develop tests against or to help interact with third-party
 solutions. For example, Inferno has a [Reference Server](https://github.com/inferno-framework/inferno-reference-server)
