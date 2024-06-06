@@ -63,10 +63,12 @@ require 'smart_app_launch_test_kit'
 require 'us_core_test_kit'
 ```
 
-Inferno relies on external validation services for profile validation; by
-default, Inferno uses the [FHIR Validator
-Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper). For Test
-Kits that require profile validation, such as the US Core Test Kit, the
+Inferno uses two validator "wrapper" services for profile validation:
+ - [HL7 Validator Wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper)
+   - Used to validate resources as part of the test suite
+ - [Inferno Validator Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper) (deprecated)
+   - Used to support the Validator UI until the UI is transitioned to use the HL7 service
+For Test Kits that require profile validation, such as the US Core Test Kit, the
 corresponding Implementation Guide needs to be placed in the
 `lib/inferno_deployment/igs/` directory as a _.tgz_ file (i.e., _package.tgz_).
 Inferno Test Kits already have the IGs in their repository,
