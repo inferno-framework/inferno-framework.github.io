@@ -9,9 +9,8 @@ section: docs
 ## Inferno Core
 
 Inferno Core is the primary library of Inferno, which testers can use to build Inferno Test
-Kits. It provides the main logic of Inferno, as well as a CLI, a web
-interface for executing tests, and integration with data persistence layers and third-party
-party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
+Kits. It provides the main logic of Inferno, as well as a command line interface, a web
+interface for executing tests, and integration with data persistence layers and third-party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
 React + create-react-app.
 
 ## Inferno DSL
@@ -64,6 +63,7 @@ for US Core and the Inferno ONC (g)(10) certification tests.
 A web host running one or more Inferno Test Kits. An example is the 
 [https://inferno.healthit.gov](https://inferno.healthit.gov) website.
 An individual Test Kit can also be run as an Inferno Deployment on 
-users' local machines without any additional
-configuration. An Inferno Deployment includes a web interface as well as
+users' local machines without any additional configuration. See
+[Using Test Kits: Getting Started](/docs/getting-started-users.html)
+for more information. An Inferno Deployment includes a web interface as well as
 a RESTful API to enable third-party integration.
