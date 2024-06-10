@@ -297,7 +297,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method)
 **Description**: Define a summary to display on the suite options
 selection page. If the suite has no options, the summary is not used. If no
 suite summary is defined, the description will be displayed on the options
-selection page.
+selection page. [Markdown](https://commonmark.org/help/) is supported.
 
 **Can Be Used In**: `Suite`
 
