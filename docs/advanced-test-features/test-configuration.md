@@ -1,6 +1,6 @@
 ---
 title: Altering Test Behavior
-nav_order: 1
+nav_order: 2
 parent: Advanced Features
 layout: docs
 section: docs
