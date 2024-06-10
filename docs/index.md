@@ -91,4 +91,4 @@ testing DSL.
   Inferno's Ruby API.
 
 ## Inferno Test Kits
-Visit the [Test Kits page](https://inferno.healthit.gov/test-kits/) to view all available Test Kits.
+Visit the [Test Kits](https://inferno.healthit.gov/test-kits/) page to view all available Test Kits.
