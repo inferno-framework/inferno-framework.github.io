@@ -12,7 +12,7 @@ The Inferno Command Line Interface is available to developers running Inferno wi
 
 We recommend running all commands starting with `bundle exec` (e.g. `bundle exec inferno migrate`) because
 it guarantees that only the specific gems and versions listed in `Gemfile.lock` are available to be used.
-**Exception:** The `inferno start` command cannot be run with `bundle exec`.
+**Warning:** The `inferno start` command cannot be run with `bundle exec` prior to Inferno Core version 0.4.39.
 
 The commands available include:
 
