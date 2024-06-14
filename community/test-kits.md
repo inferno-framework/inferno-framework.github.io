@@ -21,9 +21,9 @@ or open a [Pull Request](https://github.com/inferno-framework/inferno-framework.
 | Da Vinci Coverage Requirements Discovery (CRD) Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-crd-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | Da Vinci Documentation Templates and Rules (DTR) Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-dtr-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | Da Vinci Payer Data Exchange (PDex) Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-pdex-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
-| Da Vinci Plan Net Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-plan-net-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
+| DaVinci Plan Net Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-plan-net-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | Da Vinci Prior Authorization Support (PAS) Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-pas-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
-| Da Vinci US Drug Formulary Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
+| DaVinci US Drug Formulary Test Kit | [Github Repository](https://github.com/inferno-framework/davinci-us-drug-formulary-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | FAST Security Test Kit | [GitHub Repository](https://github.com/inferno-framework/fast-security-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | International Patient Access Test Kit | [GitHub Repository](https://github.com/inferno-framework/ipa-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
 | International Patient Summary Test Kit | [GitHub Repository](https://github.com/inferno-framework/ips-test-kit) | [Hosted by ONC](https://inferno.healthit.gov) |
