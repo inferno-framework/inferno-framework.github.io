@@ -22,14 +22,14 @@ title: Home
 
 <div class="container-fluid landing-offcolor">
 
-<div class="col-md-10 mx-auto py-5">
-  <h1 class="my-4 text-center" >Test FHIR&reg; APIs using a simple but powerful DSL</h1>
-  <div class="text-center">
-    Inferno Framework provides a flexible testing DSL that is tailored to
-    the typical needs of conformance testing systems.  You write the tests,
-    and Inferno will provide web, command line, and JSON APIs for you. 
-  </div>
-  <pre class="bg-white rounded border-dark"><code class="language-ruby bg-white">test do
+  <div class="col-md-10 mx-auto py-5">
+    <h1 class="my-4 text-center">Test FHIR&reg; APIs using a simple but powerful DSL</h1>
+    <div class="text-center">
+      Inferno Framework provides a flexible testing DSL that is tailored to
+      the typical needs of conformance testing systems. You write the tests,
+      and Inferno will provide web, command line, and JSON APIs for you.
+    </div>
+    <pre class="rounded"><code class="language-ruby bg-white">test do
   title 'Server returns requested Patient resource from the Patient read interaction'
 
   input :patient_id
@@ -51,18 +51,21 @@ end</code>
   <div class="col-md-10 mx-auto my-5 text-center">
     <h1 class="my-4">A Web UI, Out of the Box</h1>
     <div>
-      <p>Inferno ships with a web based user interface suitable for local use or deploying as a shared, central service.</p>
+      <p>Inferno ships with a web based user interface suitable for local use or deploying as a shared, central service.
+      </p>
     </div>
     <figure class="figure">
-    <img class="img-thumbnail figure-img img-fluid mx-auto d-block" src="https://inferno-framework.github.io/inferno-core/web-ui.png" alt="Inferno Web UI" width="800px">
-  <figcaption class="figure-caption text-end">Screenshot of Inferno Test Interface</figcaption>
-</figure>
+      <img class="img-thumbnail figure-img img-fluid mx-auto d-block"
+        src="https://inferno-framework.github.io/inferno-core/web-ui.png" alt="Inferno Web UI" width="800px">
+      <figcaption class="figure-caption text-end">Screenshot of Inferno Test Interface</figcaption>
+    </figure>
   </div>
   <div class="col-lg-6 mx-auto my-5 text-center">
     <h1 class="my-4">Create, Share, Extend</h1>
     <div>
       <p>Inferno Test Kits can be easily shared and extended so you can focus on your unique tests.</p>
-      <pre class="rounded border-dark"><code class="language-ruby">require 'smart_app_launch_test_kit'
+      <pre class="rounded">
+        <code class="language-ruby">require 'smart_app_launch_test_kit'
 
 module MyTestKit
   class MyTestSuite < Inferno::TestSuite
@@ -73,4 +76,3 @@ end</code>
     </div>
   </div>
 </div>
-

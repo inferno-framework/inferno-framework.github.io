@@ -7,7 +7,7 @@ layout: docs
 ---
 # Inferno Command Line Interface
 
-### Inferno Commands
+<h2 data-toc-skip class="h3">Inferno Commands</h2>
 The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation.
 
 We recommend running all commands starting with `bundle exec` (e.g. `bundle exec inferno migrate`) because

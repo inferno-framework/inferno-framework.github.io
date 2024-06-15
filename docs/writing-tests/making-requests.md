@@ -8,7 +8,7 @@ section: docs
 # Making Requests
 Inferno provides support for making FHIR requests as well as generic HTTP requests.
 
-### Accessing Requests and Responses
+## Accessing Requests and Responses
 After making a FHIR or HTTP request, information about it is made available via several
 methods:
 - `request` - returns a
@@ -56,7 +56,7 @@ test do
 end
 ```
 
-### Reusing Requests
+## Reusing Requests
 If you want to reuse a request from an earlier test instead of reissuing it,
 you can give the initial request a name, and then have your other tests use that named request.
 
@@ -88,7 +88,7 @@ end
 
 ## FHIR Requests
 
-#### FHIR Clients
+<h3 data-toc-skip class="h4">FHIR Clients</h3>
 Before making a FHIR request, a client needs to be created. Clients are passed
 down from a `TestSuite` or `TestGroup` to all of their descendants, so it isn't
 necessary for each `Test` to define its own client. When defining a client, you
@@ -138,7 +138,7 @@ end
 ```
 [methods for defining FHIR clients in the API docs](/inferno-core/docs/Inferno/DSL/FHIRClientBuilder.html)
 
-#### Available FHIR Request Methods
+<h3 data-toc-skip class="h4">Available FHIR Request Methods</h3>
 The following methods are currently available for making FHIR requests:
 - `fhir_create`
 - `fhir_delete`
@@ -206,7 +206,7 @@ test do
 end
 ```
 
-#### Making Requests to Multiple Servers
+<h3 data-toc-skip class="h4">Making Requests to Multiple Servers</h3>
 If you need to make requests to multiple FHIR servers, this can be accomplished
 by naming each `fhir_client`.
 
@@ -230,7 +230,7 @@ group do
 end
 ```
 
-#### OAuth Credentials
+<h3 data-toc-skip class="h4">OAuth Credentials</h3>
 When making requests to FHIR servers using OAuth2-based authorization (such as the SMART App
 Launch workflow), OAuth credentials support an access token and,
 optionally, a refresh token and the information needed to perform a
@@ -262,7 +262,7 @@ end
 
 ## HTTP Requests
 
-#### HTTP Clients
+<h3 data-toc-skip class="h4">HTTP Clients</h3>
 It is not necessary to create a HTTP client in order to make HTTP requests, but
 it may be helpful if you need to make multiple requests to the same server. If
 an HTTP client is available, then the HTTP request methods only need
@@ -288,7 +288,7 @@ end
 
 ```
 
-#### Available HTTP Request Methods
+<h3 data-toc-skip class="h4">Available HTTP Request Methods</h3>
 The following methods are currently available for making HTTP requests:
 - `get`
 - `post`

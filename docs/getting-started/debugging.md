@@ -21,8 +21,7 @@ To use the debug gem:
   debugger console.
 4. Use debug commands, which can be found [here](https://github.com/ruby/debug#debug-command-on-the-debug-console).
 
-#### Example
-
+<h3 data-toc-skip class="h4">Example</h3>
 We first add the `require 'debug/open_nonstop'` and `debugger` to set a breakpoint. We've added
 these to lines 9 & 10 in the example test below.
 
