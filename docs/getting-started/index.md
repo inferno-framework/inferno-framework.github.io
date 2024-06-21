@@ -10,8 +10,10 @@ This page shows you how to create a Test Kit from scratch. We recommend using th
 [Inferno Template](https://github.com/inferno-framework/inferno-template) repository
 as a starting point, since it includes everything you'll need to get started.
 
-We also have a tutorial designed to walk a user through writing a basic set of tests for servers of the US Core Implementation Guide v3.1.1.
-[Click here for the US Core Test Kit tutorial](https://github.com/inferno-training/inferno-tutorial/wiki).
+We encourage beginners to visit the
+[Test Kit Authoring Tutorial](https://github.com/inferno-training/inferno-tutorial/wiki)
+that walks you through creating a basic set of tests for server that target a common
+Implementation Guide.
 
 Tests can be developed either with a local Ruby installation or by using Docker.
 We recommended installing Ruby locally for development because:
