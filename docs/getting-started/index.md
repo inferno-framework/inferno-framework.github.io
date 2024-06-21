@@ -12,7 +12,7 @@ as a starting point, since it includes everything you'll need to get started.
 
 We encourage beginners to visit the
 [Test Kit Authoring Tutorial](https://github.com/inferno-training/inferno-tutorial/wiki)
-that walks you through creating a basic set of tests for server that target a common
+that walks you through creating a basic set of tests for servers that target a common
 Implementation Guide.
 
 Tests can be developed either with a local Ruby installation or by using Docker.
