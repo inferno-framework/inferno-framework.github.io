@@ -42,7 +42,7 @@ or reference implementations.
 {% include figure.html 
     file="inferno-test-kit.png"
     alt="Diagram of parts of a Test Kit"
-    caption="Test Kits organize test suites, import test kits, and can include additional test tools."
+    caption="Test Kits organize test suites, import Test Kits, and can include additional test tools."
     description="Test Kits can include reference implementations, FHIR Validators, test presets and options for complete customization"
     maxwidth="100%"
 %}
