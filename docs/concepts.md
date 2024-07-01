@@ -54,7 +54,7 @@ A template for writing Inferno Test Kits. See [Template Layout](/docs/getting-st
 {% include figure.html 
     file="inferno-template.png"
     alt="Diagram of Inferno Template"
-    caption="The template for writing test kits includes Inferno Core and a skeleton file structure."
+    caption="The template for writing Test Kits includes Inferno Core and a skeleton file structure."
     description="The template provides scripts to run Test Kits using Inferno Core and reuse existing Test Kits."
     maxwidth="466px"
 %}
