@@ -1,9 +1,9 @@
 ---
 title: Input Presets
-nav_order: 5
-parent: Deploying to Shared Hosts
-section: docs
+nav_order: 1
+parent: Advanced Features
 layout: docs
+section: docs
 ---
 # Input Presets
 Input presets are sets of predefined input values for a suite. Users can select

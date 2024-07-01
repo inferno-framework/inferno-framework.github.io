@@ -1,6 +1,6 @@
 ---
 title: Configuration Checks
-nav_order: 5
+nav_order: 6
 parent: Advanced Features
 layout: docs
 section: docs

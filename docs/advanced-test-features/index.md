@@ -11,6 +11,10 @@ Now that you've gone through the basics of how to write tests, we can move on to
 These pages do not have to be read in order. Feel free to jump around to whatever pages are useful for your 
 specific use case:
 
+#### [Input Presets](/docs/advanced-test-features/input-presets.html)
+Input presets are sets of predefined input values for a suite. Users can select
+a preset to use predefined values without having to manually enter them.
+
 #### [Altering Test Behavior](/docs/advanced-test-features/test-configuration.html)
 This page walks through two options of how
 to alter test behavior at either boot time or at session creation time, to address use

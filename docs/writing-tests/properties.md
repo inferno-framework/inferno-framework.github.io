@@ -213,7 +213,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestGroup.html#run_as_group-class_meth
 ## Suite Option
 **Description** Define a user-selectable option for a suite. See [Suite
 Options
-documentation](/inferno-core/writing-tests/test-configuration.html#suite-options-1).
+documentation](/docs/advanced-test-features/test-configuration#suite-options).
 
 **Can Be Used In**: `Suite`
 
@@ -242,7 +242,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_meth
 **Description**: Define the suite options that must be selected
 in order for a runnable to be included in the current session. See [Hiding Tests
 Based on Suite
-Options](/inferno-core/writing-tests/test-configuration.html#hiding-tests-based-on-suite-options).
+Options](/docs/advanced-test-features/test-configuration#hiding-tests-based-on-suite-options).
 
 **Can Be Used In**: `Test`, `Group`
 
@@ -297,7 +297,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method)
 **Description**: Define a summary to display on the suite options
 selection page. If the suite has no options, the summary is not used. If no
 suite summary is defined, the description will be displayed on the options
-selection page.
+selection page. [Markdown](https://commonmark.org/help/) is supported.
 
 **Can Be Used In**: `Suite`
 
@@ -316,7 +316,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_met
 ----
 ## Config
 **Description**: Configure a runnable and its descendants. For more information, see
-[Configuration](/inferno-core/writing-tests/test-configuration.html#configuration-1).
+[Configuration](/docs/advanced-test-features/test-configuration#configuration).
 
 **Can Be Used In**: `Suite`
 
