@@ -7,7 +7,7 @@ section: about
 
 # Frequently Asked Questions
 
-### Who maintains Inferno?
+## Who maintains Inferno?
 
 Development of Inferno is led by the Office of the National Coordinator for
 Health IT and core components are implemented by the MITRE Corporation.
@@ -15,7 +15,7 @@ External participation and contributions are encouraged and welcome.  To learn
 how to participate, visit the <a href="/community">Community</a> page of this
 site.
 
-### Does Inferno use the FHIR TestScript Resource?
+## Does Inferno use the FHIR TestScript Resource?
 
 Inferno does not currently use the standard <a
 href="https://hl7.org/fhir/tesetscript.html">FHIR Testscript Resource</a> for
@@ -74,7 +74,7 @@ not need to be described in order to accomplish testing goals, but does provide
 the opportunity to be extended as needed, understanding that using extensions
 may negatively impact the value of using TestScript.
 
-### Does Inferno test beyond US Core?
+## Does Inferno test beyond US Core?
 
 Yes, Inferno is able to test other Implementation Guides (IGs), though tests
 must be written specific to these IGs.
@@ -86,11 +86,11 @@ best known for testing this IG, and Inferno is particularly well suited to
 support IGs that also require conformance to US Core, but the goal of Inferno is
 to enable the creation of conformance tests for a wide variety of FHIR IGs.
 
-### How can I find Test Kits built with Inferno?
+## How can I find Test Kits built with Inferno?
 
 Visit our <a href="/community">Community</a> page to find Test Kits built with Inferno.
 
-### Can I host my own Inferno server?
+## Can I host my own Inferno server?
 
 Inferno is specifically designed such that Inferno Test Kits can be run in any
 environment that supports Docker, including on a desktop machine or

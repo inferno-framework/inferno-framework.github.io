@@ -9,7 +9,7 @@ layout: docs
 Inferno uses nginx as a reverse proxy, and it can be configured to serve Inferno
 with SSL.
 
-### Configuring nginx for HTTPS
+## Configuring nginx for HTTPS
 In `config/nginx.conf`, there is a `server block` which starts like this:
 ```nginx
   server {
@@ -25,7 +25,7 @@ Right below `listen 80;`, add the following to serve Inferno with SSL:
     ssl_protocols TLSv1.2 TLSv1.3;
 ```
 
-### Adding Certificate to nginx
+## Adding Certificate to nginx
 Once the nginx configuration has been updated, a certificate needs to be mounted
 into its docker image. In `docker-compose.yml`, update the `volumes` list to
 include the certificates:

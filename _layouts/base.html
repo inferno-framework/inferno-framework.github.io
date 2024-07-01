@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" class="h-100">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -17,12 +18,15 @@
 
   <title>Inferno Framework - {{ page.title }}</title>
 </head>
-<body  data-spy="scroll" data-target="#toc" class="d-flex flex-column  h-100">
+
+<body data-spy="scroll" data-target="#toc" class="d-flex flex-column  h-100">
   <a href="#content" class="visually-hidden-focusable">Skip to main content</a>
 
   {% include menubar.html %}
 
-  {{ content }}
+  <main>
+    {{ content }}
+  </main>
 
   {% include footer.html %}
 
@@ -37,5 +41,6 @@
   <script src="{{ site.baseurl }}/assets/common.js"></script>
   <script src="{{ site.baseurl }}/assets/prism.js"></script>
 
-  </body>
+</body>
+
 </html>

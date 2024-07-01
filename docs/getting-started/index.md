@@ -25,7 +25,7 @@ We recommended installing Ruby locally for development because:
 
 ## Development with Ruby
 
-#### Windows Instructions
+<h3 data-toc-skip class="h4">Windows Instructions</h3>
 Windows developers will need to use [WSL](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-wsl-2) in order to interact with 
 Inferno.  It is recommended that you also follow [the steps for installing node.js](https://learn.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl#install-nvm-nodejs-and-npm). 
 Once you have WSL (and node.js) set up:
@@ -47,8 +47,7 @@ Once you have WSL (and node.js) set up:
 **NOTE:** If, when running Inferno within WSL, the tests begin to stall and the console repeatedly prints `WARN: Your Redis network connection is performing extremely poorly.`,
 WSL may be having networking issues.  To resolve this, you can follow the steps in this [WSL Slow Network Issue thread](https://github.com/microsoft/WSL/issues/4901#issuecomment-1724482084).  You can make a `.wslconfig` file from your `%USERDATA%` directory if it does not already exist, and you will need to restart WSL (usually through `wsl --shutdown` in Windows Powershell) before the changes take effect.
 
-
-#### Set Up Environment
+<h3 data-toc-skip class="h4">Set Up Environment</h3>
 1. Install [Docker](https://www.docker.com/get-started).
 1. Install Ruby. It is highly recommended that you install Ruby via a [Ruby
    version
@@ -59,14 +58,14 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
 1. Run `gem install rerun` to install rerun, which will be used to enable
    `watch` functionality to reload Inferno when a test has been updated.
 
-#### Set Up a New Test Kit
+<h3 data-toc-skip class="h4">Set Up a New Test Kit</h3>
 1. Clone the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository. You can
    either clone this repository directly, or click the green "Use this template"
    button to create your own repository based on this one.
 1. Run `bundle install` to install dependencies.
 1. Run `bundle exec inferno migrate` to set up the database.
 
-#### Run Your Test Kit
+<h3 data-toc-skip class="h4">Run Your Test Kit</h3>
 1. Run `bundle exec inferno services start` to start the background services. By
    default, these include nginx, Redis, the FHIR validator service, and the FHIR
    validator UI. You can check to make sure they're running by running `docker container ls` in the
@@ -83,17 +82,17 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
 
 ## Development with Docker Only
 
-#### Set Up Environment
+<h3 data-toc-skip class="h4">Set Up Environment</h3>
 1. Install [Docker](https://www.docker.com/get-started).
 
-#### Set Up a New Test Kit
+<h3 data-toc-skip class="h4">Set Up a New Test Kit</h3>
 1. Clone the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository. You can
    either clone this repository directly, or click the green "Use this template"
    button to create your own repository based on this one.
 1. Run `./setup.sh` in the template repository to retrieve the necessary Docker
    images and create a database.
 
-#### Run Your Test Kit
+<h3 data-toc-skip class="h4">Run Your Test Kit</h3>
 1. Run the `./run.sh` script to start Inferno.
 - Navigate to `http://localhost` to access Inferno and run test
   suites.
@@ -101,7 +100,7 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
   standalone validator that can be used to validate individual FHIR resources.
    
 
-### Next Steps
+<h3 data-toc-skip class="h4">Next Steps</h3>
 Now that Inferno is running, you can:
 - Go to [Template Layout](/docs/getting-started/repo-layout-and-organization.html) for
 how to update the template for your use case
