@@ -31,3 +31,7 @@ The Inferno Team runs a monthly Tech Talk to discuss updates to the Inferno test
 
 - [HL7 Synthetic Data Event](https://confluence.hl7.org/pages/viewpage.action?pageId=184922592): Synthetic Data for Testing - [Link to Video](https://youtu.be/WcMfL4tQEOQ?si=hJWOt13Ouo2JLQW5&t=2723)
 - [ONC 2022 Tech Forum](https://www.healthit.gov/news/events/2022-onc-virtual-tech-forum): Inferno Framework Capabilities Beyond (g)(10) - [Link to Video](https://www.youtube.com/watch?v=epf7OHPaeZ0)
+
+## Inferno Architecture Diagram
+
+You can view an [Inferno Architecture Diagram](/download/Inferno_Architecture.pdf) (PDF) which summarizes the components of Inferno Framework and includes a glossary of terms.
