@@ -5,6 +5,8 @@ parent: Writing Tests
 layout: docs
 section: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Inputs and Outputs
 Inputs and outputs provide a structured way to pass information into and out of
 tests. When a user initiates a test run, a modal is displayed for providing input values.
@@ -14,7 +16,9 @@ in the run. Currently, all inputs and outputs are stored as strings.
 
 ## Inputs
 
-<h3 data-toc-skip class="h4">Defining Inputs</h3>
+### Defining Inputs
+{:toc-skip}
+
 The `input` method defines an input. `input` can take several arguments, but
 only the identifier is required:
 - `identifier` - (**required**) a name for this input. The input value is
@@ -57,7 +61,9 @@ end
 [`input` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#input-instance_method)
 
-<h3 data-toc-skip class="h4">Defining Multiple Inputs</h3>
+### Defining Multiple Inputs
+{:toc-skip}
+
 It is possible to define multiple inputs in a single `input` call, though this 
 prevents the use of the additional properties listed above. This can be useful when a test
 uses inputs that have been defined in a parent or sibling.
@@ -69,7 +75,9 @@ test do
 end
 ```
 
-<h3 data-toc-skip class="h4">Inputs with List Options</h3>
+### Inputs with List Options
+{:toc-skip}
+
 For the `radio` or `checkbox` input types, a list of options must be provided.
 The `label` is displayed to the user, and the `value` is the actual value that
 is stored when the user selects that option.
@@ -126,7 +134,9 @@ test do
 end
 ```
 
-<h3 data-toc-skip class="h4">Ordering Inputs</h3>
+### Ordering Inputs
+{:toc-skip}
+
 When a group or suite displays all of its descendants' inputs, they may be in an
 unintuitive order. They can be reordered using `input_order`.
 ```ruby
@@ -164,7 +174,9 @@ end
 
 ## Outputs
 
-<h3 data-toc-skip class="h4">Defining Outputs</h3>
+### Defining Outputs
+{:toc-skip}
+
 The `output` method defines an output. It is used in a test's definition block
 to define which outputs a test provides, and within a test's `run` block to
 assign a value to an output. Multiple outputs can be defined and assigned at once.

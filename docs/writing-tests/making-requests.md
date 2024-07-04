@@ -5,6 +5,8 @@ parent: Writing Tests
 layout: docs
 section: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Making Requests
 Inferno provides support for making FHIR requests as well as generic HTTP requests.
 
@@ -88,7 +90,9 @@ end
 
 ## FHIR Requests
 
-<h3 data-toc-skip class="h4">FHIR Clients</h3>
+### FHIR Clients
+{:toc-skip}
+
 Before making a FHIR request, a client needs to be created. Clients are passed
 down from a `TestSuite` or `TestGroup` to all of their descendants, so it isn't
 necessary for each `Test` to define its own client. When defining a client, you
@@ -138,7 +142,9 @@ end
 ```
 [methods for defining FHIR clients in the API docs](/inferno-core/docs/Inferno/DSL/FHIRClientBuilder.html)
 
-<h3 data-toc-skip class="h4">Available FHIR Request Methods</h3>
+### Available FHIR Request Methods
+{:toc-skip}
+
 The following methods are currently available for making FHIR requests:
 - `fhir_create`
 - `fhir_delete`
@@ -210,7 +216,9 @@ test do
 end
 ```
 
-<h3 data-toc-skip class="h4">Making Requests to Multiple Servers</h3>
+### Making Requests to Multiple Servers
+{:toc-skip}
+
 If you need to make requests to multiple FHIR servers, this can be accomplished
 by naming each `fhir_client`.
 
@@ -234,7 +242,9 @@ group do
 end
 ```
 
-<h3 data-toc-skip class="h4">OAuth Credentials</h3>
+### OAuth Credentials
+{:toc-skip}
+
 When making requests to FHIR servers using OAuth2-based authorization (such as the SMART App
 Launch workflow), OAuth credentials support an access token and,
 optionally, a refresh token and the information needed to perform a
@@ -266,7 +276,9 @@ end
 
 ## HTTP Requests
 
-<h3 data-toc-skip class="h4">HTTP Clients</h3>
+### HTTP Clients
+{:toc-skip}
+
 It is not necessary to create a HTTP client in order to make HTTP requests, but
 it may be helpful if you need to make multiple requests to the same server. If
 an HTTP client is available, then the HTTP request methods only need
@@ -292,7 +304,9 @@ end
 
 ```
 
-<h3 data-toc-skip class="h4">Available HTTP Request Methods</h3>
+### Available HTTP Request Methods
+{:toc-skip}
+
 The following methods are currently available for making HTTP requests:
 - `get`
 - `post`
