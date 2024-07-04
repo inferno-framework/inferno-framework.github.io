@@ -22,9 +22,9 @@ code {
   font-size: 0.8rem;
 }
 
-pre {
+:not(pre)>code[class*=language-], pre[class*=language-] {
   /* Need white background for color contrast */
-  background-color: white !important;
+  background-color: white;
   border: 1px solid var(--border);
   border-radius: 10px;
 }
