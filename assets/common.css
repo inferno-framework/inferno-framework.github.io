@@ -22,11 +22,17 @@ code {
   font-size: 0.8rem;
 }
 
-:not(pre)>code[class*=language-], pre[class*=language-] {
+:not(pre)>code[class*=language-],
+pre[class*=language-] {
   /* Need white background for color contrast */
   background-color: white;
   border: 1px solid var(--border);
   border-radius: 10px;
+}
+
+:not(pre)>code[class*=language-plaintext] {
+  background-color: #f5f2f0;
+  border-radius: 2px;
 }
 
 .hero {
