@@ -46,7 +46,7 @@ end
 [`fhir_resource_validator` in the API
 docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fhir_resource_validator-instance_method)
 
-### Validating FHIR Resources
+## Validating FHIR Resources
 The `resource_is_valid?` method will validate a FHIR resource and add any
 validation messages to the runnable.
 
@@ -99,7 +99,7 @@ end
 [`assert_valid_resource` in the API
 docs](/inferno-core/docs/Inferno/DSL/Assertions.html#assert_valid_resource-instance_method)
 
-### Filtering Validation Messages
+## Filtering Validation Messages
 If you need to ignore certain validation messages in your test kit, this can be
 done using the `exclude_message` method in the validator definition.
 
@@ -114,7 +114,7 @@ fhir_resource_validator do
 end
 ```
 
-### Performing Additional Validation
+## Performing Additional Validation
 If you want to perform validation steps in addition to the FHIR validation,
 you can use the `perform_additional_validation` method in the validator definition. The method
 can also be used multiple times in a single validator definition to add multiple

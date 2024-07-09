@@ -5,9 +5,13 @@ parent: Getting Started
 section: docs
 layout: docs
 ---
+{:toc-skip: .h3 data-toc-skip=""}
+
 # Inferno Command Line Interface
 
-### Inferno Commands
+## Inferno Commands
+{:toc-skip}
+
 The Inferno Command Line Interface is available to developers running Inferno with a local Ruby installation.
 
 We recommend running all commands starting with `bundle exec` (e.g. `bundle exec inferno migrate`) because

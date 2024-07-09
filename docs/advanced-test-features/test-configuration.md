@@ -5,6 +5,8 @@ parent: Advanced Features
 layout: docs
 section: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Altering Test Behavior
 
 Inferno provides two mechanisms for altering test behavior: Configuration and Suite Options.
@@ -34,7 +36,8 @@ overrides any child runnable's configuration.
 [`Configurable` in the API
 docs](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Configurable.html)
 
-#### Renaming Inputs, Outputs, and Requests
+### Renaming Inputs, Outputs, and Requests
+{:toc-skip}
 
 Renaming inputs and outputs allows test authors to handle potential naming
 conflicts when using the same tests multiple times, or using tests from multiple
@@ -76,7 +79,8 @@ end
 Outputs and requests can be renamed in the same fashion, using `outputs` or
 `requests` as the key in `config`.
 
-#### Altering Input Properties
+### Altering Input Properties
+{:toc-skip}
 
 In addition to renaming an input, other input properties can be altered as well.
 Any of the [input
@@ -151,7 +155,8 @@ class StandaloneLaunchGroupSTU2 < StandaloneLaunchGroup
 end
 ```
 
-#### Custom Configuration Options
+### Custom Configuration Options
+{:toc-skip}
 
 Custom configuration options allow information to be loaded at boot time and
 made available to tests. For example, a test could have optional functionality
@@ -192,7 +197,9 @@ other versions are hidden. Some additional information about Suite Options:
 [`suite_option` in the API
 docs](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
 
-#### Defining Suite Options
+### Defining Suite Options
+{:toc-skip}
+
 [Suite
 options](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_option-class_method)
 must be defined within a test suite and have the following properties:
@@ -219,7 +226,8 @@ class MyTestSuite < Inferno::TestSuite
 end
 ```
 
-#### Hiding Tests Based on Suite Options
+### Hiding Tests Based on Suite Options
+{:toc-skip}
 
 Tests and groups can be hidden from the user and prevented from executing based on
 the selected suite options by defining
@@ -246,7 +254,8 @@ class MyTestSuite < Inferno::TestSuite
 end
 ```
 
-#### Altering Test Behavior Based on Suite Options
+### Altering Test Behavior Based on Suite Options
+{:toc-skip}
 
 Test behavior can be modified by inspecting the value of an option inside of the
 `run` block.

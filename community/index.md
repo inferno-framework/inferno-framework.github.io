@@ -4,6 +4,8 @@ nav_order: 1
 layout: docs
 section: community
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Inferno Community
 
 Welcome to the Inferno Community.  The Inferno Framework is being developed
@@ -33,25 +35,30 @@ Please report any issues on the given Test Kit's Issues page on [our GitHub](htt
 
 We welcome external contributions to our repositories. The information below explains expectations for contributors and the contribution process.
 
-#### Code of Conduct
+### Code of Conduct
+{:toc-skip}
 
 The Inferno Team has adopted a Code of Conduct that we expect all internal and external contributors to adhere to. The full text can be [found here](/community/code-of-conduct).
 
-#### Branch Organization
+### Branch Organization
+{:toc-skip}
 
 The latest version of any Inferno repository is on the `main` branch, and any Pull Request (PR) should be made against the `main` branch.
 
-#### Semantic Versioning
+### Semantic Versioning
+{:toc-skip}
 
 Inferno projects follow [semantic versioning](https://semver.org/). We release patch versions for bugfixes, minor versions for new features, and major versions for any breaking changes. When we make breaking changes, we make note of it in the release and include what users have to do migrate changes.
 
 For the [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit), we release either a minor or major version monthly. Any issues that are reported for this Test Kit and are resolved with a given release are tagged with that release version. They are also tagged with "add constraint" if they cause systems that previously passed tests to now fail.
 
-#### Proposing a Change
+### Proposing a Change
+{:toc-skip}
 
 If you are interested in making a non-trivial change to one of our GitHub repositories, we recommend [reporting an issue](#reporting-issues) first. This allows us to make sure that the Inferno maintainers are on board with your approach before you put significant effort into this change. It is fine to submit a PR without a tracking issue for bug fixes, but we still recommend doing so in case we don’t accept that specific fix but want to keep track of the issue.
 
-#### Submitting a Pull Request
+### Submitting a Pull Request
+{:toc-skip}
 
 When submitting a PR, please do the following:
 - Confirm that all linters and tests pass

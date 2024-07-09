@@ -16,7 +16,7 @@ By default, Inferno uses SQLite. Unfortunately, SQLite is not suitable for use i
 deployment. Multi-user deployments should use PostgreSQL instead. The following sections
 walk through setting up Inferno with PostgreSQL.
 
-### PostgreSQL with Docker
+## PostgreSQL with Docker
 The easiest way to run a PostgreSQL service is by adding it to the
 `docker-compose.yml` file with the rest of Inferno's services. To do so:
 * Add `gem 'pg'` to `Gemfile`
@@ -56,7 +56,7 @@ production:
   host: inferno_db
 ```
 
-### PostgreSQL as a Separate Service
+## PostgreSQL as a Separate Service
 If you have an existing PostgreSQL service that you would like to use, you can
 use it with the following steps:
 

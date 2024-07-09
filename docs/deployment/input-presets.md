@@ -10,7 +10,7 @@ Input presets are sets of predefined input values for a suite. Users can select
 a preset to use predefined values without having to manually enter them.
 Presets must be placed in `config/presets`.
 
-### Generating a Preset Template
+## Generating a Preset Template
 The Inferno CLI can generate a preset template.
 
 ```
@@ -67,7 +67,7 @@ creation of a preset.
 }
 ```
 
-### Presets with Dynamic Values
+## Presets with Dynamic Values
 
 It is possible for values in templates to be dynamically generated when Inferno
 starts by using [ERB](https://github.com/ruby/erb). For example,
@@ -94,7 +94,7 @@ In the example above, if the `REFERENCE_SERVER_HOST` environment variable were
 set to `http://example.com`, then that input would have a value of
 `"http://example.com/reference-server/r4"`.
 
-### Presets with Suite Options
+## Presets with Suite Options
 
 It is possible to specify different values for a preset input depending on what
 [suite

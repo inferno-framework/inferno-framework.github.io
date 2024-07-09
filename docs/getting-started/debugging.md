@@ -5,6 +5,7 @@ parent: Getting Started
 section: docs
 layout: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
 
 # Debugging in Inferno
 
@@ -21,7 +22,8 @@ To use the debug gem:
   debugger console.
 4. Use debug commands, which can be found [here](https://github.com/ruby/debug#debug-command-on-the-debug-console).
 
-#### Example
+### Example
+{:toc-skip}
 
 We first add the `require 'debug/open_nonstop'` and `debugger` to set a breakpoint. We've added
 these to lines 9 & 10 in the example test below.
