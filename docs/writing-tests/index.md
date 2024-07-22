@@ -14,6 +14,8 @@ There are three classes used to organize tests in Inferno:
 - `Test` - An individual test. A `Test` contains a `run` block which defines what
   happens when the test is run.
 
+In the Inferno DSL, each is considered a [Runnable](/inferno-core/docs/Inferno/DSL/Runnable.html). 
+
 For example, a simple US Core test suite might look like this:
 - US Core (`TestSuite`)
   - US Core Patient Group (`TestGroup`)
@@ -171,7 +173,9 @@ module USCoreTestKit
 end
 ```
 
-We can take it a step further and move the tests into their own files
+We can take it a step further and move the tests into their own files. This is often
+beneficial because it encourages decoupling tests from each other, and allows for more
+dynamic test group composition.
 
 ```ruby
 # File: lib/us_core_test_kit/us_core_patient_read_test.rb

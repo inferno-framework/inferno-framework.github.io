@@ -101,7 +101,8 @@ Tests can have the following results in Inferno:
   verify B. An `omit` does not prevent a test session from passing because it
   indicates behavior that does not need to be verified.
 - `error` - Something unexpected happened and caused an internal server error.
-  This indicates a problem in a Test Kit or in Inferno itself. You should
+  This indicates a problem in a Test Kit or in Inferno itself. If you determine this error
+  is not expected behavior for the given test and inputs, you should
   contact the Test Kit author or the Inferno team.
 - `wait` - A test is waiting to receive an incoming request, and will resume
   once it is received (see [Waiting for an Incoming

@@ -11,7 +11,7 @@ a preset to use predefined values without having to manually enter them.
 Presets must be placed in `config/presets`.
 
 ## Generating a Preset Template
-The Inferno CLI can generate a preset template.
+The Inferno CLI can generate a preset template, with entries for all of a given test suite's inputs.
 
 ```
 ᐅ inferno suite help input_template
@@ -39,10 +39,13 @@ The preset template will contain some metadata for the preset:
   for the preset when Inferno starts.
 * `test_suite_id` - The id for the test suite this preset is for
 
-The preset then contains a list of `inputs`. Set the `value` for each input, and
-those values will be used when a user selects the preset. The input keys
-beginning with underscores are ignored, and are included to assist in the
-creation of a preset.
+The preset then contains a list of `inputs`. Inputs without a default value defined in
+the test suite, will have a value of `null` in the preset template. If a test suite
+provides a default value for an input, that default will be exported in the preset template. 
+
+Set the `value` for each input, and those values will be used when a user selects the
+preset. The input keys beginning with underscores are ignored, and are included to assist
+in the creation of a preset.
 
 ```json
 {

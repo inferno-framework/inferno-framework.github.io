@@ -29,7 +29,7 @@ The Inferno Template defines one basic validator in the suite. The validator mus
 reference the IG being tested against. IGs may be referenced by package identifier 
 (for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename. 
 It is not necessary to alter the template suite further unless you need multiple validators or want to add
-extra validator behaviors. Validators are defined with `fhir_resource_validator`:
+[extra validator behaviors](/docs/writing-tests/fhir-validation.html#performing-additional-validation). Validators are defined with `fhir_resource_validator`:
 
 ```ruby
 fhir_resource_validator :optional_validator_name do
