@@ -222,8 +222,13 @@ footer a:visited {
   color: var(--primary);
 }
 
-.docs-content h1 {
-  padding-bottom: 20px;
+.docs-content {
+  h1 {
+    margin-bottom: 1em;
+  }
+  h2 {
+      margin-top:1em;
+  }
 }
 
 .docs-content .anchor-heading {
@@ -297,8 +302,9 @@ footer a:visited {
 }
 
 .docs-body {
-  max-width: 800px;
+  max-width: 860px;
 }
+
 
 /* Search */
 
@@ -492,12 +498,21 @@ footer a:visited {
 
   td,
   th {
-    padding-left: 7px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    vertical-align:top;
   }
-
+  td {
+    padding-bottom:1em;
+  }
   td:last-child,
-  th:last-child {
+  th:last-child,
+  td:nth-child(2),
+  th:nth-child(2) {
     border-left: 1px solid var(--border);
+    & a {
+      white-space:nowrap;
+    }
   }
 }
 
@@ -539,4 +554,10 @@ footer a:visited {
   th:nth-child(2) {
     border-left: 1px solid var(--border);
   }
+}
+
+.footnotes {
+  border-top:1px solid var(--border);
+  margin-top:2em;
+  padding-top:1em;
 }
