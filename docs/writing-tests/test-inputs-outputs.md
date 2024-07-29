@@ -86,14 +86,15 @@ is stored when the user selects that option.
 test do
   input :radio_input_example,
         title: 'Example Radio Input',
+        type: 'radio',
         options: {
           list_options: [
             {
-              label: 'Radio Option 1'
+              label: 'Radio Option 1',
               value: 'option_1'
             },
             {
-              label: 'Radio Option 2'
+              label: 'Radio Option 2',
               value: 'option_2'
             }
           ]
@@ -101,14 +102,15 @@ test do
 
   input :checkbox_input_example,
         title: 'Example Checkbox Input',
+        type: 'checkbox',
         options: {
           list_options: [
             {
-              label: 'Checkbox Option 1'
+              label: 'Checkbox Option 1',
               value: 'option_1'
             },
             {
-              label: 'Checkbox Option 2'
+              label: 'Checkbox Option 2',
               value: 'option_2'
             }
           ]
