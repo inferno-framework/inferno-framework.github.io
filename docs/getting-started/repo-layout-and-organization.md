@@ -6,7 +6,7 @@ parent: Getting Started
 section: docs
 layout: docs
 ---
-## Template Layout
+# Template Layout
 After cloning the [template repository](https://github.com/inferno-framework/inferno-template), you will have a directory structure that
 looks something like this:
 ```
