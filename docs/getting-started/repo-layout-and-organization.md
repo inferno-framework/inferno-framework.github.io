@@ -7,7 +7,7 @@ section: docs
 layout: docs
 ---
 ## Template Layout
-After cloning the [template repository](https://github.com/inferno-framework/inferno-template), you will have a directory structure that
+After cloning the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository, you will have a directory structure that
 looks something like this:
 ```
 ├── Dockerfile
@@ -78,4 +78,4 @@ lib
 And anyone wanting to use this test kit, would load it with `require
 'us_core_test_kit'`.
 
-If you want more examples, check out the [Community Page](/inferno-core/available-test-kits) to view all available Test Kits.
+If you want more examples, check out the [Community Page](/community/test-kits) to view all available Test Kits currently registered with the Inferno Team.

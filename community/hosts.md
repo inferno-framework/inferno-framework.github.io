@@ -12,5 +12,7 @@ All known Public Hosts of Inferno Test Kits are listed below. If you are interes
 | Name   | Link   | Host Organization |
 |--------|--------|-------------------|
 | Inferno on HealthIT.gov | [inferno.healthit.gov](https://inferno.healthit.gov) | ONC |
-| Inferno on HealthIT.gov QA | [inferno-qa.healthit.gov](https://inferno-qa.healthit.gov) &emsp; | ONC |
+| Inferno on HealthIT.gov QA[^1] | [inferno-qa.healthit.gov](https://inferno-qa.healthit.gov) | ONC |
 {: .multi-grid}
+
+[^1]: Inferno QA is a site used for testing pre-release versions of Inferno and Test Kits and is **not** for certification use. 
