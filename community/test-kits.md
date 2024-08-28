@@ -7,7 +7,7 @@ section: community
 
 # Test Kit Registry
 
-The Test Kit Registry includes all Test Kits currently registered with the Inferno Team, along with a link to the associated source code and publicly hosted server, if available. The list of all Inferno Test Kits that are publicly available on GitHub can be [found here](https://github.com/inferno-framework/inferno-core/network/dependents).
+The Test Kit Registry includes all Test Kits currently registered with the Inferno Team, along with a link to the associated source code and publicly hosted server, if available. There is a list of [publicly available Inferno Test Kits](https://github.com/inferno-framework/inferno-core/network/dependents) on GitHub.
 
 If you are interested in adding your Test Kit to this table, [Contact Us](/about/who.html)
 or open a [Pull Request](https://github.com/inferno-framework/inferno-framework.github.io/blob/main/community/test-kits.md).

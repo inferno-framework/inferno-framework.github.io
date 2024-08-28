@@ -9,8 +9,7 @@ layout: docs
 
 The database configuration file is `config/database.yml`. Inferno uses the
 [Sequel gem](http://sequel.jeremyevans.net/) to communicate with the database,
-which offers a wide range of configuration options, 
-[found here](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options).
+which offers a wide range of [configuration options](http://sequel.jeremyevans.net/rdoc/files/doc/opening_databases_rdoc.html#label-General+connection+options).
 
 By default, Inferno uses SQLite. Unfortunately, SQLite is not suitable for use in a multi-user
 deployment. Multi-user deployments should use PostgreSQL instead. The following sections
