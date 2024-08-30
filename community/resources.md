@@ -42,4 +42,4 @@ Interested viewers may join the [Inferno Tech Talk monthly meeting](https://glob
 
 ## Inferno Architecture Diagram
 
-You can view an [Inferno Architecture Diagram (PDF, 1.1MB)](/download/Inferno_Architecture.pdf) (PDF) which summarizes the components of Inferno Framework and includes a glossary of terms.
+You can view an [Inferno Architecture Diagram (PDF, 1.1MB)](/download/Inferno_Architecture.pdf) which summarizes the components of Inferno Framework and includes a glossary of terms.
