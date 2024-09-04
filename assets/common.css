@@ -54,6 +54,10 @@ pre[class*=language-] {
 .news-content {
   margin-left: 1.5rem;
 }
+/* Lists */
+.item-list li {
+  margin-bottom: 1em;
+}
 
 /* Buttons */
 
