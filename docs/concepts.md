@@ -105,4 +105,4 @@ a RESTful API to enable third-party integration.
 
 ## Inferno Architecture Diagram
 
-You can view an [Inferno Architecture Diagram](/download/Inferno_Architecture.pdf) (PDF) which summarizes the components of Inferno Framework and includes a glossary of terms.
+You can view an [Inferno Architecture Diagram (PDF 1.1 MB)](/download/Inferno_Architecture.pdf) which summarizes the components of Inferno Framework and includes a glossary of terms.
