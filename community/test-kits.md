@@ -35,4 +35,4 @@ or open a [Pull Request](https://github.com/inferno-framework/inferno-framework.
 | [UDAP Security Test Kit](https://github.com/inferno-framework/udap-security-test-kit) | [Inferno on HealthIT.gov](https://inferno.healthit.gov/test-kits/udap-security/ "View UDAP Security Test Kit at Inferno on HealthIT.gov") |
 | [UDS+ Test Kit](https://github.com/inferno-framework/uds-plus-test-kit) | [Inferno on HealthIT.gov](https://inferno.healthit.gov/test-kits/uds-plus/ "View UDS+ Test Kit at Inferno on HealthIT.gov") |
 | [US Core Test Kit](https://github.com/inferno-framework/us-core-test-kit) | [Inferno on HealthIT.gov](https://inferno.healthit.gov/test-kits/us-core/ "View US Core Test Kit at Inferno on HealthIT.gov") |
-{: .multi-grid}
+{: .grid}
