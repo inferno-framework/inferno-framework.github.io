@@ -231,7 +231,7 @@ footer a:visited {
     margin-bottom: 1em;
   }
   h2 {
-      margin-top:1em;
+      margin-top: 1em;
   }
 }
 
@@ -504,10 +504,10 @@ footer a:visited {
   th {
     padding-left: 0.5em;
     padding-right: 0.5em;
-    vertical-align:top;
+    vertical-align: top;
   }
   td {
-    padding-bottom:0.5em;
+    padding-bottom: 0.5em;
   }
   td:last-child,
   th:last-child,
@@ -515,7 +515,7 @@ footer a:visited {
   th:nth-child(2) {
     border-left: 1px solid var(--border);
     & a {
-      white-space:nowrap;
+      white-space: nowrap;
     }
   }
 }
@@ -561,7 +561,7 @@ footer a:visited {
 }
 
 .footnotes {
-  border-top:1px solid var(--border);
-  margin-top:2em;
-  padding-top:1em;
+  border-top: 1px solid var(--border);
+  margin-top: 2em;
+  padding-top: 1em;
 }
