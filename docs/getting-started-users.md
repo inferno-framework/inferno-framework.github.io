@@ -9,8 +9,7 @@ Start here if you're interested in testing a FHIR server against one or more
 existing Test Kits.
 
 ## Running an Existing Test Kit
-Most Test Kits are developed using the [Inferno Template
-repository](https://github.com/inferno-framework/inferno-template), which
+Most Test Kits are developed using the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository, which
 provides scripts for standing up an instance of Inferno to run a selected Test
 Kit. Running a Test Kit usually follows the below steps:
 

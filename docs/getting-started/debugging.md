@@ -25,8 +25,7 @@ To use the debug gem:
 ### Example
 {:toc-skip}
 
-We first add the `require 'debug/open_nonstop'` and `debugger` to set a breakpoint. We've added
-these to lines 9 & 10 in the example test below.
+First add the `require 'debug/open_nonstop'` and `debugger` to set a breakpoint. These are shown in lines 9 & 10 in the example test below.
 
 ```ruby
 1  module InfernoTemplate
@@ -50,7 +49,7 @@ these to lines 9 & 10 in the example test below.
 19 end
 ```
 
-We then run the tests until the breakpoint is reached. Then we connect to the debugger console.
+Run the tests until the breakpoint is reached. Then connect to the debugger console.
 
 ```ruby
 ᐅ bundle exec rdbg -A
@@ -68,14 +67,18 @@ DEBUGGER (client): Connected. PID:22112, $0:sidekiq 6.5.7  [0 of 10 busy]
     26|         assert_resource_type(:patient)
     27|         assert resource.id == patient_id,
 ```
-Now you can get information about the current object
+
+In the debugger you can get information about the current object:
+
 ```ruby
 (ruby:remote) self.id
 "test_suite_template-patient_group-Test01"
 (ruby:remote) self.title
 "Server returns requested Patient resource from the Patient read interaction"
 ```
+
 As well as the values of currently defined variables.
+
 ```ruby
 (rdbg:remote) inputs
 [:patient_id, :url, :credentials]
@@ -84,7 +87,9 @@ As well as the values of currently defined variables.
 (rdbg:remote) url
 "https://inferno.healthit.gov/reference-server/r4"
 ```
+
 You can also look at available methods and instance variables of a given object, like `request`
+
 ```ruby
 (rdbg:remote) ls request
 Inferno::Entities::Request
@@ -94,15 +99,18 @@ Inferno::Entities::Request
   verb=
 instance variables: @created_at  @direction  @headers  @id  @index  @name  @request_body  @response_body  @result_id  @status  @test_session_id  @updated_at  @url  @verb
 ```
+
 And then use that as a reference to get additional information:
+
 ```ruby
 (ruby:remote) request.status
 200
 (ruby:remote) request.response_body
 "{\n  \"resourceType\": \"Patient\" ... }"
 ```
+
 There are a lot more commands available than just the ones stated above.
-You can always type `help` for the list of all commands, or `help [COMMAND]` for information about a specific command. 
+Type `help` for the list of all commands, or `help [COMMAND]` for information about a specific command. 
 
 ## Interactive Console
 
@@ -112,7 +120,7 @@ syntax highlighting, runtime invocation, source & documentation browsing, and mo
 the environment generally, as opposed to using the debug gem to review the environment at a specific breakpoint while
 running the system.
 
-For example, I can look at the Suite class that is defined in the Inferno Template by default (`lib/inferno_template.rb`) and
+For example, you can look at the Suite class that is defined in the Inferno Template by default (`lib/inferno_template.rb`) and
 set it to the variable `suite`.
 
 ```ruby
@@ -121,7 +129,7 @@ set it to the variable `suite`.
 => [#<InfernoTemplate::Suite @id="test_suite_template", @title="Inferno Test Suite Template">]
 ```
 
-And then use that variable to see what groups will be run in the suite, which I see are the Capability Statement and Patient Tests.
+And then use that variable to see what groups will be run in the suite, which are the Capability Statement and Patient Tests.
 
 ```ruby
 [2] pry(main)> suite.groups
@@ -129,7 +137,7 @@ And then use that variable to see what groups will be run in the suite, which I 
  #<InfernoTemplate::PatientGroup @id="test_suite_template-patient_group", @short_id="2", @title="Patient  Tests">]
 ```
 
-I can also even see which test will be run first.
+You can also even see which test will be run first.
 
 ```ruby
 [3] pry(main)> suite.groups.first.tests

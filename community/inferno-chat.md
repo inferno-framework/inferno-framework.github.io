@@ -1,5 +1,5 @@
 ---
-title: Inferno Chat
+title: Inferno Chat on Zulip
 nav_order: 23
 layout: docs
 section: community
