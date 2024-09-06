@@ -38,7 +38,7 @@ We welcome external contributions to our repositories. The information below exp
 ### Code of Conduct
 {:toc-skip}
 
-The Inferno Team has adopted a Code of Conduct that we expect all internal and external contributors to adhere to. The full text can be [found here](/community/code-of-conduct).
+The Inferno Team has adopted a [Code of Conduct](/community/code-of-conduct) that we expect all internal and external contributors to adhere to.
 
 ### Branch Organization
 {:toc-skip}

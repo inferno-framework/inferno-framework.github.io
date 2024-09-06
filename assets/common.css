@@ -54,6 +54,10 @@ pre[class*=language-] {
 .news-content {
   margin-left: 1.5rem;
 }
+/* Lists */
+.item-list li {
+  margin-bottom: 1em;
+}
 
 /* Buttons */
 
@@ -222,33 +226,56 @@ footer a:visited {
   color: var(--primary);
 }
 
-.docs-content h1 {
-  padding-bottom: 20px;
+.docs-content {
+  h1 {
+    margin-bottom: 1em;
+  }
+  h2 {
+      margin-top: 1em;
+  }
 }
+
+/* Styles for Anchor link icon when hovering over headers */
+.docs-content h2:has(> a.anchor-heading),
+.docs-content h3:has(> a.anchor-heading),
+.docs-content h4:has(> a.anchor-heading) {margin-left:-1em;padding-left:1em}
 
 .docs-content .anchor-heading {
-  position: absolute;
-  right: -1rem;
-  width: 1.5rem;
-  padding: 0 0.25rem;
-  overflow: visible
+  position: relative;
+  overflow: visible;
 }
 
-@media (min-width: 50rem) {
+@media (min-width: 881px) {
   .docs-content .anchor-heading {
     right: auto;
-    left: -1rem
+    left: -1.5rem;
+  }
+}
+@media (max-width: 880px) {
+  .docs-content {
+    h2, h3, h4 {
+      margin-left:0;
+      padding-left:0;
+      display:flex;
+      flex-direction:row-reverse;
+      justify-content:flex-end;
+    }
+    .anchor-heading {
+      position:relative;
+      right:-0.25rem;
+    }
   }
 }
 
 .docs-content .anchor-heading svg {
   display: inline-block;
   position: absolute;
-  width: 75%;
+  width: 1.25rem;
   top: 11px;
   color: var(--primary);
   visibility: hidden;
   opacity: 0.4;
+  &:hover {opacity: 0.8}
 }
 
 .docs-content h2 .anchor-heading svg {
@@ -256,7 +283,7 @@ footer a:visited {
 }
 
 .docs-content h3 .anchor-heading svg {
-  top: 9px;
+  top: 6px;
 }
 
 .docs-content h4 .anchor-heading svg {
@@ -297,8 +324,9 @@ footer a:visited {
 }
 
 .docs-body {
-  max-width: 800px;
+  max-width: 860px;
 }
+
 
 /* Search */
 
@@ -492,12 +520,21 @@ footer a:visited {
 
   td,
   th {
-    padding-left: 7px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    vertical-align: top;
   }
-
+  td {
+    padding-bottom: 0.5em;
+  }
   td:last-child,
-  th:last-child {
+  th:last-child,
+  td:nth-child(2),
+  th:nth-child(2) {
     border-left: 1px solid var(--border);
+    & a {
+      white-space: nowrap;
+    }
   }
 }
 
@@ -539,4 +576,10 @@ footer a:visited {
   th:nth-child(2) {
     border-left: 1px solid var(--border);
   }
+}
+
+.footnotes {
+  border-top: 1px solid var(--border);
+  margin-top: 2em;
+  padding-top: 1em;
 }

@@ -6,8 +6,9 @@ parent: Getting Started
 section: docs
 layout: docs
 ---
+
 ## Template Layout
-After cloning the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository, you will have a directory structure that
+After cloning the [Inferno Test Kit Template](https://github.com/inferno-framework/inferno-template) repository, you will have a directory structure that
 looks something like this:
 ```
 ├── Dockerfile
