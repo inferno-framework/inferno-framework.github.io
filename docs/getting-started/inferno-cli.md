@@ -28,6 +28,7 @@ The commands available include:
 | `inferno services start` | Starts the background services (nginx, Redis, etc.) for Inferno |
 | `inferno services stop` | Stops the background services for Inferno |
 | `inferno start` | Starts Inferno |
-| `inferno suite SUBCOMMAND ...ARGS` &emsp; &emsp; | Performs suite-based operations. The available subcommands are `describe`, `help`, and `input_template` |
+| `inferno suite SUBCOMMAND ...ARGS` | Performs suite-based operations. The available subcommands are `describe`, `help`, and `input_template`.|
+| `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
 | `inferno suites` | Lists available test suites |
-{: .grid}
+{: .grid.command-table}

@@ -32,12 +32,12 @@ check out the [Community](/community/) section.
 ## Background
 
 Since 2018, MITRE has designed and developed a set of open-source testing tools,
-broadly named Inferno. Initially, this was in support of the ONC Health IT
-Certification Program, which was established to assess health IT capabilities
+broadly named Inferno. Initially, this was in support of the [ONC Health IT
+Certification Program](https://www.healthit.gov/topic/certification-ehrs/about-onc-health-it-certification-program), which was established to assess health IT capabilities
 for quality and consistency across certified products. This led to the
-development of the ONC Certification (g)(10) Standardized API Test Kit, an
+development of the [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit), an
 integrated set of tests that evaluates a system’s level of conformance to the
-§170.315(g)(10) criterion. This open-source Test Kit is freely available for
+[§170.315(g)(10) criterion](https://www.healthit.gov/test-method/standardized-api-patient-and-population-services). This open-source Test Kit is freely available for
 download and is being used today by health IT developers who are preparing for
 certification to this criterion, as well as Accredited Test Labs (ATLs) that
 evaluate conformance for purposes of certification.

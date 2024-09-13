@@ -79,4 +79,4 @@ lib
 And anyone wanting to use this test kit, would load it with `require
 'us_core_test_kit'`.
 
-If you want more examples, check out the [Community Page](/community/test-kits) to view all available Test Kits currently registered with the Inferno Team.
+If you want more examples, check out the [Community Page](/community/test-kits.html) to view all available Test Kits currently registered with the Inferno Team.

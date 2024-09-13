@@ -34,6 +34,9 @@ pre[class*=language-] {
   background-color: #f5f2f0;
   border-radius: 2px;
 }
+div[class*=language-]+h3 {
+  margin-top: 1em;
+}
 
 .hero {
   padding: 3rem;
@@ -527,6 +530,19 @@ footer a:visited {
   td {
     padding-bottom: 0.5em;
   }
+
+  &.command-table {
+    td {
+      vertical-align:top;
+      padding-bottom:0.5em;
+      padding-top:0.5em;
+      border-bottom:1px solid #f5f5f5;}
+    td:first-child {
+      padding-right:1em;
+      width:35%;
+    }
+  }
+
   td:last-child,
   th:last-child,
   td:nth-child(2),
@@ -536,6 +552,11 @@ footer a:visited {
       white-space: nowrap;
     }
   }
+    td:nth-child(2),
+    th:nth-child(2) {
+    border-left: 1px solid var(--border);
+}
+  code {font-size:0.9em;}
 }
 
 /* for some reason other grid classes could not inherit from .grid */
@@ -554,26 +575,6 @@ footer a:visited {
 
   td:last-child,
   th:last-child {
-    border-left: 1px solid var(--border);
-  }
-}
-
-.multi-grid {
-  width: 100%;
-
-  thead {
-    border-bottom: 1px solid var(--border);
-  }
-
-  td,
-  th {
-    padding-left: 7px;
-  }
-
-  td:last-child,
-  th:last-child,
-  td:nth-child(2),
-  th:nth-child(2) {
     border-left: 1px solid var(--border);
   }
 }
