@@ -96,4 +96,4 @@ testing DSL.
   Inferno's Ruby API.
 
 ## Inferno Test Kits
-Visit the [Community Page](/inferno-core/available-test-kits) to view all available Test Kits.
+Visit the [Community Page](/community/test-kits) to view all available Test Kits currently registered with the Inferno Team.

@@ -24,5 +24,6 @@ Note that these may require additional effort to integrate into Test Kits.
 * **[Inferno FHIR Validator App](https://github.com/inferno-framework/fhir-validator-app)**:
   Simple FHIR Validation Web UI that allows users to validate resources against the base
   FHIR specification or FHIR Implementation Guides ([hosted example](https://inferno.healthit.gov/validator)).
-* **[Inferno FHIR Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper)**:  Simple service UI to the HL7 FHIR Validator that Inferno Test Kits
+* **[Inferno FHIR Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper)**:  Simple service UI to the [official HL7 FHIR validation
+  library](https://github.com/hapifhir/org.hl7.fhir.core/tree/master/org.hl7.fhir.validation) that Inferno Test Kits
   use to provide FHIR validation services to Inferno Tests.
