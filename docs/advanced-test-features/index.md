@@ -39,3 +39,6 @@ The benefits of using scratch, and how to use it, can be found on this page.
 ## [Configuration Checks](/docs/advanced-test-features/configuration-checks.html)
 This page shows how to write a set of checks for Test Suites on startup, to ensure that
 their environment is correctly configured.
+
+## [Customized Banner](/docs/advanced-test-features/custom-banner.html)
+Inferno Core supports displaying a custom banner for your Test Kit. This banner will be shown at the top of the Inferno Core web application user interface when your test kit is run.
