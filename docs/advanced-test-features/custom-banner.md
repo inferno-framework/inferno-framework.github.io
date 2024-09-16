@@ -18,7 +18,7 @@ Here is an example of a custom banner.
 ```html
 <header class="custom-banner">
   <div>
-    <a href="https://example-company.com">Example Company, Inc.</a>
+    <a href="https://example.com">Example Company, Inc.</a>
     <p class="tagline">We Build Test Kits!</p>
   </div>
 </header>
