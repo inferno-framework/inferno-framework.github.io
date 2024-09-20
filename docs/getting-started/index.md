@@ -10,7 +10,9 @@ layout: docs
 # Getting Started Creating a Test Kit
 This page shows you how to create a Test Kit from scratch. We recommend using the 
 [Inferno Template](https://github.com/inferno-framework/inferno-template) repository
-as a starting point, since it includes everything you'll need to get started.
+as a starting point, since it includes everything you'll need to get started. You may
+also [create a new Test Kit](/docs/getting-started/inferno-cli.html#creating-a-new-test-kit) using the Inferno
+Command Line Interface (CLI). 
 
 We encourage beginners to visit the
 [Test Kit Authoring Tutorial](https://github.com/inferno-training/inferno-tutorial/wiki)
@@ -69,9 +71,20 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
 ### Set Up a New Test Kit
 {:toc-skip}
 
-1. Clone the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository. You can
-   either clone this repository directly, or click the green "Use this template"
-   button to create your own repository based on this one.
+There are two convenient methods to create a new Test Kit. The first is by cloning the 
+[Inferno Template](https://github.com/inferno-framework/inferno-template) repository. This
+method ensures you will always be starting with the latest Test Kit Template. You can
+either clone this repository directly, or click the green "Use this template" button in GitHub
+to create your own repository based on the Inferno Template.
+
+The second method is to use the Inferno Command Line Interface. After installing
+the `inferno_core` gem, run `inferno new TestKitName` to create a new Test Kit
+Template in a directory named `test-kit-name`. See how to [create a new Test
+Kit](/docs/getting-started/inferno-cli.html#creating-a-new-test-kit) using the Inferno CLI for more
+information and options.
+
+1. Create your Test Kit by cloning the [Inferno Template](https://github.com/inferno-framework/inferno-template)
+   or by using the `inferno new` command.
 1. Run `bundle install` to install dependencies.
 1. Run `bundle exec inferno migrate` to set up the database.
 
@@ -102,9 +115,8 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
 ### Set Up a New Test Kit
 {:toc-skip}
 
-1. Clone the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository. You can
-   either clone this repository directly, or click the green "Use this template"
-   button to create your own repository based on this one.
+1. Create your Test Kit by cloning the [Inferno Template](https://github.com/inferno-framework/inferno-template)
+   or by using the `inferno new` command.
 1. Run `./setup.sh` in the template repository to retrieve the necessary Docker
    images and create a database.
 
