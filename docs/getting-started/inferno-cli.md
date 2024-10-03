@@ -48,13 +48,20 @@ It will automatically install the necessary Gem files used by Inferno Core and r
 database migrations to bring the database up to date. Run `inferno new --help` for more
 options and examples.
 
+```
+inferno new MyTestKit --author "My Name" --author "My Friend" --implementation-guide hl7.fhir.us.core@6.1.0
+```
+
 Note that this command follows the naming convention used by Ruby gems. The command
 `inferno new MyTestKit` will create a new folder named `my-test-kit`. Inside the 
 `my-test-kit/lib` folder, it will create the subdirectory `my_test_kit` for your test files, 
 and the main Ruby file named `my_test_kit.rb`. The main module in the `.rb` file will be named `MyTestKit`.
 
-In `my-test-kit/spec`, it will create the subdirectory `my_test_kit` and in the main `patient_group_spec.rb` RSpec file, it sets the module name to `MyTestKit::PatientGroup`.
+The new test kit supports [RSpec](https://rspec.info/) testing on the test kit itself. It also includes a working example in `my-test-kit/spec/patient_group_spec.rb`.
 
-It will create a `my_test_kit.gemspec` file, and set the names of any authors supplied using the `-a` option, and set the name, summary and description values to your Test Kit name.
+It will create a `my_test_kit.gemspec` file, and set the names of any authors supplied 
+using the `-a` option, and set the name, summary and description values to your Test Kit name. 
+You should manually inspect this file if you want to [publish or distribute the Test Kit](/docs/distributing-tests.html).
 
 
+The `--implementation-guide` or `-i` option will look at an absolute file path if its prefixed by `file:///` or lookup the name in the [official FHIR package registry](https://packages.fhir.org/).

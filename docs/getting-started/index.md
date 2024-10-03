@@ -62,7 +62,7 @@ WSL may be having networking issues.  To resolve this, you can follow the steps 
 1. Install Ruby. It is highly recommended that you install Ruby via a [Ruby
    version
    manager](https://www.ruby-lang.org/en/documentation/installation/#managers).
-1. Run `gem install inferno_core` to install inferno.
+1. Run `gem install inferno_core` to install Inferno.
 1. Run `gem install foreman` to install foreman, which will be used to run the
    Inferno web and worker processes.
 1. Run `gem install rerun` to install rerun, which will be used to enable
@@ -77,9 +77,13 @@ method ensures you will always be starting with the latest Test Kit Template. Yo
 either clone this repository directly, or click the green "Use this template" button in GitHub
 to create your own repository based on the Inferno Template.
 
-The second method is to use the Inferno Command Line Interface. After installing
-the `inferno_core` gem, run `inferno new TestKitName` to create a new Test Kit
-Template in a directory named `test-kit-name`. See how to [create a new Test
+The second method is to use the Inferno Command Line Interface. 
+
+```sh
+gem install inferno_core && inferno new my-test-kit
+```
+
+This will create a new Test Kit Template in a directory named `test-kit-name`. See how to [create a new Test
 Kit](/docs/getting-started/inferno-cli.html#creating-a-new-test-kit) using the Inferno CLI for more
 information and options.
 
