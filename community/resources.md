@@ -12,7 +12,7 @@ section: community
 
 Inferno YouTube Channel: [https://www.youtube.com/@infernoframework](https://www.youtube.com/@infernoframework)
 
-US Core Test Kit Tutorial: [https://github.com/inferno-training/inferno-tutorial/wiki](https://github.com/inferno-training/inferno-tutorial/wiki)
+Inferno Test Kit Authoring Tutorial: [https://github.com/inferno-framework/tutorial-test-kit/wiki](https://github.com/inferno-framework/tutorial-test-kit/wiki)
 
 ## Monthly Tech Talk Presentations
 

@@ -15,7 +15,7 @@ also [create a new Test Kit](/docs/getting-started/inferno-cli.html#creating-a-n
 Command Line Interface (CLI). 
 
 We encourage beginners to visit the
-[Test Kit Authoring Tutorial](https://github.com/inferno-training/inferno-tutorial/wiki)
+[Inferno Test Kit Authoring Tutorial](https://github.com/inferno-framework/tutorial-test-kit/wiki)
 that walks you through creating a basic set of tests for servers that target a common
 Implementation Guide.
 
