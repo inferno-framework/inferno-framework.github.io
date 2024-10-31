@@ -35,6 +35,7 @@ layout: base
     <div class="col-lg-7 order-1">
       <div class="docs-body mx-auto" id="content">
         {% include anchor_headings.html html=content h_min=2 beforeHeading="true" anchorBody="<svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><use xlink:href=\"#svg-link\"></use></svg>" anchorClass="anchor-heading" anchorAttrs="aria-labelledby=\"%html_id%\"" %}
+        {% include suggest_an_edit.html content=page.path %}
       </div>
     </div>
   </div>
