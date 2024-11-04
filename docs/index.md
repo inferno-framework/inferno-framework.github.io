@@ -83,6 +83,11 @@ testing DSL.
 - [Inferno Template](https://github.com/inferno-framework/inferno-template) - A
   template for test writers. This is the repository to use if you want to write
   your own set of tests with Inferno.
+- [FHIR Validator App](https://github.com/inferno-framework/fhir-validator-app) - A
+  simple web wrapper around the [official HL7 FHIR validation
+  library](https://github.com/hapifhir/org.hl7.fhir.core/tree/master/org.hl7.fhir.validation).
+  Inferno relies on this service to validate FHIR resources.
+
 
 ## Documentation Resources
 - [JSON API Documentation](/inferno-core/api-docs) - The documentation for
