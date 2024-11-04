@@ -1,6 +1,6 @@
 ---
 title: Scratch
-nav_order: 4
+nav_order: 5
 parent: Advanced Features
 layout: docs
 section: docs
