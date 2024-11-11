@@ -71,11 +71,11 @@ The `--implementation-guide` or `-i` option will look at an absolute file path i
 
 The `inferno execute` command allows you to execute [runnables](https://inferno-framework.github.io/docs/writing-tests/#test-suite-structure)
 from a Test Kit in the shell. The command requires:
- - the Test Kit as the working directory
- - Inferno background services running
- - a Test Suite id
- - all inputs and any [Suite Options](https://inferno-framework.github.io/docs/advanced-test-features/test-configuration.html#suite-options) necessary for execution
- - optionally, the short ids of select Tests and Test Groups you want to run
+ - The Test Kit as the working directory.
+ - Inferno background services running.
+ - A Test Suite id.
+ - All inputs and any [Suite Options](https://inferno-framework.github.io/docs/advanced-test-features/test-configuration.html#suite-options) necessary for execution.
+ - Optionally, the short ids of select Tests and Test Groups you want to run.
 
 
 For example, to run the [US Core Test Kit](https://github.com/inferno-framework/us-core-test-kit)
