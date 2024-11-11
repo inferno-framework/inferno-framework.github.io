@@ -2,11 +2,11 @@
 layout: news
 title: New Execute CLI in Inferno Core v0.4.44 and Breaking Change in v0.5.0
 section: news
-date: 2024-11-08
+date: 2024-11-11
 ---
 
-We are excited to announce our initial release of an `inferno execute` CLI that lets you run Test Kits
-in the shell, with the intention of running Inferno in CI/CD pipelines. This feature is included in
+We are excited to announce our initial release of the `inferno execute` CLI, which lets you run Test Kits
+in the shell and enables running Inferno in CI/CD pipelines. This feature is included in
 Inferno Core v0.4.44 release. We also briefly cover the technical breaking change in our Inferno Core
 v0.5.0 release in this post.
 
@@ -14,49 +14,54 @@ v0.5.0 release in this post.
 
 We were told by our community and stakeholders that adding
 [Continuous Integration (CI)](https://github.com/resources/articles/devops/continuous-integration)
-testing would be a good value add to Inferno, and so we listened and embarked on this task. While
-implementing the full breadth of Inferno features into automated CI tooling is a far goal, we
-believe we took a step in the right direction with our new [`inferno execute` command](/TODO).
+testing would be a good value add to Inferno, and so we listened and embarked on this task. Our
+first step was implementing an [`inferno execute` command](/docs/getting-started/inferno-cli#running-a-test-kit-in-command-line),
+which you can view an example of below.
 
-For a quick start on the `inferno execute` command follow these steps:
- 1. Have Ruby setup to 3.1.2
- 2. Clone the US Core Test Kit repository. You should be on Release v0.9.0.
-```
-TODO
-```
- 3. Enter Test Kit as working directory and install dependencies.
-```
-cd us-core-test-kit
-bundle install
-```
- 4. Launch background services
-```
-bundle exec inferno services start
-```
- 5. Use `inferno execute` to run the US Core v3.1.1 Single Patient API Test Group against our reference
-server
-```
-bundle exec inferno execute --suite us_core_v311 \
-                            --suite-options smart_app_launch_version:smart_app_launch_1 \
-                            --groups 2 \
-                            --inputs "url:https://inferno.healthit.gov/reference-server/r4" \
-                                     patient_ids:85,355 \
-                                     "smart_credentials:{\"access_token\":\"SAMPLE_TOKEN\"}"
+{% include figure.html
+    file="inferno-execute-example.png"
+    alt="Console command running dev_validator Test Suite Test Group 1 on HAPI FHIR Server with tests passing and exit status 0."
+    caption="Example usage of inferno execute"
+    description="A screenshot of the console command bundle exec inferno execute --suite dev_validator --groups 1 --inputs \"url:https://hapi.fhir.org/baseR4\" patient_id:1234321."
+    maxwidth="100%"
+%}
 
-```
+Inferno's CLI is powered by the [Thor gem](https://github.com/rails/thor/wiki), which allows for array
+and hash type CLI arguments. The command is also designed to follow Unix convention and return 0 on a
+success. If the designated Test Suite fails, or if selected non-optional Test Groups or Tests fail, the
+command will exit with a non-zero status.
 
-and if it all works successfully you should see something like this:
+This should allow anyone to use `inferno execute` in bash scripts or YAML workflow files to perform
+their own CI with Inferno. Infact we made our own proof-of-concept
+[Inferno CI workflow file](https://github.com/inferno-framework/inferno-reference-server/blob/47c7b8cc687f6ac7eddc117e5d7d8fe0b0d61cf1/.github/workflows/inferno_ci.yml)
+<!-- TODO replace above link when file gets merged -->
+on our [Reference Server](https://github.com/inferno-framework/inferno-reference-server).
 
-TODO IMAGE
+Unfortunately while doing so, we found some limitations with running Inferno in a CI environment when
+compared to what Inferno can do normally. These limitations are:
 
-The limitations...
+ - We could not emulate TLS, causing all TLS version tests to fail. We made a quick fix for this by
+implementing a feature where having `INFERNO_DISABLE_TLS_TEST=true` in the environment would bypass the
+test. See our
+[TLS Test Kit](https://github.com/inferno-framework/tls-test-kit?tab=readme-ov-file#disabling-the-tls-test)
+for details. We are also investigating more generalizable solutions for the future such as test quarantining.
 
+ - Certain features such as [`scratch`](/docs/advanced-test-features/scratch.html) require tests to run as a
+group, however these tests may not always be marked under `run_as_group` and the CLI will let you run these
+independently. Such tests will fail or error in CLI. For this reason we encourage Test Kit writers to use
+`run_as_group` where appropriate, and we encourage Test Kit users to submit issues and try the latest release.
 
-You can see our [documentation](/TODO) on the `inferno execute` CLI or run `bundle exec inferno execute --help`
-for more guidance. You can also view our [CI documentation](/TODO) if you want to run it in CI.
+ - We do not support SMART Launch tests or client testing in CI. Any tests that rely on recieving HTTP requests
+won't work. We are investigating supporting this feature via CLI in the future.
+
+Despite these short comings, the `inferno execute` CLI opens up a new potential for the Inferno in CI, scripting,
+and automation. You can see our [documentation](/docs/getting-started/inferno-cli#running-a-test-kit-in-command-line)
+on the `inferno execute` CLI or run `bundle exec inferno execute --help` for more guidance. You can also view our
+[CI documentation](/docs/advanced-test-features/using-test-kits-in-ci-cd.md) if you want to run it in CI.
 
 The v0.4.44 release also included various other bug fixes and enhancements.
-You can see the v0.4.44 release on GitHub for more details.
+You can see the [v0.4.44 release on GitHub](https://github.com/inferno-framework/inferno-core/releases/tag/v0.4.44)
+for more details.
 
 ## v0.5.0
 
@@ -71,9 +76,12 @@ to update. However, if you want the performance improvements you can run `bundle
 your Test Kit directory. If there is a duplicate id in your Test Kit, the command `inferno start` will
 fail to start, and you need to go rename one or more ids in the Test Kit.
 
-You can see the v0.5.0 release on GitHub for more details.
+You can see the
+[v0.5.0 release on GitHub](https://github.com/inferno-framework/inferno-core/releases/tag/v0.5.0)
+for more details.
 
----
+## Next Steps
 
-As always, we welcome your feedback and look forward to enhancing Inferno in future
-releases. Thank you for your continued support!
+We'll keep improving the Inferno Core, the Inferno Framework site, and the FHIR Community
+as a whole with future releases. As always, we welcome your feedback and ideas for improvement.
+Thank you for your continued support!
