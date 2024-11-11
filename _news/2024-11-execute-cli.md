@@ -10,6 +10,8 @@ in the shell and enables running Inferno in CI/CD pipelines. This feature is inc
 Inferno Core v0.4.44 release. We also briefly cover the technical breaking change in our Inferno Core
 v0.5.0 release in this post.
 
+<!-- break -->
+
 ## v0.4.44 and Inferno Execute CLI
 
 We were told by our community and stakeholders that adding
