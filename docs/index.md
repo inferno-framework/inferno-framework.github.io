@@ -30,7 +30,7 @@ the <a href="getting-started-users.html">Using Test Kits</a> documentation.
 
 A Test Kit is a standalone Ruby application that can be run on an end
 user's machine, on a shared private host behind a firewall, or on a shared
-public host such as [inferno.healthit.gov](https://inferno.healthit.gov/suites).
+public host such as [inferno.healthit.gov](https://inferno.healthit.gov/test-kits/).
 It is built with the [**Inferno Core**](https://github.com/inferno-framework/inferno-core) gem, which provides
 several useful features for a FHIR testing application, including:
 
@@ -83,11 +83,11 @@ testing DSL.
 - [Inferno Template](https://github.com/inferno-framework/inferno-template) - A
   template for test writers. This is the repository to use if you want to write
   your own set of tests with Inferno.
-- [FHIR Validator
-  Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper) - A
+- [FHIR Validator App](https://github.com/inferno-framework/fhir-validator-app) - A
   simple web wrapper around the [official HL7 FHIR validation
   library](https://github.com/hapifhir/org.hl7.fhir.core/tree/master/org.hl7.fhir.validation).
   Inferno relies on this service to validate FHIR resources.
+
 
 ## Documentation Resources
 - [JSON API Documentation](/inferno-core/api-docs) - The documentation for
