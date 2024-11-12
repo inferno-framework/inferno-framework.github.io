@@ -21,15 +21,15 @@
 
 <body data-spy="scroll" data-target="#toc" class="d-flex flex-column  h-100">
   <a href="#content" class="visually-hidden-focusable">Skip to main content</a>
+  <div class="layout-grid">
+    {% include menubar.html %}
 
-  {% include menubar.html %}
+    <main>
+      {{ content }}
+    </main>
 
-  <main>
-    {{ content }}
-  </main>
-
-  {% include footer.html %}
-
+    {% include footer.html %}
+  </div>
   <div class="search-overlay"></div>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->

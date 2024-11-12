@@ -18,6 +18,12 @@ html {
   line-height: 1.2;
 }
 
+.layout-grid {
+  display:grid;
+  min-height: 100dvh;
+  grid-template-rows: auto auto 1fr auto;
+}
+
 code {
   font-size: 0.8rem;
 }
@@ -577,6 +583,16 @@ footer a:visited {
   th:last-child {
     border-left: 1px solid var(--border);
   }
+}
+
+.suggest-improvement {
+  font-size: 0.8em;
+  border-top: 1px solid var(--border);
+  margin-top: 2em;
+  padding-top: 0.5em;
+}
+.suggest-improvement p {
+  margin:0.25rem 0.5rem;
 }
 
 .footnotes {
