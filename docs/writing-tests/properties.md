@@ -64,6 +64,23 @@ session urls look like `INFERNO_BASE_PATH/TEST_SUITE_ID/TEST_SESSION_ID`.
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#id-instance_method)
 
 ----
+## Short Id
+**Description**: A short numeric id or sequence number which is displayed
+in the left side of the UI before short title. This attribute is read only
+and is automatically assigned.
+
+**Can Be Used In**: `Test`, `Group`
+
+**Example**:
+```ruby
+require 'us_core_test_kit'
+USCoreTestKit::USCoreV610::USCoreTestSuite.groups.first.short_id  # => "1"
+```
+
+**Reference**: `short_id` in API docs for [Test](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/Test.html#short_id-class_method)
+and [TestGroup](https://inferno-framework.github.io/inferno-core/docs/Inferno/Entities/TestGroup.html#short_id-class_method).
+
+----
 ## Description
 **Description**: A detailed description displayed in the UI.
 [Markdown](https://commonmark.org/help/) is supported. The description usually
