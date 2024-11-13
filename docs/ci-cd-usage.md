@@ -1,25 +1,27 @@
 ---
-title: Using Test Kits in CI/CD
-nav_order: 14
-parent: Advanced Features
+title: CI/CD Usage
+nav_order: 26
 layout: docs
 section: docs
 ---
 
 # Using Test Kits in CI/CD
 
-Since inferno execute enables running Inferno tests in CLI, it may be used to construct
-CI/CD pipelines. The generic steps around automatically running a Test Kit are:
+Since [inferno
+execute](/docs/getting-started/inferno-cli.html#running-a-test-kit-in-command-line)
+enables running Inferno tests in CLI, it may be used within a Continuous
+Integration or Continuous Deployment (CI/CD) pipelines. The generic steps around
+automatically running a Test Kit are:
 
  1. Setup a container or environment with Ruby and Docker
  2. Obtain your target Test Kit version and make it your working directory
  3. Launch background Inferno services: `bundle exec inferno services start`. This
 command works on top of docker compose and daemonizes the processes for you.
  4. Confirm that background services are ready, possibly with the [wait-for](https://github.com/eficode/wait-for) script.
- 5. Launch your FHIR server and confirm that it is ready to receive requests.
+ 5. Launch the system under test and confirm that it is ready to receive requests.
  6. Select the Tests, Test Groups, and Test Suites you want in CI and run them
 with `inferno execute`. See
-[Running a Test Kit in Command Line](https://inferno-framework.github.io/docs/getting-started/inferno-cli.html#creating-a-new-test-kit)
+[Running a Test Kit in Command Line](/docs/getting-started/inferno-cli.html#running-a-test-kit-in-command-line)
 for more information. The command will exit with status 0 if the Inferno Summarizer deems
 it a pass.
     + You can run multiple inferno execute commands, but remember that each call represents
