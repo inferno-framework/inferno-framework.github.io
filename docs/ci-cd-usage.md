@@ -10,7 +10,7 @@ section: docs
 Since [inferno
 execute](/docs/getting-started/inferno-cli.html#running-a-test-kit-in-command-line)
 enables running Inferno tests in CLI, it may be used within a Continuous
-Integration or Continuous Deployment (CI/CD) pipelines. The generic steps around
+Integration or Continuous Deployment (CI/CD) pipeline. The generic steps around
 automatically running a Test Kit are:
 
  1. Setup a container or environment with Ruby and Docker
