@@ -43,6 +43,12 @@ fhir_resource_validator :optional_validator_name do
 end
 ```
 
+The `url` defaults to reading from the `FHIR_RESOURCE_VALIDATOR_URL` environment variable, so if you
+have not modified the validator service or environment variables, this line may be omitted.
+
+If no `igs` are specified, the validator will only support validation against base FHIR definitions,
+and attempting to validate against specific profile URLs will result in errors.
+
 [`fhir_resource_validator` in the API
 docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fhir_resource_validator-instance_method)
 
