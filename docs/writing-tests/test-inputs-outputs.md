@@ -136,6 +136,37 @@ test do
 end
 ```
 
+It is possible to lock individual checkbox items. In the following example,
+`Item 1` is not locked, so the user can check and uncheck it freely. `Item 2` is
+checked because it is included in the `default`, and the user can not uncheck
+it. `Item 3` is unchecked because it is not included in the `default`, and the
+user can not check it.
+
+```ruby
+input :locked_checkbox_example,
+      title: 'Locked Checkbox Input Example',
+      type: 'checkbox',
+      default: ['value2'],
+      options: {
+        list_options: [
+          {
+            label: 'Item 1',
+            value: 'value1'
+          },
+          {
+            label: 'Item 2 - Locked checked',
+            value: 'value2',
+            locked: true
+          },
+          {
+            label: 'Item 3 - Locked unchecked',
+            value: 'value3',
+            locked: true
+          }
+        ]
+      }
+```
+
 ### Ordering Inputs
 {:toc-skip}
 
