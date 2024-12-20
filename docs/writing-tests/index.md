@@ -242,32 +242,9 @@ To start, add each Test Kit you want to import as a runtime dependency in the `.
 file of your test kit, as you would for additional Ruby gems.
 
 ```ruby
-Gem::Specification.new do |spec|
-  spec.name          = 'my_custom_test_kit'
-  spec.version       = '0.0.1'
-  spec.date          = Time.now.utc.strftime('%Y-%m-%d')
-  spec.summary       = 'My Custom Test Kit'
-  spec.description   = 'My custom Inferno test kit for FHIR'
-  spec.license       = 'Apache-2.0'
-  spec.add_runtime_dependency 'inferno_core', '~> 0.4.43'
-
   # Import additional Test Kits
   spec.add_runtime_dependency 'smart_app_launch_test_kit', '0.4.5'
   spec.add_runtime_dependency 'bulk_data_test_kit', '0.10.0'
-    
-  spec.add_development_dependency 'database_cleaner-sequel', '~> 1.8'
-  spec.add_development_dependency 'factory_bot', '~> 6.1'
-  spec.add_development_dependency 'rspec', '~> 3.10'
-  spec.add_development_dependency 'webmock', '~> 3.11'
-  spec.required_ruby_version = Gem::Requirement.new('>= 3.1.2')
-  spec.files = [
-    Dir['lib/**/*.rb'],
-    Dir['lib/**/*.json'],
-    'LICENSE'
-  ].flatten
-
-  spec.require_paths = ['lib']
-end
 ```
 
 Then you would add `require` statements for each Test Kit to your main Test Kit Ruby file.
@@ -284,14 +261,21 @@ module MyCustomTestKit
 end
 ```
 
-Test Suites, Groups, Tests and configuration options from the imported Test Kits can be referenced using the module name of the imported Test Kit.
+Test Suites, Groups, Tests and configuration options from the imported Test Kits can be referenced from the imported Test Kit.
 
 ```ruby
 # File: lib/my_custom_test_kit/my_test.rb
 module MyCustomTestKit
-  class MyEHRLaunchGroup < SMARTAppLaunch::EHRLaunchGroup
+  class MyEHRLaunchGroup < Inferno::TestGroup
+    id :my_kit_smart_ehr_launch
     title 'Custom EHR SMART App Launch'
+    
+    run_as_group
+    
+    group from: :smart_ehr_launch_stu2,
+      run_as_group: true
     ...
+    end
   end
 end
 ```
