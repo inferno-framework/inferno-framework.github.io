@@ -22,6 +22,8 @@ Interested viewers may join the [Inferno Tech Talk monthly meeting](https://glob
 ## Past Tech Talk Presentation Slides
 {:toc-skip}
 
+- [January 2025 Tech Talk (PDF, 383 KB)](/download/Inferno_Tech_Talk_Jan_8_2025.pdf)
+- [December 2024 Tech Talk (PDF, 362 KB)](/download/Inferno_Tech_Talk_Dec_11_2024.pdf)
 - [November 2024 Tech Talk (PDF, 912 KB)](/download/Inferno_Tech_Talk_Nov_13_2024.pdf)
 - [October 2024 Tech Talk (PDF, 390 KB)](/download/Inferno_Tech_Talk_Oct_9_2024.pdf)
 - [September 2024 Tech Talk (PDF, 237 KB)](/download/Inferno_Tech_Talk_Sep_11_2024.pdf)
