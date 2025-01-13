@@ -99,7 +99,7 @@ information and options.
    default, these include nginx, Redis, the FHIR validator service, and the FHIR
    validator UI. You can check to make sure they're running by running `docker container ls` in the
    command line, or checking the "Container" tab in Docker Desktop.
-1. Run `inferno start --watch` to start Inferno and have it reload any time a file
+1. Run `bundle exec inferno start --watch` to start Inferno and have it reload any time a file
    changes. Remove the `watch` flag if you would prefer to manually restart
    Inferno.
 1. Navigate to `http://localhost:4567` to access Inferno. You should see two test groups on the side

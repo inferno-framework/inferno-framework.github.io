@@ -13,25 +13,25 @@ The Inferno Command Line Interface is available to developers running Inferno wi
 
 ## Inferno Commands
 
-We recommend running all commands starting with `bundle exec` (e.g. `bundle exec inferno migrate`) because
-it guarantees that only the specific gems and versions listed in `Gemfile.lock` are available to be used.
-**Warning:** The `inferno start` command cannot be run with `bundle exec` prior to Inferno Core version 0.4.39.
+All commands (unless stated below) must be prefixed with `bundle exec` (e.g. `bundle exec inferno migrate`) because
+it guarantees that only the exact dependencies listed in `Gemfile.lock` are used.
 
 The commands available include:
 
 | Command      | Description |
 |--------------|-------------|
 | `inferno console` | Starts an interactive console session with Inferno. More information can be found on the [Debugging Page](debugging.html#interactive-console). |
-| `inferno help [COMMAND]` | Describes the available commands, or one specific command if specified |
-| `inferno migrate` | Runs database migrations |
-| `inferno new TEST_KIT_NAME` | Create a new test kit. Run `inferno new --help` for additional options. |
-| `inferno services start` | Starts the background services (nginx, Redis, etc.) for Inferno |
-| `inferno services stop` | Stops the background services for Inferno |
-| `inferno start` | Starts Inferno web UI |
+| `inferno help [COMMAND]` | Describes the available commands, or one specific command if specified. |
+| `inferno migrate` | Runs database migrations. |
+| `inferno new TEST_KIT_NAME` | Create a new test kit. Run `inferno new --help` for additional options. Does not require `bundle exec`. |
+| `inferno services start` | Starts the background services (nginx, Redis, etc.) for Inferno. |
+| `inferno services stop` | Stops the background services for Inferno. |
+| `inferno start` | Starts Inferno web UI. Do not use `bundle exec` if the Inferno Core version is prior to 0.4.39. |
 | `inferno suite SUBCOMMAND [...ARGS]` | Performs suite-based operations. The available subcommands are `describe`, `help`, and `input_template`.|
 | `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
-| `inferno suites` | Lists available test suites |
-| `inferno execute` | Execute tests in the command line instead of web UI |
+| `inferno suites` | Lists available test suites. |
+| `inferno execute` | Execute tests in the command line instead of web UI. |
+| `inferno version` | Output the version of Inferno Core (not the Test Kit). Does not require `bundle exec`. |
 {: .grid.command-table}
 
 ## Creating a new Test Kit
