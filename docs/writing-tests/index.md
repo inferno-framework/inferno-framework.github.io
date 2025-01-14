@@ -228,3 +228,56 @@ Note: When importing a group, its optional children can be omitted:
 ```ruby
 group from: :us_core_patient, exclude_optional: true
 ```
+
+## Importing From Other Test Kits
+
+Inferno Test Kits may include other Test Kits as a dependency. This allows you to
+reuse existing tests, test groups or test suites as part of your own tests.  This is helpful
+if your testing requires common functionality already covered by existing Test Kits, such as
+[SMART App Launch](https://github.com/inferno-framework/smart-app-launch-test-kit) for testing 
+connecting to a FHIR Server, and [Bulk Data Access Test Kit](https://github.com/inferno-framework/bulk-data-test-kit) for
+exporting bulk data from a FHIR Server.
+
+To start, add each Test Kit you want to import as a runtime dependency in the `.gemspec` 
+file of your test kit, as you would for additional Ruby gems.
+
+```ruby
+  # Import additional Test Kits
+  spec.add_runtime_dependency 'smart_app_launch_test_kit', '0.4.5'
+  spec.add_runtime_dependency 'bulk_data_test_kit', '0.10.0'
+```
+
+Then you would add `require` statements for each Test Kit to your main Test Kit Ruby file.
+
+```ruby
+# lib/my_custom_test_kit.rb
+require 'bulk_data_test_kit'
+require 'smart_app_launch_test_kit'
+
+module MyCustomTestKit
+  class MyTestSuite < Inferno::TestSuite
+   ...
+  end
+end
+```
+
+Test Suites, Groups, Tests and configuration options from the imported Test Kits can be referenced from the imported Test Kit.
+
+```ruby
+# File: lib/my_custom_test_kit/my_test.rb
+module MyCustomTestKit
+  class MyEHRLaunchGroup < Inferno::TestGroup
+    id :my_kit_smart_ehr_launch
+    title 'Custom EHR SMART App Launch'
+    
+    run_as_group
+    
+    group from: :smart_ehr_launch_stu2,
+      run_as_group: true
+    ...
+    end
+  end
+end
+```
+
+
