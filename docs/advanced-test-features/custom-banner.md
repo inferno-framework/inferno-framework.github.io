@@ -1,6 +1,6 @@
 ---
 title: Custom Banner
-nav_order: 14
+nav_order: 7
 parent: Advanced Features
 layout: docs
 section: docs

@@ -22,6 +22,9 @@ Interested viewers may join the [Inferno Tech Talk monthly meeting](https://glob
 ## Past Tech Talk Presentation Slides
 {:toc-skip}
 
+- [January 2025 Tech Talk (PDF, 383 KB)](/download/Inferno_Tech_Talk_Jan_8_2025.pdf)
+- [December 2024 Tech Talk (PDF, 362 KB)](/download/Inferno_Tech_Talk_Dec_11_2024.pdf)
+- [November 2024 Tech Talk (PDF, 912 KB)](/download/Inferno_Tech_Talk_Nov_13_2024.pdf)
 - [October 2024 Tech Talk (PDF, 390 KB)](/download/Inferno_Tech_Talk_Oct_9_2024.pdf)
 - [September 2024 Tech Talk (PDF, 237 KB)](/download/Inferno_Tech_Talk_Sep_11_2024.pdf)
 - [August 2024 Tech Talk (PDF, 2.2 MB)](/download/Inferno_Tech_Talk_Aug_14_2024.pdf)
@@ -38,6 +41,7 @@ Interested viewers may join the [Inferno Tech Talk monthly meeting](https://glob
 
 ## Other Presentations
 
+- [Da Vinci Webinar](https://confluence.hl7.org/display/DVP/Da+Vinci+Video+Presentations): Exploring Inferno: An Overview, Demo and Benefits of Da Vinci-related Test Kits<br>Video: [Da Vinci Webinar - October 23, 2024](https://www.youtube.com/watch?v=_6vja-Gyfio&t=1s)
 - [HL7 Synthetic Data Event](https://confluence.hl7.org/pages/viewpage.action?pageId=184922592): Synthetic Data for Testing<br>Video: [HL7 Synthetic Data Event - August 29, 2023](https://youtu.be/WcMfL4tQEOQ?si=hJWOt13Ouo2JLQW5&t=2723)
 - [ONC 2022 Tech Forum](https://www.healthit.gov/news/events/2022-onc-virtual-tech-forum): Inferno Framework Capabilities Beyond (g)(10)<br>Video: [ONC 2022 Tech Forum: Inferno Framework Capabilities Beyond (g)(10)](https://www.youtube.com/watch?v=epf7OHPaeZ0)
 {:itemlist}

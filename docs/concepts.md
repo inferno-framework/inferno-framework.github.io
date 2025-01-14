@@ -9,10 +9,10 @@ section: docs
 ## Inferno Core
 
 Inferno Core is the primary library of Inferno, which testers can use to build Inferno Test
-Kits. It provides the main logic of Inferno, as well as a CLI, a web
+Kits. It provides the main logic of Inferno, as well as a command line interface (CLI), a web
 interface for executing tests, and integration with data persistence layers and third-party
-party validators. Conceptually, Inferno Core is similar to Ruby on Rails or
-React + create-react-app.
+party validators. Conceptually, Inferno Core is similar to [Ruby on Rails](https://rubyonrails.org/) or
+[React](https://react.dev/) + [create-react-app](https://create-react-app.dev/).
 
 {% include figure.html 
     file="inferno-core.png"
@@ -49,7 +49,7 @@ or reference implementations.
 
 ## Inferno Template
 
-Inferno Template is a template for writing Inferno Test Kits. See [Template Layout](/docs/getting-started/repo-layout-and-organization) for more information.
+The Inferno Template is a template for writing Inferno Test Kits. See [Template Layout](/docs/getting-started/repo-layout-and-organization) for more information.
 
 {% include figure.html 
     file="inferno-template.png"
@@ -83,11 +83,10 @@ Inferno Test Kits support using custom or third-party validators, if necessary. 
 
 ## Reference Implementations
 
-An Inferno Test Kit may provide one or more reference implementations, which
-is a program that implements all requirements from a specification (e.g. FHIR) 
-and demonstrates "correct" behavior. They can
-be useful to develop tests against or to help interact with third-party
-solutions. For example, Inferno has a [Reference Server](https://github.com/inferno-framework/inferno-reference-server)
+Reference implementations are example servers that implement all requirements from a
+specification (e.g. FHIR) and demonstrates "correct" behavior. They can be useful to
+develop tests against or to help interact with third-party solutions. For example, Inferno
+has a [Reference Server](https://github.com/inferno-framework/inferno-reference-server)
 for US Core and the Inferno ONC (g)(10) certification tests.
 
 ## Inferno Deployment
@@ -96,7 +95,9 @@ An Inferno Deployment is a web host running one or more Inferno Test Kits. An ex
 [https://inferno.healthit.gov](https://inferno.healthit.gov) website.
 An individual Test Kit can also be run as an Inferno Deployment on 
 users' local machines without any additional
-configuration. An Inferno Deployment includes a web interface as well as
+configuration. See
+[Using Test Kits: Getting Started](/docs/getting-started-users.html)
+for more information. An Inferno Deployment includes a web interface as well as
 a RESTful API to enable third-party integration.
 
 {% include figure.html 
