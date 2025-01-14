@@ -1,6 +1,6 @@
 ---
 layout: news
-title: New Execute CLI in Inferno Core v0.4.44 and Breaking Change in v0.5.0
+title: Continuous Integration and Deployment in Inferno
 section: news
 date: 2024-11-11
 ---

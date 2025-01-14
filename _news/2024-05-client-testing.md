@@ -1,6 +1,6 @@
 ---
 layout: news
-title: "Client Testing on Inferno"
+title: "FHIR Client Testing on Inferno"
 section: news
 date: 2024-05-14
 ---
@@ -17,14 +17,19 @@ However some FHIR workflows, such as SMART app launch, require Inferno to
 and play the server. The community has also been asking for FHIR Client testing to Inferno.
 Little by little, we've been adding "server simulator" components to Inferno:
 
+<br/>
+<br/>
 
-| DSL | Usage |
-|:---:|:------|
-| `route` | Handle a request with any [Rack-based application](https://github.com/rack/rack). |
-| `wait`  | Pause the test run from a test in order to wait for a client request. |
+| DSL                 | Usage                   |
+|:-------------------:|:-----------------------:|
+| `route`             | Handle a request with any [Rack-based application](https://github.com/rack/rack). |
+| `wait`              | Pause the test run from a test in order to wait for a client request. |
 | `resume_test_route` | Handle a request and unpause the Inferno test run. |
-| `recieves_request` | Link a recieved request with a test. |
-| `suite_endpoint` | Handle a request with a `SuiteEndpoint`. |
+| `recieves_request`  | Link a recieved request with a test. |
+| `suite_endpoint`    | Handle a request with a `SuiteEndpoint`. |
+
+<br/>
+<br/>
 
 While `resume_test_route` could handle
 [simple cases](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_method),

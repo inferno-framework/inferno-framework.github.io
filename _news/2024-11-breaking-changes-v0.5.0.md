@@ -1,6 +1,6 @@
 ---
 layout: news
-title: "Inferno Core Release v0.5.0!"
+title: "Inferno Core Release v0.5.0"
 section: news
 date: 2024-11-04
 ---
