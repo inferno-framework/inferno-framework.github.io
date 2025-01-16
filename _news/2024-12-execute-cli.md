@@ -2,10 +2,10 @@
 layout: news
 title: Continuous Integration and Deployment in Inferno
 section: news
-date: 2024-11-11
+date: 2024-12-05
 ---
 
-We are excited to announce our initial release of the `inferno execute` CLI, which lets you run Test Kits
+We are excited to announce the release of an `inferno execute` CLI, which lets you run Test Kits
 in the shell and enables running Inferno in CI/CD pipelines.
 
 <!-- break -->
