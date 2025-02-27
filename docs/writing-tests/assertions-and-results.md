@@ -134,6 +134,19 @@ test do
 end
 ```
 
+`skip/omit` can also take a block instead of a message. If an assertion fails
+inside of that block, then the test will skip/omit instead.
+
+```ruby
+test do
+  run do
+    skip do
+      assert false, 'This test will skip rather than fail'
+    end
+  end
+end
+```
+
 ### Adding Messages to Results
 {:toc-skip}
 
