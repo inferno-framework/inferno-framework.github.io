@@ -262,22 +262,55 @@ end
 ```
 
 Test Suites, Groups, Tests and configuration options from the imported Test Kits can be referenced from the imported Test Kit.
+Include the required suite, and then reference test groups with the appropriate id.
 
 ```ruby
-# File: lib/my_custom_test_kit/my_test.rb
+# File: lib/my_custom_test_kit/my_test_suite.rb
+
+require_relative 'ehr_launch_group_stu2'
+require_relative 'app_launch_test'
+
 module MyCustomTestKit
-  class MyEHRLaunchGroup < Inferno::TestGroup
+  class MyEHRLaunchSuite < Inferno::TestSuite
     id :my_kit_smart_ehr_launch
     title 'Custom EHR SMART App Launch'
-    
+      
     run_as_group
     
+    # import entire group
     group from: :smart_ehr_launch_stu2,
       run_as_group: true
-    ...
+    
+    group do
+      title 'My Custom Group'
+      id :my_custom_group
+      
+      # import individual test
+      test from: :smart_app_launch
+      test do
+        title 'Check for response with missing data'
+        ...
+      end
     end
   end
 end
 ```
 
+You can reuse groups and tests in your Test Kit, and customize with your own configuration.
 
+```ruby
+  group from: :smart_discovery_stu2,
+    title 'Custom Group Title'
+    description %(
+      # My Customized group description...
+    )
+    id :my_smart_discovery_group
+    
+    config: {
+      inputs: {
+         url: { name: :bulk_server_url } 
+      }
+    }
+```
+
+            
