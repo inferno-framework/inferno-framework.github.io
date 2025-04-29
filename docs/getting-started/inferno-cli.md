@@ -132,10 +132,10 @@ and may error or fail erroneously when run individually through CLI.
 
 The Evaluator is a command-line tool that characterizes and analyzes HL7® FHIR® data in the context of a given Implementation Guide. The Evaluator is primarily designed to help ensure example datasets are comprehensive and useful.
 
-To run the Evalutor, install dependencies with `bundle install`. Run the evaluation CLI with bundle exec evaluator evaluate:
+To run the Evaluator, install dependencies with `bundle install`. Run the evaluation CLI with the command below:
 
 ```
-bundle exec evaluator evaluate ig_path [data_path]
+bundle exec inferno evaluate ig_path [data_path]
 ```
 
 For example:
@@ -143,11 +143,11 @@ For example:
 Load the US core IG and evaluate the data in the provided example folder. If there are examples in the IG already, they will be ignored.
 
 ```
-bundle exec evaluator evaluate ./uscore7.0.0.tgz ./package/example
+bundle exec inferno evaluate ./uscore7.0.0.tgz ./package/example
 ```
 
 Loads the US core IG and evaluate the data included in the IG's example folder.
 
 ```
-bundle exec evaluator evaluate ./uscore7.0.0.tgz
+bundle exec inferno evaluate ./uscore7.0.0.tgz
 ```
