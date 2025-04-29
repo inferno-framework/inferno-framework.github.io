@@ -31,7 +31,7 @@ The commands available include:
 | `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
 | `inferno suites` | Lists available test suites. |
 | `inferno execute` | Execute tests in the command line instead of web UI. |
-| `inferno evaluate [IG_PATH]` | Run the evaluator in the command line. |
+| `inferno evaluate [IG_PATH] [DATA_PATH]` | Run the FHIR evaluator in the command line. |
 | `inferno version` | Output the version of Inferno Core (not the Test Kit). Does not require `bundle exec`. |
 {: .grid.command-table}
 
@@ -127,3 +127,27 @@ Please note that inferno execute is still low maturity and has limitations. Infe
 currently cannot support SMART launch tests or tests that receive client requests
 via CLI execution. Some tests are also expected to [run as a group](https://inferno-framework.github.io/docs/writing-tests/properties.html#run-as-group),
 and may error or fail erroneously when run individually through CLI.
+
+## Run the FHIR Evaluator
+
+The Evaluator is a command-line tool that characterizes and analyzes HL7® FHIR® data in the context of a given Implementation Guide. The Evaluator is primarily designed to help ensure example datasets are comprehensive and useful.
+
+To run the Evalutor, install dependencies with `bundle install`. Run the evaluation CLI with bundle exec evaluator evaluate:
+
+```
+bundle exec evaluator evaluate ig_path [data_path]
+```
+
+For example:
+
+Load the US core IG and evaluate the data in the provided example folder. If there are examples in the IG already, they will be ignored.
+
+```
+bundle exec evaluator evaluate ./uscore7.0.0.tgz ./package/example
+```
+
+Loads the US core IG and evaluate the data included in the IG's example folder.
+
+```
+bundle exec evaluator evaluate ./uscore7.0.0.tgz
+```
