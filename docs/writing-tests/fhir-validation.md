@@ -17,7 +17,7 @@ Two validator "wrapper" services are currently included in the Inferno framework
 When creating a Test Kit based on the [Inferno
 Template](https://github.com/inferno-framework/inferno-template), IG packages do
 not need to be included if the IG is available from the FHIR package server. If
-you need to validato against an unpublished IG, place the `.tgz` IG packages in
+you need to validate against an unpublished IG, place the `.tgz` IG packages in
 `lib/YOUR_TEST_KIT_NAME/igs`. At runtime, all IG packages in
 `lib/YOUR_TEST_KIT_NAME/igs` as well as those in corresponding locations in
 other loaded test kits, are copied to `data/igs`, and the validator accesses the
