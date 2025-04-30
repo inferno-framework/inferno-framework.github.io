@@ -17,6 +17,7 @@ looks something like this:
 │   └── ...
 ├── config.ru
 ├── data
+│   └── igs
 │   └── redis
 │       └── ...
 ├── docker-compose.yml
@@ -36,7 +37,9 @@ looks something like this:
 - `config` - This folder contains configuration for the database and web
   servers.
 - `config.ru` - This is the main file for Inferno's web server process.
-- `data` - This folder includes the database and Redis snapshots.
+- `data` - This folder includes the database, Redis snapshots, and IG files for
+  the FHIR validator. The contents of this folder are created automatically and
+  should not be edited.
 - `docker-compose.yml` - This file coordinates and runs all of the services Inferno
   needs.
 - `docker-compose.background.yml` - This file coordinates and runs the background
@@ -45,8 +48,11 @@ looks something like this:
   up as a distributable Ruby gem. This is also where you can add additional Ruby
   gems if you need them.
 - `lib` - This folder is where the code for your tests goes.
-- `lib/{YOUR_TEST_KIT_NAME}/igs` - This is where IG packages go so that they can
-  be used by the validator. See `/lib/inferno_template/igs` for reference.
+- `lib/{YOUR_TEST_KIT_NAME}/igs` - This is where IG packages go if a test kit
+  relies on an IG to generate tests, or relies on an unpublished IG which is not
+  available on the FHIR packages server. IG files do not need to be included to
+  validate resources against published IGs. See `/lib/inferno_template/igs` for
+  reference.
 - `spec` - This folder is for unit tests.
 - `worker.rb` - This is the main file for Inferno's test runner process.
 
@@ -60,9 +66,9 @@ distributed.
 - All other test files should live in a subdirectory in `lib`, and
   the convention is to have this subdirectory have the same name as the single file in `lib`,
   minus the extension.
-- The `package.tgz` file for the IG you're testing against should be placed in
-  `lib/your_test_kit_name/igs`. This will allow you to validate against the
-  profiles in that IG.
+- If a test kit relies on an unpublished IG, the `package.tgz` file for that IG
+  should be placed in `lib/your_test_kit_name/igs`. This will allow you to
+  validate against the profiles in that IG.
 
 For example, if I were creating a Test Kit for the US Core Implementation Guide,
 my `lib` folder would look like this:
@@ -74,9 +80,11 @@ lib
     ├── condition_tests.rb
     ├── ...
     └── igs
-        └── package.tgz
+        └── unpublished_ig_package.tgz
 ```
 And anyone wanting to use this test kit, would load it with `require
 'us_core_test_kit'`.
 
-If you want more examples, check out the [Community Page](/community/test-kits.html) to view all available Test Kits currently registered with the Inferno Team.
+If you want more examples, check out the [Community
+Page](/community/test-kits.html) to view all available Test Kits currently
+registered with the Inferno Team.
