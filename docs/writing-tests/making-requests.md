@@ -59,8 +59,15 @@ end
 ```
 
 ## Reusing Requests
-If you want to reuse a request from an earlier test instead of reissuing it,
-you can give the initial request a name, and then have your other tests use that named request.
+If you want to reuse requests from earlier tests instead of reissuing them,
+you can give the initial request a name, or tags.
+
+### Named Requests
+{:toc-skip}
+
+Naming a request is an easy way to reuse a single request. The test where the
+request is made declares that it makes a request with a particular name, and
+then other tests which require access to this request declare that they use it.
 
 ```ruby
 group do
@@ -83,6 +90,43 @@ group do
       request
       response
       resource
+    end
+  end
+end
+```
+
+### Tagged Requests
+{:toc-skip}
+
+Tagging requests provides a way to reuse multiple requests, as well as load
+dynamic collections of requests. The `tags` argument can be used with any FHIR
+or HTTP request to assign an array of arbitrary tags to a request.
+`load_tagged_requests` will load requests which contain all of the specified
+tags. Individual tests may be run multiple times during a single test session,
+but only requestes from the most recent run of any test will be loaded when
+using `load_tagged_requests`.
+
+```ruby
+group do
+  test do
+    run do
+      fhir_search(:patient, params: { _id: 'abc' }, tags: ['Patient', 'Patient?_id', 'search'])
+      fhir_search(:patient, params: { _id: 'def'}, tags: ['Patient', 'Patient?_id', 'search'])
+
+      fhir_read(:condition, 'xyz', tags: ['Condition', 'read'])
+      fhir_search(:condition, params: { patient: '123' }, tags: ['Condition', 'Condition?patient', 'search'])
+      fhir_search(:condition, params: { category: 'problem-list-item' }, tags: ['Condition', 'Condition?category', 'search'])
+      fhir_search(:condition, params: { code: '165002' }, tags: ['Condition', 'Condition?code', 'search'])
+    end
+  end
+
+  test do
+    run do
+      load_tagged_requests('Patient?_id') # Load all requests with "Patient?_id" tag_
+      load_tagged_requests('Condition', 'search') # load all requests with both "Condition" and "search" tags
+
+      # This is populated with all of the loaded requests
+      requests
     end
   end
 end
