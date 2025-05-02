@@ -31,7 +31,7 @@ The commands available include:
 | `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
 | `inferno suites` | Lists available test suites. |
 | `inferno execute` | Execute tests in the command line instead of web UI. |
-| `inferno evaluate [IG_PATH]` | Run the FHIR evaluator in the command line. |
+| `inferno evaluate [IG_PATH]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
 | `inferno version` | Output the version of Inferno Core (not the Test Kit). Does not require `bundle exec`. |
 {: .grid.command-table}
 
@@ -132,7 +132,7 @@ and may error or fail erroneously when run individually through CLI.
 
 The Evaluator is a command-line tool that characterizes and analyzes HL7® FHIR® data in the context of a given Implementation Guide. The Evaluator is primarily designed to help ensure example datasets are comprehensive and useful.
 
-To run the Evaluator, install dependencies with `bundle install`. Run the evaluation CLI with the command below:
+Run the evaluation CLI with the command below:
 
 ```
 bundle exec inferno evaluate ig_path [data_path]
