@@ -31,7 +31,7 @@ The commands available include:
 | `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
 | `inferno suites` | Lists available test suites. |
 | `inferno execute` | Execute tests in the command line instead of web UI. |
-| `inferno evaluate [IG_PATH]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
+| `inferno evaluate IG_PATH [DATA_PATH]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
 | `inferno version` | Output the version of Inferno Core (not the Test Kit). Does not require `bundle exec`. |
 {: .grid.command-table}
 
