@@ -139,3 +139,27 @@ fhir_resource_validator do
   end
 end
 ```
+
+# MustSupport Test using the Evaluator
+
+Checking the presence of Must Support elements is a common feature across test kits and
+its implementation has been copy-and-pasted between them. 
+To improve the productivity of developing test kits, the Evaluator CLI is built into 
+inferno core, and the MustSupport checks can also be invoked in the context of a test kit 
+by a single method.
+
+To invoke the MustSupport checks, add the following code into test:
+
+```
+assert_must_support_elements_present(resources, profile_url, metadata)
+```
+
+Refer to the assertion API documentation below:
+
+[assert_must_support_elements_present](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Assertions.html#assert_must_support_elements_present-instance_method)
+
+Refer to the examples used in IGs below:
+
+[CARIN for BlueButton IG Test kit](https://github.com/inferno-framework/carin-for-blue-button-test-kit/blob/main/lib/carin_for_blue_button_test_kit/must_support_test.rb)
+
+[International Patient Summary IG Test kit](https://github.com/inferno-framework/ipa-test-kit/blob/main/lib/ipa_test_kit/must_support_test.rb)
