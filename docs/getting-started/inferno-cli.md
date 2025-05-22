@@ -135,19 +135,19 @@ The Evaluator is a command-line tool that characterizes and analyzes HL7Â® FHIRÂ
 Run the evaluation CLI with the command below:
 
 ```
-bundle exec inferno evaluate ig_path [data_path]
+inferno evaluate [-d data_path] ig_path
 ```
 
 For example:
 
-Load the US core IG and evaluate the data in the provided example folder. If there are examples in the IG already, they will be ignored.
+Load the US Core IG and evaluate the data in the provided example folder. If there are examples in the IG already, they will be ignored.
 
 ```
-bundle exec inferno evaluate ./uscore7.0.0.tgz ./package/example
+inferno evaluate -d ./package/example ./uscore7.0.0.tgz
 ```
 
-Loads the US core IG and evaluate the data included in the IG's example folder.
+Loads the US Core IG and evaluate the data included in the IG's example folder.
 
 ```
-bundle exec inferno evaluate ./uscore7.0.0.tgz
+inferno evaluate ./uscore7.0.0.tgz
 ```
