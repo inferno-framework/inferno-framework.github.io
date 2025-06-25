@@ -229,6 +229,26 @@ Note: When importing a group, its optional children can be omitted:
 group from: :us_core_patient, exclude_optional: true
 ```
 
+## Repeated Groups and Tests
+
+When it is necessary to repeat a group or test multiple times, the id must be
+changed to avoid conflicts. This new id must be specified as a keyword argument
+to the `group`/`test` call rather than in a block.
+
+```ruby
+group from: :us_core_patient
+
+# Change the id of subsequent instances using a keyword argument
+group from: :us_core_patient, id: :us_core_patient_2 do
+  # Further configuration
+end
+
+# Do not try to change the id in the block
+group from: :us_core_patient do
+  id :us_core_patient_3 # This will not work properly
+end
+```
+
 ## Importing From Other Test Kits
 
 Inferno Test Kits may include other Test Kits as a dependency. This allows you to
@@ -296,21 +316,21 @@ module MyCustomTestKit
 end
 ```
 
-You can reuse groups and tests in your Test Kit, and customize with your own configuration.
+You can reuse groups and tests in your Test Kit, and customize them with your own configuration.
 
 ```ruby
-  group from: :smart_discovery_stu2,
-    title 'Custom Group Title'
-    description %(
-      # My Customized group description...
-    )
-    id :my_smart_discovery_group
-    
-    config: {
-      inputs: {
-         url: { name: :bulk_server_url } 
-      }
+group from: :smart_discovery_stu2,
+  title 'Custom Group Title'
+  description %(
+    # My Customized group description...
+  )
+  id :my_smart_discovery_group
+
+  config: {
+    inputs: {
+        url: { name: :bulk_server_url } 
     }
+  }
 ```
 
             
