@@ -1,5 +1,5 @@
 ---
-title: Waiting for Incoming Request
+title: Waiting for Incoming Requests
 nav_order: 4
 parent: Advanced Features
 layout: docs
@@ -36,6 +36,12 @@ which takes three arguments:
   `:post`, etc.)
 * `path` - A string for the route path. The route will be served at
   `INFERNO_BASE/custom/SUITE_ID/CUSTOM_ROUTE_PATH`.
+* `tags` - An array of tags to apply to the request. See [Tagged
+  Requests](/docs/writing-tests/making-requests.html#tagged-requests).
+* `result` - A string (default `"pass"`) representing the result that the wait
+  test should receive when the incoming request is received. See
+  [Results](/docs/writing-tests/assertions-and-results.html#results) for
+  possible values.
 * A block that extracts the `identifier` from the incoming request and returns it.
   In this block, `request` can be used to access a [`Request`
   ](/inferno-core/docs/Inferno/Entities/Request.html) object which contains the
