@@ -1,5 +1,5 @@
 ---
-title: Waiting for Incoming Request
+title: Waiting for Incoming Requests
 nav_order: 4
 parent: Advanced Features
 layout: docs
