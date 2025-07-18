@@ -13,11 +13,7 @@ under the Apache 2.0 license and the source is available in the [Inferno Framewo
 
 ## Inferno Team
 
-The fastest way to reach the Inferno team is via the 
-[Inferno Chat on Zulip](https://chat.fhir.org/#narrow/stream/179309-inferno).
-
-You can also
-[e-mail the team](mailto:inferno@groups.mitre.org).
+You may reach the team on the [Inferno Chat on Zulip](https://chat.fhir.org/#narrow/stream/179309-inferno).
 
 ## Reporting Issues
 

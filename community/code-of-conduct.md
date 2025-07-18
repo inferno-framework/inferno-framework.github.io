@@ -66,11 +66,10 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-[inferno@groups.mitre.org](mailto:inferno@groups.mitre.org).
-All complaints will be reviewed and investigated promptly and fairly. The project 
-team is obligated to respect the privacy and security of the
-reporter of any incident. Further details of specific enforcement policies may be posted separately.
+reported to the community leaders responsible for enforcement.  All complaints
+will be reviewed and investigated promptly and fairly. The project team is
+obligated to respect the privacy and security of the reporter of any incident.
+Further details of specific enforcement policies may be posted separately.
 
 Project maintainers who do not follow or enforce the Code of Conduct in good faith 
 may face temporary or permanent repercussions as determined by other members of the project's leadership.
