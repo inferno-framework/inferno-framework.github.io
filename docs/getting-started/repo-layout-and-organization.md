@@ -8,8 +8,12 @@ layout: docs
 ---
 
 ## Template Layout
-After cloning the [Inferno Test Kit Template](https://github.com/inferno-framework/inferno-template) repository, you will have a directory structure that
-looks something like this:
+
+After cloning the [Inferno Test Kit
+Template](https://github.com/inferno-framework/inferno-template) repository, or
+running `inferno new`, you will have a directory structure that looks something
+like this:
+
 ```
 ├── Dockerfile
 ├── Gemfile
@@ -25,6 +29,7 @@ looks something like this:
 ├── inferno_template.gemspec
 ├── lib
 │   ├── inferno_template
+│   │   ├── metadata.rb
 │   │   └── igs
 │   │       └── ...
 │   └── inferno_template.rb
@@ -48,6 +53,9 @@ looks something like this:
   up as a distributable Ruby gem. This is also where you can add additional Ruby
   gems if you need them.
 - `lib` - This folder is where the code for your tests goes.
+- `lib/{YOUR_TEST_KIT_NAME}/metadata.rb` - This file contains the metadata for
+  your test kit. See [Test Kit
+  Metadata](/docs/getting-started/test-kit-metadata.html) for more information.
 - `lib/{YOUR_TEST_KIT_NAME}/igs` - This is where IG packages go if a test kit
   relies on an IG to generate tests, or relies on an unpublished IG which is not
   available on the FHIR packages server. IG files do not need to be included to
@@ -78,6 +86,7 @@ lib
 └── us_core_test_kit
     ├── patient_tests.rb
     ├── condition_tests.rb
+    ├── metadata.rb
     ├── ...
     └── igs
         └── unpublished_ig_package.tgz
