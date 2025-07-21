@@ -7,7 +7,7 @@ layout: docs
 ---
 
 # Test Kit Metadata
-Test kit metadada is defined in `lib/{YOUR_TEST_KIT_NAME}/metadata.rb`. This
+Test kit metadata is defined in `lib/{YOUR_TEST_KIT_NAME}/metadata.rb`. This
 information is used to populate the test kit page which is displayed when
 starting Inferno.
 
