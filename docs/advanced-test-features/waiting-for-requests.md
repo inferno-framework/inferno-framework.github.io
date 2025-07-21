@@ -28,10 +28,10 @@ method. `wait` takes three arguments:
 [`wait` in the API
 docs](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
 
-## Handling the Incoming Request
+## Simple Incoming Request Handling
 The route for making a test resume execution is created with
 [`resume_test_route`](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_method),
-which takes three arguments:
+which takes the following arguments:
 * `method` - A symbol for the HTTP verb for the incoming request (`:get`,
   `:post`, etc.)
 * `path` - A string for the route path. The route will be served at
@@ -58,7 +58,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_me
 [`receives_request` in the API
 docs](/inferno-core/docs/Inferno/DSL/RequestStorage/ClassMethods.html#receives_request-instance_method)
 
-## Example
+### Example
 This example will show how to implement the redirect flow in the [SMART App
 Launch Standalone Launch
 Sequence](http://hl7.org/fhir/smart-app-launch/1.0.0/#standalone-launch-sequence).
@@ -126,6 +126,95 @@ class SMARTAppLaunchSuite < Inferno::TestSuite
         code = request.query_parameters['code']
         
         assert code.present?, 'No `code` parameter received'
+      end
+    end
+  end
+end
+```
+
+## Advanced Incoming Request Handling
+The `suite_endpoint` method can be used for more advanced handling of incoming
+requests, such as:
+- handling multiple incoming requests with customized logic to determine when to
+  resume the test, or
+- returning particular responses to incoming requests rather than redirecting
+  the user the UI.
+Like `resume_test_route`, `suite_endpoint`
+takes a method (such as `:get` or `:post`), and a path for the final url
+fragment in the route. All of the other configuration, however, is handled by an
+`Inferno::DSL::SuiteEndpoint` class.
+
+A `SuiteEndpoint` is based on a [Hanami
+endpoint](https://github.com/hanami/controller/tree/v2.0.0), so much of the
+functionality is the same. In a `SuiteEndpoint`, `request` and `response` return
+Hanami request/response objects. There are several methods that should be
+overridden in a `SuiteEndpoint`:
+- `test_run_identifier` - This method needs to return the identifier value
+  specified by `wait` in the waiting test based on information in the incoming
+  request
+- `make_response` - This method constructs the response.
+- `tags` - This method defines which tags should be apllied to the request.
+- `name` - This method defines a name for the request.
+- `update_result` - This method updates the test result. The tests will resume
+  once the result has been updated to have a result other than `waiting`.
+- `persist_result?` - When `true` (which is the default) the incoming request
+  will be persisted and included in the list of requests for the test in the UI.
+
+[`suite_endpoint` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_method)
+
+[`Inferno::DSL::SuiteEndpoint` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
+
+### Example
+In the example below, an endpoint is defined which waits for an incoming
+request with a particular bearer token and returns a FHIR Patient resource.
+
+```ruby
+class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
+  # Identify the incoming request based on a bearer token
+  def test_run_identifier
+    request.headers['authorization']&.delete_prefix('Bearer ')
+  end
+
+  # Return a json FHIR Patient resource
+  def make_response
+    response.status = 200
+    response.body = FHIR::Patient.new(id: request.params[:id]).to_json
+    response.format = :json
+  end
+
+  # Update the waiting test to pass when the incoming request is received.
+  # This will resume the test run.
+  def update_result
+    results_repo.update(result.id, result: 'pass')
+  end
+
+  # Apply the 'authorized' tag to the incoming request so that it may be
+  # used by later tests.
+  def tags
+    ['authorized']
+  end
+end
+
+class AuthorizedRequestSuite < Inferno::TestSuite
+  id :authorized_suite
+  suite_endpoint :get, '/Patient/:id', AuthorizedEndpoint
+
+  group do
+    title 'Authorized Request Group'
+
+    test do
+      title 'Wait for authorized request'
+
+      input :bearer_token
+
+      run do
+        wait(
+          identifier: bearer_token,
+          message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
+                    "at `#{Inferno::Application['base_url']}/custom/authorized_suite/authorized_endpoint`"
+        )
       end
     end
   end
