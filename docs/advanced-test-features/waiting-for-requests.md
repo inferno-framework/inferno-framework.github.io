@@ -167,7 +167,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_metho
 docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
 
 ### Example
-In the example below, an endpoint is defined which waits for a an incoming
+In the example below, an endpoint is defined which waits for an incoming
 request with a particular bearer token and returns a FHIR Patient resource.
 
 ```ruby
