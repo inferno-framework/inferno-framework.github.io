@@ -44,6 +44,7 @@ only the identifier is required:
 - `locked:` - (**default: false**) whether the user can alter the input's value.
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
+- `hidden:` - (**default: false**) hide the input from the UI. Must be used with either `optional: true` or `locked: true`.
 
 Here is a simple example:
 ```ruby
@@ -51,7 +52,7 @@ test do
   input :url,
         title: 'FHIR Server Url',
         description: 'The base url for the FHIR server'
-        
+
   run do
     # The input's identifier is :url, so its value is available via `url`
     assert url.start_with?('https'), 'The server must support https'
@@ -64,7 +65,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#input-instance_method)
 ### Defining Multiple Inputs
 {:toc-skip}
 
-It is possible to define multiple inputs in a single `input` call, though this 
+It is possible to define multiple inputs in a single `input` call, though this
 prevents the use of the additional properties listed above. This can be useful when a test
 uses inputs that have been defined in a parent or sibling.
 
@@ -167,6 +168,19 @@ input :locked_checkbox_example,
       }
 ```
 
+### Hidden Inputs
+{:toc-skip}
+
+The `hidden:` property (default: `false`) can be used to hide an input from the UI.
+Hidden inputs must be either optional or locked. If neither is true, an error will be raised.
+
+```ruby
+input :hidden_value,
+      title: 'Hidden Input',
+      hidden: true,
+      optional: true
+```
+
 ### Ordering Inputs
 {:toc-skip}
 
@@ -175,11 +189,11 @@ unintuitive order. They can be reordered using `input_order`.
 ```ruby
 group do
   input_order :input_2, :input_1
-  
+
   test do
     input :input_1
   end
-  
+
   test do
     input :input_2
   end
@@ -218,7 +232,7 @@ assign a value to an output. Multiple outputs can be defined and assigned at onc
 test do
   output :value1
   output :value2, :value3
-  
+
   run do
     output value1: 'ABC'
     output value2: 'DEF',
@@ -248,7 +262,7 @@ string.
 ```ruby
 test do
   output :complex_object_json
-  
+
   run do
     ...
     output complex_object_json: hash_or_array_or_fhir_resource.to_json
@@ -257,7 +271,7 @@ end
 
 test do
   input :complex_object_json
-  
+
   run do
     assert_valid_json(complex_object_json) # For safety
 
@@ -279,3 +293,14 @@ Since inputs and outputs form a single key-value
 store, a value will be overwritten if multiple tests write to the same output.
 However, each test result stores the input and output values that were present for
 that particular test.
+
+## Merging Behavior (Advanced)
+
+When inputs are defined at multiple levels (e.g., group and test), Inferno merges them. The following rules apply:
+
+- `locked`, `hidden`, and `type` are **not inherited** when merging input definitions between parent and child.
+- Other attributes such as `title`, `description`, `default`, and `optional` **are inherited**.
+
+This allows different test scopes to override specific input behaviors without affecting others.
+
+Additionally, when inputs are merged with external configuration, `type` and `options` are also excluded from automatic merging.
