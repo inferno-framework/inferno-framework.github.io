@@ -142,13 +142,19 @@ You can use the `inferno suite` command to interact with test suites more granul
 
 - **`input_template SUITE_ID`**
 
-  Generates a YAML template for creating an input preset.
+  Generates a JSON template for creating an input preset for a Test Suite.
 
   **Options**:
-  - `-f`, `--filename <filename>`: Write the template to a specific file.
+  - `-f`, `--filename <filename>`: Write the preset template to a specific file.
 
   ```sh
-  bundle exec inferno suite input_template us_core_v311 -f template.yml
+  bundle exec inferno suite input_template us_core_v311 -f template.json
+  ```
+
+  The file may also include embedded Ruby (`.json.erb`) for dynamic content.
+
+  ```sh
+  bundle exec inferno suite input_template us_core_v311 -f template.json.erb
   ```
 
 - **`lock_short_ids SUITE_ID`**
@@ -175,7 +181,7 @@ Options:
 - `-o`, `--output`: Output result as an OperationOutcome to the specified file (e.g., `outcome.json`).
 - `-c`, `--config`: Use a custom YAML config file to evaluate the data.
 
-### Examples
+**Examples:**
 
 Load the US Core IG and evaluate the data in the provided example folder. If there are examples in the IG already, they will be ignored.
 
