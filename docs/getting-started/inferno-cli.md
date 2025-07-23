@@ -167,6 +167,8 @@ You can use the `inferno suite` command to interact with test suites more granul
 
   This is especially useful for certification test kits, like [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit), where maintaining stable short IDs is important for usability and traceability.
 
+  The short ID map is written to: `./lib/<test_kit_name>/<suite_name>_short_id_map.yml`
+
    **Example usage (from the ONC Certification (g)(10) Standardized API Test Kit):**
 
   ```sh
