@@ -303,4 +303,4 @@ When inputs are defined at multiple levels (e.g., group and test), Inferno merge
 
 This allows different test scopes to override specific input behaviors without affecting others.
 
-Additionally, when inputs are merged with external configuration (e.g., presets), `type` and `options` are also excluded from automatic merging.
+Additionally, when inputs are merged with external configuration, `type` and `options` are also excluded from automatic merging.
