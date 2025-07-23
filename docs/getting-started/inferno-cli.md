@@ -161,9 +161,19 @@ You can use the `inferno suite` command to interact with test suites more granul
 
   Loads the given suite and writes its current short_id map to its corresponding YAML file.
 
+  Short IDs are numeric identifiers displayed in the left side of the Inferno UI, before short title. By default, Inferno auto-generates these based on test order.
+
+  Locking short IDs ensures that test short IDs remain consistent, even when tests are added, removed, or reordered.
+
+  This is especially useful for certification test kits, like [ONC Certification (g)(10) Standardized API Test Kit](https://github.com/onc-healthit/onc-certification-g10-test-kit), where maintaining stable short IDs is important for usability and traceability.
+
+   **Example usage (from the ONC Certification (g)(10) Standardized API Test Kit):**
+
   ```sh
-  bundle exec inferno suite lock_short_ids us_core_v311
+  bundle exec inferno suite lock_short_ids 'g10_certification'
   ```
+
+  This will persist the current short ID mapping to: `./lib/onc_certification_g10_test_kit/short_id_map.yml`.
 
 ## Run the FHIR Evaluator
 
