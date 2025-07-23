@@ -173,7 +173,9 @@ You can use the `inferno suite` command to interact with test suites more granul
   bundle exec inferno suite lock_short_ids 'g10_certification'
   ```
 
-  This will persist the current short ID mapping to: `./lib/onc_certification_g10_test_kit/short_id_map.yml`.
+  This will persist the current short ID mapping to: `./lib/onc_certification_g10_test_kit/g10_certification_suite_short_id_map.yml`.
+
+  > **Note**: If a test kit uses locked short IDs, the developer must execute this command whenever tests are added or removed to keep the short ID map up to date.
 
 ## Run the FHIR Evaluator
 
