@@ -32,6 +32,8 @@ like this:
 │   │   ├── metadata.rb
 │   │   └── igs
 │   │       └── ...
+│   ├── requirements
+│   |   └── Inferno Requirements Template.xlsx
 │   └── inferno_template.rb
 ├── spec
 │   ├── ...
@@ -61,6 +63,11 @@ like this:
   available on the FHIR packages server. IG files do not need to be included to
   validate resources against published IGs. See `/lib/inferno_template/igs` for
   reference.
+- `lib/{YOUR_TEST_KIT_NAME}/requirements` - This folder contains a [template
+  spreadsheet](https://github.com/inferno-framework/inferno-core/blob/main/lib/inferno/apps/cli/templates/lib/%25library_name%25/requirements/Inferno%20Requirements%20Template.xlsx)
+  for collecting discrete requirements to use with Inferno's optional requirement
+  management infrastructure. See [Requirements](/docs/advanced-test-features/requirements.html)
+  for more information on how to use the requirements tools.
 - `spec` - This folder is for unit tests.
 - `worker.rb` - This is the main file for Inferno's test runner process.
 

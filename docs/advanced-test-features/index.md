@@ -46,3 +46,9 @@ their environment is correctly configured.
 
 ## [Customized Banner](/docs/advanced-test-features/custom-banner.html)
 Inferno Core supports displaying a custom banner for your Test Kit. This banner will be shown at the top of the Inferno Core web application user interface when your test kit is run.
+
+## [Tools for Tracking Verified Requirements](/docs/advanced-test-features/requirements.html)
+The Inferno DSL supports associating discrete requirements with suites, test
+groups, and tests. Test developers can track which requirements Inferno is and is not
+verifying and Inferno displays these associations to users within the
+[user interface](/docs/user-interface.html#viewing-verified-requirements).
