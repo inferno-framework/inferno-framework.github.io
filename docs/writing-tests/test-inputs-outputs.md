@@ -281,6 +281,83 @@ test do
 end
 ```
 
+## AuthInfo
+[`AuthInfo`](/inferno-core/docs/Inferno/DSL/AuthInfo.html) is a complex input
+type used to store the information needed to perform a [SMART App Launch
+authorization workflow](https://hl7.org/fhir/smart-app-launch/), make authorized
+FHIR requests, and automatically refresh the authorization when needed. It
+supports public, confidential symmetric, confidential asymmetric, and backend
+services launches.
+
+### Configuring AuthInfo
+{:toc-skip}
+A single `AuthInfo` input contains many input fields. These fields are listed in
+the [`AuthInfo`
+attributes](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/AuthInfo.html#ATTRIBUTES-constant).
+Each of these fields can be configured like a regular input using the
+`components` option.
+
+```ruby
+# An auth info that only allows backend services auth
+input :backend_services_auth_info,
+      options: {
+        components: [
+          {
+            name: :auth_type,
+            default: 'backend_services',
+            locked: 'true'
+          }
+        ]
+      }
+      
+input :smart_auth_info,
+      options: {
+        components: [
+          # This method configures the auth_type component to allow the user to
+          # select any auth type except backend services
+          Inferno::DSL::AuthInfo.default_auth_type_component_without_backend_services,
+          {
+            name: :requested_scopes,
+            default: 'launch/patient openid fhirUser offline_access patient/*.rs'
+          },
+          {
+            name: :pkce_support,
+            default: 'enabled',
+            locked: true
+          },
+          {
+            name: :pkce_code_challenge_method,
+            default: 'S256',
+            locked: true
+          },
+          {
+            name: :use_discovery,
+            locked: true
+          }
+        ]
+      }
+```
+
+`AuthInfo` also has a `mode` property which affects how the input is displayed
+in the UI. In `'auth'` mode, the input will display all of the fields which are
+needed to perform an initial authorization workflow. In `'access'` mode, the
+input will only display the fields needed to make authorized requests and
+perform a token refresh.
+
+```ruby
+# Use this to perform an initial authorization workflow
+input :auth_info1,
+      options: {
+        mode: 'auth'
+      }
+      
+# Use this to make authorized requests
+input :auth_info2,
+      options: {
+        mode: 'access'
+      }
+```
+
 ## Behind the Scenes
 Inputs and outputs work as a single key-value store scoped to a test session.
 The main differences between them are:
