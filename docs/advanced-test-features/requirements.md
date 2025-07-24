@@ -120,9 +120,9 @@ for the us-core test kit).
 
 Each suite can declare the requirements that the systems it tests are
 responsible for meeting. The `requirement_sets` property takes a list of
-hashes representing `RequirementSet` each identifying a list of requirements
-from a single requirement set. Taken together, these lists constitute the
-suite's requirements. 
+hashes each representing a `RequirementSet` object. Each `RequirementSet`
+identifies a list of requirements from a single requirement set. Taken
+together, these lists constitute the suite's requirements. 
 
 Each `requirement_sets` entry must include:
 - `identifier`: the requirement set identifier as a string.
