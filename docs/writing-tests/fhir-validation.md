@@ -7,7 +7,7 @@ section: docs
 ---
 # FHIR Resource Validation
 [FHIR Resource validation](https://www.hl7.org/fhir/validation.html) is
-performed by the [HL7® FHIR Java Validator](https://github.com/hapifhir/org.hl7.fhir.core). 
+performed by the [HL7® FHIR Java Validator](https://github.com/hapifhir/org.hl7.fhir.core).
 Two validator "wrapper" services are currently included in the Inferno framework:
  - [HL7 Validator Wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper)
    - Used to validate resources as part of the test suite
@@ -26,8 +26,8 @@ the contents are automatically deleted prior to loading.
 
 ### Defining Validators
 The Inferno Template defines one basic validator in the suite. The validator must be configured to
-reference the IG being tested against. IGs may be referenced by package identifier 
-(for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename. 
+reference the IG being tested against. IGs may be referenced by package identifier
+(for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename.
 It is not necessary to alter the template suite further unless you need multiple validators or want to add
 [extra validator behaviors](/docs/writing-tests/fhir-validation.html#performing-additional-validation). Validators are defined with `fhir_resource_validator`:
 
@@ -56,22 +56,28 @@ docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fh
 The `resource_is_valid?` method will validate a FHIR resource and add any
 validation messages to the runnable.
 
+You can optionally skip adding validation messages by setting `add_messages_to_runnable: false`.
+
 ```ruby
 test do
   fhir_read(:patient, '123')
-  
+
   # Validate the resource from the last request
   if resource_is_valid?
   end
-  
+
+  # Validate the resource from last request without adding messages to the runnable
+  if resource_is_valid?(add_messages_to_runnable: false)
+  end
+
   # Validate some other resource
   if resource_is_valid?(resource: some_other_resource)
   end
-  
+
   # Validate against a particular profile
   if resource_is_valid?(profile_url: 'http://example.com/fhir_profile_url')
   end
-  
+
   # Validate using a particular named validator
   if resource_is_valid?(validator: :my_customized_validator)
   end
@@ -87,16 +93,16 @@ to the runnable, and fail the test if the resource is invalid.
 ```ruby
 test do
   fhir_read(:patient, '123')
-  
+
   # Use the resource from the last request
   assert_valid_resource
-  
+
   # Validate some other resource
   assert_valid_resource(resource: some_other_resource)
-  
+
   # Validate against a particular profile
   assert_valid_resource(profile_url: 'http://example.com/fhir_profile_url')
-  
+
   # Validate using a particular named validator
   assert_valid_resource(validator: :my_customized_validator)
 end
@@ -143,9 +149,9 @@ end
 # MustSupport Test using the Evaluator
 
 Checking the presence of Must Support elements is a common feature across test kits and
-its implementation has been copy-and-pasted between them. 
-To improve the productivity of developing test kits, the Evaluator CLI is built into 
-inferno core, and the MustSupport checks can also be invoked in the context of a test kit 
+its implementation has been copy-and-pasted between them.
+To improve the productivity of developing test kits, the Evaluator CLI is built into
+inferno core, and the MustSupport checks can also be invoked in the context of a test kit
 by a single method.
 
 To invoke the MustSupport checks, add the following code into test:
