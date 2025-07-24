@@ -10,8 +10,8 @@ section: docs
 # Tools for Tracking Verified Requirements
 
 Inferno was designed to support conformance testing for FHIR systems against
-standards and regulations. Inferno provides tools for associating specification
-requirements with suites and tests within them. This allows
+standards and regulations. The Inferno DSL supports associating discrete
+requirements with suites, test groups, and tests. This allows
 - Developers to track how well test suites cover a specification's
   requirements.
 - Testers to see the requirements that drove the test design within the
@@ -19,43 +19,44 @@ requirements with suites and tests within them. This allows
 
 ## Process Overview
 
-To use Inferno's requirements tooling, test developers will need to
+To use Inferno's requirements tooling, test kit developers will need to
 
 1. [Extract discrete specification requirements](#extract-discrete-requirements)
-2. [Make requirements available to an Inferno test kit](#make-requirements-available-to-a-test-kit)
+2. [Load requirements](#load-requirements)
 3. [Declare suite requirements](#declare-suite-requirements)
 4. [Mark requirements as verified by a test, group, or suite](#mark-requirements-as-verified)
 
 Once these steps are done, then
 
-- Requirement details will be [displayed in the user interface](/docs/user-interface.html#viewing-verified-requirements),
+- Testers can see [requirements in the user interface](/docs/user-interface.html#viewing-verified-requirements),
   and
-- A [requirement coverage report can be generated](#generate-a-suite-coverage-report) for each suite.
+- Developers can generate a [requirements coverage report](#generate-a-suite-requirements-coverage-report) for each suite.
 
 ## Extract Discrete Requirements
 
-Inferno's requirements tooling links discrete, atomic requirements to suites
-and the tests that verify them. However, FHIR IGs and related regulations
-define most of their requirements in narrative form, without a clear way to
-reference the individual, atomic requirements that they place on conformant
-systems. To use the Inferno requirements tooling, test developers must first
-extract atomic requirements from the target IG's narrative sections and give
-them identifiers so that they can be easily referenced.
+Inferno's requirements tooling allows test kit developers to link discrete,
+atomic requirements to suites and the tests that verify them. However, FHIR
+IGs and related regulations define most of their requirements in narrative
+form without a clear way to reference the individual, atomic requirements that
+they place on conformant systems. To use the Inferno requirements tooling, test
+developers must first extract atomic requirements from the target IG's
+narrative sections and give each requirement an identifier so that they can be
+directly referenced.
 
-Inferno defines a [template spreadsheet](https://github.com/inferno-framework/inferno-template/tree/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx)
+Inferno defines a [template spreadsheet](https://github.com/inferno-framework/inferno-template/blob/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx)
 into which requirements can be extracted for use within Inferno. The "Info"
-sheet of that spreadsheet includes details on what each column on the
-"Requirements" sheet means and includes some best practices for filling
-it out with discrete requirements from a FHIR IG.
+sheet of the template includes details on what each column on the
+"Requirements" sheet means and includes some best practices for filling it out
+with discrete requirements from a FHIR IG.
 
-## Make Requirements Available to a Test Kit
+## Load Requirements
 
-For requirements to be available for linking to test suites, they must be
-loaded as a part of the Inferno test kit. When Inferno loads a test kit, it
-will load requirements from two locaations:
-- csv files found the `/lib/[test kit source]/requirements` folder of the test
-  kit, and
-- csv files contained in any Inferno Test Kit gems referenced by the test kit's
+For requirements to be available to test suites, they must be loaded by the
+test kit. When a test kit starts, it will load requirements from two
+locaations:
+- csv files found in the `/lib/[test kit source]/requirements` folder of the
+  test kit, and
+- csv files contained in any Inferno test kit gems referenced by the test kit's
   gemspec.
 
 Loaded requirements must be unique so each requirement can only be defined
@@ -68,7 +69,7 @@ Inferno includes a CLI command that generates the requirements csv file for a te
 kit by combining requirement lists from spreadsheets found in the
 `/lib/[test kit source]/requirements` folder. It requires that each
 spreadsheet's filename ends with `.xlsx` and that each is built off the
-[Inferno Requirements Template](https://github.com/inferno-framework/inferno-template/tree/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx)
+[Inferno Requirements Template](https://github.com/inferno-framework/inferno-template/blob/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx)
 with requirements on the `Requirements` sheet and the requirement set id
 present in the `Id` field of the `Metadata` sheet. To generate the file
 from the test kit root directory, run `bundle exec inferno requirements
@@ -81,7 +82,7 @@ Inferno's `requirements export_csv` CLI command generates a csv file called
 `[test kit name]_requirements.csv` in the `requirements` directory. The file
 will contain a row for each requirement found in spreadsheets within the
 `requirements` directory, each with the following columns, which are a subset
-of those found in the [Inferno Requirements Template](https://github.com/inferno-framework/inferno-template/tree/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx):
+of those found in the [Inferno Requirements Template](https://github.com/inferno-framework/inferno-template/blob/main/lib/inferno_template/requirements/Inferno%20Requirements%20Template.xlsx):
 - `Req Set`: the requirement set id.
 - `ID`: the requirement id within the set.
 - `URL`: a link to the requirement source.
@@ -111,20 +112,21 @@ of those found in the [Inferno Requirements Template](https://github.com/inferno
 ### Keeping the requirements csv file in sync
 {:toc-skip}
 
-To help keep the csv file in sync with the spreadsheet, test kit repositories
-can use the `bundle exec inferno requirements check` command in the CI/CD
-pipeline to check that the files are in sync ([github example](https://github.com/inferno-framework/us-core-test-kit/blob/main/.github/workflows/ruby.yml#L64)
+To help keep the requirements csv file in sync with the spreadsheet, test kit
+repositories can use the `bundle exec inferno requirements check` command in
+their CI/CD pipeline to check that the files remain in sync each time the
+repository is updated ([github example](https://github.com/inferno-framework/us-core-test-kit/blob/main/.github/workflows/ruby.yml#L64)
 for the us-core test kit).
 
 ## Declare Suite Requirements
 
-Each suite can declare the requirements that the systems it tests are
-responsible for meeting. The `requirement_sets` property takes a list of
-hashes each representing a `RequirementSet` object. Each `RequirementSet`
-identifies a list of requirements from a single requirement set. Taken
-together, these lists constitute the suite's requirements. 
+Suites can declare the requirements that the systems it tests are responsible
+for meeting. The `requirement_sets` property takes a list of hashes each
+representing a `RequirementSet` object. Each `RequirementSet` identifies a list
+of requirements from a single requirement set. Taken together, these lists
+constitute the suite's requirements. 
 
-Each `requirement_sets` entry must include:
+Each `requirement_sets` hash entry must include:
 - `identifier`: the requirement set identifier as a string.
 - `title`: a human-readable title for this requirement set, used for display
   only.
@@ -156,12 +158,12 @@ when specific suite options are selected. Developers can indicate this using:
 ### Requirement sets example
 {:toc-skip}
 
-For example, the following suite definition uses these various options to
-include the following in the suite's requirements:
-- All requirements from `example-regulation`,
-- "Provider" actor requirements `2`, and `4-5` from `example-ig_v1`, and
+For example, the following suite definition uses the options described above to
+include the following requirements in the suite's declared requirements list:
+- All requirements from the `example-regulation` set,
+- "Provider" actor requirements `2`, and `4-5` from the `example-ig_v1` set, and
 - When the `2.0.0` option is selected for the `ig_version` suite option,
-  all "Provider" actor requirements from `example-ig_v2`.
+  all "Provider" actor requirements from the `example-ig_v2` set.
 
 ```ruby
 class SuiteWithLinkedRequirements < Inferno::Test
@@ -218,14 +220,14 @@ end
 [`verifies_requirements` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#verifies_requirements-instance_method)
 
-## Generate a Suite Coverage Report
+## Generate a Suite Requirements Coverage Report
 
 The Inferno CLI includes a command `requirements coverage` that can be
 used to create a requirements coverage report for each suite. To determine
 which requirements are verified for a suite, the command walks the suite's
 test tree and uses the `verifies_requirements` property at each position to
-determine which requirements it tests. If Inferno identifies any requirements
-that are verified, but that are not declared as part of the suite's
+determine which requirements are verified. If Inferno identifies any
+requirements that are verified but that are not declared as part of the suite's
 requirements using the `requirement_sets` property, the command will succeed
 but will display a warning.
 
@@ -236,19 +238,20 @@ The `requirements coverage` CLI command generates a csv file for each suite,
 named `[suite id]_requirements_coverage.csv` in the `requirements/generated`
 directory. The coverage report includes a row for each of the suite's
 requirments. It includes all columns from the requirements csv generated
-by the `requirements export_csv` CLI command (see the [Make Requirements
-Available to a Test Kit](#make-requirements-available-to-a-test-kit) section
-for details) except for the `Sub-requirement(s)` column. In addition, it contains
-two additional columns indicating the short (number-based) and full ids for the
-tests and groups that verify the requirement in that row.
+by the `requirements export_csv` CLI command (see the [Requirements csv file
+details](#requirements-csv-file-details) section for details) except for the
+`Sub-requirement(s)` column. In addition, it contains two additional columns
+indicating the short (number-based) and full ids for the tests and groups that
+verify the requirement in that row.
 
 ### Keeping the coverage report csv files in sync
 {:toc-skip}
 
-To help keep the generated csv report files in sync with the requirements and
-the tests, test kit repositories can use the `bundle exec inferno requirements check_coverage`
-command in the CI/CD pipeline to check that the files are in sync
-([github example](https://github.com/inferno-framework/us-core-test-kit/blob/main/.github/workflows/ruby.yml#L64)
+To help keep the generated csv report files in sync with the requirements csv
+and the `verifies_requirements` annotations in the suite, test kit repositories
+can use the `bundle exec inferno requirements check_coverage`
+command in their CI/CD pipeline to check that the files remain in sync each
+time the repository is updated ([github example](https://github.com/inferno-framework/us-core-test-kit/blob/main/.github/workflows/ruby.yml#L64)
 for the us-core test kit). Note that warnings generated by this command do not
 cause the`requirements check_coverage` CLI command to return an error code.
 
@@ -260,15 +263,15 @@ The Inferno requirements tools are stable and usable as is, but the Inferno
 team has found the following aspects to be difficult to use in their current
 form:
 - **Conditionality**: While the Inferno requirements format includes space for
-  capturing conditionality, in pratice it is difficult to collect and define.
+  capturing conditionality, in practice it is difficult to collect and define.
   The tooling does not currently use this information in any way, so it is
   safe to omit this detail.
 - **Sub-requirements**: FHIR IGs often contain references to other IGs or parts
-  of them. Turning these references, into formal requirements lists requires
+  of them. Turning these references into formal requirements lists requires
   careful interpretation. For example, when another IG's CapabilityStatement is
   referenced, that could be interpreted to either include just the structured API
-  requirements defined in the CapabilityStatement itself, or include other
-  related requirements from the IG's narrative sections.
+  requirements defined in the CapabilityStatement itself, or to also include
+  other related requirements from the IG's narrative sections.
 - **Decisions not to test a requirement**: Currently, requirements can be marked
   as not tested at a global level, e.g., because they are malformed in some way.
   However, they cannot be marked as explicitly out of scope for a specific test
