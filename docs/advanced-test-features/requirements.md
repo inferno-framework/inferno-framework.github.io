@@ -30,7 +30,20 @@ Once these steps are done, then
 
 - Testers can see [requirements in the user interface](/docs/user-interface.html#viewing-verified-requirements),
   and
-- Developers can generate a [requirements coverage report](#generate-a-suite-requirements-coverage-report) for each suite.
+- Developers can generate a [requirements coverage report for each suite](#generate-suite-requirements-coverage-reports).
+
+## Requirements CLI Command Summary
+
+The following commands are avilable in the [Inferno CLI](/docs/getting-started/inferno-cli.html)
+for use in managing requirements assets:
+
+| Command      | Description |
+|--------------|-------------|
+| `inferno requirements export_csv` | Converts [extracted requirements](#extract-discrete-requirements) into an [Inferno requirements csv file](#requirements-csv-file-details). See the [Generating the requirements csv file](#generating-the-requirements-csv-file) section for details. |
+| `inferno requirements check` | Checks that the current [Inferno requirements csv file](#requirements-csv-file-details) matches the output of the `inferno requirements export_csv` command. |
+| `inferno requirements coverage` | Generates a [requirements coverage report](#report-format) for each suite in the test kit. See the [Generate Suite Requirements Coverage Reports](#generate-suite-requirements-coverage-reports) section for details. |
+| `inferno requirements check_coverage` | Checks that the current [requirements coverage reports](#report-format) match those created by the `inferno requirements coverage` command. |
+{: .grid.command-table}
 
 ## Extract Discrete Requirements
 
@@ -220,7 +233,7 @@ end
 [`verifies_requirements` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#verifies_requirements-instance_method)
 
-## Generate a Suite Requirements Coverage Report
+## Generate Suite Requirements Coverage Reports
 
 The Inferno CLI includes a command `requirements coverage` that can be
 used to create a requirements coverage report for each suite. To determine
