@@ -24,7 +24,7 @@ methods:
 test do
   run do
     fhir_read(:patient, '123')
-    
+
     request  # A `Request` object containing the request and response
     response # A `Hash` containing the response information
     resource # A FHIR model built from the response body
@@ -42,14 +42,14 @@ unless you want to make assertions against a different response/resource.
 test do
   run do
     fhir_read(:patient, '123')
-    
+
     # Using the values from the fhir_read request automatically
     assert_response_status(200)
     assert_resource_type(:patient)
     assert_valid_resource
-    
+
     ...
-    
+
     # Specifying the request & resource explicitly
     assert_response_status(200, request: some_other_request)
     assert_resource_type(:patient, resource: some_other_resource)
@@ -74,17 +74,17 @@ group do
   test do
     # Declare that this test makes a particular request
     makes_request :patient_read
-    
+
     run do
       fhir_read(:patient, '123', name: :patient_read) # include the name
     end
   end
-  
+
   test do
     # Declare that this test uses the named request ":patient_read". The test runner
     # will automatically load this request and make it available within the test.
     uses_request :patient_read
-    
+
     run do
       # These will all be populated with the request from the first test
       request
@@ -150,7 +150,7 @@ group do
     bearer_token 'abc'               # optional
     headers 'X-Custom-Header' => 'def' # optional
   end
-  
+
   test do
     run do
       # FHIR requests will automatically use the client declared above
@@ -165,7 +165,7 @@ symbol can be used to read these values from an input.
 ```ruby
 group do
   input :server_url, :access_token
-  
+
   fhir_client do
     url :server_url
     bearer_token :access_token
@@ -201,6 +201,7 @@ The following methods are currently available for making FHIR requests:
 - `fhir_transaction`
 - `fhir_update`
 - `fhir_vread`
+- `fetch_all_bundled_resources`
 
 For more details on these methods, see the [FHIR Client API
 documentation](/inferno-core/docs/Inferno/DSL/FHIRClient.html). If you need to
@@ -214,14 +215,14 @@ test do
   # Create a resource on a server
   new_patient = FHIR::Patient.new(name: [{ given: ['Jane'], family: 'Doe'}])
   fhir_create(new_patient)
-  
+
   # Delete a resource on a server
   fhir_delete(:patient, 'resource_to_delete_id_1')
   fhir_delete('Patient', 'resource_to_delete_id_2')
-  
+
   # Fetch a server's CapabilityStatement
   fhir_get_capability_statement
-  
+
   # Perform a FHIR Operation
   parameters = FHIR::Parameters.new(
     parameter: [
@@ -236,19 +237,19 @@ test do
     ]
   )
   fhir_operation("/CodeSystem/$lookup", body: parameters)
-  
+
   # Read a FHIR resource
   fhir_read(:patient, 'resource_to_read_id')
   fhir_read('Patient', 'resource_to_read_id')
-  
+
   # Perform a FHIR search w/GET
   fhir_search(:patient, params: { family: 'Smith' })
   fhir_search('Patient', params: { family: 'Smith' })
-  
+
   # Perform a FHIR search w/POST
   fhir_search(:patient, params: { family: 'Smith' }, search_method: :post)
   fhir_search('Patient', params: { family: 'Smith' }, search_method: :post)
-  
+
   # Perform a FHIR transaction
   transaction_bundle = FHIR::Bundle.new(
     type: 'transaction',
@@ -257,6 +258,22 @@ test do
     ]
   )
   fhir_transaction(transaction_bundle)
+
+  # Fetch all resources from a paginated bundle resource from the last search request.
+  # It will add an info message to the runnable if the bundle contains a resource type other than Observation.
+  fetch_all_bundled_resources(resource_type: 'Observation')
+
+  # Fetch all resources with options
+  # - Uses a specific bundle instead of defaulting to the bundle resource from the last search request
+  # - Follows up to 10 pagination links (default is 20)
+  # - Specifies additional resource types that could be in the bundle
+  # It will add an info message to the runnable if the bundle contains a resource type other than Observation, Patient, or ServiceRequest.
+  fetch_all_bundled_resources(
+    resource_type: 'Composition',
+    bundle: some_bundle,
+    max_pages: 10,
+    additional_resource_types: ['Patient', 'ServiceRequest']
+  )
 end
 ```
 
@@ -271,15 +288,15 @@ group do
   fhir_client :client_a do
     url :url_a
   end
-  
+
   fhir_client :client_b do
     url :url_b
   end
-  
+
   test do
     run do
       fhir_read(:patient, '123', client: :client_a)
-      
+
       fhir_read(:patient, '456', client: :client_b)
     end
   end
@@ -301,18 +318,18 @@ FHIR request.
 ```ruby
 group do
   input :credentials, type: :oauth_credentials
-  
+
   fhir_client do
     url 'https://example.com/fhir'
     oauth_credentials :credentials
   end
-  
+
   test do
     run do
       sleep 3600
-      
+
       # The access token will automatically refresh if it has expired
-      fhir_read(:patient, '123') 
+      fhir_read(:patient, '123')
     end
   end
 end
@@ -338,7 +355,7 @@ group do
     bearer_token 'abc'
     headers 'X-Custom-Header' => 'def'
   end
-  
+
   test do
     run do
       get '/path'  # Makes a request to `https://example.com/path`
