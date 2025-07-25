@@ -54,7 +54,7 @@ different input.
 class MyTestGroup < Inferno::TestGroup
   input :source_server_url
   input :destination_server_url
-  
+
   # Inline config
   test from: :tls_version_test,
        id: :source_server_tls_test,
@@ -63,7 +63,7 @@ class MyTestGroup < Inferno::TestGroup
            url: { name: :source_server_url }
          }
        }
-       
+
   # Config within test block
   test from: :tls_version_test do
     id :destination_server_tls_test
@@ -162,7 +162,7 @@ Custom configuration options allow information to be loaded at boot time and
 made available to tests. For example, a test could have optional functionality
 which is enabled by setting a specific configuration option value.
 
-[This test](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb), 
+[This test](https://github.com/inferno-framework/tls-test-kit/blob/main/lib/tls_test_kit/tls_version_test.rb),
 which checks the TLS versions a server supports,
 allows test authors to set minimum and maximum allowed TLS versions. This
 gives the test flexibility to be used in a variety of different testing
@@ -240,13 +240,13 @@ selected when starting their session.
 class MyTestSuite < Inferno::TestSuite
   # suite_option :smart_app_launch_version,
   # ...
-  
+
   # Suite option requirements can be defined inline
   group from: :smart_app_launch_v1,
         required_suite_options: {
           smart_app_launch_version: 'smart_app_launch_1'
         }
-        
+
   # Suite option requirements can also be defined within a test/group definition
   group from: :smart_app_launch_v2 do
     required_suite_options smart_app_launch_version: 'smart_app_launch_2'
@@ -268,6 +268,71 @@ class MyTest < Inferno::Test
     elsif suite_options[:smart_app_launch_version] == 'smart_app_launch_2'
       # Perform SMART App Launch v2 behavior
     end
+  end
+end
+```
+
+## Manipulating Runnable Children
+
+Inferno supports advanced test suite customization by allowing test kit developers to dynamically modify the children of a runnable (group or suite). This includes reordering, replacing, and removing groups or tests.
+
+These methods are useful when test behavior must adapt to specific testing requirements or configuration contexts.
+They allow fine-grained control over test execution and layout while preserving modular and reusable test definitions.
+
+### Reordering Children
+{:toc-skip}
+
+Move a test or group to a new position within its parent group or suite:
+
+```ruby
+class MyTestSuite < Inferno::TestSuite
+  # ...
+
+  # Move the `standalone_token_tls` test to the first position within the `smart_standalone_launch` group
+  group from: :smart_standalone_launch do
+    reorder :standalone_token_tls, 0
+  end
+end
+```
+
+### Replacing Children
+{:toc-skip}
+
+Replace an existing child test or group with another:
+
+```ruby
+require_relative 'smart_custom_tls_test'
+
+class MyTestSuite < Inferno::TestSuite
+  # --
+
+  # Replace the `standalone_token_tls` test with a custom test
+  group from: :smart_standalone_launch do
+    replace :standalone_token_tls, :smart_custom_tls
+  end
+
+  # Replace the `standalone_token_tls` test with a custom test and passing block for additional configuration
+  group from: :smart_standalone_launch_stu2 do
+    replace :standalone_token_tls, :custom_tls_test do
+      id :customized_tls_check
+      config(inputs: { url: { name: :smart_custom_url } })
+    end
+  end
+end
+```
+
+### Removing Children
+{:toc-skip}
+
+Remove a test or group entirely by ID:
+
+```ruby
+class MyTestSuite < Inferno::TestSuite
+  # ...
+
+  # Remove the `standalone_token_tls` test from the group
+  group from: :smart_standalone_launch do
+    remove :standalone_token_tls
   end
 end
 ```
