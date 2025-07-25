@@ -310,6 +310,20 @@ input :backend_services_auth_info,
         ]
       }
       
+# Limit the auth types to those in SMART App Launch v1
+input :smart_v1_auth_info,
+      options: {
+        components: [
+          {
+            name: :auth_type,
+            list_options: [
+              { label: 'Public', value: 'public' },
+              { label: 'Confidential Symmetric', value: 'symmetric' }
+            ]
+          }
+        ]
+      }
+      
 input :smart_auth_info,
       options: {
         components: [
