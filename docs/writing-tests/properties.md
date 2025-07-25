@@ -5,6 +5,8 @@ parent: Writing Tests
 layout: docs
 section: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Test, Group & Suite Properties
 
 ## Title
@@ -311,14 +313,13 @@ end
 **Reference**: [`links` in the API
 docs](/inferno-core/docs/Inferno/DSL/Links.html#links-instance_method)
 
-----
-## add_link / source_code_url / ig_url / download_url / report_issue_url
+### Convenience Link Helpers
+{:toc-skip}
 
-**Description**: Convenience methods to add links to the suite footer.
-
-**Can Be Used In**: `Suite`
+**Description**: Shortcut methods for adding links to the suite footer without needing to define a full hash manually.
 
 **Example**:
+
 ```ruby
 class MyTestSuite < Inferno::TestSuite
   source_code_url 'https://github.com/example/source'
@@ -328,8 +329,8 @@ class MyTestSuite < Inferno::TestSuite
   add_link 'custom', 'Custom Link', 'https://example.com'
 end
 ```
-**Reference**: [`Links DSL` in the API
-docs](/inferno-core/docs/Inferno/DSL/Links.html)
+
+**Reference**: [`Links DSL` in the API docs](/inferno-core/docs/Inferno/DSL/Links.html)
 
 ----
 ## Suite Summary
@@ -361,34 +362,4 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_met
 
 **Reference**: [`config` in the API
 docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
-
-----
-## Reorder
-**Description**: Move a child test or group to a new position. For more information, see
-[Reordering Children](/docs/advanced-test-features/test-configuration#reordering-children).
-
-**Can Be Used In**: `Suite`, `Group`
-
-**Reference**: [`reorder` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#reorder-instance_method)
-
-----
-## Replace
-**Description**: Replace a child test or group with another. For more information, see
-[Replacing Children](/docs/advanced-test-features/test-configuration#replacing-children).
-
-**Can Be Used In**: `Suite`, `Group`
-
-**Reference**: [`replace` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#replace-instance_method)
-
-----
-## Remove
-**Description**: Remove a child test or group by ID. For more information, see
-[Removinging Children](/docs/advanced-test-features/test-configuration#removing-children).
-
-**Can Be Used In**: `Suite`, `Group`
-
-**Reference**: [`remove` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#remove-instance_method)
 
