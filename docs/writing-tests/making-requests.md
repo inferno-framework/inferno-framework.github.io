@@ -147,7 +147,6 @@ custom headers.
 group do
   fhir_client do
     url 'https://example.com/fhir'   # required
-    bearer_token 'abc'               # optional
     headers 'X-Custom-Header' => 'def' # optional
   end
   
@@ -155,20 +154,6 @@ group do
     run do
       # FHIR requests will automatically use the client declared above
     end
-  end
-end
-```
-
-It is unlikely you will want to hard code the server url or bearer token, so a Ruby
-symbol can be used to read these values from an input.
-
-```ruby
-group do
-  input :server_url, :access_token
-  
-  fhir_client do
-    url :server_url
-    bearer_token :access_token
   end
 end
 ```
@@ -286,8 +271,32 @@ group do
 end
 ```
 
+### AuthInfo for FHIR Requests
+Authorization for FHIR requests can be provided with an [`AuthInfo`
+input](/docs/writing-tests/test-inputs-outputs.html#authinfo). When using
+`AuthInfo`, the access token will automatically be refreshed when needed.
+
+```ruby
+input :url
+input :my_auth_info,
+      type: :auth_info
+
+fhir_client do
+  url :url
+  auth_info :my_auth_info
+end
+```
+
+Usually, a SMART App Launch will be performed to obtain this authorization. In
+these cases, [tests from the SMART App Launch Test Kit can be
+reused](https://github.com/inferno-framework/smart-app-launch-test-kit#importing-tests)
+to perform the authorization workflow.
+
 ### OAuth Credentials
 {:toc-skip}
+
+**NOTE:** It is recommended that [`AuthInfo`](#authinfo-for-fhir-requests) be
+used rather than OAuth Credentials.
 
 When making requests to FHIR servers using OAuth2-based authorization (such as the SMART App
 Launch workflow), OAuth credentials support an access token and,
