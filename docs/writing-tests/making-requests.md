@@ -235,6 +235,23 @@ test do
   fhir_search(:patient, params: { family: 'Smith' }, search_method: :post)
   fhir_search('Patient', params: { family: 'Smith' }, search_method: :post)
 
+  # Fetch all resources from a paginated bundle resource from the last search request.
+  # It will add an info message to the runnable if the bundle contains a resource type other than Patient.
+  fetch_all_bundled_resources(resource_type: 'Patient')
+
+  # Fetch all resources with options
+  # - Uses a specific bundle instead of defaulting to the bundle resource from the last search request
+  # - Follows up to 10 pagination links (default is 20)
+  # - Specifies additional resource types that could be in the bundle
+  # It will add an info message to the runnable if the bundle contains a resource type other than
+  # Composition, Patient, or ServiceRequest.
+  fetch_all_bundled_resources(
+    resource_type: 'Composition',
+    bundle: some_bundle,
+    max_pages: 10,
+    additional_resource_types: ['Patient', 'ServiceRequest']
+  )
+
   # Perform a FHIR transaction
   transaction_bundle = FHIR::Bundle.new(
     type: 'transaction',
@@ -243,22 +260,6 @@ test do
     ]
   )
   fhir_transaction(transaction_bundle)
-
-  # Fetch all resources from a paginated bundle resource from the last search request.
-  # It will add an info message to the runnable if the bundle contains a resource type other than Observation.
-  fetch_all_bundled_resources(resource_type: 'Observation')
-
-  # Fetch all resources with options
-  # - Uses a specific bundle instead of defaulting to the bundle resource from the last search request
-  # - Follows up to 10 pagination links (default is 20)
-  # - Specifies additional resource types that could be in the bundle
-  # It will add an info message to the runnable if the bundle contains a resource type other than Observation, Patient, or ServiceRequest.
-  fetch_all_bundled_resources(
-    resource_type: 'Composition',
-    bundle: some_bundle,
-    max_pages: 10,
-    additional_resource_types: ['Patient', 'ServiceRequest']
-  )
 end
 ```
 
