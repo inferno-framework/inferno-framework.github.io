@@ -184,3 +184,38 @@ docs](/inferno-core/docs/Inferno/Entities/Test.html#info-instance_method)
 
 [`warning` in the API
 docs](/inferno-core/docs/Inferno/Entities/Test.html#warning-instance_method)
+
+## Customizing Suite and Group results
+
+By default, a suite or group will pass when all of its required children pass
+(or omit). This behavior can be customized by defining a `run` block in the
+suite/group. Within this `run` block, `results` will return a
+[`ResultCollection`](/inferno-core/docs/Inferno/DSL/ResultCollection.html) which
+can be used to inspect child results and use them to determine what the
+suite/group result should be. `ResultCollection` includes the [Ruby `Enumerable`
+module](https://docs.ruby-lang.org/en/3.3/Enumerable.html), so the methods in
+that module may be called on the `ResultCollection`.
+
+```ruby
+group do
+  test from: :test_1
+  test from: :test_2
+  test from: :test_3
+  test from: :test_4
+
+  # define custom result logic for this group 
+  run do
+    # omit if test 1 didn't pass
+    omit_if results[0].result != 'pass'
+   
+    # skip if any tests skipped
+    skip_if results.any? { |result| result.result == 'skip' }
+
+    # fail if tests 3 & 4 didn't pass
+    assert results[:test_3].result == 'pass' && results[:test_4].result == 'pass',
+           'Tests 3 and 4 did not both pass'
+           
+    # if the run block reaches the end, the suite/group will pass
+  end
+end
+```
