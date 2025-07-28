@@ -5,12 +5,14 @@ parent: Writing Tests
 layout: docs
 section: docs
 ---
+{:toc-skip: .h4 data-toc-skip=""}
+
 # Test, Group & Suite Properties
 
 ## Title
 **Description**: The title which is displayed in the UI.
 
-**Can be Used In**: `Test`, `Group`, `Suite` 
+**Can be Used In**: `Test`, `Group`, `Suite`
 
 **Example**:
 ```ruby
@@ -25,7 +27,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#title-instance_method)
 ## Short Title
 **Description**: A short title which is displayed in the left side of the UI.
 
-**Can be Used In**: `Test`, `Group`, `Suite` 
+**Can be Used In**: `Test`, `Group`, `Suite`
 
 **Example**:
 ```ruby
@@ -93,15 +95,15 @@ define long strings in Ruby.
 ```ruby
 test do
   description 'This is a brief description'
-  
+
   description 'This is a longer description. There are several ways to split ' \
               'it up over multiple lines, and this is one of the worst ways.'
-              
+
   description <<~DESCRIPTION
     This is another long description. This is an ok way to represent a long
     string in ruby.
   DESCRIPTION
-  
+
   description %(
     This is another long description. This is a pretty good way to represent a
     long string in ruby.
@@ -126,14 +128,14 @@ group do
   test do
     optional # Makes this test optional
   end
-  
+
   test from: :some_optional_test do
     required # Make an optional test required
   end
 end
 ```
 **Reference**: [`optional` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method), 
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#optional-instance_method),
 [`required` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#required-instance_method)
 
@@ -174,7 +176,7 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#version-class_method)
 
 ----
 ## Input Instructions
-**Description**: 
+**Description**:
 Define additional instructions which will be displayed above a runnable's
 inputs. These instructions only appear when running this particular runnable.
 They will not appear if you run a parent or child of this runnable.
@@ -296,10 +298,12 @@ the UI.
 class MyTestSuite < Inferno::TestSuite
   links [
     {
+      type: 'report_issue',
       label: 'Report Issue',
       url: 'https://github.com/onc-healthit/onc-certification-g10-test-kit/issues/'
     },
     {
+      type: 'source_code',
       label: 'Open Source',
       url: 'https://github.com/onc-healthit/onc-certification-g10-test-kit/'
     }
@@ -307,7 +311,26 @@ class MyTestSuite < Inferno::TestSuite
 end
 ```
 **Reference**: [`links` in the API
-docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#links-class_method)
+docs](/inferno-core/docs/Inferno/DSL/Links.html#links-instance_method)
+
+### Convenience Link Helpers
+{:toc-skip}
+
+**Description**: Shortcut methods for adding links to the suite footer without needing to define a full hash manually.
+
+**Example**:
+
+```ruby
+class MyTestSuite < Inferno::TestSuite
+  source_code_url 'https://github.com/example/source'
+  ig_url 'https://hl7.org/fhir/us/core/'
+  download_url 'https://example.com/download'
+  report_issue_url 'https://github.com/example/issues'
+  add_link 'custom', 'Custom Link', 'https://example.com'
+end
+```
+
+**Reference**: [`Links DSL` in the API docs](/inferno-core/docs/Inferno/DSL/Links.html)
 
 ----
 ## Suite Summary
@@ -339,3 +362,4 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_met
 
 **Reference**: [`config` in the API
 docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
+

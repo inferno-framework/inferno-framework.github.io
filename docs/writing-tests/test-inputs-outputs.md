@@ -44,6 +44,7 @@ only the identifier is required:
 - `locked:` - (**default: false**) whether the user can alter the input's value.
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
+- `hidden:` - (**default: false**) hide the input from the UI. Must be used with either `optional: true` or `locked: true`.
 
 Here is a simple example:
 ```ruby
@@ -51,7 +52,7 @@ test do
   input :url,
         title: 'FHIR Server Url',
         description: 'The base url for the FHIR server'
-        
+
   run do
     # The input's identifier is :url, so its value is available via `url`
     assert url.start_with?('https'), 'The server must support https'
@@ -64,7 +65,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#input-instance_method)
 ### Defining Multiple Inputs
 {:toc-skip}
 
-It is possible to define multiple inputs in a single `input` call, though this 
+It is possible to define multiple inputs in a single `input` call, though this
 prevents the use of the additional properties listed above. This can be useful when a test
 uses inputs that have been defined in a parent or sibling.
 
@@ -167,6 +168,19 @@ input :locked_checkbox_example,
       }
 ```
 
+### Hidden Inputs
+{:toc-skip}
+
+The `hidden:` property (default: `false`) can be used to hide an input from the UI.
+Hidden inputs must be either optional or locked. If neither is true, an error will be raised.
+
+```ruby
+input :hidden_value,
+      title: 'Hidden Input',
+      hidden: true,
+      optional: true
+```
+
 ### Ordering Inputs
 {:toc-skip}
 
@@ -175,11 +189,11 @@ unintuitive order. They can be reordered using `input_order`.
 ```ruby
 group do
   input_order :input_2, :input_1
-  
+
   test do
     input :input_1
   end
-  
+
   test do
     input :input_2
   end
@@ -218,7 +232,7 @@ assign a value to an output. Multiple outputs can be defined and assigned at onc
 test do
   output :value1
   output :value2, :value3
-  
+
   run do
     output value1: 'ABC'
     output value2: 'DEF',
@@ -248,7 +262,7 @@ string.
 ```ruby
 test do
   output :complex_object_json
-  
+
   run do
     ...
     output complex_object_json: hash_or_array_or_fhir_resource.to_json
@@ -257,7 +271,7 @@ end
 
 test do
   input :complex_object_json
-  
+
   run do
     assert_valid_json(complex_object_json) # For safety
 
@@ -265,6 +279,97 @@ test do
     ...
   end
 end
+```
+
+## AuthInfo
+[`AuthInfo`](/inferno-core/docs/Inferno/DSL/AuthInfo.html) is a complex input
+type used to store the information needed to perform a [SMART App Launch
+authorization workflow](https://hl7.org/fhir/smart-app-launch/), make authorized
+FHIR requests, and automatically refresh the authorization when needed. It
+supports public, confidential symmetric, confidential asymmetric, and backend
+services launches.
+
+### Configuring AuthInfo
+{:toc-skip}
+A single `AuthInfo` input contains many input fields. These fields are listed in
+the [`AuthInfo`
+attributes](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/AuthInfo.html#ATTRIBUTES-constant).
+Each of these fields can be configured like a regular input using the
+`components` option.
+
+```ruby
+# An auth info that only allows backend services auth
+input :backend_services_auth_info,
+      options: {
+        components: [
+          {
+            name: :auth_type,
+            default: 'backend_services',
+            locked: 'true'
+          }
+        ]
+      }
+      
+# Limit the auth types to those in SMART App Launch v1
+input :smart_v1_auth_info,
+      options: {
+        components: [
+          {
+            name: :auth_type,
+            list_options: [
+              { label: 'Public', value: 'public' },
+              { label: 'Confidential Symmetric', value: 'symmetric' }
+            ]
+          }
+        ]
+      }
+      
+input :smart_auth_info,
+      options: {
+        components: [
+          # This method configures the auth_type component to allow the user to
+          # select any auth type except backend services
+          Inferno::DSL::AuthInfo.default_auth_type_component_without_backend_services,
+          {
+            name: :requested_scopes,
+            default: 'launch/patient openid fhirUser offline_access patient/*.rs'
+          },
+          {
+            name: :pkce_support,
+            default: 'enabled',
+            locked: true
+          },
+          {
+            name: :pkce_code_challenge_method,
+            default: 'S256',
+            locked: true
+          },
+          {
+            name: :use_discovery,
+            locked: true
+          }
+        ]
+      }
+```
+
+`AuthInfo` also has a `mode` property which affects how the input is displayed
+in the UI. In `'auth'` mode, the input will display all of the fields which are
+needed to perform an initial authorization workflow. In `'access'` mode, the
+input will only display the fields needed to make authorized requests and
+perform a token refresh.
+
+```ruby
+# Use this to perform an initial authorization workflow
+input :auth_info1,
+      options: {
+        mode: 'auth'
+      }
+      
+# Use this to make authorized requests
+input :auth_info2,
+      options: {
+        mode: 'access'
+      }
 ```
 
 ## Behind the Scenes
@@ -279,3 +384,14 @@ Since inputs and outputs form a single key-value
 store, a value will be overwritten if multiple tests write to the same output.
 However, each test result stores the input and output values that were present for
 that particular test.
+
+## Merging Behavior (Advanced)
+
+When inputs are defined at multiple levels (e.g., group and test), Inferno merges them. The following rules apply:
+
+- `locked`, `hidden`, and `type` are **not inherited** when merging input definitions between parent and child.
+- Other attributes such as `title`, `description`, `default`, and `optional` **are inherited**.
+
+This allows different test scopes to override specific input behaviors without affecting others.
+
+Additionally, when inputs are merged with external configuration, `type` and `options` are also excluded from automatic merging.

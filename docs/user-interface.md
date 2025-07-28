@@ -184,8 +184,8 @@ specifics about requests or messages.
 ## Testing Report
 
 At any time, you may view a summary report of the test execution status.
-Clicking on "Report" the sidebar will display a summary report page, with all
-tests in the Test Suite listed with the icon indicating the status of each. 
+Clicking on "Report" in the sidebar will display a summary report page, with
+all tests in the Test Suite listed with the icon indicating the status of each.
 
 {% include figure.html 
     file="report-view.png"
@@ -216,3 +216,115 @@ not to make changes to test inputs or to run the tests.
     caption="Share links for test sessions"
     maxwidth="666px"
 %}
+
+## Viewing Verified Requirements
+
+Inferno enables test developers to [declare suite requirements](/docs/advanced-test-features/requirements.html#declare-suite-requirements)
+and [indicate which tests verify them](/docs/advanced-test-features/requirements.html#mark-requirements-as-verified).
+When test developers choose to do this, it provides testers with a detailed
+view of 
+- The discrete requirements that conformant systems are responsible
+  for meeting and which of them are verified through the "Specification
+  Requirements" page, and 
+- Which requirements the tests in the suite verify through "View Specification
+  Requirements" links in test, group, and suite documentation panels.
+
+### Specification Requirements
+{:toc-skip}
+
+Clicking on "Specification Requirements" in the sidebar will display a list
+of all the requirements that the test kit developers declared in the test suite.
+Each entry represents a discrete requirement that a relevant specification or
+regulation places on the tested system.
+
+{% include figure.html 
+    file="specification-requirements.png"
+    alt="Screenshot of the specification requirements page"
+    caption="The 'Specification Requirements' page"
+    maxwidth="666px"
+%}
+
+The requirements page groups requirements based on their definition location.
+The top of each group includes the requirement set identifier and a link that
+can be used to access the original source. 
+
+{% include figure.html 
+    file="requirements-group-header.png"
+    alt="Screenshot of a requirements group header"
+    caption="Requirements are grouped by their source requirement set and definition link"
+    maxwidth="666px"
+%}
+
+For each individual requirement, Inferno displays
+- **The requirement identifier**. This will either be an identifier defined by
+  the requirement source if one exists, or an identifier that was generated when
+  the requirement was [extracted](/docs/advanced-test-features/requirements.html#extract-discrete-requirements).
+- **The strength of the requirement**, expressed as a [FHIR conformance verb](https://hl7.org/fhir/R4/conformance-rules.html#conflang), where "SHALL" means required, "SHOULD" means recommended,
+  and "MAY" means optional.
+- **The requirement text**. Note that the text will often have been edited for
+  clarity and to make them stand-alone by:
+  - Adding additional context, which is indicated by enclosing the added text in
+  square brackets, e.g., "[this is context added to] a requirement", and
+  - Removing unimportant details, which is indicated through an ellipsis (...),
+  e.g., "Some superflous details were removed ... from the middle of this
+  requirement".
+- **Where the requirement is verified**, expressed as a list of links to the
+  locations in the suite that verify the requirement, or "Not Tested" if the
+  suite does not verify the requirement. If there are multiple tests listed,
+  testers should assume that all linked tests must pass for the requirement to
+  be considered met by the tested system.
+
+{% include figure.html 
+    file="requirement-entry.png"
+    alt="Screenshot of a single requirement entry"
+    caption="A single requirement verified by 3 tests"
+    maxwidth="666px"
+%}
+
+The page provides dropdowns that allow testers to filter the displayed
+requirements by the requirement set identifier or the conformance verb.
+
+{% include figure.html 
+    file="requirements-filters.png"
+    alt="Screenshot of the requirement filtering dropdown"
+    caption="Requirements filtered by Conformance verb"
+    maxwidth="666px"
+%}
+
+### Test-specific Requirements Display
+{:toc-skip}
+
+Suites, test groups, and tests that the test kit developers marked as verifying
+specific requirements will include a "View Specification Requirements" link at
+the bottom right of their documentation panel.
+
+{% include figure.html 
+    file="view-specification-requirements.png"
+    alt="Screenshot of a View Specification Requirements link"
+    caption="Access verified requirements through the 'View Specification Requirements' link"
+    maxwidth="666px"
+%}
+
+Clicking on this link will bring up a display of the requirements completely or
+partially verified when the tested system has passed the test.
+
+{% include figure.html 
+    file="test-verified-requirements.png"
+    alt="Screenshot of tested requirements dialog"
+    caption="A requirement verified by a specific test"
+    maxwidth="666px"
+%}
+
+This display is similar to the "Specification Requirements" page, but
+- Includes only requirements verified by the selected test, group, or suite.
+- Does not include the list of all tests that verify the requirement.
+- Does not support filtering.
+
+Note that
+- A passing test does not necessarily indicate conformance to all associated
+  requirements. If the requirement is associated with multiple tests, the
+  verification performed by each test may be partial.
+- Other requirements may be verified by child tests or test groups. Verified
+  requirements do not roll up into the parent’s list of verified requirements
+  because a passing parent does not always imply a passing child (e.g., in the
+  case of an optional child test).
