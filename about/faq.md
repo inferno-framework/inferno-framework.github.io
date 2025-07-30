@@ -9,11 +9,13 @@ section: about
 
 ## Who maintains Inferno?
 
-Development of Inferno is led by the Office of the National Coordinator for
-Health IT and core components are implemented by the MITRE Corporation.
-External participation and contributions are encouraged and welcome.  To learn
-how to participate, visit the <a href="/community">Community</a> page of this
-site.
+Development of Inferno is led by the Assistant Secretary for Technology Policy
+(ASTP) / Office of the National Coordinator for Health (ONC)
+in support of the ONC Health IT Certification Program and the broader Health IT
+community.  Core components of Inferno were initially implemented by the MITRE
+Corporation.  External participation and contributions are encouraged and
+welcome.  To learn how to participate, visit the <a
+href="/community">Community</a> page of this site.
 
 ## Does Inferno use the FHIR TestScript Resource?
 
