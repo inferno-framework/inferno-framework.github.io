@@ -111,8 +111,8 @@ RSpec.describe ExampleTestKit::ExampleServerSuite do
   describe 'encounter group' do
     describe 'read test' do
       let(:test) { find_test(suite, 'read') } # `find_test` and `suite` are from Inferno Core
-      # You must use `find_test` to load the test instead of
-      # `described_class` or `Inferno::Repositories::Test#find`
+      # `find_test` will load the test its parents inputs
+      # `described_class` will load the test with only its own inputs
 
       it 'passes if an Encounter was received' do
         stub_request(:get, "#{url}/Encounter/#{encounter_id}") # Stub FHIR server endpoint
