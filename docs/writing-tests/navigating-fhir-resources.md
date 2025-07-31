@@ -71,7 +71,7 @@ find_a_value_at(patient_with_names, 'name.family') { |family| family == 'ABC' } 
 ## `evaluate_fhirpath`
 
 [`evaluate_fhirpath`](/inferno-core/docs/Inferno/DSL/FhirpathEvaluation.html#evaluate_fhirpath-instance_method)
-utilizes the Inferno's [FHIRPath service](https://github.com/inferno-framework/fhirpath-service)
+utilizes Inferno's [FHIRPath service](https://github.com/inferno-framework/fhirpath-service)
 to query resource via standardized [FHIRPath expressions](https://hl7.org/fhir/R4/fhirpath.html).
 This allows for very granular control of FHIR resources and attributes.
 
