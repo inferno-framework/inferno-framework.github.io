@@ -1,6 +1,6 @@
 ---
 title: Testing the Tests
-nav_order: 5
+nav_order: 9
 parent: Advanced Features
 layout: docs
 section: docs
