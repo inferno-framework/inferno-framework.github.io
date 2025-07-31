@@ -19,7 +19,7 @@ when they get large and complex.
 
 Inferno sets up [Rake](https://ruby.github.io/rake/) to trigger testing by default
 (`bundle exec rake`). However using RSpec directly gives more precise control over
-the unit tests, such as only running the latest failure. **Rspec without rake can
+the unit tests, such as only running the latest failure. **Rspec without Rake can
 only be invoked from the Test Kit root directory**:
 
 Run Rspec tests randomly:
@@ -68,8 +68,6 @@ class ExampleTestKit
       end
     end
 
-    uses_request :encounter_read
-
     test do
       id :validate
       title "Validate Encounter Resource"
@@ -79,11 +77,12 @@ class ExampleTestKit
       run do
         assert_valid_resource
       end
+    end
   end
 end
 ```
 
-The RSpec unit tests need to mock the inputs, the FHIR server requests, the Inferno Validator requests,
+The RSpec unit tests need to mock the inputs, the FHIR server endpoints, the Inferno Validator endpoints,
 and the FHIR resource in question. Inferno core will auto-inject a
 [shared context](https://github.com/inferno-framework/inferno-core/blob/main/spec/runnable_context.rb)
 with helpers when writing a spec for a runnable (`Test`, `TestGroup`, or `TestSuite`).
@@ -102,18 +101,18 @@ RSpec.describe ExampleServerSuite do
   describe 'read test' do
     let(:test) { find_test(suite, 'read') } # `find_test` and `suite` are from Inferno Core
                                             # You must use `find_test` to load the test instead of
-					    # `described_class` or `Inferno::Repositories::Test#find`
+					                                  # `described_class` or `Inferno::Repositories::Test#find`
 
     it 'passes if an Encounter was received' do
       stub_request(:get, "#{url}/Encounter/#{encounter_id}") # Stub FHIR server endpoint
         .to_return(status: 200, body: encounter_fixture_json)
 
-      result = run(test, { url:, bearer_token: encounter_id: }, {}) # `run(runnable, inputs, scratch)` is from Inferno Core
+      result = run(test, { url:, bearer_token:, encounter_id: }, {}) # `run(runnable, inputs, scratch)` is from Inferno Core
       expect(result.result).to eq('pass'), result.result_message
     end
 
     it 'fails if a Patient was recieved' do
-      stub_request(:get. "#{url}/Encounter/#{encounter_id}")
+      stub_request(:get, "#{url}/Encounter/#{encounter_id}")
         .to_return(status: 200, body: FHIR::Patient.new.to_json)
 
       result = run(test, { url:, bearer_token:, encounter_id: })
@@ -138,8 +137,8 @@ RSpec.describe ExampleServerSuite do
       repo_create(                            # `repo_create` is from Inferno Core
         :requests,
         name: :encounter_read,                # stub for `uses_request`
-	test_session_id: test_session.id,
-	response_body: encounter_json_fixture 
+        test_session_id: test_session.id,
+        response_body: encounter_json_fixture
       )
 
       result = run(test, { url:, encounter_id: })
@@ -201,10 +200,10 @@ module ExampleTestKit
 
       run do
         wait(
-	  identifier: bearer_token,
-	  message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
-                   "at `#{Inferno::Application['base_url']}/custom/example_client_suite/Encounter/[id]`"
-	)
+          identifier: bearer_token,
+          message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
+                    "at `#{Inferno::Application['base_url']}/custom/example_client_suite/Encounter/[id]`"
+        )
       end
     end
   end
@@ -229,11 +228,11 @@ RSpec.describe ExampleClientSuite do
 
       repo_create(                        # Mock the Encounter retreival request
         :requests,
-	verb: 'get',
-	url: 'https://fhir.example.com/Encounter/123',
-	direction: 'incoming',
-	result_id: result.id
-	test_session_id: test_session.id
+        verb: 'get',
+        url: 'https://fhir.example.com/Encounter/123',
+        direction: 'incoming',
+        result_id: result.id
+        test_session_id: test_session.id
       )
 
       result = run(test, bearer_token:)   # Re-run test now that Encounter request was mocked
@@ -262,7 +261,7 @@ end
 Inferno comes with [FactoryBot](https://github.com/thoughtbot/factory_bot), which
 enables the [factory pattern](https://en.wikipedia.org/wiki/Factory_method_pattern)
 for quickly generating resources with minor differences. Writing factories with
-[Faker](github.com/faker-ruby/faker) for randomized genearation is a powerful tool.
+[Faker](github.com/faker-ruby/faker) for randomized generation is a powerful tool.
 
 For example, suppose the Test Kit specification requires checking patients with many
 [HumanName](https://hl7.org/fhir/R4/datatypes.html#HumanName) variations, instead
@@ -284,17 +283,17 @@ FactoryBot.define do
 
       factory :patient_with_full_name do
         transient do
-	  family { [ Faker::Name.middle_name, Faker::Name.last_name ] }
-	end
-	name { { given:, family: } }
+	        family { [ Faker::Name.middle_name, Faker::Name.last_name ] }
+	      end
+	      name { { given:, family: } }
 
-	factory :patient_with_complex_name do
-	  transient do
-	    suffix { Faker::Name.suffix }
-	    prefix { Faker::Name.prefix }
-	  end
-	  name { { given:, family:, suffix:, prefix: } }
-	end
+        factory :patient_with_complex_name do
+          transient do
+            suffix { Faker::Name.suffix }
+            prefix { Faker::Name.prefix }
+          end
+          name { { given:, family:, suffix:, prefix: } }
+        end
       end
     end
   end
