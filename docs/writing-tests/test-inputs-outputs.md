@@ -374,6 +374,8 @@ input :auth_info2,
       }
 ```
 
+[`AuthInfo` in the API docs](/inferno-core/docs/Inferno/DSL/AuthInfo.html)
+
 ## Behind the Scenes
 Inputs and outputs work as a single key-value store scoped to a test session.
 The main differences between them are:
