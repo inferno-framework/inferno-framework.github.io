@@ -271,7 +271,7 @@ should conform to the platform deployable test kit spec. This spec is a set of
 [shared RSpec examples](https://rspec.info/features/3-12/rspec-core/example-groups/shared-examples/)
 which can be imported via:
 
-```
+```ruby
 RSpec.describe ExampleTestKit, order: :defined do
   it_behaves_like 'platform_deployable_test_kit'
 end
