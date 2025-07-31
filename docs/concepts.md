@@ -89,25 +89,22 @@ develop tests against or to help interact with third-party solutions. For exampl
 has a [Reference Server](https://github.com/inferno-framework/inferno-reference-server)
 for US Core and the Inferno ONC (g)(10) certification tests.
 
-## Inferno Deployment
+## Inferno Platform
 
-An Inferno Deployment is a web host running one or more Inferno Test Kits. An example is the 
+An Inferno Platform is a web host running one or more Inferno Test Kits. An example is the 
 [https://inferno.healthit.gov](https://inferno.healthit.gov) website.
-An individual Test Kit can also be run as an Inferno Deployment on 
-users' local machines without any additional
-configuration. See
-[Using Test Kits: Getting Started](/docs/getting-started-users.html)
-for more information. An Inferno Deployment includes a web interface as well as
+An individual Test Kit can also be run on users' local machines without any additional
+configuration. See [Using Test Kits: Getting Started](/docs/getting-started-users.html)
+for more information. An Inferno Platform includes a web interface as well as
 a RESTful API to enable third-party integration.
 
 {% include figure.html 
     file="inferno-deployment.png"
-    alt="Diagram of Inferno Deployment"
-    caption="A deployment combines Inferno Core and a Test Kit into a running instance."
+    alt="Diagram of Inferno Platform"
+    caption="A platform combines Inferno Core and Test Kits into a running instance."
     description="Default services in a deployment include nginx, redis, validator services, web and command line interfaces, and database interfaces."
     maxwidth="100%"
 %}
-
 
 ## Inferno Architecture Diagram
 
