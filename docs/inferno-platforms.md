@@ -7,6 +7,15 @@ section: docs
 
 # Bundle Test Kits with Inferno Platforms
 
+Inferno Test Kits double as both Ruby gems and applications.
+[Inferno Platforms](https://github.com/inferno-framework/inferno-platform-template/)
+can load multiple Test Kits as Ruby gems together, offering a unified interface
+for hosting a set of Test Kit on shared infrastructure. This offers a more feature-rich
+experience than deploying an individual Test Kit, or importing multiple Test Suites
+into one Test Kit.
+
+Note the Inferno Platform is still in early release and should be considered unstable.
+
 {% include figure.html 
     file="inferno-platform.png"
     alt="Landing Page of Inferno Platform"
@@ -15,19 +24,19 @@ section: docs
     maxwidth="466px"
 %}
 
-Inferno Test Kits double as both Ruby gems and applications.
-[Inferno Platforms](https://github.com/inferno-framework/inferno-platform-template/)
-can load multiple Test Kits as Ruby gems together, offering a unified interface
-for hosting a set of Test Kit on shared infrastructure. This is different from
-[deploying individual Test Kits](/docs/deployment), even if they share a database or
-other host resources. The primary advantages are:
- - A dashboard for Test Kit usage
+{% include figure.html 
+    file="inferno-platform-test-kits.png"
+    alt="Inferno Platform Test Kits page"
+    caption="Inferno Platform listing multiple Test Kits."
+    description="Inferno Platform listing the US Core, SMART App Launch, and International Patient Summary Test Kits, with a search bar and filters."
+    maxwidth="466px"
+%}
+
+The primary advantages of Inferno Platform are:
  - News and other non-Test-Kit pages
- - Filtering Test Kits by tag
+ - Searching and filtering Test Kits
  - Data retention and clearing policies
 
 See the [Inferno Platform Template](https://github.com/inferno-framework/inferno-platform-template/) repository
 for instructions on getting started, adding Test Kits, and other features.
-
-
 
