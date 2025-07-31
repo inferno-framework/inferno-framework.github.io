@@ -35,6 +35,8 @@ only the identifier is required:
   - `'oauth_credentials'` - a complex type for storing OAuth2 credentials. When
     used by a FHIR client, the access token will automatically refresh if
     possible.
+  - `'authinfo'` - a complex type for storing all the data required for various
+    authorization protocols. See the [AuthInfo section below](#authinfo).
 - `default:` - default value for the input.
 - `optional:` - (**default: false**) whether the input is optional.
 - `options:` - possible input option formats based on input type.
@@ -371,6 +373,8 @@ input :auth_info2,
         mode: 'access'
       }
 ```
+
+[`AuthInfo` in the API docs](/inferno-core/docs/Inferno/DSL/AuthInfo.html)
 
 ## Behind the Scenes
 Inputs and outputs work as a single key-value store scoped to a test session.

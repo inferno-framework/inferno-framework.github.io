@@ -14,8 +14,6 @@ for hosting a set of Test Kit on shared infrastructure. This offers a more featu
 experience than deploying an individual Test Kit, or importing multiple Test Suites
 into one Test Kit.
 
-Note the Inferno Platform is still in early release and should be considered unstable.
-
 {% include figure.html 
     file="inferno-platform.png"
     alt="Landing Page of Inferno Platform"
