@@ -32,10 +32,12 @@ Note the Inferno Platform is still in early release and should be considered uns
     maxwidth="466px"
 %}
 
-The primary advantages of Inferno Platform are:
+The primary features of Inferno Platform are:
  - News and other non-Test-Kit pages
  - Searching and filtering Test Kits
  - Data retention and clearing policies
+
+You can visit [inferno.healthit.gov](https://inferno.healthit.gov) for production example of an Inferno Platform.
 
 See the [Inferno Platform Template](https://github.com/inferno-framework/inferno-platform-template/) repository
 for instructions on getting started, adding Test Kits, and other features.
