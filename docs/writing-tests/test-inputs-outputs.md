@@ -35,7 +35,7 @@ only the identifier is required:
   - `'oauth_credentials'` - a complex type for storing OAuth2 credentials. When
     used by a FHIR client, the access token will automatically refresh if
     possible.
-  - `'authinfo'` - a complex type for storing all the data required for various FHIR
+  - `'authinfo'` - a complex type for storing all the data required for various
     authorization protocols, including SMART-on-FHIR. See its
     [Ruby documentation](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/AuthInfo.html)
     for more information.
