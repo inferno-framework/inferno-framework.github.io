@@ -36,9 +36,7 @@ only the identifier is required:
     used by a FHIR client, the access token will automatically refresh if
     possible.
   - `'authinfo'` - a complex type for storing all the data required for various
-    authorization protocols, including SMART-on-FHIR. See its
-    [Ruby documentation](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/AuthInfo.html)
-    for more information.
+    authorization protocols. See the [AuthInfo section below](#authinfo).
 - `default:` - default value for the input.
 - `optional:` - (**default: false**) whether the input is optional.
 - `options:` - possible input option formats based on input type.
