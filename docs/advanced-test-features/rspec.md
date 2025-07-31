@@ -42,7 +42,7 @@ When Inferno is testing a FHIR server, it acts as a FHIR Client simulator. RSpec
 then acts as a unit tester on the client simulator. Given the Inferno test code below:
 
 ```ruby
-class ExampleTestKit
+module ExampleTestKit
   class ExampleServerSuite < Inferno::TestSuite
     id 'example_server_suite'
 
@@ -55,27 +55,35 @@ class ExampleTestKit
       bearer_token :bearer_token
     end
 
-    test do
-      id :read
-      title "Read Encounter"
-
-      makes_request :encounter_read
-
-      run do
-        fhir_read(:encounter, encounter_id, name: :encounter_read)
-
-        assert_response_status(200)
-      end
+    fhir_resource_validator do
     end
 
-    test do
-      id :validate
-      title "Validate Encounter Resource"
+    group do
+      id :encounter_group
 
-      uses_request :encounter_read
+      test do
+        id :read
+        title 'Read Encounter'
 
-      run do
-        assert_valid_resource
+        makes_request :encounter_read
+
+        run do
+          fhir_read(:encounter, encounter_id, name: :encounter_read)
+
+          assert_response_status(200)
+          assert_resource_type(FHIR::Encounter)
+        end
+      end
+
+      test do
+        id :validate
+        title 'Validate Encounter Resource'
+
+        uses_request :encounter_read
+
+        run do
+          assert_valid_resource
+        end
       end
     end
   end
@@ -88,61 +96,67 @@ and the FHIR resource in question. Inferno core will auto-inject a
 with helpers when writing a spec for a runnable (`Test`, `TestGroup`, or `TestSuite`).
 
 ```ruby
-RSpec.describe ExampleServerSuite do
+require 'example_test_kit/example_server_suite'
+
+RSpec.describe ExampleTestKit::ExampleServerSuite do
   let(:suite_id) { 'example_server_suite' } # This is always required by Inferno Core's shared context
   let(:url) { 'https://fhir.example.com' }
   let(:bearer_token) { 'dummy_token' }
   let(:encounter_id) { '123' }
 
   let(:encounter_fixture_json) do
-    File.read('fixtures/encounter.json')
+    File.read('spec/fixtures/encounter.json')
   end
 
-  describe 'read test' do
-    let(:test) { find_test(suite, 'read') } # `find_test` and `suite` are from Inferno Core
-                                            # You must use `find_test` to load the test instead of
-					                                  # `described_class` or `Inferno::Repositories::Test#find`
+  describe 'encounter group' do
+    describe 'read test' do
+      let(:test) { find_test(suite, 'read') } # `find_test` and `suite` are from Inferno Core
+      # You must use `find_test` to load the test instead of
+      # `described_class` or `Inferno::Repositories::Test#find`
 
-    it 'passes if an Encounter was received' do
-      stub_request(:get, "#{url}/Encounter/#{encounter_id}") # Stub FHIR server endpoint
-        .to_return(status: 200, body: encounter_fixture_json)
+      it 'passes if an Encounter was received' do
+        stub_request(:get, "#{url}/Encounter/#{encounter_id}") # Stub FHIR server endpoint
+          .to_return(status: 200, body: encounter_fixture_json)
 
-      result = run(test, { url:, bearer_token:, encounter_id: }, {}) # `run(runnable, inputs, scratch)` is from Inferno Core
-      expect(result.result).to eq('pass'), result.result_message
+        result = run(test, { url:, bearer_token:, encounter_id: }, {}) # `run(runnable, inputs, scratch)` is from Inferno Core
+
+        expect(result.result).to eq('pass'), result.result_message
+      end
+
+      it 'fails if a Patient was recieved' do
+        stub_request(:get, "#{url}/Encounter/#{encounter_id}")
+          .to_return(status: 200, body: FHIR::Patient.new.to_json)
+
+        result = run(test, { url:, bearer_token:, encounter_id: })
+        expect(result.result).to eq('fail'), result.result_message
+      end
     end
 
-    it 'fails if a Patient was recieved' do
-      stub_request(:get, "#{url}/Encounter/#{encounter_id}")
-        .to_return(status: 200, body: FHIR::Patient.new.to_json)
+    describe 'validate test' do
+      let(:test) { find_test(suite, 'validate') }
+      let(:validation_success) do # stubbed response from Inferno Validator
+        {
+          outcomes: [{
+                       issues: []
+                     }],
+          sessionId: test_session.id # `test_session` is from Inferno Core
+        }.to_json
+      end
 
-      result = run(test, { url:, bearer_token:, encounter_id: })
-      expect(result.result).to eq('fail'), result.result_message
-    end
-  end
+      it 'passes if the resource is valid' do
+        stub_request(:post, validation_url) # `validation_url` is from Inferno Core
+          .to_return(status: 200, body: validation_success)
 
-  describe 'validate test' do
-    let(:validation_success) do # stubbed response from Inferno Validator
-      {
-        outcomes: [{
-          issues: []
-        }],
-        sessionId: test_session.id # `test_session` is from Inferno Core
-      }
-    end
+        repo_create(                            # `repo_create` is from Inferno Core
+          :request,
+          name: :encounter_read,                # stub for `uses_request`
+          test_session_id: test_session.id,
+          response_body: encounter_fixture_json
+        )
 
-    it 'passes if the resource is valid' do
-      stub_request(:post, validation_url) # `validation_url` is from Inferno Core
-        .to_return(status: 200, body: validation_success)
-
-      repo_create(                            # `repo_create` is from Inferno Core
-        :requests,
-        name: :encounter_read,                # stub for `uses_request`
-        test_session_id: test_session.id,
-        response_body: encounter_json_fixture
-      )
-
-      result = run(test, { url:, encounter_id: })
-      expect(result.result).to eq('pass'), result.result_message
+        result = run(test, { url:, bearer_token:, encounter_id: })
+        expect(result.result).to eq('pass'), result.result_message
+      end
     end
   end
 end
@@ -186,24 +200,28 @@ module ExampleTestKit
     def update_result
       results_repo.update(result.id, result: 'pass')
     end
+
+    def tags
+      ['encounter_request']
+    end
   end
 
-  class ExampleClientSuite
+  class ExampleClientSuite < Inferno::TestSuite
     id :example_client_suite
     input :bearer_token
 
     suite_endpoint :get, '/Encounter/:id', EncounterEndpoint
 
-    test do
-      id :retrieve
-      title "Retrieve Encounter Resource"
+    group do
+      id :client_group
 
-      run do
-        wait(
-          identifier: bearer_token,
-          message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
-                    "at `#{Inferno::Application['base_url']}/custom/example_client_suite/Encounter/[id]`"
-        )
+      test do
+        id :retrieve
+        title 'Retrieve Encounter Resource'
+
+        run do
+          assert load_tagged_requests('encounter_request').any?
+        end
       end
     end
   end
@@ -213,26 +231,29 @@ end
 the RSpec test code for it is:
 
 ```ruby
-RSpec.describe ExampleClientSuite do
+require 'example_test_kit/example_client_suite'
+
+RSpec.describe ExampleTestKit::ExampleClientSuite do
   let(:suite_id) { 'example_client_suite' }
   let(:bearer_token) { 'dummy_token' }
 
-  describe "retrieve encounter test" do
+  describe 'retrieve encounter test' do
     let(:test) { find_test(suite, 'retrieve') }
 
-    it 'passes after read encounter request recieved' do
-      allow(test).to recieve_messages(suite:)
+    it 'passes after read encounter request received' do
+      allow(test).to receive_messages(suite:)
 
       result = run(test, bearer_token:)
       expect(result.result).to eq('fail') # Assert test is fail before Encounter request
 
-      repo_create(                        # Mock the Encounter retreival request
-        :requests,
+      repo_create(                        # Mock the Encounter retrieval request
+        :request,
         verb: 'get',
         url: 'https://fhir.example.com/Encounter/123',
         direction: 'incoming',
-        result_id: result.id
-        test_session_id: test_session.id
+        result_id: result.id,
+        test_session_id: test_session.id,
+        tags: ['encounter_request']
       )
 
       result = run(test, bearer_token:)   # Re-run test now that Encounter request was mocked
