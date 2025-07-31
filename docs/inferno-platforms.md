@@ -37,7 +37,7 @@ The primary features of Inferno Platform are:
  - Searching and filtering Test Kits
  - Data retention and clearing policies
 
-You can visit [inferno.healthit.gov](https://inferno.healthit.gov) for production example of an Inferno Platform.
+You can visit [inferno.healthit.gov](https://inferno.healthit.gov) for a production example of an Inferno Platform.
 
 See the [Inferno Platform Template](https://github.com/inferno-framework/inferno-platform-template/) repository
 for instructions on getting started, adding Test Kits, and other features.
