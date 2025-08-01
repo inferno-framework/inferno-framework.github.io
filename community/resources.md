@@ -45,7 +45,7 @@ Interested viewers may join the [Inferno Tech Talk monthly meeting](https://glob
 
 - [Da Vinci Webinar](https://confluence.hl7.org/display/DVP/Da+Vinci+Video+Presentations): Exploring Inferno: An Overview, Demo and Benefits of Da Vinci-related Test Kits<br>Video: [Da Vinci Webinar - October 23, 2024](https://www.youtube.com/watch?v=_6vja-Gyfio&t=1s)
 - [HL7 Synthetic Data Event](https://confluence.hl7.org/pages/viewpage.action?pageId=184922592): Synthetic Data for Testing<br>Video: [HL7 Synthetic Data Event - August 29, 2023](https://youtu.be/WcMfL4tQEOQ?si=hJWOt13Ouo2JLQW5&t=2723)
-- [ONC 2022 Tech Forum](https://www.healthit.gov/news/events/2022-onc-virtual-tech-forum): Inferno Framework Capabilities Beyond (g)(10)<br>Video: [ONC 2022 Tech Forum: Inferno Framework Capabilities Beyond (g)(10)](https://www.youtube.com/watch?v=epf7OHPaeZ0)
+- ONC 2022 Tech Forum: Inferno Framework Capabilities Beyond (g)(10)<br>Video: [ONC 2022 Tech Forum: Inferno Framework Capabilities Beyond (g)(10)](https://www.youtube.com/watch?v=epf7OHPaeZ0)
 {:itemlist}
 
 ## Inferno Architecture Diagram
