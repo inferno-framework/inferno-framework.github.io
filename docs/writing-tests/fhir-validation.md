@@ -58,6 +58,10 @@ validation messages to the runnable.
 
 You can optionally skip adding validation messages by setting `add_messages_to_runnable: false`.
 
+The `validator_response_details` parameter allows you to capture the detailed validator output
+for custom processing. Pass an empty array, and it will be populated with all validation issues.
+See [Accessing Detailed Validation Results](#accessing-detailed-validation-results) for more information.
+
 ```ruby
 test do
   fhir_read(:patient, '123')
@@ -80,6 +84,18 @@ test do
 
   # Validate using a particular named validator
   if resource_is_valid?(validator: :my_customized_validator)
+  end
+
+  # Capture detailed validation results for custom processing
+  validation_details = []
+  if resource_is_valid?(validator_response_details: validation_details)
+    # Resource is valid, but you can still inspect validation_details
+    # for warnings or informational messages
+    info_messages = validation_details.select { |issue| issue.severity == 'info' }
+  else
+    # Resource is invalid, analyze the detailed error information
+    error_details = validation_details.select { |issue| issue.severity == 'error' }
+    # Perform custom error handling based on specific error types
   end
 end
 ```
@@ -127,6 +143,8 @@ end
 ```
 
 ## Performing Additional Validation
+
+### Custom Validation Logic
 If you want to perform validation steps in addition to the FHIR validation,
 you can use the `perform_additional_validation` method in the validator definition. The method
 can also be used multiple times in a single validator definition to add multiple
@@ -145,6 +163,29 @@ fhir_resource_validator do
   end
 end
 ```
+
+### Accessing Detailed Validation Results
+The `validator_response_details` parameter provides access to the complete validation output
+from the validator service, including both filtered and unfiltered issues. This is useful when
+you need to perform custom analysis, present validation results differently, or implement
+conditional logic based on specific validation patterns.
+
+When you pass an empty array to `validator_response_details`, it will be populated with validator
+issue objects that contain the full formatted response from the validator service. Each issue
+includes a `filtered` flag that indicates whether the issue would have been excluded by default
+filtering rules (such as those defined by `exclude_message`).
+
+#### Validator Issue Structure
+Each validator issue object in the `validator_response_details` array contains:
+
+- **`message`** (String): The formatted validation message, including location information
+- **`severity`** (String): The severity level - `'error'`, `'warning'`, or `'info'`
+- **`location`** (String): The location in the resource where the issue was found
+- **`filtered`** (Boolean): Whether this issue would be filtered out by default exclusion rules
+- **`slice_info`** (Array): Nested validator issues/information (each with the same structure);
+  typically provide details of the base-level issue, including any sub-errors or warnings
+- **`resource`** (FHIR::Model): The resource being validated
+- **`raw_issue`** (Hash): The complete raw issue hash from the validator service
 
 # MustSupport Test using the Evaluator
 
