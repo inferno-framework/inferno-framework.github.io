@@ -88,14 +88,11 @@ test do
 
   # Capture detailed validation results for custom processing
   validation_details = []
-  if resource_is_valid?(validator_response_details: validation_details)
-    # Resource is valid, but you can still inspect validation_details
-    # for warnings or informational messages
-    info_messages = validation_details.select { |issue| issue.severity == 'info' }
-  else
+  unless resource_is_valid?(validator_response_details: validation_details, add_messages_to_runnable: false)
     # Resource is invalid, analyze the detailed error information
-    error_details = validation_details.select { |issue| issue.severity == 'error' }
-    # Perform custom error handling based on specific error types
+    validation_details.select { |issue| issue.severity == 'error' }.each do |issue|
+      add_message('error', issue.message) if issue_of_interest?(issue)
+    end
   end
 end
 ```
