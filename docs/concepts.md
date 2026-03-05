@@ -102,7 +102,7 @@ a RESTful API to enable third-party integration.
 
 {% include figure.html 
     file="inferno-deployment.png"
-    alt="Diagram of Inferno Deployment
+    alt="Diagram of Inferno Deployment"
     caption="A deployment combines Inferno Core and Test Kits into a running instance."
     description="Default services in a deployment include nginx, redis, validator services, web and command line interfaces, and database interfaces."
     maxwidth="100%"
