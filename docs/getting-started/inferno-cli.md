@@ -21,7 +21,8 @@ The commands available include:
 | Command      | Description |
 |--------------|-------------|
 | `inferno console` | Starts an interactive console session with Inferno. More information can be found on the [Debugging Page](debugging.html#interactive-console). |
-| `inferno execute` | Execute tests in the command line instead of web UI. |
+| `inferno execute` | Execute tests in the command line. |
+| `inferno execute_script` | Execute tests in the command line instead of web UI. |
 | `inferno evaluate IG_PATH [--options]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
 | `inferno help [COMMAND]` | Describes the available commands, or one specific command if specified. |
 | `inferno migrate` | Runs database migrations. |
@@ -30,7 +31,7 @@ The commands available include:
 | `inferno requirements help SUBCOMMAND` | View details on the requirements subcommands. |
 | `inferno services start` | Starts the background services (nginx, Redis, etc.) for Inferno. |
 | `inferno services stop` | Stops the background services for Inferno. |
-| `inferno session SUBCOMMAND [...ARGS]` | Manages Inferno test sessions programmatically. The available subcommands are `create`, `start_run`, `status`, `cancel_run`, `data`, `results`, and `compare`. |
+| `inferno session SUBCOMMAND [...ARGS]` | Manages Inferno test sessions. The available subcommands are `create`, `start_run`, `status`, `cancel_run`, `data`, `results`, and `compare`. |
 | `inferno session help SUBCOMMAND` | View details on the session subcommands. |
 | `inferno start` | Starts Inferno web UI. Do not use `bundle exec` if the Inferno Core version is prior to 0.4.39. |
 | `inferno suite SUBCOMMAND [...ARGS]` | Performs suite-based operations. The available subcommands are `describe`, `help`, `input_template`, and `lock_short_ids`.|
@@ -69,7 +70,6 @@ It will create a `my_test_kit.gemspec` file, and set the names of any authors su
 using the `-a` option, and set the name, summary and description values to your Test Kit name.
 You should manually inspect this file if you want to [publish or distribute the Test Kit](/docs/distributing-tests.html).
 
-
 The `--implementation-guide` or `-i` option will look at an absolute file path if its prefixed by `file:///` or lookup the name in the [official FHIR package registry](https://packages.fhir.org/).
 
 ## Manage Sessions
@@ -88,7 +88,7 @@ for Thor and Bash respectively).
 
 Subcommands include:
 
-### **`create SUITE_ID`**
+- **`create SUITE_ID`**
 
   Create a new test session for the given suite.
 
@@ -104,7 +104,7 @@ Subcommands include:
   bundle exec inferno session create my_test_suite -I https://inferno.healthit.gov/suites -p my_preset
   ```
 
-### **`start_run SESSION_ID`**
+- **`start_run SESSION_ID`**
 
   Initiate a test run on an existing session.
 
@@ -132,7 +132,8 @@ Subcommands include:
   [`GET /test_runs/{test_run_id}`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Run/get_test_runs__test_run_id_)
   API for details on the output. Additionally, When `status` is `waiting`, fields
   `wait_outputs` and `wait_result_message` are added to this base object using the
-  `outputs` and `result_message` fields from the result of the waiting test (last test that was executed).
+  `outputs` and `result_message` fields from the result of the waiting test (last test that was executed)
+  which can be used to script the continuation of the session.
 
   ```sh
   bundle exec inferno session status abc123 -I https://inferno.healthit.gov/suites
@@ -160,7 +161,7 @@ Subcommands include:
   **Options**:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
 
-  **Output**: JSON array of `{ name, value }` objects representing the session's current inputs.
+  **Output**: JSON array of objects with `name` and `value` keys representing the session's current inputs.
     See the output of the [`GET /test_sessions/{test_session_id}/results`](https://inferno-framework.github.io/inferno-core/api-docs/#/Result/get_test_sessions__test_session_id__results)
     API for details on the output.
 
@@ -194,9 +195,8 @@ Subcommands include:
   - `-s`, `--expected_results_session`: Session ID on the same server whose results serve as expected.
   - `-m`, `--compare_messages`: Also compare per-test messages (not only pass/fail result). Default: `false`.
   - `-r`, `--compare_result_message`: Also compare each test's `result_message` string. Default: `false`.
-  - `-n`, `--normalize`: Before comparing strings, replace dynamic values with stable
-    placeholders: ISO 8601 datetimes → `<timestamp>`, UUIDs → `<uuid>`, random base64
-    strings → `<base64>`. Default: `false`.
+  - `-n`, `--normalized_strings`: List of literal strings and regexes which will be used to normalize
+    strings prior to comparison. For literal strings, the URL-encoded version will be replaced as well.
 
   **Output**: JSON with a top-level `matched` boolean and a `results` array. Each entry
   contains `id`, `type` (`Compared` / `Missing` / `Additional`), `matched`,
@@ -213,8 +213,33 @@ Subcommands include:
   bundle exec inferno session compare abc123 -I https://inferno.healthit.gov/suites -f expected.json -m -n
   ```
 
-
 ## Running a Test Kit in Command Line
+
+Inferno provides two CLI options for executing Inferno tests via the command line:
+1. The `inferno execute_script` CLI command for complex executions that can involve multiple runs
+   and sessions as well as scripting of external systems.
+2. The `inferno execute` CLI command for simple executions that don't involve any interaction beyond
+   starting the test runs.
+
+### Complex Scripted Execution
+
+The `inferno execute_script` CLI command can be used to execute complex Inferno runs from the command line
+which are specified in a [script configuration file](/docs/advanced-test-features/scripting-execution#creating-script-configuration-files).
+By default, scripts are executed against the local running Inferno instance (both background services
+and the test kit must be running). Execution can be performed against a remote Inferno instance by providing
+the root Inferno url using the `-I` option.
+
+For example, the following command would run the script defined in file `g10.yaml` on the instance of
+Inferno deployed to [inferno.healthit.gov](https://inferno.healthit.gov):
+```
+bundle exec inferno execute_script g10.yaml -I https://inferno.healthit.gov
+```
+
+See [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution) for details on how to
+define script configuration files and [CI / CD Usage](/docs/ci-cd-usage.md) for how to integrate scripts
+into development pipelines.
+
+### Simple Execution
 
 The `inferno execute` command allows you to execute [runnables](https://inferno-framework.github.io/docs/writing-tests/#test-suite-structure)
 from a Test Kit in the shell. The command requires:
@@ -223,7 +248,6 @@ from a Test Kit in the shell. The command requires:
  - A Test Suite id.
  - All inputs and any [Suite Options](https://inferno-framework.github.io/docs/advanced-test-features/test-configuration.html#suite-options) necessary for execution.
  - Optionally, the short ids of select Tests and Test Groups you want to run.
-
 
 For example, to run the [US Core Test Kit](https://github.com/inferno-framework/us-core-test-kit)
 v3.1.1 Single Patient API group, you would:
