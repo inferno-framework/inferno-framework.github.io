@@ -180,10 +180,10 @@ test do
 end
 ```
 [`info` in the API
-docs](/inferno-core/docs/Inferno/Entities/Test.html#info-instance_method)
+docs](/inferno-core/docs/Inferno/DSL/Messages.html#info-instance_method)
 
 [`warning` in the API
-docs](/inferno-core/docs/Inferno/Entities/Test.html#warning-instance_method)
+docs](/inferno-core/docs/Inferno/DSL/Messages.html#warning-instance_method)
 
 ## Customizing Suite and Group results
 
