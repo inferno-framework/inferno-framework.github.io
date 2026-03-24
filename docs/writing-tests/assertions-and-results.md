@@ -17,7 +17,8 @@ arguments:
   pass if the value is truthy (anything other than `false` or `nil`), and fail
   if the value is falsey (`false` or `nil`).
 - The second value is the message which will be displayed if the assertion
-  fails.
+  fails. Messages provided to assertions support [Markdown](https://commonmark.org/help/)
+  syntax.
  
 ```ruby
 test do
@@ -147,7 +148,7 @@ test do
 end
 ```
 
-### Adding Messages to Results
+### Info and Warning messages
 {:toc-skip}
 
 Test results can have error, warning, and info messages associated with them.
@@ -184,6 +185,43 @@ docs](/inferno-core/docs/Inferno/DSL/Messages.html#info-instance_method)
 
 [`warning` in the API
 docs](/inferno-core/docs/Inferno/DSL/Messages.html#warning-instance_method)
+
+### Adding Messages Directly to Results
+
+Error, Warning, and Info messages can also be added to the results of a test using
+the `add_message` method:
+
+```
+add_message(:error, 'This is an error.)
+add_message(:warning, 'This is a warning.)
+add_message(:info, 'This is informational.)
+
+```
+
+Unlike using assertions, but like the `warning` and `info` DSL methods, `add_message`
+does not stop execution of the test. This can be useful because it allows
+analysis to complete and multiple error messages to be returned, e.g., across multiple
+requests. However, adding a message with type `:error` does not automatically cause the
+test to fail. Tests that use this approach to log error messages directly to the result
+can use either of the following two methods at the end of the test logic to trigger a
+failure or a skip if error messages were logged:
+
+```
+assert_no_error_messages # If error messages present, fails with a standard result message
+assert_no_error_messages('Errors detected.') # If error messages present, fails with a custom result message
+skip_if error_messages? # If error messages present, skips with a standard result message
+skip_if error_messages?, 'Errors detected.' # If error messages present, skips with a custom result message
+```
+
+[`add_message` in the API
+docs](/inferno-core/docs/Inferno/DSL/Messages.html#add_message-instance_method)
+
+[`error_messages?` in the API
+docs](/inferno-core/docs/Inferno/DSL/Messages.html#error_messages%3F-instance_method)
+
+[`assert_no_error_messages` in the API
+docs](/inferno-core/docs/Inferno/DSL/Assertions.html#assert_no_error_messages-instance_method)
+
 
 ## Customizing Suite and Group results
 
