@@ -99,6 +99,15 @@ test do
     hook_request_object,
     'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
   )
+
+  # Check and using parsed json without immediately ending the test
+  requests.each do |hook_request| # previously made or loaded hook requests
+    parsed_hook_request = parsed_json_if_valid(hook_request.request_body)
+    next unless parsed_hook_request.present?
+  
+    # hook request validation logic
+  end
+  assert_no_error_messages
 end
 ```
 
