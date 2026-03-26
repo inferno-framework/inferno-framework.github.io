@@ -32,6 +32,7 @@ Inferno also implements more specific assertions to handle common cases, such as
 - Verifying the HTTP status code of a response.
 - Verifying that a string is valid JSON.
 - Validating a FHIR Resource.
+- Checking conformance to a FHIR Logical Model.
 
 Check out the [assertions API
 documentation](/inferno-core/docs/Inferno/DSL/Assertions.html) for detailed
@@ -84,6 +85,18 @@ test do
       'Medication': nil
     }
   )
+
+  # Valid JSON and Logical Model conformance on multiple requests in a single test
+  requests.each do |hook_request| # previously made or loaded hook requests
+    parsed_hook_request = parsed_json_if_valid(hook_request.request_body)
+    next unless parsed_hook_request.present?
+  
+    assert_conformance_to_logical_model(
+      parsed_hook_request,
+      'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
+    )
+  end
+  assert_no_error_messages
 end
 ```
 

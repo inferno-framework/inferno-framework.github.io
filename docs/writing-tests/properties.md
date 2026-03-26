@@ -363,3 +363,25 @@ docs](/inferno-core/docs/Inferno/Entities/TestSuite.html#suite_summary-class_met
 **Reference**: [`config` in the API
 docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
 
+----
+## Simulation Validation
+**Description**: Flag a test as checking whether Inferno's simulation of a partnering
+system is conformant. Tests flagged in this way do not check the behavior of the tested
+system. They must still pass to ensure that all parts of the demonstrated exchange
+are conformant.
+
+Tests with this flag will be rendered in the UI with the following badge: 
+{% include figure.html 
+    file="simulation_verification_badge.png"
+    alt="Example of the simulation_verification badge"
+    caption="This badge visually indicates tests that are flagged as simulation_verification"
+    description="A screenshot of the simlulation verification badge with the stylized Inferno flaming 'o' and the words 'simulation verification' on a light orange background"
+    maxwidth="100%"
+%}
+
+
+**Can Be Used In**: `Test`
+
+**Reference**: [`simulation_verification` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#simulation_verification-instance_method)
+
