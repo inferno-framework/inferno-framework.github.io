@@ -86,26 +86,15 @@ test do
     }
   )
 
-  # Logical model validation checks parsed json represented as a Ruby Hash
-  hook_request_object = {
-    hook: 'encounter-start',
-    hookInstance: '753593b6-8fa1-45e3-a108-978256af0f5c',
-    context: {
-      userId: 'Practitioner/example',
-      patientId: 'example'
-    }
-  }
-  assert_conformance_to_logical_model(
-    hook_request_object,
-    'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
-  )
-
-  # Check and using parsed json without immediately ending the test
+  # Valid JSON and Logical Model conformance on multiple requests in a single test
   requests.each do |hook_request| # previously made or loaded hook requests
     parsed_hook_request = parsed_json_if_valid(hook_request.request_body)
     next unless parsed_hook_request.present?
   
-    # hook request validation logic
+    assert_conformance_to_logical_model(
+      parsed_hook_request,
+      'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
+    )
   end
   assert_no_error_messages
 end
