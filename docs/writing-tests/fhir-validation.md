@@ -24,7 +24,7 @@ other loaded test kits, are copied to `data/igs`, and the validator accesses the
 IG files from that location. Do not manually edit the contents of `data/igs`, as
 the contents are automatically deleted prior to loading.
 
-### Defining Validators
+## Defining Validators
 The Inferno Template defines one basic validator in the suite. The validator must be configured to
 reference the IG being tested against. IGs may be referenced by package identifier
 (for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename.
@@ -54,7 +54,8 @@ docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fh
 
 ## Validating FHIR Resources
 The `resource_is_valid?` method will validate a FHIR resource and add any
-validation messages to the runnable.
+validation messages to the runnable. You can add a prefix to all messages
+logged by setting `message_prefix: 'Prefix - '`.
 
 You can optionally skip adding validation messages by setting `add_messages_to_runnable: false`.
 
@@ -207,3 +208,41 @@ Refer to the examples used in IGs below:
 [CARIN for BlueButton IG Test kit](https://github.com/inferno-framework/carin-for-blue-button-test-kit/blob/main/lib/carin_for_blue_button_test_kit/must_support_test.rb)
 
 [International Patient Summary IG Test kit](https://github.com/inferno-framework/ipa-test-kit/blob/main/lib/ipa_test_kit/must_support_test.rb)
+
+## Validating Objects Against Logical Models
+
+FHIR also supports the definition of logical models that can be used to check the structure of generic objects.
+The `conforms_to_logical_model?` method will validate a parsed json object against a specified model
+using the same process and with the same options as when [validating FHIR Resources](#fhir-resource-validation).
+
+```ruby
+test do
+  hook_requests = load_tagged_requests('encounter-start-requests')
+  hook_request_object = JSON.Parse(hook_requests.first.request_body)
+  if conforms_to_logical_model?(hook_request_object,
+       'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest')
+    # Perform additional checks if the parsed request body conforms to the CDSHooksRequest Logical Model
+  end
+end
+```
+
+[`conforms_to_logical_model?` in the API
+docs](/inferno-core/docs/Inferno/DSL/FHIRValidation.html#conforms_to_logical_model%3F-instance_method)
+
+`assert_conformance_to_logical_model` will validate the resource, add any validation messages
+to the runnable, and fail the test if the object is not conformant.
+
+```ruby
+test do
+  hook_requests = load_tagged_requests('encounter-start-requests')
+  hook_request_object = JSON.Parse(hook_requests.first.request_body)
+  assert_conformance_to_logical_model(
+    hook_request_object,
+    'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
+  )
+  end
+end
+```
+
+[`assert_conformance_to_logical_model` in the API
+docs](/inferno-core/docs/Inferno/DSL/Assertions.html#assert_conformance_to_logical_model-instance_method)
