@@ -218,7 +218,7 @@ using the same process and with the same options as when [validating FHIR Resour
 ```ruby
 test do
   hook_requests = load_tagged_requests('encounter-start-requests')
-  hook_request_object = JSON.Parse(hook_requests.first.request_body)
+  hook_request_object = parsed_json_if_valid(hook_requests.first.request_body, continue: false)
   if conforms_to_logical_model?(hook_request_object,
        'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest')
     # Perform additional checks if the parsed request body conforms to the CDSHooksRequest Logical Model
@@ -235,7 +235,7 @@ to the runnable, and fail the test if the object is not conformant.
 ```ruby
 test do
   hook_requests = load_tagged_requests('encounter-start-requests')
-  hook_request_object = JSON.Parse(hook_requests.first.request_body)
+  hook_request_object = parsed_json_if_valid(hook_requests.first.request_body, continue: false)
   assert_conformance_to_logical_model(
     hook_request_object,
     'http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest'
