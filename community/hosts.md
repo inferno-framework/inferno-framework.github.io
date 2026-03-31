@@ -13,6 +13,7 @@ All known Public Hosts of Inferno Test Kits are listed below. If you are interes
 |--------|--------|-------------------|
 | Inferno on HealthIT.gov | [inferno.healthit.gov](https://inferno.healthit.gov) | ONC |
 | Inferno on HealthIT.gov QA | [inferno-qa.healthit.gov](https://inferno-qa.healthit.gov) | ONC |
+| Inferno on hl7.org.au | [inferno.hl7.org.au](https://inferno.hl7.org.au/) | HL7 Australia |
 {: .grid}
 
 
@@ -25,4 +26,7 @@ testing and demonstration of upcoming Test Kits or development releases of Infer
 It is likely to be updated without notice and should _only_ be used by those with a need
 to work with pre-release Test Kits or Inferno Core features under development. It is **not** for certification use.
 
-Both hosts are for demonstration purposes only, and should not be used with any sensitive data or Protected Health Information (PHI).
+[inferno.hl7.org.au](https://inferno.hl7.org.au/) is a public service for running select FHIR conformance tests for **HL7 Australia** FHIR Implementation Guides.
+It includes Inferno Test Kits to support implementation of specifications published by HL7 Australia, supporting approved final and latest development publication versions (snapshots).
+
+All hosts are for demonstration purposes only, and should not be used with any sensitive data or Protected Health Information (PHI).
