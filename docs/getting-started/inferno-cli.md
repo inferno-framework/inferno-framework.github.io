@@ -21,17 +21,21 @@ The commands available include:
 | Command      | Description |
 |--------------|-------------|
 | `inferno console` | Starts an interactive console session with Inferno. More information can be found on the [Debugging Page](debugging.html#interactive-console). |
+| `inferno execute` | Execute tests in the command line instead of web UI. |
+| `inferno evaluate IG_PATH [--options]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
 | `inferno help [COMMAND]` | Describes the available commands, or one specific command if specified. |
 | `inferno migrate` | Runs database migrations. |
 | `inferno new TEST_KIT_NAME` | Create a new test kit. Run `inferno new --help` for additional options. Does not require `bundle exec`. |
+| `inferno requirements SUBCOMMAND [...ARGS]` | Manipulates and checks Inferno requirements. The available subcommands are `export_csv`, `check`, `coverage`, and `check_coverage`. See the [requirements page](/docs/advanced-test-features/requirements) for details of these subcommands. |
+| `inferno requirements help SUBCOMMAND` | View details on the requirements subcommands. |
 | `inferno services start` | Starts the background services (nginx, Redis, etc.) for Inferno. |
 | `inferno services stop` | Stops the background services for Inferno. |
+| `inferno session SUBCOMMAND [...ARGS]` | Manages Inferno test sessions programmatically. The available subcommands are `create`, `start_run`, `status`, `cancel_run`, `data`, `results`, and `compare`. |
+| `inferno session help SUBCOMMAND` | View details on the session subcommands. |
 | `inferno start` | Starts Inferno web UI. Do not use `bundle exec` if the Inferno Core version is prior to 0.4.39. |
 | `inferno suite SUBCOMMAND [...ARGS]` | Performs suite-based operations. The available subcommands are `describe`, `help`, `input_template`, and `lock_short_ids`.|
 | `inferno suite help SUBCOMMAND` | View details on the suite subcommands. |
 | `inferno suites` | Lists available test suites. |
-| `inferno execute` | Execute tests in the command line instead of web UI. |
-| `inferno evaluate IG_PATH [--options]` | Run the FHIR evaluator in the command line. Does not require `bundle exec`. |
 | `inferno version` | Outputs the version of Inferno Core (not the Test Kit). Does not require `bundle exec`. |
 {: .grid.command-table}
 
@@ -67,6 +71,148 @@ You should manually inspect this file if you want to [publish or distribute the 
 
 
 The `--implementation-guide` or `-i` option will look at an absolute file path if its prefixed by `file:///` or lookup the name in the [official FHIR package registry](https://packages.fhir.org/).
+
+## Manage Sessions
+
+The `inferno session` command provides a programmatic interface for creating and managing
+Inferno test sessions from the command line. It is useful for automating test execution,
+especially in CI/CD pipelines. See the [CI/CD Usage](docs/ci-cd-usage) page for additional
+information and tools for the CI/CD use case.
+
+All commands leverage the [JSON web API](https://inferno-framework.github.io/inferno-core/api-docs/)
+to interact with Inferno. By default, these commands interact with the
+local running Inferno instance. Additionally, all session subcommands
+support the `--inferno_base_url` (`-I`) option to specify the URL of a remote running Inferno instance to interact
+with instead. All commands write JSON to stdout and exit `0` on success or `3` on error (`1` and `2` are reserved
+for Thor and Bash respectively).
+
+Subcommands include:
+
+### **`create SUITE_ID`**
+
+  Create a new test session for the given suite.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+  - `-o`, `--suite_options`: Suite options as `key:value` pairs (e.g., `--suite_options us_core_version:us_core_6 smart_app_launch_version:smart_app_launch_2`).
+  - `-p`, `--preset_id`: Apply a named preset when creating the session.
+
+  **Output**: JSON representation of the created session, including the session `id` used by all subsequent subcommands.
+    See the output of the [`POST /test_sessions`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Session/post_test_sessions) API for details on the output.
+
+  ```sh
+  bundle exec inferno session create my_test_suite -I https://inferno.healthit.gov/suites -p my_preset
+  ```
+
+### **`start_run SESSION_ID`**
+
+  Initiate a test run on an existing session.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+  - `-r`, `--runnable`: Short or internal ID of a specific group or test to run. If omitted, the entire suite is run.
+  - `-i`, `--inputs`: Input values as `key:value` pairs (e.g., `--inputs url:https://example.com patient_id:123`). These merge with and override the session's previously stored inputs.
+
+  **Output**: JSON representation of the created test run. See the output of the [`POST /test_runs`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Run/post_test_runs) API for details on the output.
+
+  ```sh
+  bundle exec inferno session start_run abc123 -I https://inferno.healthit.gov/suites -r my_group \
+    -i url:https://example.com patient_id:123
+  ```
+
+- **`status SESSION_ID`**
+
+  Get the current run status of a session.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+
+  **Output**: JSON including a `status` field (`created`, `queued`, `running`, `waiting`, `done`,
+  etc.) and the ID of the `last_test_executed`. See the output of the 
+  [`GET /test_runs/{test_run_id}`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Run/get_test_runs__test_run_id_)
+  API for details on the output. Additionally, When `status` is `waiting`, fields
+  `wait_outputs` and `wait_result_message` are added to this base object using the
+  `outputs` and `result_message` fields from the result of the waiting test (last test that was executed).
+
+  ```sh
+  bundle exec inferno session status abc123 -I https://inferno.healthit.gov/suites
+  ```
+
+- **`cancel_run SESSION_ID`**
+
+  Cancel the currently active run for a session. Applies when the run is in `queued`,
+  `running`, or `waiting` status. 
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+
+  **Output**: JSON with `run_id` and `cancelled: true`, or an error object if no cancellable
+  run is active.
+
+  ```sh
+  bundle exec inferno session cancel_run abc123 -I https://inferno.healthit.gov/suites
+  ```
+
+- **`data SESSION_ID`**
+
+  Get the input values currently stored for a session.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+
+  **Output**: JSON array of `{ name, value }` objects representing the session's current inputs.
+    See the output of the [`GET /test_sessions/{test_session_id}/results`](https://inferno-framework.github.io/inferno-core/api-docs/#/Result/get_test_sessions__test_session_id__results)
+    API for details on the output.
+
+  ```sh
+  bundle exec inferno session data abc123 -I https://inferno.healthit.gov/suites
+  ```
+
+- **`results SESSION_ID`**
+
+  Get the test results for a session.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+
+  **Output**: JSON array of result objects for each test, group, or suite that has been executed. 
+    See the output of the [`GET /test_sessions/{test_session_id}/session_data`](https://inferno-framework.github.io/inferno-core/api-docs/#/Session%20Data/get_test_sessions__test_session_id__session_data)
+    API for details on the output.
+
+  ```sh
+  bundle exec inferno session results abc123 -I https://inferno.healthit.gov/suites
+  ```
+
+- **`compare SESSION_ID`**
+
+  Compare a session's results against expected results from a file or another session.
+  Exits `0` when results match; exits `3` when they do not.
+
+  **Options**:
+  - `-I`, `--inferno_base_url`: URL of the target Inferno service.
+  - `-f`, `--expected_results_file`: Path to a JSON file containing the expected results.
+  - `-s`, `--expected_results_session`: Session ID on the same server whose results serve as expected.
+  - `-m`, `--compare_messages`: Also compare per-test messages (not only pass/fail result). Default: `false`.
+  - `-r`, `--compare_result_message`: Also compare each test's `result_message` string. Default: `false`.
+  - `-n`, `--normalize`: Before comparing strings, replace dynamic values with stable
+    placeholders: ISO 8601 datetimes → `<timestamp>`, UUIDs → `<uuid>`, random base64
+    strings → `<base64>`. Default: `false`.
+
+  **Output**: JSON with a top-level `matched` boolean and a `results` array. Each entry
+  contains `id`, `type` (`Compared` / `Missing` / `Additional`), `matched`,
+  `expected_result`, and `actual_result`. When `-m` or `-r` are set, the corresponding
+  message fields are included as well.
+
+  When `-f` is provided and results do not match, two files are written to the same
+  directory as the expected results file. If the provided file name ends with
+  `expected.json`, the `<prefix>` will be everything before that. Otherwise, it will be empty:
+  - `<prefix>actual_results_<timestamp>.json` — the session's actual results
+  - `<prefix>compared_results_<timestamp>.csv` — a CSV diff of the mismatched results
+
+  ```sh
+  bundle exec inferno session compare abc123 -I https://inferno.healthit.gov/suites -f expected.json -m -n
+  ```
+
 
 ## Running a Test Kit in Command Line
 
