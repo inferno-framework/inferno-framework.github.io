@@ -365,12 +365,12 @@ docs](/inferno-core/docs/Inferno/DSL/Configurable.html#config-instance_method)
 
 ----
 ## Simulation Validation
-**Description**: Flag a test as checking whether Inferno's simulation of a partnering
-system is conformant. Tests flagged in this way do not check the behavior of the tested
+**Description**: Flag a test or group as checking whether Inferno's simulation of a partnering
+system is conformant. Tests and groups flagged in this way do not check the behavior of the tested
 system. They must still pass to ensure that all parts of the demonstrated exchange
 are conformant.
 
-Tests with this flag will be rendered in the UI with the following badge: 
+Tests and groups with this flag will be rendered in the UI with the following badge: 
 {% include figure.html 
     file="simulation_verification_badge.png"
     alt="Example of the simulation_verification badge"
@@ -379,9 +379,7 @@ Tests with this flag will be rendered in the UI with the following badge:
     maxwidth="100%"
 %}
 
-
-**Can Be Used In**: `Test`
+**Can Be Used In**: `Test`, `Group`
 
 **Reference**: [`simulation_verification` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#simulation_verification-instance_method)
-
