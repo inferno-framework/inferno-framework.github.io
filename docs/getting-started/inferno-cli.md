@@ -82,9 +82,9 @@ information and tools for the CI/CD use case.
 All commands leverage the [JSON web API](https://inferno-framework.github.io/inferno-core/api-docs/)
 to interact with Inferno. By default, these commands interact with the
 local running Inferno instance. Additionally, all session subcommands
-support the `--inferno_base_url` (`-I`) option to specify the URL of a remote running Inferno instance to interact
-with instead. All commands write JSON to stdout and exit `0` on success or `3` on error (`1` and `2` are reserved
-for Thor and Bash respectively).
+support the `--inferno_base_url` (`-I`) option to specify the URL of a remote running Inferno
+instance to interact with instead. All commands write JSON to stdout and exit `0` on success or
+`3` on error (`1` and `2` are reserved for Thor and Bash respectively).
 
 Subcommands include:
 
@@ -94,8 +94,11 @@ Subcommands include:
 
   **Options**:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
-  - `-o`, `--suite_options`: Suite options as `key:value` pairs (e.g., `--suite_options us_core_version:us_core_6 smart_app_launch_version:smart_app_launch_2`).
-  - `-p`, `--preset_id`: Apply a named preset when creating the session.
+  - `-o`, `--suite_options`: Suite options as `key:value` pairs (e.g.,
+    `--suite_options us_core_version:us_core_6 smart_app_launch_version:smart_app_launch_2`).
+    Keys and values can use either the display name seen in the Inferno UI or the internal name.
+  - `-p`, `--preset`: Apply a named preset when creating the session. Both the title or the id
+    can be used to identity the target preset.
 
   **Output**: JSON representation of the created session, including the session `id` used by all subsequent subcommands.
     See the output of the [`POST /test_sessions`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Session/post_test_sessions) API for details on the output.
@@ -110,13 +113,18 @@ Subcommands include:
 
   **Options**:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
-  - `-r`, `--runnable`: Short or internal ID of a specific group or test to run. If omitted, the entire suite is run.
-  - `-i`, `--inputs`: Input values as `key:value` pairs (e.g., `--inputs url:https://example.com patient_id:123`). These merge with and override the session's previously stored inputs.
+  - `-r`, `--runnable`: Short or internal ID of a specific group or test to run.
+    If omitted, the entire suite is run.
+  - `-i`, `--inputs`: Input values as `key:value` pairs (e.g., 
+    `--inputs url:https://example.com patient_id:123`). These merge with and override
+    the session's previously stored inputs. The internal name for the input must be used
+    as the key. This can be found from the [Inferno testing interface UI](docs/user-interface#main-test-interface) by looking at the json or yaml representation of
+    the inputs.
 
   **Output**: JSON representation of the created test run. See the output of the [`POST /test_runs`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Run/post_test_runs) API for details on the output.
 
   ```sh
-  bundle exec inferno session start_run abc123 -I https://inferno.healthit.gov/suites -r my_group \
+  bundle exec inferno session start_run 7uLiz9qX4og -I https://inferno.healthit.gov/suites -r my_group \
     -i url:https://example.com patient_id:123
   ```
 
@@ -136,7 +144,7 @@ Subcommands include:
   which can be used to script the continuation of the session.
 
   ```sh
-  bundle exec inferno session status abc123 -I https://inferno.healthit.gov/suites
+  bundle exec inferno session status 7uLiz9qX4og -I https://inferno.healthit.gov/suites
   ```
 
 - **`cancel_run SESSION_ID`**
@@ -151,7 +159,7 @@ Subcommands include:
   run is active.
 
   ```sh
-  bundle exec inferno session cancel_run abc123 -I https://inferno.healthit.gov/suites
+  bundle exec inferno session cancel_run 7uLiz9qX4og -I https://inferno.healthit.gov/suites
   ```
 
 - **`data SESSION_ID`**
@@ -166,7 +174,7 @@ Subcommands include:
     API for details on the output.
 
   ```sh
-  bundle exec inferno session data abc123 -I https://inferno.healthit.gov/suites
+  bundle exec inferno session data 7uLiz9qX4og -I https://inferno.healthit.gov/suites
   ```
 
 - **`results SESSION_ID`**
@@ -181,7 +189,7 @@ Subcommands include:
     API for details on the output.
 
   ```sh
-  bundle exec inferno session results abc123 -I https://inferno.healthit.gov/suites
+  bundle exec inferno session results 7uLiz9qX4og -I https://inferno.healthit.gov/suites
   ```
 
 - **`compare SESSION_ID`**
@@ -210,7 +218,7 @@ Subcommands include:
   - `<prefix>compared_results_<timestamp>.csv` — a CSV diff of the mismatched results
 
   ```sh
-  bundle exec inferno session compare abc123 -I https://inferno.healthit.gov/suites -f expected.json -m -n
+  bundle exec inferno session compare 7uLiz9qX4og -I https://inferno.healthit.gov/suites -f expected.json -m -n
   ```
 
 ## Running a Test Kit in Command Line
@@ -230,13 +238,13 @@ and the test kit must be running). Execution can be performed against a remote I
 the root Inferno url using the `-I` option.
 
 For example, the following command would run the script defined in file `g10.yaml` on the instance of
-Inferno deployed to [inferno.healthit.gov](https://inferno.healthit.gov):
+Inferno deployed to [inferno.healthit.gov](https://inferno.healthit.gov/suites):
 ```
-bundle exec inferno execute_script g10.yaml -I https://inferno.healthit.gov
+bundle exec inferno execute_script g10.yaml -I https://inferno.healthit.gov/suites
 ```
 
 See [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution) for details on how to
-define script configuration files and [CI / CD Usage](/docs/ci-cd-usage.md) for how to integrate scripts
+define script configuration files and [CI / CD Usage](/docs/ci-cd-usage) for how to integrate scripts
 into development pipelines.
 
 ### Simple Execution
@@ -293,9 +301,10 @@ bundle exec inferno execute --help
 
 for more information.
 
-Please note that inferno execute is still low maturity and has limitations. Inferno
-currently cannot support SMART launch tests or tests that receive client requests
-via CLI execution. Some tests are also expected to [run as a group](https://inferno-framework.github.io/docs/writing-tests/properties.html#run-as-group),
+The `execute` command does not support SMART launch tests or tests that receive client requests
+via CLI execution. Use the [`execute_script`](#complex-scripted-execution) functionality
+for these complex execution cases. Some tests are also expected to
+[run as a group](https://inferno-framework.github.io/docs/writing-tests/properties.html#run-as-group),
 and may error or fail erroneously when run individually through CLI.
 
 ## Suite Subcommands
