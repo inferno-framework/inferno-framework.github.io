@@ -398,11 +398,11 @@ The following Test Kits include scripts that can be executed. To execute any of 
   [execution scripts](https://github.com/inferno-framework/inferno-core/tree/main/execution_scripts)
   for [sample development suites](https://github.com/inferno-framework/inferno-core/tree/main/dev_suites)
   that demonstrate features of Inferno and the `execute_script` CLI.
+- [**SMART App Launch**](https://github.com/inferno-framework/smart-app-launch-test-kit):
+  The SMART App Launch test kit includes both client and server tests and includes [execution scripts](https://github.com/inferno-framework/smart-app-launch-test-kit/tree/main/execution_scripts)
+  demonstrating how multi-session scripts can be used to execute these tests against each other.
 - [**(g)(10) Certification**](https://github.com/onc-healthit/onc-certification-g10-test-kit):
   The (g)(10) Certification test kit (and [US Core Core test kit](https://github.com/inferno-framework/us-core-test-kit/tree/main/execution_scripts)) 
   contains [scripts](https://github.com/onc-healthit/onc-certification-g10-test-kit/tree/main/execution_scripts)
   that demonstrate one approach to scripting external interactions with tested systems, in this
   case the Inferno Reference Server.
-- [**Da Vinci CRD**](https://github.com/inferno-framework/davinci-crd-test-kit):
-  The Da Vinci CRD test kit includes both client and server tests and includes [execution scripts](https://github.com/inferno-framework/davinci-crd-test-kit/tree/main/execution_scripts) demonstrating
-  how multi-session scripts can be used to execute these tests against each other.
