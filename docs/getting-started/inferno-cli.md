@@ -107,14 +107,14 @@ Subcommands include:
   bundle exec inferno session create my_test_suite -I https://inferno.healthit.gov/suites -p my_preset
   ```
 
-- **`start_run SESSION_ID`**
+- **`start_run SESSION_ID RUNNABLE_ID`**
 
-  Initiate a test run on an existing session.
+  Initiate a test run on an existing session. The `RUNNABLE_ID` is
+  a short or internal ID of a specific group or test to run, or `suite`
+  to run the entire suite.
 
   **Options**:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
-  - `-r`, `--runnable`: Short or internal ID of a specific group or test to run.
-    If omitted, the entire suite is run.
   - `-i`, `--inputs`: Input values as `key:value` pairs (e.g., 
     `--inputs url:https://example.com patient_id:123`). These merge with and override
     the session's previously stored inputs. The internal name for the input must be used
@@ -124,7 +124,7 @@ Subcommands include:
   **Output**: JSON representation of the created test run. See the output of the [`POST /test_runs`](https://inferno-framework.github.io/inferno-core/api-docs/#/Test%20Run/post_test_runs) API for details on the output.
 
   ```sh
-  bundle exec inferno session start_run 7uLiz9qX4og -I https://inferno.healthit.gov/suites -r my_group \
+  bundle exec inferno session start_run 7uLiz9qX4og my_group -I https://inferno.healthit.gov/suites \
     -i url:https://example.com patient_id:123
   ```
 
@@ -235,12 +235,15 @@ The `inferno execute_script` CLI command can be used to execute complex Inferno 
 which are specified in a [script configuration file](/docs/advanced-test-features/scripting-execution#creating-script-configuration-files).
 By default, scripts are executed against the local running Inferno instance (both background services
 and the test kit must be running). Execution can be performed against a remote Inferno instance by providing
-the root Inferno url using the `-I` option.
+the root Inferno url using the `-I` option. To reduce the risk of running unsafe commands
+unintentionally, the `--allow-commands` flag must be passed when the executed script
+uses `command:` actions to execute separately defined scripts. See [Defining, Executing, and Securing Complex Commands](/docs/advanced-test-features/scripting-execution#defining-executing-and-securing-complex-commands) for additional details.
 
-For example, the following command would run the script defined in file `g10.yaml` on the instance of
+For example, the following command would run the script defined in file `g10_with_commands.yaml`,
+including `command:` actions, on the instance of
 Inferno deployed to [inferno.healthit.gov](https://inferno.healthit.gov/suites):
 ```
-bundle exec inferno execute_script g10.yaml -I https://inferno.healthit.gov/suites
+bundle exec inferno execute_script g10_with_commands.yaml -I https://inferno.healthit.gov/suites --allow-commands
 ```
 
 See [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution) for details on how to

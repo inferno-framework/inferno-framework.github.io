@@ -54,7 +54,7 @@ file for a complete format reference.
 ### Sessions
 
 Each script configuration file will indicate a list (sequence) of one or more Inferno sessions to create under
-the `sessions:` top-leve key. Each sequence includes
+the `sessions:` top-level key. Each sequence includes
 - **Suite** (`suite:`): *Required* - the internal id for the suite or the title selected in the UI.
 - **Name** (`name:`): *Conditional* - a short key used to identify the session in steps.
   Required when multiple sessions are defined, otherwise optional.
@@ -171,7 +171,7 @@ look like this:
 comparison_config:
   sessions:
     g10:
-    expected_results_file: g10_results_expected.json
+      expected_results_file: g10_results_expected.json
       alternate_expected_files:
         - file: g10_no_terminology_expected.json
           when:
@@ -220,7 +220,7 @@ Additionally, the optional `state_description:` key can be used to provide docum
 describing the state. This has no functional effect, but is echoed during script execution
 for debugging purposes.
 
-Note that Inferno can be have other status (e.g., `running` and `cancelled`), but these
+Note that Inferno can be have other status (e.g., `running` and `cancelling`), but these
 do not represent stable states where Inferno is waiting for an action, so they will never
 be used in scripts.
 
