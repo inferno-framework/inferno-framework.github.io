@@ -52,6 +52,10 @@ request can be assigned a name using `receives_request :my_request_name` (see
 [Reusing
 Requests](/inferno-core/writing-tests/making-requests.html#reusing-requests)).
 
+To set a `result_message` along with the `result`, e.g., to indicate the resason
+for a failure, the `message` url parameter can be set when invoking the
+resume route.
+
 [`resume_test_route` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_method)
 
