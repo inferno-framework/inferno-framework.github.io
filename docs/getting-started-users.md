@@ -8,7 +8,9 @@ layout: docs
 Start here if you're interested in testing a FHIR server against one or more
 existing Test Kits.
 
-## Running an Existing Test Kit
+## Running Test Kits
+
+### Running an Existing Test Kit
 Most Test Kits are developed using the [Inferno Template](https://github.com/inferno-framework/inferno-template) repository, which
 provides scripts for standing up an instance of Inferno to run a selected Test
 Kit. Running a Test Kit usually follows the below steps:
@@ -32,7 +34,7 @@ cd us-core-test-kit
 Always check the documentation for an individual Test Kit, however, since there may be
 additional installation steps.
 
-## Running Multiple Test Kits
+### Running Multiple Test Kits
 There may be times when you wish to run multiple Test Kits in a single Inferno
 instance. You can load and run two or more separate Test Kits by using [Inferno
 Template](https://github.com/inferno-framework/inferno-template).
@@ -86,3 +88,13 @@ cd inferno_template
 ```
 
 _Note: Example Test Suites, Groups, Tests and IGs in the template can be removed._
+
+## Executing Tests
+
+Suites hosted by a running test kit can be executed:
+1. Interactively, using the web-based [Inferno Testing Interface UI](/docs/user-interface)
+2. Automatically, using [scripted execution](/docs/advanced-test-features/scripting-execution).
+
+Advanced users can also use the lower-level [`session` CLI](/docs/getting-started/inferno-cli#manage-sessions)
+or the [JSON API](https://inferno-framework.github.io/inferno-core/api-docs/) to create and interact
+with Inferno sessions.

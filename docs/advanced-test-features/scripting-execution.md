@@ -10,12 +10,12 @@ section: docs
 ## Overview
 
 Inferno supports the scripting of test suite execution through the `inferno execute_script`
-[CLI command](/docs/getting-started/inferno-cli). This command takes as input a
-[configuration file](#yaml-configuration-format) that tells Inferno when and how to perform
+[CLI command](/docs/getting-started/inferno-cli#complex-scripted-execution). This command takes as input a
+[configuration file](#creating-script-configuration-files) that tells Inferno when and how to perform
 execution steps both inside and outside of Inferno. The results of the session are compared
 against the results of a known-good execution to identify any regressions. The script
 can be executed against the local Inferno instance or a specific remote instance. These scripts
-can be built into [CI/CD Pipelines](/docs/ci-cd-usage).
+can be built into [CI/CD Pipelines](/docs/ci-cd-usage#using-the-inferno-execute_script-cli-for-complex-orchestration).
 
 ## Execution
 
@@ -29,8 +29,70 @@ Three standard options for executing scripts include:
   - `FILTER=execution_scripts/<directory>/*.yaml`: provide a different filter to use to identify
     the scripts to execute. If not provided, the default is `execution_scripts/**/*.yaml`.
 - Executing all scripts defined in the test kit's `execution_scripts` directory within GitHub,
-  either in response to a commit or a manual trigger. See [CI / CD Usage](/docs/ci-cd-usage.md)
+  either in response to a commit or a manual trigger. See 
+  [CI / CD Usage](/docs/ci-cd-usage#using-the-inferno-execute_script-cli-for-complex-orchestration)
   for additional details.
+
+### Execution Process and Output
+
+When a script is executed, the following phases are performed:
+1. Sessions are created
+2. Steps are executed
+3. Results are checked
+
+During execution, Inferno will print to the terminal details on its polling, matching, and actions during
+execution and provide a summary of the results comparison performed.
+
+Inferno will use exit code 3 when an error is encountered. Error cases include:
+- The exepected results file for one or more sessions did not exist.
+- Compared results for one or more sessions did not match.
+- Script execution did not end at the `END_SCRIPT` step.
+- Script execution had to be interrupted due to a timeout.
+
+Otherwise, the CLI command will end with exit code 0 indicating success.
+
+#### Session Creation
+
+Test suite sessions for the execution are detailed in the [`sessions`](#sessions) section of the script
+configuration file. Creation is performed using the
+[`inferno session create` CLI](/docs/getting-started/inferno-cli#manage-sessions).
+
+#### Step Execution
+
+The steps taken during execution are detailed in the [`steps`](#steps) section of the script
+configuration file.
+
+Inferno checks the status of sessions for next step polling using the [`inferno session status` CLI](/docs/getting-started/inferno-cli#manage-sessions). It may also use the [`inferno session cancel` CLI](/docs/getting-started/inferno-cli#manage-sessions) if it needs to cancel a session.
+
+To start runs, Inferno uses the [`inferno session start_run` CLI](/docs/getting-started/inferno-cli#manage-sessions).
+
+#### Check Results
+
+For each session in the script, Inferno will compare the results in the expected results
+file (see [Expected Results File and Alternates](#expected-results-file-and-alternates))
+to the results of the completed session execution. Configuration of the comparison is
+detailed in the [`comparison_config`](#result-comparison-config) section of the script
+configuration file.
+
+Comparison is performed using the [`inferno session compare` CLI](/docs/getting-started/inferno-cli#manage-sessions)
+using the `-f` flag to specify the expected file. Comparison involves the following steps:
+- normalize the expected and actual results using the configured [`normalized_strings`](#normalized-strings)
+- match individual result entries using the runnable id (`test_id`, `test_group_id`, or `test_suite_id`)
+- compare the matched result entries, looking at the status (e.g., pass, fail), the result message, and the
+  individual messages within the result
+
+When the actual and expected results do not match, two files will be written in the same location as the expected file:
+- actual results: a file with the results json (prior to normalization)
+- comparison analysis: a csv file with details of results that differed, including normalized details
+These files are named using the same prefix as the executed file and include a timestamp for the execution so that
+they will be unique for each script execution.
+
+When the target expected results file does not exist it will be created using the output of the
+[`inferno session results` CLI](/docs/getting-started/inferno-cli#manage-sessions). The `execute_script`
+CLI will exit with an error status in this case. After creation of a expected results
+file in this way, users should review the results using the file and/or the Inferno
+UI to make sure that they are the expected results as subsequent script executions
+will perform the comparison using that file as the expected results.
 
 ## Creating Script Configuration Files
 
@@ -74,7 +136,7 @@ the actual and/or expected results to facilitate like-to-like comparison.
 All configurations around results comparison are nested under the `comparison_config:` top-level
 key.
 
-#### Normalized String
+#### Normalized Strings
 
 Before comparing the actual results to the expected results, Inferno will replace strings
 indicated in the `normalized_strings:` key. This prevents these values, which are expected
@@ -290,55 +352,6 @@ the following keys:
   After executing a step, Inferno will either poll the session indicated in this key or the
   session polled after the previous step if none is specified.
 
-## Execution Process and Output
-
-When a script is executed, the following phases are performed:
-1. Sessions are created
-2. Steps are executed
-3. Results are checked
-
-During execution, Inferno will print to the terminal details on its polling, matching, and actions during
-execution and provide a summary of the results comparison performed.
-
-Inferno will use exit code 3 when an error is encountered. Error cases include:
-- The exepected results file for one or more sessions did not exist.
-- Compared results for one or more sessions did not match.
-- Script execution did not end at the `END_SCRIPT` step.
-- Script execution had to be interrupted due to a timeout.
-
-Otherwise, the CLI command will end with exit code 0 indicating success.
-
-### Session Creation
-
-Internally, this uses the [`inferno session create` CLI](/docs/getting-started/inferno-cli#manage-sessions).
-
-### Step Execution
-
-Inferno checks the status of sessions for next step polling using the [`inferno session status` CLI](/docs/getting-started/inferno-cli#manage-sessions). It may also use the [`inferno session cancel` CLI](/docs/getting-started/inferno-cli#manage-sessions) if it needs to cancel a session.
-
-To start runs, Inferno uses the [`inferno session start_run` CLI](/docs/getting-started/inferno-cli#manage-sessions).
-
-### Check Results
-
-For each session in the script, Inferno will compare the results in the expected results file (see [Expected Results File and Alternates](#expected-results-file-and-alternates)) to the results of the completed session execution. To perform the comparison, it will use the [`inferno session compare` CLI](/docs/getting-started/inferno-cli#manage-sessions), which involves the following steps:
-- normalize the expected and actual results using the configured [`normalized_strings`](#normalizations-for-results-comparison)
-- match individual result entries using the runnable id (`test_id`, `test_group_id`, or `test_suite_id`)
-- compare the matched result entries, looking at the status (e.g., pass, fail), the result message, and the
-  individual messages within the result
-
-When the actual and expected results do not match, two files will be written in the same location as the expected file:
-- actual results: a file with the results json (prior to normalization)
-- comparison analysis: a csv file with details of results that differed, including normalized details
-These files are named using the same prefix as the executed file and include a timestamp for the execution so that
-they will be unique for each script execution.
-
-When the target expected results file does not exist it will be created using the output of the
-[`inferno session results` CLI](/docs/getting-started/inferno-cli#manage-sessions). The `execute_script`
-CLI will exit with an error status in this case. After creation of a expected results
-file in this way, users should review the results using the file and/or the Inferno
-UI to make sure that they are the expected results as subsequent script executions
-will perform the comparison using that file as the expected results.
-
 ## Scripts with Multiple Sessions
 
 Scripts with multiple sessions involve additional complexity but are useful for scripting the execution of
@@ -391,7 +404,7 @@ The following Test Kits include scripts that can be executed. To execute any of 
 
 - [**Inferno Template**](https://github.com/inferno-framework/inferno-template): 
   New Inferno Test Kits created from the [inferno-template repository](https://github.com/inferno-framework/inferno-template)
-  or the [`inferno new` CLI command](/docs/getting-started/inferno-cli.html#inferno-commands)
+  or the [`inferno new` CLI command](/docs/getting-started/inferno-cli.html#creating-a-new-test-kit)
   include a [simple execution configuration file](https://github.com/inferno-framework/inferno-template/blob/main/execution_scripts/inferno_template_script.yaml)
   for the example test suite included in the template.
 - [**Inferno Core**](https://github.com/inferno-framework/inferno-core): Inferno Core contains

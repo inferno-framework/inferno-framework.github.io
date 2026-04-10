@@ -199,8 +199,12 @@ Subcommands include:
 
   **Options**:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
-  - `-f`, `--expected_results_file`: Path to a JSON file containing the expected results.
-  - `-s`, `--expected_results_session`: Session ID on the same server whose results serve as expected.
+  - `-f`, `--expected_results_file`: Path to a JSON file containing the expected results. When the session
+    results do not match the expected results in the file, generated comparison files will be placed in
+    the same directory.
+  - `-s`, `--expected_results_session`: Session ID on the same server. The results of this indicated
+    session will be used as the expected results. When the compared session's results do not match
+    comparison details will not be written to file (use the `-f` option).
   - `-m`, `--compare_messages`: Also compare per-test messages (not only pass/fail result). Default: `false`.
   - `-r`, `--compare_result_message`: Also compare each test's `result_message` string. Default: `false`.
   - `-n`, `--normalized_strings`: List of literal strings and regexes which will be used to normalize
