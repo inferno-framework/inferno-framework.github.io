@@ -170,7 +170,7 @@ Subcommands include:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
 
   **Output**: JSON array of objects with `name` and `value` keys representing the session's current inputs.
-    See the output of the [`GET /test_sessions/{test_session_id}/results`](https://inferno-framework.github.io/inferno-core/api-docs/#/Result/get_test_sessions__test_session_id__results)
+    See the output of the [`GET /test_sessions/{test_session_id}/session_data`](https://inferno-framework.github.io/inferno-core/api-docs/#/Session%20Data/get_test_sessions__test_session_id__session_data)
     API for details on the output.
 
   ```sh
@@ -185,7 +185,7 @@ Subcommands include:
   - `-I`, `--inferno_base_url`: URL of the target Inferno service.
 
   **Output**: JSON array of result objects for each test, group, or suite that has been executed. 
-    See the output of the [`GET /test_sessions/{test_session_id}/session_data`](https://inferno-framework.github.io/inferno-core/api-docs/#/Session%20Data/get_test_sessions__test_session_id__session_data)
+    See the output of the [`GET /test_sessions/{test_session_id}/results`](https://inferno-framework.github.io/inferno-core/api-docs/#/Result/get_test_sessions__test_session_id__results)
     API for details on the output.
 
   ```sh

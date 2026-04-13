@@ -243,7 +243,7 @@ comparison_config:
               matches: ^There is a problem with the terminology resources
 ```
 
-Note that the `normalized_string:` key never appears under the `sessions:` key.
+Note that the `normalized_strings:` key never appears under the `sessions:` key.
 
 ### Steps
 
@@ -303,7 +303,11 @@ key. Only one can be defined for each step:
   - `inputs:` *Optional* - key-value pairs indicating inputs to be merged into those already
     stored in the session (from the preset or previous run inputs or outputs). Each key must
     be the internal name for the input (from the UI, use the yaml or json view of the inputs
-    to find the internal name).
+    to find the internal name). Values can be
+      - *a single value*: used as the literal input value; or
+      - *an object or sequence*: the json representation will be used as the input value; or
+      - *a file path prefixed with `@`*: the contents of the file will be used as the input value.
+        Relative paths are resolved from the directory containing this script file.
   - `session:` *Conditional* - when multiple sessions are defined the name (not the suite)
     of the session on which the run will be executed, otherwise omitted.
 - `command:` Specifies a shell command to execute. For example, a `curl` command to navigate
