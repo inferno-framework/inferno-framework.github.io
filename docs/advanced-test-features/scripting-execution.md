@@ -43,12 +43,16 @@ When a script is executed, the following phases are performed:
 During execution, Inferno will print to the terminal details on its polling, matching, and actions during
 execution and provide a summary of the results comparison performed.
 
-Inferno will use exit code 3 when an error is encountered. Error cases include:
-- The exepected results file for one or more sessions did not exist.
-- Compared results for one or more sessions did not match.
-- Script execution did not end at the `END_SCRIPT` step.
-- Script execution had to be interrupted due to a timeout.
-- The results contained an `error` result, indicating a problem in the test logic
+Inferno will use exit code 3 when an error is encountered. Error cases include the following,
+separated into cases where a detailed results comparison is performed and those
+where it is not:
+- Reults comparison performed
+  - Compared results for one or more sessions did not match.
+  - Script execution reached an unmatched stable state (no action specified for a `done` or `waiting` state).
+- No results comparison performed
+  - The exepected results file for one or more sessions did not exist.
+  - Script execution had to be interrupted due to a timeout. 
+  - The results contained an `error` result, indicating a problem in the test logic
 
 Otherwise, the CLI command will end with exit code 0 indicating success.
 
