@@ -48,6 +48,7 @@ Inferno will use exit code 3 when an error is encountered. Error cases include:
 - Compared results for one or more sessions did not match.
 - Script execution did not end at the `END_SCRIPT` step.
 - Script execution had to be interrupted due to a timeout.
+- The results contained an `error` result, indicating a problem in the test logic
 
 Otherwise, the CLI command will end with exit code 0 indicating success.
 
@@ -73,6 +74,14 @@ file (see [Expected Results File and Alternates](#expected-results-file-and-alte
 to the results of the completed session execution. Configuration of the comparison is
 detailed in the [`comparison_config`](#result-comparison-config) section of the script
 configuration file.
+
+There is no requirement that the tests must pass for the results check to succeed.
+The exepected results file can indicate that some or all entries have a failing result
+(e.g., `fail` or `skip`) with particular details in their `result_message` and `messages`
+fields. This allows scripts that verify that particular tests fail under certain conditions
+and indicate this with expected messages. However, if any tests end with a `error` result,
+indicating a problem in the test execution logic, the script execution will fail and result
+comparison will be skipped.
 
 Comparison is performed using the [`inferno session compare` CLI](/docs/getting-started/inferno-cli#manage-sessions)
 using the `-f` flag to specify the expected file. Comparison involves the following steps:
