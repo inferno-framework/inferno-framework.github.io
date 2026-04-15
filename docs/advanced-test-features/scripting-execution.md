@@ -386,7 +386,7 @@ Considerations to keep in mind when creating script configuration files with mul
   form.
 - `NOOP` actions can be used to help clarify sequencing. For example, if two
   sessions both have long running tests that interact but complete in a particular
-  order due to wait interactions, but don't require any external interactions. You
+  order due to wait interactions and don't require any external interactions. You
   could poll the session that will end last and look only for the `done` state,
   which would require `WAIT` actions on any `waiting` states so that Inferno
   recognizes them, or you could define states for each `waiting` state with `NOOP`
