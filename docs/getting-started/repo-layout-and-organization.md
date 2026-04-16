@@ -15,6 +15,8 @@ running `inferno new`, you will have a directory structure that looks something
 like this:
 
 ```
+├── .github
+│   └── workflows
 ├── Dockerfile
 ├── Gemfile
 ├── config
@@ -26,6 +28,7 @@ like this:
 │       └── ...
 ├── docker-compose.yml
 ├── docker-compose.background.yml
+├── execution_scripts
 ├── inferno_template.gemspec
 ├── lib
 │   ├── inferno_template
@@ -39,6 +42,8 @@ like this:
 │   ├── ...
 └── worker.rb
 ```
+- `.github/workflows` - This directory tells github how to build and test Inferno
+  when updates are committed to a GitHub repository.
 - `Dockerfile` - This file controls how the Docker image for your tests is built.
 - `Gemfile` - This file is where you add extra Ruby dependencies.
 - `config` - This folder contains configuration for the database and web
@@ -51,6 +56,10 @@ like this:
   needs.
 - `docker-compose.background.yml` - This file coordinates and runs the background
   services needed for running Inferno.
+- `execution_scripts` - This folder is for scrips that execute test suites against
+  running Inferno services like the HL7 Validator. The template includes an example
+  script for the sample test suite. See [CI/CD Usage](docs/ci-cd-usage.html#using-the-inferno-execute_script-cli-for-complex-orchestration)
+  for additional information.
 - `inferno_template.gemspec` - This file controls how your tests are packaged
   up as a distributable Ruby gem. This is also where you can add additional Ruby
   gems if you need them.
@@ -68,7 +77,7 @@ like this:
   for collecting discrete requirements to use with Inferno's optional requirement
   management infrastructure. See [Requirements](/docs/advanced-test-features/requirements.html)
   for more information on how to use the requirements tools.
-- `spec` - This folder is for unit tests.
+- `spec` - This folder is for unit tests. The template includes an example unit test for the sample test suite written in rspec.
 - `worker.rb` - This is the main file for Inferno's test runner process.
 
 ## Test Organization

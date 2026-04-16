@@ -52,3 +52,7 @@ The Inferno DSL supports associating discrete requirements with suites, test
 groups, and tests. Test developers can track which requirements Inferno is and is not
 verifying and Inferno displays these associations to users within the
 [user interface](/docs/user-interface.html#viewing-verified-requirements).
+
+## [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution.html)
+The Inferno CLI supports executing suites using a yaml configuration format
+instead of the UI using the `inferno execute_script` command.
