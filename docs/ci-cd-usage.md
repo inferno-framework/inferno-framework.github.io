@@ -35,6 +35,19 @@ Key considerations when using this GitHub workflow:
   repository with Inferno's standard Ruby setup. You can modify the workflow if your commands
   require additional setup to execute.
 
+### Investigating github workflow failures
+
+The [standard Github Workflow file](https://github.com/inferno-framework/inferno-template/blob/main/.github/workflows/run_inferno_execution_scripts.yml)
+will output debugging artifacts including
+- The inferno test kit process log
+- Docker container logs
+- Actual result json and comparison analysis csv files
+
+Note that in cases where the script execution does not perform the
+results comparison and no actual result files are generated because
+there was an `error` result in a test, the error will be present
+in the inferno process log for debugging purposes.
+
 ## Using the `inferno execute` CLI for Simple Execution
 
 To run Inferno using the [inferno

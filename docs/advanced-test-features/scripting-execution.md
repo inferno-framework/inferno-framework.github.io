@@ -50,7 +50,7 @@ where it is not:
   - Compared results for one or more sessions did not match.
   - Script execution reached an unmatched stable state (no action specified for a `done` or `waiting` state).
 - No results comparison performed
-  - The exepected results file for one or more sessions did not exist.
+  - The exepected results file for one or more sessions did not exist and was generated.
   - Script execution had to be interrupted due to a timeout. 
   - The results contained an `error` result, indicating a problem in the test logic
 
