@@ -23,15 +23,16 @@ The `input` method defines an input. `input` can take several arguments, but
 only the identifier is required:
 - `identifier` - (**required**) a name for this input. The input value is
   available in the run block using this name.
-- `title:` -  a title which is displayed in the UI.
+- `title:` - a title which is displayed in the UI.
 - `description:` - a description which is displayed in the UI.
 - `type:` - controls the type of HTML input element used in the UI. Currently
-  there are 5 possible values:
+  there are 6 possible values:
   - `'text'` - (**default**) a regular input field.
   - `'textarea'` - for a text area input field.
   - `'radio'` - for a radio button singular selection field.
-  - `'checkbox` - for a checkbox field. In tests, a checkbox input is
+  - `'checkbox'` - for a checkbox field. In tests, a checkbox input is
     represented as an array of the selected values.
+  - `'select'` - for a select input field.
   - `'oauth_credentials'` - a complex type for storing OAuth2 credentials. When
     used by a FHIR client, the access token will automatically refresh if
     possible.
@@ -47,6 +48,7 @@ only the identifier is required:
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
 - `hidden:` - (**default: false**) hide the input from the UI. Must be used with either `optional: true` or `locked: true`.
+- `enable_when` - (**optional**) adds conditional visibility for inputs. It's a hash with `input_name` and `value`.
 
 Here is a simple example:
 ```ruby
@@ -221,6 +223,37 @@ group do
 end
 ```
 
+### Conditional visibility for inputs
+Inputs can be shown or hidden based on the value of another input using an `enable_when` condition. We recommend implementing conditional visibility based on **Radio** or **Select** inputs.
+
+```ruby
+group do
+  id 'conditional_group'
+  title 'Conditional Inputs Group'
+  optional
+
+  test 'Conditional, optional, empty input test' do
+    input :get_type, title: 'How to get Bundle', type: 'radio', options: {
+      list_options: [
+        { value: 'copy_paste', label: 'Paste JSON' },
+        { value: 'url', label: 'URL to FHIR Bundle' },
+        { value: 'summary_op', label: '$summary Operation' }
+      ]
+    }, default: 'copy_paste'
+    input :bundle_copy_paste, title: 'Paste JSON', type: 'textarea', optional: true,
+                              enable_when: { input_name: 'get_type', value: 'copy_paste' }
+    input :bundle_url, title: 'URL to FHIR Bundle', type: 'text', optional: true,
+                       enable_when: { input_name: 'get_type', value: 'url' }
+    input :fhir_server_url, title: 'FHIR Server URL', type: 'text', optional: true,
+                            enable_when: { input_name: 'get_type', value: 'summary_op' }
+    input :patient_id, title: 'Patient ID', type: 'text', optional: true,
+                       enable_when: { input_name: 'get_type', value: 'summary_op' }
+
+    run { pass }
+  end
+end
+```
+
 ## Outputs
 
 ### Defining Outputs
@@ -311,7 +344,7 @@ input :backend_services_auth_info,
           }
         ]
       }
-      
+
 # Limit the auth types to those in SMART App Launch v1
 input :smart_v1_auth_info,
       options: {
@@ -325,7 +358,7 @@ input :smart_v1_auth_info,
           }
         ]
       }
-      
+
 input :smart_auth_info,
       options: {
         components: [
@@ -366,7 +399,7 @@ input :auth_info1,
       options: {
         mode: 'auth'
       }
-      
+
 # Use this to make authorized requests
 input :auth_info2,
       options: {
@@ -380,9 +413,9 @@ input :auth_info2,
 Inputs and outputs work as a single key-value store scoped to a test session.
 The main differences between them are:
 - An input's value can not be changed
-during a test
+  during a test
 - Inputs support additional metadata for display in the UI
-(title, description, etc.)
+  (title, description, etc.)
 
 Since inputs and outputs form a single key-value
 store, a value will be overwritten if multiple tests write to the same output.
