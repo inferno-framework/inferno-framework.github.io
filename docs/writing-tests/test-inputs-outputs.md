@@ -26,7 +26,7 @@ only the identifier is required:
 - `title:` - a title which is displayed in the UI.
 - `description:` - a description which is displayed in the UI.
 - `type:` - controls the type of HTML input element used in the UI. Currently
-  there are 6 possible values:
+  there are 7 possible values:
   - `'text'` - (**default**) a regular input field.
   - `'textarea'` - for a text area input field.
   - `'radio'` - for a radio button singular selection field.
@@ -48,7 +48,7 @@ only the identifier is required:
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
 - `hidden:` - (**default: false**) hide the input from the UI. Must be used with either `optional: true` or `locked: true`.
-- `enable_when` - (**optional**) adds conditional visibility for inputs. It's a hash with `input_name` and `value`.
+- `enable_when` - (**optional**) adds conditional UI visibility for the input, causing it to be displayed only when the indicated input has the specified value. The value is a hash with keys `input_name` (the controlling input's identifier as a string, e.g. `'get_type'` for `input :get_type`) and `value` (a string matching that input's current value).
 
 Here is a simple example:
 ```ruby
@@ -223,8 +223,22 @@ group do
 end
 ```
 
-### Conditional visibility for inputs
-Inputs can be shown or hidden based on the value of another input using an `enable_when` condition. We recommend implementing conditional visibility based on **Radio** or **Select** inputs.
+### Conditional UI visibility for inputs
+
+When a test needs related inputs but only some apply at a time, `enable_when` controls **conditional visibility in the inputs modal only**. It does not change how inputs are defined in the DSL or how values are read in `run` blocks. Use it when several inputs represent **alternative paths** for the same data—showing every field at once would clutter the modal or confuse users. A typical pattern is a single radio or select choice that reveals only the fields relevant to the selected method.
+
+**Semantics:**
+
+- `enable_when: { input_name: '<controlling_input>', value: '<string>' }` — `value` is a string matching the controlling input's stored value (for example, a `list_options` `value` on a radio or select input).
+- `input_name` is the controlling input's identifier (the symbol name as a string, e.g. `'get_type'` for `input :get_type`).
+- The controlling input should be a **radio** or **select** input (single-valued). **Checkbox** inputs are not supported as controllers.
+- Dependent inputs can use any normal input type (`text`, `textarea`, etc.).
+- Unlike `hidden:`, which always hides an input, `enable_when` is **dynamic** and updates as the user changes the controlling input.
+- Required-field checks in the modal still apply to inputs that are hidden by `enable_when`. 
+
+A **select** input works the same way as radio for the controlling field.
+
+The following example is adapted from the inferno-core demo suite. It models supplying a FHIR Bundle in one of three mutually exclusive ways: paste JSON, provide a URL, or run a `$summary` operation (FHIR server URL and patient ID).
 
 ```ruby
 group do
@@ -253,6 +267,15 @@ group do
   end
 end
 ```
+
+In this example:
+
+1. `:get_type` is the controlling radio input. `default: 'copy_paste'` means the paste field is visible when the modal first opens.
+2. `:bundle_copy_paste` is shown only when `get_type` is `'copy_paste'`.
+3. `:bundle_url` is shown only when `get_type` is `'url'`.
+4. `:fhir_server_url` and `:patient_id` both use the same `enable_when` for `'summary_op'`—multiple dependent inputs can share one condition.
+5. All dependent inputs are `optional: true` so hidden fields do not block submitting the modal.
+6. The group is `optional` so the entire demo can be skipped, matching the inferno-core demonstration pattern.
 
 ## Outputs
 
@@ -426,7 +449,7 @@ that particular test.
 
 When inputs are defined at multiple levels (e.g., group and test), Inferno merges them. The following rules apply:
 
-- `locked`, `hidden`, and `type` are **not inherited** when merging input definitions between parent and child.
+- `locked`, `hidden`, `enable_when`, and `type` are **not inherited** when merging input definitions between parent and child.
 - Other attributes such as `title`, `description`, `default`, and `optional` **are inherited**.
 
 This allows different test scopes to override specific input behaviors without affecting others.
