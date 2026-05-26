@@ -23,15 +23,16 @@ The `input` method defines an input. `input` can take several arguments, but
 only the identifier is required:
 - `identifier` - (**required**) a name for this input. The input value is
   available in the run block using this name.
-- `title:` -  a title which is displayed in the UI.
+- `title:` - a title which is displayed in the UI.
 - `description:` - a description which is displayed in the UI.
 - `type:` - controls the type of HTML input element used in the UI. Currently
-  there are 5 possible values:
+  there are 7 possible values:
   - `'text'` - (**default**) a regular input field.
   - `'textarea'` - for a text area input field.
   - `'radio'` - for a radio button singular selection field.
-  - `'checkbox` - for a checkbox field. In tests, a checkbox input is
+  - `'checkbox'` - for a checkbox field. In tests, a checkbox input is
     represented as an array of the selected values.
+  - `'select'` - for a select input field.
   - `'oauth_credentials'` - a complex type for storing OAuth2 credentials. When
     used by a FHIR client, the access token will automatically refresh if
     possible.
@@ -47,6 +48,7 @@ only the identifier is required:
   Locking an input can force it to use a value from a previous test's output, or
   the default value.
 - `hidden:` - (**default: false**) hide the input from the UI. Must be used with either `optional: true` or `locked: true`.
+- `enable_when` - (**optional**) adds conditional UI visibility for the input, causing it to be displayed only when the indicated input has the specified value. The value is a hash with keys `input_name` (the controlling input's identifier as a string, e.g. `'get_type'` for `input :get_type`) and `value` (a string matching that input's current value).
 
 Here is a simple example:
 ```ruby
@@ -221,6 +223,59 @@ group do
 end
 ```
 
+### Conditional UI visibility for inputs
+
+When a test needs related inputs but only some apply at a time, `enable_when` controls **conditional visibility in the inputs modal only**. It does not change how inputs are defined in the DSL or how values are read in `run` blocks. Use it when several inputs represent **alternative paths** for the same data—showing every field at once would clutter the modal or confuse users. A typical pattern is a single radio or select choice that reveals only the fields relevant to the selected method.
+
+**Usage:**
+
+- `enable_when: { input_name: '<controlling_input>', value: '<string>' }` — `value` is a string matching the controlling input's stored value (for example, a `list_options` `value` on a radio or select input).
+- `input_name` is the controlling input's identifier (the symbol name as a string, e.g. `'get_type'` for `input :get_type`).
+- The controlling input should be a **radio** or **select** input (single-valued). **Checkbox** inputs are not supported as controllers.
+- Dependent inputs can use any normal input type (`text`, `textarea`, etc.).
+- Unlike `hidden:`, which always hides an input, `enable_when` is **dynamic** and updates as the user changes the controlling input.
+- Required-field checks in the modal still apply to inputs that are hidden by `enable_when`. 
+
+A **select** input works the same way as radio for the controlling field.
+
+The following example models supplying a FHIR Bundle in one of three mutually exclusive ways: paste JSON, provide a URL, or run a `$summary` operation (FHIR server URL and patient ID).
+
+```ruby
+group do
+  id 'conditional_group'
+  title 'Conditional Inputs Group'
+  optional
+
+  test 'Conditional, optional, empty input test' do
+    input :get_type, title: 'How to get Bundle', type: 'radio', options: {
+      list_options: [
+        { value: 'copy_paste', label: 'Paste JSON' },
+        { value: 'url', label: 'URL to FHIR Bundle' },
+        { value: 'summary_op', label: '$summary Operation' }
+      ]
+    }, default: 'copy_paste'
+    input :bundle_copy_paste, title: 'Paste JSON', type: 'textarea', optional: true,
+                              enable_when: { input_name: 'get_type', value: 'copy_paste' }
+    input :bundle_url, title: 'URL to FHIR Bundle', type: 'text', optional: true,
+                       enable_when: { input_name: 'get_type', value: 'url' }
+    input :fhir_server_url, title: 'FHIR Server URL', type: 'text', optional: true,
+                            enable_when: { input_name: 'get_type', value: 'summary_op' }
+    input :patient_id, title: 'Patient ID', type: 'text', optional: true,
+                       enable_when: { input_name: 'get_type', value: 'summary_op' }
+
+    run { pass }
+  end
+end
+```
+
+In this example:
+
+1. `:get_type` is the controlling radio input. `default: 'copy_paste'` means the paste field is visible when the modal first opens.
+2. `:bundle_copy_paste` is shown only when `get_type` is `'copy_paste'`.
+3. `:bundle_url` is shown only when `get_type` is `'url'`.
+4. `:fhir_server_url` and `:patient_id` both use the same `enable_when` for `'summary_op'`—multiple dependent inputs can share one condition.
+5. All dependent inputs are `optional: true` so hidden fields do not block submitting the modal.
+
 ## Outputs
 
 ### Defining Outputs
@@ -311,7 +366,7 @@ input :backend_services_auth_info,
           }
         ]
       }
-      
+
 # Limit the auth types to those in SMART App Launch v1
 input :smart_v1_auth_info,
       options: {
@@ -325,7 +380,7 @@ input :smart_v1_auth_info,
           }
         ]
       }
-      
+
 input :smart_auth_info,
       options: {
         components: [
@@ -366,7 +421,7 @@ input :auth_info1,
       options: {
         mode: 'auth'
       }
-      
+
 # Use this to make authorized requests
 input :auth_info2,
       options: {
@@ -380,9 +435,9 @@ input :auth_info2,
 Inputs and outputs work as a single key-value store scoped to a test session.
 The main differences between them are:
 - An input's value can not be changed
-during a test
+  during a test
 - Inputs support additional metadata for display in the UI
-(title, description, etc.)
+  (title, description, etc.)
 
 Since inputs and outputs form a single key-value
 store, a value will be overwritten if multiple tests write to the same output.
@@ -393,7 +448,7 @@ that particular test.
 
 When inputs are defined at multiple levels (e.g., group and test), Inferno merges them. The following rules apply:
 
-- `locked`, `hidden`, and `type` are **not inherited** when merging input definitions between parent and child.
+- `locked`, `hidden`, `enable_when`, and `type` are **not inherited** when merging input definitions between parent and child.
 - Other attributes such as `title`, `description`, `default`, and `optional` **are inherited**.
 
 This allows different test scopes to override specific input behaviors without affecting others.
