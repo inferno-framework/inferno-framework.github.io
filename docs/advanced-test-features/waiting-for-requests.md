@@ -23,7 +23,13 @@ method. `wait` takes three arguments:
   the incoming request.
 * `message` - A markdown string displayed to the user while the
   test is waiting.
-* `timeout` - The number of seconds the test will wait.
+* `timeout` - The number of seconds the test will wait. If `timeout` is not specified, it defaults to **300 seconds**.
+
+#### Wait Modal
+
+While a test is waiting, a modal dialog is displayed to the user with the message defined in the `wait` call. The modal includes a **Cancel** button, which is the only way to end a waiting test run from the UI.
+
+If a `timeout` is provided, the modal displays a live countdown of the remaining seconds. When the countdown reaches zero, the test run expires and will no longer respond to incoming requests — the only option at that point is to click **CANCEL** to end the run and try again.
 
 [`wait` in the API
 docs](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
