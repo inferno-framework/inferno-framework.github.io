@@ -40,7 +40,7 @@ The "User Action Required" modal displays a live countdown of the remaining seco
     file="wait-modal.png"
     alt="Example of the Wait modal"
     caption="The 'User Action Required' modal displayed while a test is in the wait state"
-    description="A screenshot of the User Action Required modal dialog, showing a message to the user, a live countdown timer, and a Cancel button"
+    description="A screenshot of the User Action Required modal dialog, showing a message to the user with options on how to progress the test, a live countdown timer, and a Cancel button"
     maxwidth="100%"
 %}
 
