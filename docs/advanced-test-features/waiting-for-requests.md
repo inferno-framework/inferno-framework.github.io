@@ -9,15 +9,15 @@ section: docs
 Some testing workflows required testing to pause until an incoming request is
 received. For example, the OAuth2 workflow used by the SMART App Launch IG
 involves redirecting the user to an authorization server, which then redirects
-the user back to the application that requested authorization. More generally,
-waits are used when a test requires the user to:
-* Attest that a requirement has been met
-* Perform or confirm an action in the system under test
-* Send a specific type of request to the Inferno session API
+the user back to the application that requested authorization.
 
-In order to handle a workflow like this, Inferno must be able to handle the
-incoming request and associate it with a particular testing session. Inferno
-accomplishes this with the `wait` status and special routes for resuming tests.
+More generally,
+Inferno execution must pause and listen for requests whenever an external action is needed, such as when the tester is asked to
+* Perform an action in the system under test, e.g., authorize access in the workflow above,
+* Send one or more requests to Inferno, e.g., send a request to an Inferno-hosted FHIR API, or
+* Attest that a requirement has been met.
+
+When waiting, Inferno needs to know how to identify the session the incoming request is for and when to restart its own execution. Inferno
 
 ## Wait Method
 A test is instructed to wait for an incoming request using the
