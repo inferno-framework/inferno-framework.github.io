@@ -27,7 +27,7 @@ method. `wait` takes three arguments:
 
 #### Wait Modal
 
-While a test is waiting, a modal dialog is displayed to the user with the message defined in the `wait` call. The modal includes a **Cancel** button, which is the only way to end a waiting test run from the UI.
+While a test is waiting, a "User Action Required" modal dialog is displayed to the user with the message defined in the `wait` call. The modal includes a **Cancel** button, which can be used to end the test run if the tester does not want to or cannot complete the requested action.
 
 If a `timeout` is provided, the modal displays a live countdown of the remaining seconds. When the countdown reaches zero, the test run expires and will no longer respond to incoming requests — the only option at that point is to click **CANCEL** to end the run and try again.
 
