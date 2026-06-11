@@ -9,8 +9,13 @@ section: docs
 Some testing workflows required testing to pause until an incoming request is
 received. For example, the OAuth2 workflow used by the SMART App Launch IG
 involves redirecting the user to an authorization server, which then redirects
-the user back to the application that requested authorization. In
-order to handle a workflow like this, Inferno must be able to handle the
+the user back to the application that requested authorization. More generally,
+waits are used when a test requires the user to:
+* Attest that a requirement has been met
+* Perform or confirm an action in the system under test
+* Send a specific type of request to the Inferno session API
+
+In order to handle a workflow like this, Inferno must be able to handle the
 incoming request and associate it with a particular testing session. Inferno
 accomplishes this with the `wait` status and special routes for resuming tests.
 
@@ -30,6 +35,14 @@ method. `wait` takes three arguments:
 While a test is waiting, a "User Action Required" modal dialog is displayed to the user with the message defined in the `wait` call. The modal includes a **Cancel** button, which can be used to end the test run if the tester does not want to or cannot complete the requested action.
 
 The "User Action Required" modal displays a live countdown of the remaining seconds before the timeout is reached. When the countdown reaches zero, the test run expires and will no longer respond to incoming requests — the only option at that point is to click **CANCEL** to end the run.
+
+{% include figure.html
+    file="wait-modal.png"
+    alt="Example of the Wait modal"
+    caption="The 'User Action Required' modal displayed while a test is in the wait state"
+    description="A screenshot of the User Action Required modal dialog, showing a message to the user, a live countdown timer, and a Cancel button"
+    maxwidth="100%"
+%}
 
 [`wait` in the API
 docs](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
