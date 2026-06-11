@@ -388,7 +388,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#simulation_verification-insta
 ## Attestation
 **Description**: Flag a test as requiring user attestation of a behavior that Inferno cannot
 independently verify. Tests flagged in this way rely on the tester's confirmation rather than
-automated verification. They must still pass (via attestation) to complete the test session.
+automated verification.
 
 Tests with this flag will be rendered in the UI with the following badge:
 {% include figure.html 
