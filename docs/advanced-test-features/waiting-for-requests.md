@@ -9,10 +9,15 @@ section: docs
 Some testing workflows required testing to pause until an incoming request is
 received. For example, the OAuth2 workflow used by the SMART App Launch IG
 involves redirecting the user to an authorization server, which then redirects
-the user back to the application that requested authorization. In
-order to handle a workflow like this, Inferno must be able to handle the
-incoming request and associate it with a particular testing session. Inferno
-accomplishes this with the `wait` status and special routes for resuming tests.
+the user back to the application that requested authorization.
+
+More generally,
+Inferno execution must pause and listen for requests whenever an external action is needed, such as when the tester is asked to
+* Perform an action in the system under test, e.g., authorize access in the workflow above,
+* Send one or more requests to Inferno, e.g., send a request to an Inferno-hosted FHIR API, or
+* Attest that a requirement has been met.
+
+When waiting, Inferno needs to know how to identify the session the incoming request is for and when to restart its own execution.
 
 ## Wait Method
 A test is instructed to wait for an incoming request using the
@@ -23,7 +28,21 @@ method. `wait` takes three arguments:
   the incoming request.
 * `message` - A markdown string displayed to the user while the
   test is waiting.
-* `timeout` - The number of seconds the test will wait.
+* `timeout` - The number of seconds the test will wait. If `timeout` is not specified, it defaults to **300 seconds**.
+
+#### Wait Modal
+
+While a test is waiting, a "User Action Required" modal dialog is displayed to the user with the message defined in the `wait` call. The modal includes a **CANCEL** button, which can be used to end the test run if the tester does not want to or cannot complete the requested action.
+
+The "User Action Required" modal displays a live countdown of the remaining seconds before the timeout is reached. When the countdown reaches zero, the test run expires and will no longer respond to incoming requests — the only option at that point is to click **CANCEL** to end the run.
+
+{% include figure.html
+    file="wait-modal.png"
+    alt="Example of the Wait modal"
+    caption="The 'User Action Required' modal displayed while a test is in the wait state"
+    description="A screenshot of the User Action Required modal dialog, showing a message to the user with options on how to progress the test, a live countdown timer, and a Cancel button"
+    maxwidth="100%"
+%}
 
 [`wait` in the API
 docs](/inferno-core/docs/Inferno/DSL/Results.html#wait-instance_method)
