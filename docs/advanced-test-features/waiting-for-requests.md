@@ -17,7 +17,7 @@ Inferno execution must pause and listen for requests whenever an external action
 * Send one or more requests to Inferno, e.g., send a request to an Inferno-hosted FHIR API, or
 * Attest that a requirement has been met.
 
-When waiting, Inferno needs to know how to identify the session the incoming request is for and when to restart its own execution. Inferno
+When waiting, Inferno needs to know how to identify the session the incoming request is for and when to restart its own execution.
 
 ## Wait Method
 A test is instructed to wait for an incoming request using the
