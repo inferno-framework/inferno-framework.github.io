@@ -211,6 +211,9 @@ docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
 ### Example
 In the example below, an endpoint is defined which waits for an incoming
 request with a particular bearer token and returns a FHIR Patient resource.
+After a request is received at this endpoint with the specified bearer token
+during the "wait" test, Inferno will continue execution and verify that
+Inferno's simulated response contains a conformant Patient resource.
 
 ```ruby
 class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
@@ -248,6 +251,7 @@ class AuthorizedRequestSuite < Inferno::TestSuite
 
   group do
     title 'Authorized Request Group'
+    run_as_group
 
     test do
       title 'Wait for authorized request'
@@ -258,8 +262,20 @@ class AuthorizedRequestSuite < Inferno::TestSuite
         wait(
           identifier: bearer_token,
           message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
-                    "at `#{Inferno::Application['base_url']}/custom/authorized_suite/authorized_endpoint`"
+                    "at `#{Inferno::Application['base_url']}/custom/Patient/<id>`"
         )
+      end
+    end
+
+    test do
+      title 'Check that the response contains a valid Patient resource'
+      simulation_verification
+
+      run do
+        load_tagged_requests('authorized')
+        resource = FHIR.from_contents(request.response_body)
+        assert_resource_type(:patient)
+        assert_valid_resource
       end
     end
   end
