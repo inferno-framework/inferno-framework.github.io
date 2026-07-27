@@ -161,7 +161,7 @@ requests, such as:
 - handling multiple incoming requests with customized logic to determine when to
   resume the test, or
 - returning particular responses to incoming requests rather than redirecting
-  the user the UI.
+  the user to the UI.
 Like `resume_test_route`, `suite_endpoint`
 takes a method (such as `:get` or `:post`), and a path for the final url
 fragment in the route. All of the other configuration, however, is handled by an
@@ -170,18 +170,37 @@ fragment in the route. All of the other configuration, however, is handled by an
 A `SuiteEndpoint` is based on a [Hanami
 endpoint](https://github.com/hanami/controller/tree/v2.0.0), so much of the
 functionality is the same. In a `SuiteEndpoint`, `request` and `response` return
-Hanami request/response objects. There are several methods that should be
-overridden in a `SuiteEndpoint`:
-- `test_run_identifier` - This method needs to return the identifier value
+Hanami request/response objects. There are several methods that can be
+overridden to control the behavior of a `SuiteEndpoint`:
+- `test_run_identifier` (Required) - This method needs to return the identifier value
   specified by `wait` in the waiting test based on information in the incoming
   request
-- `make_response` - This method constructs the response.
-- `tags` - This method defines which tags should be apllied to the request.
-- `name` - This method defines a name for the request.
-- `update_result` - This method updates the test result. The tests will resume
-  once the result has been updated to have a result other than `waiting`.
-- `persist_result?` - When `true` (which is the default) the incoming request
-  will be persisted and included in the list of requests for the test in the UI.
+- `make_response` (Required) - This method constructs the response.
+- `persist_result?` (Optional) - When `true` (which is the default) the incoming request
+  will be persisted and accessible to other tests using the associated tags and/or
+  name.
+- `tags` (Optional) - This method defines which tags, if any, should be applied
+  to the request for use in retrieving the request later. If
+  neither tags nor a name are associated with a request, it will not be retrievable.
+- `name` (Optional) - This method defines a name for the request for use
+  in associating the request with an Inferno test using `uses_request`. If
+  neither tags nor a name are associated with a request, it will not be retrievable.
+- `update_result` (Optional) - Override this method to (conditionally) update the waiting
+  test's result after processing a request. Updating the result to anything other
+  than `waiting` will cause Inferno to resume the test run. See the example below
+  for how to update the result.
+- `error_response_format` (Optional) - Not a method, but can be set to `:operation_outcome`
+  to cause error responses to be returned as FHIR OperationOutcome resources.
+  See the syntax in the example below.
+- `test_run_identifier_location_description` (Optional) - provide a short narrative
+  string describing where this endpoint looks for the `test_run_identifier`. If provided,
+  the string will be used in creating error messages when the target session cannot be
+  found. When used in errors, it will follow the text "found in".
+- `no_session_response` (Optional) - provide a custom error response, including the
+  response body, content type, and http response code, for Inferno to use when no
+  session was found, either because of a missing `test_run_identifier` or one not
+  associated with a session. Use when the standard text and OperationOutcome options
+  are not correct, such as for OAuth endpoints.
 
 [`suite_endpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_method)
@@ -199,6 +218,9 @@ class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
   def test_run_identifier
     request.headers['authorization']&.delete_prefix('Bearer ')
   end
+
+  # return a FHIR OperationOutcome on errors
+  error_response_format :operation_outcome
 
   # Return a json FHIR Patient resource
   def make_response
