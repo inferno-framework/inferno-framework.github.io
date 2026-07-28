@@ -56,3 +56,9 @@ verifying and Inferno displays these associations to users within the
 ## [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution.html)
 The Inferno CLI supports executing suites using a yaml configuration format
 instead of the UI using the `inferno execute_script` command.
+
+## [Instrumenting Test Execution](/docs/advanced-test-features/instrumenting-test-execution.html)
+Inferno runs a whole test run in a single call stack, so instrumentation applied
+around the runner covers the entire run rather than individual tests. This page
+shows how to use the `around_test` hook to scope tracing, metrics, or logging to
+one test at a time.
