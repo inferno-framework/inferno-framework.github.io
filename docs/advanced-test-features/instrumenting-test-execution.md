@@ -101,6 +101,8 @@ correlated by the test run id:
 
 ```ruby
 module PerTestTraceRoot
+  SPAN_NAME = 'inferno.test'.freeze
+
   def around_test(test)
     tracer = OpenTelemetry.tracer_provider.tracer('inferno')
 
@@ -108,12 +110,14 @@ module PerTestTraceRoot
     # rather than becoming another branch of the run's trace.
     OpenTelemetry::Context.with_current(OpenTelemetry::Context::ROOT) do
       tracer.in_span(
-        "inferno.test #{test.id}",
+        SPAN_NAME,
         attributes: {
           'inferno.test_run_id' => test_run.id,
+          'inferno.test_session_id' => test_session.id,
           'inferno.test_id' => test.id,
-          'inferno.test_session_id' => test_session.id
-        }
+          'inferno.test_short_id' => test.short_id,
+          'inferno.test_title' => test.title
+        }.compact
       ) do
         super
       end
@@ -128,6 +132,41 @@ Each test is now a bounded trace on its own, and searching for
 `inferno.test_run_id` returns every test in a run. OpenTelemetry is used here
 only as an illustration; the hook has no knowledge of it, and the same shape
 works for a metrics client, a timer, or a log context.
+
+### Keep the test out of the span name
+
+Note that the span above is given a constant name and everything identifying it
+is an attribute. This is worth doing deliberately, because the span name is not
+just a label: tracing backends treat it as a low-cardinality dimension and
+generate metrics keyed on it. Grafana Tempo's metrics generator, for example,
+emits `traces_spanmetrics_*` series with the span name as a dimension.
+
+Naming the span after the test therefore creates one metric series per test, per
+suite, per suite version. On one deployment of a large test kit that produced
+over 1,400 distinct span names, and every one of those series was useless by
+construction: a test emits a single span per run, so a per-test series holds one
+observation and a `rate()` or `increase()` over it returns zero. Collapsing the
+name to a constant removed all of that cardinality and, as a side effect, turned
+the one remaining series into a genuinely useful one, total test execution time
+across the deployment.
+
+Attributes have no such constraint. Filtering, grouping and table columns all
+work on them, so nothing is lost by moving identity out of the name.
+
+A related point if the override records the outcome: reserve error status for
+results of `'error'`. A test result of `'fail'` is the expected outcome of
+testing a non-conformant system, so marking those spans as errors puts ordinary
+conformance failures into error-rate panels and alerts.
+
+### What the block covers
+
+`around_test` wraps the whole of `#run_test`, which includes loading inputs,
+constructing the test instance, running it, saving outputs, and persisting the
+result along with its messages and requests. A duration measured with this hook
+is therefore the wall time a user waited for that test, which is usually what you
+want, but it is not purely the time spent executing the test body. For a test
+that makes many HTTP requests, persisting them can be a substantial share of it.
+If you need the two separated, instrument `#persist_result` as well.
 
 ## Other Uses
 
