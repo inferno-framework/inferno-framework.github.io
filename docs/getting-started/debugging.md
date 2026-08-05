@@ -143,3 +143,10 @@ You can also even see which test will be run first.
 [3] pry(main)> suite.groups.first.tests
 => [#<Inferno::Entities::Test @id="test_suite_template-capability_statement-capability_statement_read", @short_id="1.01", @title="Read CapabilityStatement">]
 ```
+
+## Instrumenting a Deployment
+
+The techniques above are for investigating a single test interactively while you
+write it. To observe test runs in a deployed instance instead, for example by
+emitting a trace, a span, or a timing metric for each test that runs, see
+[Instrumenting Test Execution](/docs/advanced-test-features/instrumenting-test-execution.html).
