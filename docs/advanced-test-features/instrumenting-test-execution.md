@@ -63,9 +63,9 @@ belongs to.
 
 An override must run the test, so it has to:
 
-- **Call `super` (or `yield`) exactly once.** An override that never runs the
-  test silently skips it and records no result for it. An override that runs it
-  twice runs the test twice, including any HTTP requests it makes.
+- **Call `super` exactly once.** An override that never runs the test silently
+  skips it and records no result for it. An override that runs it twice runs
+  the test twice, including any HTTP requests it makes.
 - **Return the value it gets back unchanged.** That value is the test's result,
   and the runner uses it to roll up group and suite results. Using `ensure`, as
   above, keeps the return value intact; assigning `super` to a variable and
@@ -80,102 +80,54 @@ file under your test kit's `lib` directory that is required from your test kit's
 main file will be picked up by the web server, the background worker, and the
 CLI.
 
-## Example: One Trace Per Test
+## Usage Best Practices
 
-The motivating case for this hook is distributed tracing. If a deployment
-instruments the background worker, for example with OpenTelemetry
-auto-instrumentation of Sidekiq, then the span for the job becomes the root of
-the trace, and every request made by every test in the run nests underneath it.
-An entire run then arrives at the trace store as a single trace that can be many
-minutes long and, in our case, tens of thousands of spans. That is a problem
-regardless of which backend is used:
+- **When implementing distributed tracing, use the hook to start a separate
+  trace per test.** A whole run instrumented as one operation produces a single
+  very long trace, which trace stores truncate and trace UIs cannot render
+  usefully. Detach from the enclosing context inside the override so each test
+  becomes its own bounded trace, correlated by the test run id. For example,
+  with OpenTelemetry:
 
-- A trace is meant to represent one logical operation, and no trace UI renders a
-  multi-minute waterfall of thousands of spans in a way anyone can read.
-- Trace stores cap the size of a single trace (for example, Grafana Tempo's
-  `max_bytes_per_trace` defaults to 5 MB) and drop spans past the limit, so
-  the end of a long run is lost.
-
-Detaching the context inside `around_test` gives one trace per test instead,
-correlated by the test run id:
-
-```ruby
-module PerTestTraceRoot
-  SPAN_NAME = 'inferno.test'.freeze
-
-  def around_test(test)
-    tracer = OpenTelemetry.tracer_provider.tracer('inferno')
-
-    # Detach from the enclosing job span so that each test starts its own trace
-    # rather than becoming another branch of the run's trace.
-    OpenTelemetry::Context.with_current(OpenTelemetry::Context::ROOT) do
-      tracer.in_span(
-        SPAN_NAME,
-        attributes: {
-          'inferno.test_run_id' => test_run.id,
-          'inferno.test_session_id' => test_session.id,
-          'inferno.test_id' => test.id,
-          'inferno.test_short_id' => test.short_id,
-          'inferno.test_title' => test.title
-        }.compact
-      ) do
-        super
+  ```ruby
+  module PerTestTraceRoot
+    def around_test(test)
+      tracer = OpenTelemetry.tracer_provider.tracer('inferno')
+      OpenTelemetry::Context.with_current(OpenTelemetry::Context::ROOT) do
+        tracer.in_span(
+          'inferno.test',
+          attributes: {
+            'inferno.test_run_id' => test_run.id,
+            'inferno.test_id' => test.id
+          }
+        ) do
+          super
+        end
       end
     end
   end
-end
 
-Inferno::TestRunner.prepend(PerTestTraceRoot)
-```
+  Inferno::TestRunner.prepend(PerTestTraceRoot)
+  ```
 
-Each test is now a bounded trace on its own, and searching for
-`inferno.test_run_id` returns every test in a run. OpenTelemetry is used here
-only as an illustration; the hook has no knowledge of it, and the same shape
-works for a metrics client, a timer, or a log context.
+- **Give spans a generic name and put the test's identity in attributes**, as
+  in the example above. Tracing backends treat the span name as a
+  low-cardinality dimension and generate metrics keyed on it, so naming spans
+  after tests creates one useless metric series per test. A constant name
+  allows aggregation across tests; attributes still support filtering and
+  grouping by test.
 
-### Keep the test out of the span name
+- **If the override records outcomes, reserve error status for results of
+  `'error'`.** A `'fail'` result is the expected outcome of testing a
+  non-conformant system, not an error.
 
-Note that the span above is given a constant name and everything identifying it
-is an attribute. This is worth doing deliberately, because the span name is not
-just a label: tracing backends treat it as a low-cardinality dimension and
-generate metrics keyed on it. Grafana Tempo's metrics generator, for example,
-emits `traces_spanmetrics_*` series with the span name as a dimension.
+- **`around_test` covers test execution and the storage of results and
+  requests made during the execution.** A duration measured with the hook is
+  the wall time a user waited for the test, not purely the test body; for a
+  request-heavy test, persistence can be a substantial share. Instrument
+  `#persist_result` as well to separate the two.
 
-Naming the span after the test therefore creates one metric series per test, per
-suite, per suite version. On one deployment of a large test kit that produced
-over 1,400 distinct span names, and every one of those series was useless by
-construction: a test emits a single span per run, so a per-test series holds one
-observation and a `rate()` or `increase()` over it returns zero. Collapsing the
-name to a constant removed all of that cardinality and, as a side effect, turned
-the one remaining series into a genuinely useful one, total test execution time
-across the deployment.
-
-Attributes have no such constraint. Filtering, grouping and table columns all
-work on them, so nothing is lost by moving identity out of the name.
-
-A related point if the override records the outcome: reserve error status for
-results of `'error'`. A test result of `'fail'` is the expected outcome of
-testing a non-conformant system, so marking those spans as errors puts ordinary
-conformance failures into error-rate panels and alerts.
-
-### What the block covers
-
-`around_test` wraps the whole of `#run_test`, which includes loading inputs,
-constructing the test instance, running it, saving outputs, and persisting the
-result along with its messages and requests. A duration measured with this hook
-is therefore the wall time a user waited for that test, which is usually what you
-want, but it is not purely the time spent executing the test body. For a test
-that makes many HTTP requests, persisting them can be a substantial share of it.
-If you need the two separated, instrument `#persist_result` as well.
-
-## Other Uses
-
-The hook is not specific to tracing. It is also a reasonable place to:
-
-- emit a per-test duration metric, as in the first example above
-- add the current test and run to a logging context, so that log lines emitted
-  while a test runs can be attributed to it
-- report progress for long-running suites to something outside Inferno
-
-Because it wraps a single test rather than the whole run, none of these need to
-know how the suite is structured or how the runner recurses through it.
+- **The hook is not specific to tracing.** The same shape works for a per-test
+  duration metric, a logging context that attributes log lines to the running
+  test, or progress reporting for long suites, and none of these need to know
+  how the suite is structured or how the runner recurses through it.
