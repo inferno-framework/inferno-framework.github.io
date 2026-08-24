@@ -8,11 +8,7 @@ section: docs
 # FHIR Resource Validation
 [FHIR Resource validation](https://www.hl7.org/fhir/validation.html) is
 performed by the [HL7® FHIR Java Validator](https://github.com/hapifhir/org.hl7.fhir.core).
-Two validator "wrapper" services are currently included in the Inferno framework:
- - [HL7 Validator Wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper)
-   - Used to validate resources as part of the test suite
- - [Inferno Validator Wrapper](https://github.com/inferno-framework/fhir-validator-wrapper) (deprecated)
-   - Used to support the Validator UI until the UI is transitioned to use the HL7 service
+accessed via the [HL7 Validator Wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper).
 
 When creating a Test Kit based on the [Inferno
 Template](https://github.com/inferno-framework/inferno-template), IG packages do
@@ -37,9 +33,9 @@ fhir_resource_validator :optional_validator_name do
   url ENV.fetch('FHIR_RESOURCE_VALIDATOR_URL')
 
   # Specify the IG(s) to validate resources against
- igs 'identifier#version' # Use this method for published IGs/versions
- igs 'igs/filename.tgz'   # Use this otherwise
- igs 'ig1#v', 'ig2#v'     # Specify all IGs in one line if multiple are needed
+  igs 'identifier#version' # Use this method for published IGs/versions
+  igs 'igs/filename.tgz'   # Use this otherwise
+  igs 'ig1#v', 'ig2#v'     # Specify all IGs in one line if multiple are needed
 end
 ```
 
@@ -51,6 +47,89 @@ and attempting to validate against specific profile URLs will result in errors.
 
 [`fhir_resource_validator` in the API
 docs](/inferno-core/docs/Inferno/DSL/FHIRResourceValidation/ClassMethods.html#fhir_resource_validator-instance_method)
+
+### Controlling Validator Behavior
+
+The HL7® FHIR Java Validator used by Inferno includes many
+[options and flags that control its behavior](https://confluence.hl7.org/spaces/FHIR/pages/35718580/Using+the+FHIR+Validator).
+Some of these can be specified within the HL7 validator-wrapper's API. To tell Inferno
+which flags and values to pass when validating resources, specify them as properties within a
+`validation_context` block in the validator definition. For example, the following
+definition tells the validator to flag all unknown extensions as errors:
+
+```ruby
+fhir_resource_validator :no_custom_extensions do
+  validation_context do
+    extensions [] # no extensions not in the spec
+  end
+end
+```
+
+By default, Inferno provides the following key-value pairs in the context when invoking the
+validator. Providing specific values within a validator definition will override them:
+
+- `"sv": "4.0.1'"`: targets the 4.0.1 version of FHIR
+- `"doNative": false`: disables validation of xml, json, and RDF content against relevant non-FHIR schemas.
+- `"extensions": ["any"]`: custom (unknown) extensions are allowed
+- `"disableDefaultResourceFetcher": true`: Limits the validator to use IG definitions loaded explicitly
+    by Inferno and declared dependencies.
+
+Note that at this time, validator behavior flags are associated with validator definitions
+only and cannot be specified as a part of Inferno assertions and dsl methods described
+below that trigger validation. If different validation context parameters need to be sent,
+define additional validator instances to use for them and specify the correct validator
+instance when performing the validation.
+
+### Controlling Terminology Validation Behavior
+
+When making `$validate-code` calls against the terminology server, the FHIR validator
+can pass along additional `parameter` entries. This can be used, for example to force
+the use of more recent code system versions that correspond to those actually loaded on
+the target terminology server.
+
+Inferno validator definitions can specify the additional `parameter` entries to provide
+as a json Parameters resource either within a particular validator definition or
+for all validator defintions using an environment variable.
+
+To specify the additional `parameter` entries to use for a particular validator instance
+provide an `expansion_parameters` value within the validator definition. The value can
+either be a hash representation of a Parameters resource, or it can be a string referencing
+a file available within the gem that contains a json Parameters resource. For example,
+the following definition provides the Parameters directly as a hash and forces the use
+of particular versions of the RxNorm and SNOMED code systems:
+
+```ruby
+fhir_resource_validator :fixed_code_system_versions do
+  validation_context do
+    expansion_parameters {
+      "resourceType":"Parameters",
+      "parameter": [
+        {
+          "name":"force-system-version",
+          "valueCanonical":"http://www.nlm.nih.gov/research/umls/rxnorm|03022026"
+        },
+        {
+          "name":"force-system-version",
+          "valueCanonical":"http://snomed.info/sct|http://snomed.info/sct/731000124108/version/20250901"
+        }
+      ]
+    }
+  end
+end
+```
+
+Additional `parameters` entries can also be defined at the [deployment](https://inferno-framework.github.io/docs/deployment/) /
+[platform](https://inferno-framework.github.io/docs/inferno-platforms.html) level
+using the `FHIR_RESOURCE_VALIDATOR_EXPANSION_PARAMETERS` environment variable.
+If specified, all validator instances that do not specify their own `expansion_parameters`
+value will use the Parameters resource specified there when communicating with the validator.
+Like the `expansion_parameters` validator definition property, the value of the 
+environment variable can either be a raw json string or a filepath referencing a file
+available within the deployment that contains a json Parameters resource.
+
+NOTE: there is currently a bug in the HL7 validator that causes `parameter` entries
+with the same name as previous entries to be dropped. The HL7 validator team is
+working on a fix.
 
 ## Validating FHIR Resources
 The `resource_is_valid?` method will validate a FHIR resource and add any
@@ -185,30 +264,6 @@ Each validator issue object in the `validator_response_details` array contains:
 - **`resource`** (FHIR::Model): The resource being validated
 - **`raw_issue`** (Hash): The complete raw issue hash from the validator service
 
-# MustSupport Test using the Evaluator
-
-Checking the presence of Must Support elements is a common feature across test kits and
-its implementation has been copy-and-pasted between them.
-To improve the productivity of developing test kits, the Evaluator CLI is built into
-inferno core, and the MustSupport checks can also be invoked in the context of a test kit
-by a single method.
-
-To invoke the MustSupport checks, add the following code into test:
-
-```
-assert_must_support_elements_present(resources, profile_url, metadata)
-```
-
-Refer to the assertion API documentation below:
-
-[assert_must_support_elements_present](https://inferno-framework.github.io/inferno-core/docs/Inferno/DSL/Assertions.html#assert_must_support_elements_present-instance_method)
-
-Refer to the examples used in IGs below:
-
-[CARIN for BlueButton IG Test kit](https://github.com/inferno-framework/carin-for-blue-button-test-kit/blob/main/lib/carin_for_blue_button_test_kit/must_support_test.rb)
-
-[International Patient Summary IG Test kit](https://github.com/inferno-framework/ipa-test-kit/blob/main/lib/ipa_test_kit/must_support_test.rb)
-
 ## Validating Objects Against Logical Models
 
 FHIR also supports the definition of logical models that can be used to check the structure of generic objects.
@@ -246,3 +301,21 @@ end
 
 [`assert_conformance_to_logical_model` in the API
 docs](/inferno-core/docs/Inferno/DSL/Assertions.html#assert_conformance_to_logical_model-instance_method)
+
+# Checking for Must Support Element Presence
+
+Checking the presence of Must Support elements across a collection of resources is a common
+validation step performed in many test kits. Inferno provides a standard assertion that takes a
+list of resources and either a profile url or a pre-computed representation of the profile metadata that
+includes details on its must support elements:
+
+```
+assert_must_support_elements_present(resources, profile_url)
+assert_must_support_elements_present(resources, nil, metadata: pre_extracted_metadata)
+```
+
+If provided, the `metadata` input should be an instance of the [ProfileMetadata class](/inferno-core/docs/Inferno/DSL/ProfileMetadata.html).
+If not provided, the metadata will be extracted for the indicated profile url on the fly using
+the [MustSupportMetadataExtractor class](/inferno-core/docs/Inferno/DSL/MustSupportMetadataExtractor.html).
+
+[`assert_must_support_elements_present` in the API docs](/inferno-core/docs/Inferno/DSL/Assertions.html#assert_must_support_elements_present-instance_method)
