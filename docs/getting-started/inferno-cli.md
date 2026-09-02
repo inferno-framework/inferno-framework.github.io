@@ -236,18 +236,22 @@ Inferno provides two CLI options for executing Inferno tests via the command lin
 ### Complex Scripted Execution
 
 The `inferno execute_script` CLI command can be used to execute complex Inferno runs from the command line
-which are specified in a [script configuration file](/docs/advanced-test-features/scripting-execution#creating-script-configuration-files).
-By default, scripts are executed against the local running Inferno instance (both background services
+which are specified in [script configuration files](/docs/advanced-test-features/scripting-execution#creating-script-configuration-files).
+When running the command, optionally specify the path to a specific configuration file or a pattern
+identifying multiple scripts to run in serial. By default, all `.yaml` files defined under the test kit's
+`execution_scripts` folder will be executed.
+
+Scripts are executed against the local running Inferno instance by default (both background services
 and the test kit must be running). Execution can be performed against a remote Inferno instance by providing
 the root Inferno url using the `-I` option. To reduce the risk of running unsafe commands
 unintentionally, the `--allow-commands` flag must be passed when the executed script
 uses `command:` actions to execute separately defined scripts. See [Defining, Executing, and Securing Complex Commands](/docs/advanced-test-features/scripting-execution#defining-executing-and-securing-complex-commands) for additional details.
 
-For example, the following command would run the script defined in file `g10_with_commands.yaml`,
+For example, the following command would run the script defined in file `execution_scripts/g10_with_commands.yaml`,
 including `command:` actions, on the instance of
 Inferno deployed to [inferno.healthit.gov](https://inferno.healthit.gov/suites):
 ```
-bundle exec inferno execute_script g10_with_commands.yaml -I https://inferno.healthit.gov/suites --allow-commands
+bundle exec inferno execute_script execution_scripts/g10_with_commands.yaml -I https://inferno.healthit.gov/suites --allow-commands
 ```
 
 See [Scripting Suite Execution](/docs/advanced-test-features/scripting-execution) for details on how to
