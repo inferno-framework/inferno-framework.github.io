@@ -131,6 +131,27 @@ NOTE: there is currently a bug in the HL7 validator that causes `parameter` entr
 with the same name as previous entries to be dropped. The HL7 validator team is
 working on a fix.
 
+### Logging Validator Calls
+
+To log details on calls made to the validator during Inferno test execution, set the
+`FHIR_RESOURCE_VALIDATOR_DEBUG_LOGGING` environment value to `true`. This will
+cause some details of all FHIR Validation requests to be logged to the main
+Inferno log, including:
+- The Inferno context: Details around the Inferno code that triggered the call,
+  including the the suite, the validator name, the session id, and the test id.
+- The validator configuration inputs: How Inferno configured the validator
+  for the call, including the validation context and any expansion parameters.
+- The issues returned: the relevant details of the issues returned and whether
+  they were filtered by the validator configuration in Inferno.
+
+Note that the body of the validation request is not included.
+
+Additional logging by the validator itself of requests to the terminology server
+can be enabled by setting the `FHIR_RESOURCE_VALIDATOR_TX_LOG` environment variable
+to a log location on the Docker container running the validator service. This
+log can be accessed there or the file can be mapped to a local file location 
+in the Docker compose file for easier access.
+
 ## Validating FHIR Resources
 The `resource_is_valid?` method will validate a FHIR resource and add any
 validation messages to the runnable. You can add a prefix to all messages
