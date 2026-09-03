@@ -59,7 +59,8 @@ like this:
 - `execution_scripts` - This folder is for scrips that execute test suites against
   running Inferno services like the HL7 Validator. The template includes an example
   script for the sample test suite which will execute on each PR. See [CI/CD Usage](docs/ci-cd-usage.html#using-the-inferno-execute_script-cli-for-complex-orchestration)
-  for additional information.
+  for additional information. If you are not planning to use the execution script
+  functionality, remove the `.yaml` file from this directory.
 - `inferno_template.gemspec` - This file controls how your tests are packaged
   up as a distributable Ruby gem. This is also where you can add additional Ruby
   gems if you need them.
@@ -80,7 +81,8 @@ like this:
   See [Requirements](/docs/advanced-test-features/requirements.html) for more
   information on how to use the requirements tools. Note that there is also
   a GitHub workflow that verifies that generated requirement components are in sync
-  with the source spreadsheets.
+  with the source spreadsheets. If you are not planning to use the requirements
+  functionality, remove the `.xlsx` file from this directory.
 - `spec` - This folder is for unit tests. The template includes an example unit test for the sample test suite written in rspec.
 - `worker.rb` - This is the main file for Inferno's test runner process.
 
