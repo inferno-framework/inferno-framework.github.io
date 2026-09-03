@@ -23,7 +23,7 @@ the contents are automatically deleted prior to loading.
 ## Defining Validators
 The Inferno Template defines one basic validator in the suite. The validator must be configured to
 reference the IG being tested against. IGs may be referenced by package identifier
-(for example, `'hl7.fhir.us.core#1.0.0'`) if they are published, or by filename.
+(for example, `'hl7.fhir.us.core#6.1.0'`) if they are published, or by filename.
 It is not necessary to alter the template suite further unless you need multiple validators or want to add
 [extra validator behaviors](/docs/writing-tests/fhir-validation.html#performing-additional-validation). Validators are defined with `fhir_resource_validator`:
 
@@ -124,10 +124,6 @@ value will use the Parameters resource specified there when communicating with t
 Like the `expansion_parameters` validator definition property, the value of the 
 environment variable can either be a raw json string or a filepath referencing a file
 available within the deployment that contains a json Parameters resource.
-
-NOTE: there is currently a bug in the HL7 validator that causes `parameter` entries
-with the same name as previous entries to be dropped. The HL7 validator team is
-working on a fix.
 
 ### Logging Validator Calls
 

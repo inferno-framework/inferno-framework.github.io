@@ -96,16 +96,14 @@ information and options.
 {:toc-skip}
 
 1. Run `bundle exec inferno services start` to start the background services. By
-   default, these include nginx, Redis, the FHIR validator service, and the FHIR
-   validator UI. You can check to make sure they're running by running `docker container ls` in the
+   default, these include nginx, Redis, and the FHIR validator service.
+   You can check to make sure they're running by running `docker container ls` in the
    command line, or checking the "Container" tab in Docker Desktop.
 1. Run `bundle exec inferno start --watch` to start Inferno and have it reload any time a file
    changes. Remove the `watch` flag if you would prefer to manually restart
    Inferno.
 1. Navigate to `http://localhost:4567` to access Inferno. You should see two test groups on the side
    of the page: "Capability Statement" and "Patient Tests".
-   To access the FHIR resource validator, navigate to
-   `http://localhost/validator`.
 1. When you are done, run `bundle exec inferno services stop` to stop the
    background services.
 
@@ -130,8 +128,6 @@ information and options.
 1. Run the `./run.sh` script to start Inferno.
 - Navigate to `http://localhost` to access Inferno and run test
   suites.
-- Navigate to `http://localhost/validator` to access a
-  standalone validator that can be used to validate individual FHIR resources.
    
 
 ### Next Steps

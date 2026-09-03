@@ -37,7 +37,7 @@ The easiest way to run a PostgreSQL service is by adding it to the
   inferno:
     # ...
     depends_on:
-      - validator_service
+      - hl7_validator_service
       - inferno_db
   worker:
     # ...
