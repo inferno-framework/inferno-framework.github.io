@@ -27,9 +27,5 @@ By default, a deployment of Inferno includes the following services:
 - `worker` - The inferno web process which executes the tests
 - `redis` - Message broker that handles communication between the inferno web and worker
   processes
-- `validator_service` - A [JSON API wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper) 
+- `hl7_validator_service` - A [JSON API wrapper](https://github.com/hapifhir/org.hl7.fhir.validator-wrapper) 
   around the HL7 FHIR validator which Inferno uses to validate FHIR resources
-- `fhir_validator_app` - (Optional) A [web front end](https://github.com/inferno-framework/fhir-validator-app) for the validator
-  service which allows users to easily perform standalone FHIR resource validation. Nothing depends
-  on this service, so it can be safely removed from `docker-compose.yml` if you
-  don't need to provide standalone FHIR resource validation.
