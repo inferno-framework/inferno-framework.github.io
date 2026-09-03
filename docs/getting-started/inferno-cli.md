@@ -238,8 +238,9 @@ Inferno provides two CLI options for executing Inferno tests via the command lin
 The `inferno execute_script` CLI command can be used to execute complex Inferno runs from the command line
 which are specified in [script configuration files](/docs/advanced-test-features/scripting-execution#creating-script-configuration-files).
 When running the command, optionally specify the path to a specific configuration file or a pattern
-identifying multiple scripts to run in serial. By default, all `.yaml` files defined under the test kit's
-`execution_scripts` folder will be executed.
+(in quotes) identifying multiple scripts to run in serial. When no pattern or file is specified,
+all `.yaml` files defined under the test kit's `execution_scripts` folder will be executed
+as if the pattern `"execution_scripts/**/*.yaml"` was provided.
 
 Scripts are executed against the local running Inferno instance by default (both background services
 and the test kit must be running). Execution can be performed against a remote Inferno instance by providing
