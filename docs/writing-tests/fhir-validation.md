@@ -100,21 +100,19 @@ of particular versions of the RxNorm and SNOMED code systems:
 
 ```ruby
 fhir_resource_validator :fixed_code_system_versions do
-  validation_context do
-    expansion_parameters {
-      "resourceType":"Parameters",
-      "parameter": [
-        {
-          "name":"force-system-version",
-          "valueCanonical":"http://www.nlm.nih.gov/research/umls/rxnorm|03022026"
-        },
-        {
-          "name":"force-system-version",
-          "valueCanonical":"http://snomed.info/sct|http://snomed.info/sct/731000124108/version/20250901"
-        }
-      ]
-    }
-  end
+  expansion_parameters({
+    "resourceType":"Parameters",
+    "parameter": [
+      {
+        "name":"force-system-version",
+        "valueCanonical":"http://www.nlm.nih.gov/research/umls/rxnorm|03022026"
+      },
+      {
+        "name":"force-system-version",
+        "valueCanonical":"http://snomed.info/sct|http://snomed.info/sct/731000124108/version/20250901"
+      }
+    ]
+  })
 end
 ```
 
