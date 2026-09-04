@@ -20,14 +20,8 @@ can be built into [CI/CD Pipelines](/docs/ci-cd-usage#using-the-inferno-execute_
 ## Execution
 
 Three standard options for executing scripts include:
-- Executing a specific script using the `execute_script` CLI: See the [CLI documentation](/docs/getting-started/inferno-cli#complex-scripted-execution)
+- Executing one or more scripts using the `execute_script` CLI: See the [CLI documentation](/docs/getting-started/inferno-cli#complex-scripted-execution)
   for details on the command.
-- Executing scripts defined in the test kit's `execution_scripts` directory using
-  the `bundle exec rake execute_scripts:run_all` command. Two environment variables may be set in addition:
-  - `INFERNO_BASE_URL=<inferno_host>`: set to run the scripts against a specific Inferno host.
-    If not provided, then the local Inferno host will be used.
-  - `FILTER=execution_scripts/<directory>/*.yaml`: provide a different filter to use to identify
-    the scripts to execute. If not provided, the default is `execution_scripts/**/*.yaml`.
 - Executing all scripts defined in the test kit's `execution_scripts` directory within GitHub,
   either in response to a commit or a manual trigger. See 
   [CI / CD Usage](/docs/ci-cd-usage#using-the-inferno-execute_script-cli-for-complex-orchestration)
@@ -414,10 +408,11 @@ are important considerations when using this feature:
 The following Test Kits include scripts that can be executed. To execute any of them
 1. Checkout the repository locally and set it up to be run in developer mode
 2. Either
-   - Run all the defined scripts under the by executing `bundle exec rake execute_scripts:run_all`, or
+   - Run all the defined scripts under the local `execution_scripts` directory by executing
+     `bundle exec inferno execute_script`, or
    - Locate the a single target script configuration file under the `execution_scripts` directory
-       and run `bundle exec inferno execute_script execution_scripts/path/to/script_config_file.yaml`
-       pointing to the desired configuration file.
+      and run `bundle exec inferno execute_script execution_scripts/path/to/script_config_file.yaml`
+      pointing to the desired configuration file.
 
 - [**Inferno Template**](https://github.com/inferno-framework/inferno-template): 
   New Inferno Test Kits created from the [inferno-template repository](https://github.com/inferno-framework/inferno-template)
@@ -431,6 +426,9 @@ The following Test Kits include scripts that can be executed. To execute any of 
 - [**SMART App Launch**](https://github.com/inferno-framework/smart-app-launch-test-kit):
   The SMART App Launch test kit includes both client and server tests and includes [execution scripts](https://github.com/inferno-framework/smart-app-launch-test-kit/tree/main/execution_scripts)
   demonstrating how multi-session scripts can be used to execute these tests against each other.
+- [**US Core**](https://github.com/inferno-framework/us-core-test-kit):
+  The US Core test kit includes [execution scripts](https://github.com/inferno-framework/us-core-test-kit/tree/main/execution_scripts)
+  for both the complete server test and for just the API tests for each version of US Core.
 - [**(g)(10) Certification**](https://github.com/onc-healthit/onc-certification-g10-test-kit):
   The (g)(10) Certification test kit (and [US Core Core test kit](https://github.com/inferno-framework/us-core-test-kit/tree/main/execution_scripts)) 
   contains [scripts](https://github.com/onc-healthit/onc-certification-g10-test-kit/tree/main/execution_scripts)
