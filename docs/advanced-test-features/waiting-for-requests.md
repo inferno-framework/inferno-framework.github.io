@@ -11,8 +11,8 @@ received. For example, the OAuth2 workflow used by the SMART App Launch IG
 involves redirecting the user to an authorization server, which then redirects
 the user back to the application that requested authorization.
 
-More generally,
-Inferno execution must pause and listen for requests whenever an external action is needed, such as when the tester is asked to
+More generally, Inferno execution must pause and listen for requests whenever
+an external action is needed, such as when the tester is asked to
 * Perform an action in the system under test, e.g., authorize access in the workflow above,
 * Send one or more requests to Inferno, e.g., send a request to an Inferno-hosted FHIR API, or
 * Attest that a requirement has been met.
@@ -81,7 +81,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_me
 [`receives_request` in the API
 docs](/inferno-core/docs/Inferno/DSL/RequestStorage/ClassMethods.html#receives_request-instance_method)
 
-### Example
+#### Example
 This example will show how to implement the redirect flow in the [SMART App
 Launch Standalone Launch
 Sequence](http://hl7.org/fhir/smart-app-launch/1.0.0/#standalone-launch-sequence).
@@ -176,12 +176,16 @@ overridden in a `SuiteEndpoint`:
   specified by `wait` in the waiting test based on information in the incoming
   request
 - `make_response` - This method constructs the response.
-- `tags` - This method defines which tags should be apllied to the request.
+- `tags` - This method defines which tags should be apllied to the request so
+  that they can be retrieved for analysis later (see the [Tagged Requests section](/docs/writing-tests/making-requests.html#tagged-requests)
+   for details).
 - `name` - This method defines a name for the request.
 - `update_result` - This method updates the test result. The tests will resume
   once the result has been updated to have a result other than `waiting`.
 - `persist_result?` - When `true` (which is the default) the incoming request
-  will be persisted and included in the list of requests for the test in the UI.
+  will be persisted, included in the list of requests for the waiting test
+  in the UI, and can be [loaded using tags](/docs/writing-tests/making-requests.html#tagged-requests)
+  during analysis performed during subsequent tests.
 
 [`suite_endpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_method)
@@ -189,7 +193,42 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_metho
 [`Inferno::DSL::SuiteEndpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
 
-### Example
+#### "No Session" Error responses
+
+When Inferno is unable to identify an active waiting session for a request
+made to a suite endpoint, a 500 error is returned. By default, the body of
+the response is plain text indicating that no session was found. Developers
+have the option of adding details to that error message and changing its format:
+
+- Override method `test_run_identifier_location_description`: provide a short
+  narrative description of where the test run identifer is expected to be found
+  in requests made to this endpoint. Inferno adds this detail to the errors
+  returned by the endpoint when no session is found to help testers debug the
+  issue.
+- Set `error_response_format :operation_outcome`: including this line in the suite
+  endpoint definition will cause the error response to be returned as a FHIR
+  OperationOutcome resource. This option should be used for suite endpoints
+  that normally return FHIR resources.
+- Override method `no_session_response`: if neither text nor FHIR OperationOutcome
+  is appropriate for these errors when returned from this endpoint, developers
+  can override this method to provide custom error response details. Overrides
+  should set the `response.status`, `response.format`, and `response.body` properties
+  to populate the response. To get the standard error message to embed within the
+  response, call the `no_session_message` method. 
+
+[`test_run_identifier_location_description` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#test_run_identifier_location_description-instance_method)
+
+[`error_response_format` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#error_response_format-instance_method)
+
+[`no_session_response` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#no_session_response-instance_method)
+
+[`no_session_message` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#no_session_message-instance_method)
+
+#### Example
 In the example below, an endpoint is defined which waits for an incoming
 request with a particular bearer token and returns a FHIR Patient resource.
 
@@ -200,12 +239,21 @@ class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
     request.headers['authorization']&.delete_prefix('Bearer ')
   end
 
+  # Describe where the run identifier will be pulled from to
+  # help with debugging issues.
+  def test_run_identifier_location_description
+    'the Bearer token sent in the HTTP Authorization header'
+  end
+
   # Return a json FHIR Patient resource
   def make_response
     response.status = 200
     response.body = FHIR::Patient.new(id: request.params[:id]).to_json
     response.format = :json
   end
+
+  # Return no-session errors as an OperationOutcome
+  error_response_format :operation_outcome
 
   # Update the waiting test to pass when the incoming request is received.
   # This will resume the test run.
