@@ -381,8 +381,8 @@ Tests and groups with this flag will be rendered in the UI with the following ba
 
 **Can Be Used In**: `Test`, `Group`
 
-**Reference**: [`simulation_verification` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#simulation_verification-instance_method)
+**Reference**: [`flag_as_simulation_verification` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_simulation_verification-instance_method)
 
 ----
 ## Attestation
@@ -395,11 +395,31 @@ Tests with this flag will be rendered in the UI with the following badge:
     file="attestation_badge.png"
     alt="Example of the attestation badge"
     caption="This badge visually indicates tests that are flagged as attestation"
-    description="A screenshot of the attestation badge with a person icon and the word 'Attestation' on a light yellow background. Hovering over the badge displays the tooltip 'Inferno cannot independently verify this behavior.'"
+    description="A screenshot of the attestation badge with a person icon and the word 'Attestation' on a light yellow background.'"
     maxwidth="100%"
 %}
 
 **Can Be Used In**: `Test`
 
-**Reference**: [`attestation` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#attestation-instance_method)
+**Reference**: [`flag_as_attestation` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_attestation-instance_method)
+
+----
+## Tester-Initiated Exchange
+**Description**: Flag a test as requiring user action within the system under test
+that triggers requests to Inferno's simulated endpoints
+
+Tests with this flag will be rendered in the UI with the following badge:
+{% include figure.html 
+    file="tester_initiated_exchange_badge.png"
+    alt="Example of the tester-initiated exchange badge"
+    caption="This badge visually indicates tests that are flagged as requiring tester action to initiate exchange with Inferno"
+    description="A screenshot of the tester-initiated exchange badge displaying two arrows pointing in opposite directions and the phrase 'Tester-Initiated Exchange' on a teal background.'"
+    maxwidth="100%"
+%}
+
+**Can Be Used In**: `Test`
+
+**Reference**: [`flag_as_attestation` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_attestation-instance_method)
+
