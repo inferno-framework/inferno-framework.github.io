@@ -100,7 +100,8 @@ end
 
 Tagging requests provides a way to reuse multiple requests, as well as load
 dynamic collections of requests. The `tags` argument can be used with any FHIR
-or HTTP request to assign an array of arbitrary tags to a request.
+or HTTP request to assign an array of arbitrary tags to a request. Tags can
+also be added to requests received by Inferno using a [suite endpoint](/docs/advanced-test-features/waiting-for-requests.html#advanced-incoming-request-handling).
 `load_tagged_requests` will load requests which contain all of the specified
 tags. Individual tests may be run multiple times during a single test session,
 but only requestes from the most recent run of any test will be loaded when

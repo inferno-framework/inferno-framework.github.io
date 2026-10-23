@@ -177,14 +177,15 @@ overridden in a `SuiteEndpoint`:
   request
 - `make_response` - This method constructs the response.
 - `tags` - This method defines which tags should be apllied to the request so
-  that they can be retrieved for analysis later (see the [Tagged Requests section](/inferno-core/docs/writing-tests/making-requests.html#tagged-requests)
+  that they can be retrieved for analysis later (see the [Tagged Requests section](/docs/writing-tests/making-requests.html#tagged-requests)
    for details).
 - `name` - This method defines a name for the request.
 - `update_result` - This method updates the test result. The tests will resume
   once the result has been updated to have a result other than `waiting`.
 - `persist_result?` - When `true` (which is the default) the incoming request
-  will be persisted and included in the list of requests for the waiting test
-  in the UI.
+  will be persisted, included in the list of requests for the waiting test
+  in the UI, and can be [loaded using tags](/docs/writing-tests/making-requests.html#tagged-requests)
+  during analysis performed during subsequent tests.
 
 [`suite_endpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_method)
