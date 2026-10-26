@@ -406,8 +406,9 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_attestation-instance_
 
 ----
 ## Tester-Initiated Exchange
-**Description**: Flag a test or group as requiring user action within the system under test
-that triggers requests to Inferno's simulated endpoints
+**Description**: Flag a test as requiring user action within the system under test
+that triggers requests to Inferno's [simulated endpoints](/docs/advanced-test-features/waiting-for-requests#advanced-incoming-request-handling). Used in the [client (initiator)
+testing paradigm](/docs/getting-started/paradigms#client-initiator-testing).
 
 Tests with this flag and their parent groups will be rendered in the UI with the following badge:
 {% include figure.html 
@@ -420,6 +421,6 @@ Tests with this flag and their parent groups will be rendered in the UI with the
 
 **Can Be Used In**: `Test`
 
-**Reference**: [`flag_as_attestation` in the API
-docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_attestation-instance_method)
+**Reference**: [`flag_as_tester_initiated_exchange` in the API
+docs](/inferno-core/docs/Inferno/DSL/Runnable.html#flag_as_tester_initiated_exchange-instance_method)
 

@@ -6,10 +6,14 @@ layout: docs
 section: docs
 ---
 # Waiting for Incoming Requests
-Some testing workflows required testing to pause until an incoming request is
-received. For example, the OAuth2 workflow used by the SMART App Launch IG
-involves redirecting the user to an authorization server, which then redirects
-the user back to the application that requested authorization.
+
+Some testing workflows require Inferno to pause until it receives an incoming request.
+For example:
+- The OAuth2 workflow used by the SMART App Launch IG
+  involves redirecting the user to an authorization server, which then redirects
+  the user back to the application that requested authorization.
+- When [testing a client system](/docs/getting-started/paradigms#client-initiator-testing),
+  Inferno must wait for the client to initiate the requests.
 
 More generally, Inferno execution must pause and listen for requests whenever
 an external action is needed, such as when the tester is asked to
@@ -217,10 +221,11 @@ docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
 When Inferno is unable to identify an active waiting session for a request
 made to a suite endpoint, a 500 error is returned. By default, the body of
 the response is plain text indicating that no session was found. Developers
-have the option of adding details to that error message and changing its format:
+have the option of adding details to that error message and changing its format.
+These details are important to help [testers debug connectivity issues](/docs/getting-started/paradigms#debugging-connectivity-issues):
 
 - Override method `test_run_identifier_location_description`: provide a short
-  narrative description of where the test run identifer is expected to be found
+  narrative description of where the test run identifier is expected to be found
   in requests made to this endpoint. Inferno adds this detail to the errors
   returned by the endpoint when no session is found to help testers debug the
   issue.
