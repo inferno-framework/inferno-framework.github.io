@@ -17,7 +17,9 @@ Command Line Interface (CLI).
 We encourage beginners to visit the
 [Inferno Test Kit Authoring Tutorial](https://github.com/inferno-framework/tutorial-test-kit/wiki)
 that walks you through creating a basic set of tests for servers that target a common
-Implementation Guide.
+Implementation Guide. Developers looking for additional context on designing tests
+for server and client systems can also read the [Testing Paradigms](/docs/getting-started/paradigms)
+page for information on key patterns supported by Inferno.
 
 Tests can be developed either with a local Ruby installation or by using Docker.
 We recommended installing Ruby locally for development because:

@@ -5,8 +5,10 @@ section: docs
 layout: docs
 ---
 # Getting Started for Inferno Users
-Start here if you're interested in testing a FHIR server against one or more
-existing Test Kits.
+Start here if you're interested in testing a FHIR-enabled system against one or more
+existing Test Kits. See the [Testing Paradigms](/docs/getting-started/paradigms) page
+for information on what to expect when running tests depending on the role the system
+plays.
 
 ## Running Test Kits
 

@@ -36,10 +36,11 @@ bundle exec rspec -n -s 42
 
 See `bundle exec rspec --help` for all options. 
 
-## Writing RSpec for an Inferno Server Tests
+## Writing RSpec for Inferno Server Tests
 
-When Inferno is testing a FHIR server, it acts as a FHIR Client simulator. RSpec
-then acts as a unit tester on the client simulator. Given the Inferno test code below:
+When Inferno is [testing a FHIR server](/docs/getting-started/paradigms#server-responder-testing),
+it acts as a FHIR Client simulator. RSpec then acts as a unit tester on the
+client simulator. Given the Inferno test code below:
 
 ```ruby
 module ExampleTestKit
@@ -181,8 +182,9 @@ end
 
 ## Writing RSpec for Inferno Client Tests
 
-When Inferno tests a FHIR client, it acts a FHIR server simulator. RSpec
-is therefore unit testing a server. Given the Inferno test code blow:
+When Inferno [tests a FHIR client](/docs/getting-started/paradigms#client-initiator-testing),
+it acts as a FHIR server simulator. RSpec is therefore unit testing a server. Given the
+Inferno test code below:
 
 ```ruby
 module ExampleTestKit

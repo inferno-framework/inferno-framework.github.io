@@ -6,13 +6,17 @@ layout: docs
 section: docs
 ---
 # Waiting for Incoming Requests
-Some testing workflows required testing to pause until an incoming request is
-received. For example, the OAuth2 workflow used by the SMART App Launch IG
-involves redirecting the user to an authorization server, which then redirects
-the user back to the application that requested authorization.
 
-More generally,
-Inferno execution must pause and listen for requests whenever an external action is needed, such as when the tester is asked to
+Some testing workflows require Inferno to pause until it receives an incoming request.
+For example:
+- The OAuth2 workflow used by the SMART App Launch IG
+  involves redirecting the user to an authorization server, which then redirects
+  the user back to the application that requested authorization.
+- When [testing a client system](/docs/getting-started/paradigms#client-initiator-testing),
+  Inferno must wait for the client to initiate the requests.
+
+More generally, Inferno execution must pause and listen for requests whenever
+an external action is needed, such as when the tester is asked to
 * Perform an action in the system under test, e.g., authorize access in the workflow above,
 * Send one or more requests to Inferno, e.g., send a request to an Inferno-hosted FHIR API, or
 * Attest that a requirement has been met.
@@ -81,7 +85,7 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#resume_test_route-instance_me
 [`receives_request` in the API
 docs](/inferno-core/docs/Inferno/DSL/RequestStorage/ClassMethods.html#receives_request-instance_method)
 
-### Example
+#### Example
 This example will show how to implement the redirect flow in the [SMART App
 Launch Standalone Launch
 Sequence](http://hl7.org/fhir/smart-app-launch/1.0.0/#standalone-launch-sequence).
@@ -161,7 +165,7 @@ requests, such as:
 - handling multiple incoming requests with customized logic to determine when to
   resume the test, or
 - returning particular responses to incoming requests rather than redirecting
-  the user the UI.
+  the user to the UI.
 Like `resume_test_route`, `suite_endpoint`
 takes a method (such as `:get` or `:post`), and a path for the final url
 fragment in the route. All of the other configuration, however, is handled by an
@@ -170,18 +174,41 @@ fragment in the route. All of the other configuration, however, is handled by an
 A `SuiteEndpoint` is based on a [Hanami
 endpoint](https://github.com/hanami/controller/tree/v2.0.0), so much of the
 functionality is the same. In a `SuiteEndpoint`, `request` and `response` return
-Hanami request/response objects. There are several methods that should be
-overridden in a `SuiteEndpoint`:
-- `test_run_identifier` - This method needs to return the identifier value
+Hanami request/response objects. There are several methods that can be
+overridden to control the behavior of a `SuiteEndpoint`:
+- `test_run_identifier` (Required) - This method needs to return the identifier value
   specified by `wait` in the waiting test based on information in the incoming
   request
-- `make_response` - This method constructs the response.
-- `tags` - This method defines which tags should be apllied to the request.
-- `name` - This method defines a name for the request.
-- `update_result` - This method updates the test result. The tests will resume
-  once the result has been updated to have a result other than `waiting`.
-- `persist_result?` - When `true` (which is the default) the incoming request
-  will be persisted and included in the list of requests for the test in the UI.
+- `make_response` (Required) - This method constructs the response.
+- `persist_result?` (Optional) - When this method returns `true` (which is the default)
+  the incoming request will be persisted, automatically associated with the waiting
+  test and visible in its Requests tab, and accessible to other tests when
+  [loaded using tags](/docs/writing-tests/making-requests.html#tagged-requests)
+  or by name.
+- `tags` (Optional) - This method defines which tags, if any, should be applied
+  to the request so that it can be retrieved for analysis later (see
+  the [Tagged Requests section](/docs/writing-tests/making-requests.html#tagged-requests)
+  for details). If neither tags nor a name are associated with a request, it will
+  not be retrievable.
+- `name` (Optional) - This method defines a name for the request for use
+  in associating the request with an Inferno test using `uses_request`. If
+  neither tags nor a name are associated with a request, it will not be retrievable.
+- `update_result` (Optional) - Override this method to (conditionally) update the waiting
+  test's result after processing a request. Updating the result to anything other
+  than `waiting` will cause Inferno to resume the test run. See the example below
+  for how to update the result.
+- `error_response_format` (Optional) - Not a method, but can be set to `:operation_outcome`
+  to cause error responses to be returned as FHIR OperationOutcome resources.
+  See the syntax in the example below.
+- `test_run_identifier_location_description` (Optional) - provide a short narrative
+  string describing where this endpoint looks for the `test_run_identifier`. If provided,
+  the string will be used in creating error messages when the target session cannot be
+  found. When used in errors, it will follow the text "found in".
+- `no_session_response` (Optional) - provide a custom error response, including the
+  response body, content type, and http response code, for Inferno to use when no
+  session was found, either because of a missing `test_run_identifier` or one not
+  associated with a session. Use when the standard text and OperationOutcome options
+  are not correct, such as for OAuth endpoints.
 
 [`suite_endpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_method)
@@ -189,9 +216,44 @@ docs](/inferno-core/docs/Inferno/DSL/Runnable.html#suite_endpoint-instance_metho
 [`Inferno::DSL::SuiteEndpoint` in the API
 docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html)
 
-### Example
+#### "No Session" Error responses
+
+When Inferno is unable to identify an active waiting session for a request
+made to a suite endpoint, a 500 error is returned. By default, the body of
+the response is plain text indicating that no session was found. Developers
+have the option of adding details to that error message and changing its format.
+These details are important to help [testers debug connectivity issues](/docs/getting-started/paradigms#debugging-connectivity-issues):
+
+- Override method `test_run_identifier_location_description`: provide a short
+  narrative description of where the test run identifier is expected to be found
+  in requests made to this endpoint. Inferno adds this detail to the errors
+  returned by the endpoint when no session is found to help testers debug the
+  issue.
+- Set `error_response_format :operation_outcome`: including this line in the suite
+  endpoint definition will cause the error response to be returned as a FHIR
+  OperationOutcome resource. This option should be used for suite endpoints
+  that normally return FHIR resources.
+- Override method `no_session_response`: if neither text nor FHIR OperationOutcome
+  is appropriate for these errors when returned from this endpoint, developers
+  can override this method to provide custom error response details. Overrides
+  should set the `response.status`, `response.format`, and `response.body` properties
+  to populate the response.
+
+[`test_run_identifier_location_description` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#test_run_identifier_location_description-instance_method)
+
+[`error_response_format` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#error_response_format-instance_method)
+
+[`no_session_response` in the API
+docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#no_session_response-instance_method)
+
+#### Example
 In the example below, an endpoint is defined which waits for an incoming
 request with a particular bearer token and returns a FHIR Patient resource.
+After a request is received at this endpoint with the specified bearer token
+during the "wait" test, Inferno will continue execution and verify that
+Inferno's simulated response contains a conformant Patient resource.
 
 ```ruby
 class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
@@ -200,12 +262,21 @@ class AuthorizedEndpoint < Inferno::DSL::SuiteEndpoint
     request.headers['authorization']&.delete_prefix('Bearer ')
   end
 
+  # Describe where the run identifier will be pulled from to
+  # help with debugging issues.
+  def test_run_identifier_location_description
+    'the Bearer token sent in the HTTP Authorization header'
+  end
+
   # Return a json FHIR Patient resource
   def make_response
     response.status = 200
     response.body = FHIR::Patient.new(id: request.params[:id]).to_json
     response.format = :json
   end
+
+  # Return no-session errors as an OperationOutcome
+  error_response_format :operation_outcome
 
   # Update the waiting test to pass when the incoming request is received.
   # This will resume the test run.
@@ -226,9 +297,11 @@ class AuthorizedRequestSuite < Inferno::TestSuite
 
   group do
     title 'Authorized Request Group'
+    run_as_group
 
     test do
       title 'Wait for authorized request'
+      flag_as_tester_initiated_exchange
 
       input :bearer_token
 
@@ -236,8 +309,20 @@ class AuthorizedRequestSuite < Inferno::TestSuite
         wait(
           identifier: bearer_token,
           message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
-                    "at `#{Inferno::Application['base_url']}/custom/authorized_suite/authorized_endpoint`"
+                    "at `#{Inferno::Application['base_url']}/custom/authorized_suite/Patient/<id>`"
         )
+      end
+    end
+
+    test do
+      title 'Check that the response contains a valid Patient resource'
+      flag_as_simulation_verification
+
+      run do
+        load_tagged_requests('authorized')
+        resource = FHIR.from_contents(request.response_body)
+        assert_resource_type(:patient, resource:)
+        assert_valid_resource(resource:)
       end
     end
   end

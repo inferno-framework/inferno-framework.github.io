@@ -58,15 +58,16 @@ The Inferno Template is a template for writing Inferno Test Kits. See [Template 
     description="The template provides scripts to run Test Kits using Inferno Core and reuse existing Test Kits."
     maxwidth="466px"
 %}
-
    
 ## Inferno Test Suite
 
 An Inferno Test Suite is an executable set of tests provided within an Inferno Test Kit that allows
-testers to evaluate the conformance of a system. They can import tests from other Test Kits. 
-Each Test Suite also defines how to interpret failures at the test level and in aggregate.
-For example, a Test Suite may define that a conformant system will pass all provided
-tests, or that the system may fail some tests. 
+testers to evaluate the conformance of a system. Each suite evaluates a single actor or system,
+and the [approach Inferno takes to testing](/docs/getting-started/paradigms) depends on the role
+played by the tested system. Test Suites can import tests from other Test Kits. Each Test Suite also
+defines how to interpret failures at the test level and in aggregate. For example, a Test Suite
+may define that a conformant system will pass all provided tests, or that the system may fail
+some tests. 
 
 ## Validators
 
