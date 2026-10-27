@@ -185,7 +185,7 @@ overridden to control the behavior of a `SuiteEndpoint`:
   test and visible in its Requests tab, and accessible to other tests when
   [loaded using tags](/docs/writing-tests/making-requests.html#tagged-requests)
   or by name.
-- `tags` (Optional) - This method defines which tags, if any, should be apllied
+- `tags` (Optional) - This method defines which tags, if any, should be applied
   to the request so that it can be retrieved for analysis later (see
   the [Tagged Requests section](/docs/writing-tests/making-requests.html#tagged-requests)
   for details). If neither tags nor a name are associated with a request, it will
@@ -237,8 +237,7 @@ These details are important to help [testers debug connectivity issues](/docs/ge
   is appropriate for these errors when returned from this endpoint, developers
   can override this method to provide custom error response details. Overrides
   should set the `response.status`, `response.format`, and `response.body` properties
-  to populate the response. To get the standard error message to embed within the
-  response, call the `no_session_message` method. 
+  to populate the response.
 
 [`test_run_identifier_location_description` in the API
 docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#test_run_identifier_location_description-instance_method)
@@ -248,9 +247,6 @@ docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#error_response_format-in
 
 [`no_session_response` in the API
 docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#no_session_response-instance_method)
-
-[`no_session_message` in the API
-docs](/inferno-core/docs/Inferno/DSL/SuiteEndpoint.html#no_session_message-instance_method)
 
 #### Example
 In the example below, an endpoint is defined which waits for an incoming
@@ -305,6 +301,7 @@ class AuthorizedRequestSuite < Inferno::TestSuite
 
     test do
       title 'Wait for authorized request'
+      flag_as_tester_initiated_exchange
 
       input :bearer_token
 
@@ -312,20 +309,20 @@ class AuthorizedRequestSuite < Inferno::TestSuite
         wait(
           identifier: bearer_token,
           message: "Waiting to receive a request with bearer_token: #{bearer_token}" \
-                    "at `#{Inferno::Application['base_url']}/custom/Patient/<id>`"
+                    "at `#{Inferno::Application['base_url']}/custom/authorized_suite/Patient/<id>`"
         )
       end
     end
 
     test do
       title 'Check that the response contains a valid Patient resource'
-      simulation_verification
+      flag_as_simulation_verification
 
       run do
         load_tagged_requests('authorized')
         resource = FHIR.from_contents(request.response_body)
-        assert_resource_type(:patient)
-        assert_valid_resource
+        assert_resource_type(:patient, resource:)
+        assert_valid_resource(resource:)
       end
     end
   end

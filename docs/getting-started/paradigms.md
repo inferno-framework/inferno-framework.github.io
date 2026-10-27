@@ -84,7 +84,7 @@ an "active" session is one that is explicitly waiting for a request. When tester
 tests that involve an exchange initiated by the tested client system (often tagged with the
 ["Tester-Initiated Exchange" badge](/docs/writing-tests/properties#tester-initiated-exchange)),
 Inferno will display a ["User Action Required" dialog](/docs/advanced-test-features/waiting-for-requests#wait-modal)
-that indicates the session is actively waiting for requests. This dialog, will document
+that indicates the session is actively waiting for requests. This dialog will document
 what Inferno is waiting for, how it will recognize incoming requests, and how it will
 respond. When a request to Inferno is associated with the waiting session, Inferno will
 respond, creating a response using inputs provided by the tester and, in some cases, prior
@@ -122,7 +122,7 @@ client system logs.
   it actually received and recognized. Testers will need to rely on logs available on the
   client system, which may include Inferno responses, and compare the details to what
   Inferno expected as documented in the "User Action Required" dialog. See the
-  [Debugging Inferno responses](#debugging-inferno-responses) section below for help
+  [Debugging Inferno responses](#debugging-inferno-responses-during-client-initiator-testing) section below for help
   in diagnosing issues.
 
 ### Example client (initiator) paradigm test suites
